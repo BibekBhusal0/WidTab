@@ -7,3 +7,7 @@ export type HabitTrackerItemType = {
   increment: number;
   //  history : HabitTrackerHistoryType
 };
+
+export type HabitTrackerSliceType = {
+  Trackers: HabitTrackerItemType[];
+};

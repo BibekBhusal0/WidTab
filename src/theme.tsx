@@ -54,6 +54,13 @@ export const getTheme = ({
           },
         },
       },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            borderRadius,
+          },
+        },
+      },
     },
   });
 };

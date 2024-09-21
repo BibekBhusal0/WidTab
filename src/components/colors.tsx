@@ -1,4 +1,5 @@
-import { Grid, Paper, Typography, useTheme } from '@mui/material';
+import { Grid, Paper, Typography, useTheme } from "@mui/material";
+import { TransparentPaper } from "./transparent";
 
 const ColorPalette = () => {
   const theme = useTheme();
@@ -16,20 +17,21 @@ const ColorPalette = () => {
     <Grid container spacing={2} justifyContent="center">
       {Object.entries(colors).map(([key, color]) => (
         <Grid item xs={12} sm={6} md={4} key={key}>
-          <Paper
+          <TransparentPaper
+            backgroundColor={color.main}
             elevation={3}
             style={{
-              backgroundColor: color.main,
-              color: theme.palette.getContrastText(color.main),
-              padding: '16px',
-              textAlign: 'center',
-            }}
-          >
-            <Typography variant="h6">{key.charAt(0).toUpperCase() + key.slice(1)}</Typography>
+              //   color: theme.palette.getContrastText(color.main),
+              padding: "16px",
+              textAlign: "center",
+            }}>
+            <Typography variant="h6">
+              {key.charAt(0).toUpperCase() + key.slice(1)}
+            </Typography>
             <Typography variant="body1">Main: {color.main}</Typography>
             <Typography variant="body1">Light: {color.light}</Typography>
             <Typography variant="body1">Dark: {color.dark}</Typography>
-          </Paper>
+          </TransparentPaper>
         </Grid>
       ))}
     </Grid>

@@ -52,13 +52,16 @@ function ChangeSlider({ val, ...props }: changeSliderProps) {
   const dispatch = useDispatch();
 
   return (
-    <Slider
-      value={theme[val]}
-      onChange={(_, value) => {
-        dispatch(set({ value: value as number, type: val }));
-      }}
-      {...props}
-    />
+    <div className="flex items-center justify-between w-full gap-4">
+      <div className="text-xl">{val}</div>
+      <Slider
+        value={theme[val]}
+        onChange={(_, value) => {
+          dispatch(set({ value: value as number, type: val }));
+        }}
+        {...props}
+      />
+    </div>
   );
 }
 

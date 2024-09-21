@@ -7,10 +7,11 @@
 // 6. Search
 // 7. Clock
 // 8. Bookmark
+// Optional
 // 9. Music
 // 10. Pomodoro Timer
-// Optional
 // 11. Calendar
 // 12. Notes
 // 13. Kanban Board
+// 14. Weather
 //
