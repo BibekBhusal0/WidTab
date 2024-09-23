@@ -1,20 +1,19 @@
 import { createTheme } from "@mui/material/styles";
-import { ThemeSliceType } from "./redux/slice/theme";
-import { useSelector } from "react-redux";
-import { StateType } from "./redux/store";
 import {
   argbFromHex,
   themeFromSourceColor,
   hexFromArgb,
 } from "@material/material-color-utilities";
 import { CssBaseline, ThemeProvider } from "@mui/material";
+import { ThemeItemType } from "./types/slice/theme";
+import useCurrentTheme from "./hooks/useCurrentTheme";
 
 export const getTheme = ({
   mode,
   primaryColor,
   blur,
   roundness,
-}: ThemeSliceType) => {
+}: ThemeItemType) => {
   const primary = themeFromSourceColor(argbFromHex(primaryColor));
   const crrPrimary = primary.schemes[mode];
 
@@ -44,6 +43,11 @@ export const getTheme = ({
         main: hexFromArgb(crrPrimary.error),
         contrastText: hexFromArgb(crrPrimary.onError),
       },
+      divider: hexFromArgb(crrPrimary.outline),
+      success: {
+        main: hexFromArgb(crrPrimary.primaryContainer),
+        contrastText: hexFromArgb(crrPrimary.onPrimaryContainer),
+      },
     },
     components: {
       MuiPaper: {
@@ -66,7 +70,7 @@ export const getTheme = ({
 };
 
 function CustomThemeProvider({ children }: { children: React.ReactNode }) {
-  const th = useSelector((state: StateType) => state.theme);
+  const th = useCurrentTheme();
   const theme = getTheme(th);
   return (
     <ThemeProvider theme={theme}>

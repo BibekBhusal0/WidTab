@@ -1,4 +1,5 @@
-import { ModeType } from "@/redux/slice/theme";
+export type ModeType = "light" | "dark";
+export type numericalThemeValues = "blur" | "opacity" | "roundness";
 
 export type ThemeItemType = {
   id: string;
@@ -7,10 +8,10 @@ export type ThemeItemType = {
   blur: number;
   roundness: number;
   opacity: number;
-  deleteAble?: boolean;
+  editAble?: boolean;
 };
 
 export type ThemeSliceType = {
-  currentThemeID: number;
+  currentThemeID: string;
   allThemes: ThemeItemType[];
 };

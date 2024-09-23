@@ -2,9 +2,8 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import tinycolor from "tinycolor2";
 import { useTheme } from "@mui/material/styles";
-import { useSelector } from "react-redux";
-import { StateType } from "@/redux/store";
 import { Paper } from "@mui/material";
+import useCurrentTheme from "@/hooks/useCurrentTheme";
 
 const addBackgroundTransparency = (color: string, transparency: number) => {
   return tinycolor(color).setAlpha(transparency).toString();
@@ -21,7 +20,7 @@ const withBackgroundTransparency = <P extends object>(
     P & WithBackgroundTransparencyProps
   > = ({ backgroundColor, ...props }) => {
     const theme = useTheme();
-    const { opacity } = useSelector((state: StateType) => state.theme);
+    const { opacity } = useCurrentTheme();
 
     const bgColor = backgroundColor || theme.palette.background.paper;
 

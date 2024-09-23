@@ -1,29 +1,34 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import useCurrentTheme from "@/hooks/useCurrentTheme";
+import { changeTheme, toggleCurrentMode } from "@/redux/slice/theme";
+import { numericalThemeValues } from "@/types/slice/theme";
 import { Slider, SliderProps, Switch } from "@mui/material";
-import { toggleMode, set, numericalThemeValues } from "@/redux/slice/theme";
-import { StateType } from "@/redux/store";
+import { useDispatch } from "react-redux";
 
-const Selector: React.FC = () => {
-  const { mode, primaryColor } = useSelector((state: StateType) => state.theme);
+function ThemeSettings() {
+  const theme = useCurrentTheme();
   const dispatch = useDispatch();
-
-  const toggle = () => {
-    dispatch(toggleMode());
-  };
   const numValues: numericalThemeValues[] = ["blur", "opacity", "roundness"];
 
   return (
-    <>
-      <div className="flex-center gap-4">
-        <Switch checked={mode === "light"} onChange={toggle} />
+    <div>
+      <div className="text-4xl">Theme Settings</div>
+      <div className="flex-justify-around">
+        <div className="text-xl">Mode</div>
+        <Switch
+          checked={theme.mode === "light"}
+          onChange={() => dispatch(toggleCurrentMode())}
+        />
+      </div>
+
+      <div className="flex-justify-around">
+        <div className="text-xl">Primary Color</div>
         <input
           type="color"
           name="primary"
           id="primary"
-          value={primaryColor}
+          value={theme.primaryColor}
           onChange={(e) =>
-            dispatch(set({ value: e.target.value, type: "primaryColor" }))
+            dispatch(changeTheme({ ...theme, primaryColor: e.target.value }))
           }
         />
       </div>
@@ -39,16 +44,16 @@ const Selector: React.FC = () => {
           />
         ))}
       </div>
-    </>
+    </div>
   );
-};
+}
 
 type changeSliderProps = SliderProps & {
   val: numericalThemeValues;
 };
 
 function ChangeSlider({ val, ...props }: changeSliderProps) {
-  const theme = useSelector((state: StateType) => state.theme);
+  const theme = useCurrentTheme();
   const dispatch = useDispatch();
 
   return (
@@ -57,7 +62,7 @@ function ChangeSlider({ val, ...props }: changeSliderProps) {
       <Slider
         value={theme[val]}
         onChange={(_, value) => {
-          dispatch(set({ value: value as number, type: val }));
+          dispatch(changeTheme({ ...theme, [val]: value as number }));
         }}
         {...props}
       />
@@ -65,4 +70,4 @@ function ChangeSlider({ val, ...props }: changeSliderProps) {
   );
 }
 
-export default Selector;
+export default ThemeSettings;
