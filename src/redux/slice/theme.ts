@@ -7,15 +7,7 @@ const initialState: ThemeSliceType = {
   currentThemeID: "0",
   allThemes: [
     {
-      mode: "light",
-      id: "0",
-      editAble: true,
-      primaryColor: "#0000ff",
-      blur: 0,
-      roundness: 0.2,
-      opacity: 1,
-    },
-    {
+      name: "red",
       mode: "light",
       id: "1",
       editAble: false,
@@ -25,6 +17,7 @@ const initialState: ThemeSliceType = {
       opacity: 0.4,
     },
     {
+      name: "green",
       mode: "dark",
       id: "2",
       editAble: false,
@@ -32,7 +25,17 @@ const initialState: ThemeSliceType = {
       blur: 0.5,
       roundness: 0.3,
       opacity: 0.7,
-    }
+    },
+    {
+      name: "blue",
+      mode: "light",
+      id: "0",
+      editAble: true,
+      primaryColor: "#0000ff",
+      blur: 0,
+      roundness: 0.2,
+      opacity: 1,
+    },
   ],
 };
 
@@ -44,9 +47,17 @@ export const themeSlice = createSlice({
       state.allThemes.push({ ...action.payload, id: uuidv4() });
     },
     deleteTheme: (state, action: PayloadAction<string>) => {
-      state.allThemes = state.allThemes.filter(
-        (p) => p.id !== action.payload && p.editAble
+      const themeToDelete = state.allThemes.find(
+        (p) => p.id === action.payload
       );
+      if (themeToDelete?.editAble) {
+        state.allThemes = state.allThemes.filter(
+          (p) => p.id !== action.payload
+        );
+        if (state.currentThemeID === action.payload) {
+          state.currentThemeID = state.allThemes[0].id;
+        }
+      }
     },
     switchTheme: (state, action: PayloadAction<string>) => {
       if (state.currentThemeID === action.payload) return;
@@ -56,7 +67,6 @@ export const themeSlice = createSlice({
     changeTheme: (state, action: PayloadAction<ThemeItemType>) => {
       const theme = state.allThemes.find((p) => p.id === action.payload.id);
       if (theme) {
-        console.log(theme.editAble);
         if (theme.editAble) {
           theme.blur = action.payload.blur;
           theme.editAble = action.payload.editAble;
@@ -64,6 +74,7 @@ export const themeSlice = createSlice({
           theme.primaryColor = action.payload.primaryColor;
           theme.roundness = action.payload.roundness;
           theme.mode = action.payload.mode;
+          theme.name = action.payload.name;
         }
       }
     },

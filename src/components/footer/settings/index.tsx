@@ -1,13 +1,9 @@
 import SettingsIcon from "@mui/icons-material/Settings";
-import {
-  Box,
-  IconButton,
-  Popover,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "@mui/material";
+import { IconButton, Popover } from "@mui/material";
 import { useState } from "react";
 import ThemeSettings from "./theme";
+import ContainerSidebar from "@/components/containerSidebar";
+import { useTheme } from "@mui/material/styles";
 
 const width = "600px";
 const height = "500px";
@@ -39,46 +35,20 @@ function Settings() {
 }
 
 function SettingsMenu() {
+  const {
+    palette: { divider },
+  } = useTheme();
   const allSettings = [
     { index: 0, name: "Theme", component: <ThemeSettings /> },
-    { index: 1, name: "Widgets", component: "click me" },
+    { index: 1, name: "Widgets", component: "Empty" },
   ];
-  const [value, setValue] = useState(0);
-  const crrComponent =
-    allSettings.find((p) => p.index === value)?.component ||
-    allSettings[0].component;
-
   const w = "150px";
   return (
-    <Box className="flex h-full" sx={{ width, height }}>
-      <Box className="h-full" sx={{ borderRight: 1, width: w }}>
-        <ToggleButtonGroup
-          orientation="vertical"
-          value={value}
-          onChange={(_, newValue) => {
-            if (newValue !== null) {
-              setValue(newValue);
-            }
-          }}
-          exclusive>
-          {allSettings.map(({ name, index }) => (
-            <ToggleButton
-              color="primary"
-              value={index}
-              key={index}
-              sx={{
-                width: w,
-                borderRadius: 0,
-                borderRight: "none",
-                borderLeft: "none",
-              }}>
-              {name}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
-      </Box>
-      <div className="border-r-3 p-4 overflow-auto h-full">{crrComponent}</div>
-    </Box>
+    <ContainerSidebar
+      items={allSettings}
+      mainProps={{ sx: { width, height } }}
+      tabsProps={{ sx: { width: w, borderRight: `2px solid ${divider}` } }}
+    />
   );
 }
 

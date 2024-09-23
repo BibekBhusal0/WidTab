@@ -39,10 +39,6 @@ export const getTheme = ({
         primary: hexFromArgb(crrPrimary.onBackground),
         secondary: hexFromArgb(crrPrimary.onSurface),
       },
-      error: {
-        main: hexFromArgb(crrPrimary.error),
-        contrastText: hexFromArgb(crrPrimary.onError),
-      },
       divider: hexFromArgb(crrPrimary.outline),
       success: {
         main: hexFromArgb(crrPrimary.primaryContainer),
