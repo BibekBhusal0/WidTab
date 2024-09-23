@@ -44,7 +44,9 @@ export const themeSlice = createSlice({
   initialState,
   reducers: {
     addTheme: (state, action: PayloadAction<ThemeItemType>) => {
-      state.allThemes.push({ ...action.payload, id: uuidv4() });
+      const newID = uuidv4();
+      state.allThemes.push({ ...action.payload, id: newID });
+      state.currentThemeID = newID;
     },
     deleteTheme: (state, action: PayloadAction<string>) => {
       const themeToDelete = state.allThemes.find(

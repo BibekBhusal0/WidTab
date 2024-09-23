@@ -1,24 +1,16 @@
-import { BookmarkWidgetType } from "./bookmark";
-import { HabitTrackerItemType } from "./habit-tracker";
-import { TaskType } from "./todo";
 import { Layout } from "react-grid-layout";
+import { TaskType } from "./todo";
+import { HabitTrackerItemType } from "./habit-tracker";
+import { BookmarkWidgetType } from "./bookmark";
 
-export const AW = [
-  "todo",
-  "bookmark",
-  "custom",
-  "clock",
-  "search",
-  "habit-tracker",
-] as const;
-export const CW = ["todo", "bookmark", "habit-tracker"] as const;
-export const UW = ["custom", "clock", "search"] as const;
+const CW = ["todo", "bookmark", "habit-tracker"] as const;
+const UW = ["custom", "clock", "search"] as const;
 
-export type allWidgetsType = (typeof AW)[number];
 export type controlledWidgetsType = (typeof CW)[number];
 export type uncontrolledWidgetsType = (typeof UW)[number];
+export type allWidgetsType = controlledWidgetsType | uncontrolledWidgetsType;
 
-export const allWidgets: allWidgetsType[] = [...AW];
+export const allWidgets: allWidgetsType[] = [...CW, ...UW];
 export const customWidgets: controlledWidgetsType[] = [...CW];
 export const uncontrolledWidgets: uncontrolledWidgetsType[] = [...UW];
 
@@ -41,14 +33,20 @@ export type AllSearchEngines =
   | "bing"
   | "youtube"
   | "duckduckgo"
-  | "brace";
+  | "brave";
 
 export type SearchWidgetType = {
   id: string;
   engine: AllSearchEngines;
 };
 
-export type WidgetMapping =
+export type WidgetMappingDynamic =
+  | { type: controlledWidgetsType; values: { id: string } }
+  | { type: "custom"; values: CustomWidgetType }
+  | { type: "clock"; values: ClockWidgetType }
+  | { type: "search"; values: SearchWidgetType };
+
+export type WidgetTypeMapping =
   | { type: "todo"; values: TaskType }
   | { type: "habit-tracker"; values: HabitTrackerItemType }
   | { type: "bookmark"; values: BookmarkWidgetType }
@@ -58,4 +56,51 @@ export type WidgetMapping =
 
 export type WidgetType = {
   gridProps: Layout;
-} & WidgetMapping;
+} & WidgetMappingDynamic;
+
+// function createEmptyWidget(
+//   type: allWidgetsType,
+//   id?: string,
+//   engine?: AllSearchEngines
+// ): WidgetMappingDynamic {
+//   switch (type) {
+//     case "clock":
+//       return {
+//         type: "clock",
+//         values: {
+//           id: "",
+//           TwentyFourHour: false,
+//           ShowDay: false,
+//           ShowSeconds: false,
+//         },
+//       };
+
+//     case "custom":
+//       return {
+//         type: "custom",
+//         values: {
+//           id: id || "",
+//           url: "",
+//         },
+//       };
+
+//     case "search":
+//       return {
+//         type: "search",
+//         values: {
+//           id: id || "",
+//           engine: engine || "google",
+//         },
+//       };
+
+//     default:
+//       return {
+//         type,
+//         values: {
+//           id: id || "",
+//         },
+//       };
+//   }
+// }
+
+// createEmptyWidget('clock')

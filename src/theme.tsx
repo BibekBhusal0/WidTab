@@ -23,6 +23,7 @@ export const getTheme = ({
     styleOverrides: {
       root: {
         borderRadius,
+        backdropFilter: backdropBlur,
       },
     },
   };
@@ -58,6 +59,8 @@ export const getTheme = ({
       MuiTextField: { ...rounded },
       MuiInputBase: { ...rounded },
       MuiInput: { ...rounded },
+      MuiFilledInput: { ...rounded },
+      MuiOutlinedInput: { ...rounded },
     },
   });
 };
