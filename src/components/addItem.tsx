@@ -21,6 +21,7 @@ export type AddItemProps = {
   showBackButton?: boolean;
 };
 
+
 function AddItem({
   word_limit = undefined,
   clickEvent = () => {},
@@ -68,7 +69,7 @@ function AddItem({
           children="Add"
           variant={inp ? "contained" : "outlined"}
           startIcon={<AddIcon />}
-          disabled={text.trim().length === 0 || reached_word_limit}
+          disabled={inp && (text.trim().length === 0 || reached_word_limit)}
           {...addButtonProps}
           onClick={handleClick}
         />

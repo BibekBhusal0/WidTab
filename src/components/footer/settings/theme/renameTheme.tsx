@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import DoneIcon from "@mui/icons-material/Done";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function RenameTheme() {
   const theme = useCurrentTheme();
@@ -19,6 +19,10 @@ function RenameTheme() {
   const hitsWordLimit = text.length >= wordLimit;
   const trimmedText = text.trim();
   const isEmpty = trimmedText.length === 0;
+
+  useEffect(() => {
+    setText(theme.name);
+  }, [theme.name]);
 
   const handleClick = () => {
     if (!hitsWordLimit && !isEmpty && trimmedText !== theme.name) {

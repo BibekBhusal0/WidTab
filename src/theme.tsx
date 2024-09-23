@@ -19,6 +19,13 @@ export const getTheme = ({
 
   const borderRadius = `${roundness * 30}px`;
   const backdropBlur = `blur(${blur * 10}px)`;
+  const rounded = {
+    styleOverrides: {
+      root: {
+        borderRadius,
+      },
+    },
+  };
 
   return createTheme({
     palette: {
@@ -46,21 +53,11 @@ export const getTheme = ({
       },
     },
     components: {
-      MuiPaper: {
-        styleOverrides: {
-          root: {
-            borderRadius,
-            backdropBlur,
-          },
-        },
-      },
-      MuiButton: {
-        styleOverrides: {
-          root: {
-            borderRadius,
-          },
-        },
-      },
+      MuiPaper: { ...rounded },
+      MuiButton: { ...rounded },
+      MuiTextField: { ...rounded },
+      MuiInputBase: { ...rounded },
+      MuiInput: { ...rounded },
     },
   });
 };
