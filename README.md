@@ -1,4 +1,6 @@
-<!-- prettier-ignore -->
+Folder Structure
+
+```tree-structure
 src
 ├── components
 │   ├── addItem.tsx
@@ -44,3 +46,4 @@ src
 │   └── slice
 │       └── widgets.ts
 └── App.tsx
+```
