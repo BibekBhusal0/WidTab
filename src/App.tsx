@@ -1,5 +1,5 @@
 import Footer from "./components/footer";
-import Grid from "./components/grid";
+import Main from "./components/main";
 import CustomThemeProvider from "./theme";
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
   return (
     <CustomThemeProvider>
       <div className="size-full h-screen relative">
-        <Grid height={height} />
+        <Main height={height} />
         <Footer height={100 - height} />
       </div>
     </CustomThemeProvider>

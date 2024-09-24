@@ -18,12 +18,12 @@ export const getTheme = ({
   const crrPrimary = primary.schemes[mode];
 
   const borderRadius = `${roundness * 30}px`;
-  const backdropBlur = `blur(${blur * 10}px)`;
+  const backdropFilter = `blur(${blur * 10}px)`;
   const rounded = {
     styleOverrides: {
       root: {
         borderRadius,
-        backdropFilter: backdropBlur,
+        backdropFilter,
       },
     },
   };
@@ -70,7 +70,6 @@ function CustomThemeProvider({ children }: { children: React.ReactNode }) {
   const theme = getTheme(th);
   return (
     <ThemeProvider theme={theme}>
-      <div className="bg-opacity"></div>
       <CssBaseline />
       {children}
     </ThemeProvider>

@@ -64,18 +64,18 @@ export const layoutSlice = createSlice({
         );
       }
     },
-    currentSpaceChangeGridProps(
-      state,
-      action: PayloadAction<{ widget_id: string; layout: Layout }>
-    ) {
+    currentSpaceSetGridProps(state, action: PayloadAction<Layout[]>) {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
       if (space) {
-        const widget = space.widgets.find(
-          (p) => p.values.id === action.payload.widget_id
-        );
-        if (widget) {
-          widget.gridProps = action.payload.layout;
-        }
+        space.widgets = space.widgets.map((widget) => {
+          const newWidget = action.payload.find(
+            (w) => w.i === widget.gridProps.i
+          );
+          return {
+            ...widget,
+            gridProps: { ...widget.gridProps, ...newWidget },
+          };
+        });
       }
     },
     currentStateDeleteState: (state) => {
@@ -103,3 +103,17 @@ export const layoutSlice = createSlice({
     },
   },
 });
+
+export const {
+  changeCurrentSpace,
+  deleteSpace,
+  addSpace,
+  currentSpaceAddWidget,
+  currentSpaceDeleteWidget,
+  currentSpaceSetGridProps,
+  currentStateDeleteState,
+  currentSpaceToggleLocked,
+  currentSpaceChangeCompaction,
+} = layoutSlice.actions;
+
+export default layoutSlice.reducer;
