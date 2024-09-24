@@ -21,7 +21,7 @@ import {
 export const transparentInput =
   "border-transparent w-full bg-transparent resize-none focus:outline-none";
 
-function Tasks({ id }: { id: string }) {
+function TodoWidget({ id }: { id: string }) {
   const dispatch = useDispatch();
   const taskRefs = useRef<Map<string, HTMLTextAreaElement | null>>(new Map());
   const titleRef = useRef<HTMLInputElement>(null);
@@ -181,4 +181,4 @@ function Tasks({ id }: { id: string }) {
   );
 }
 
-export default Tasks;
+export default TodoWidget;

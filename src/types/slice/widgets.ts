@@ -14,6 +14,13 @@ export const allWidgets: allWidgetsType[] = [...CW, ...UW];
 export const customWidgets: controlledWidgetsType[] = [...CW];
 export const uncontrolledWidgets: uncontrolledWidgetsType[] = [...UW];
 
+export type AllSearchEngines =
+  | "google"
+  | "bing"
+  | "youtube"
+  | "duckduckgo"
+  | "brave";
+
 export type CustomWidgetType = {
   id: string;
   url: string;
@@ -28,13 +35,6 @@ export type ClockWidgetType = {
   // clockType : 'analog' | 'digital'
 };
 
-export type AllSearchEngines =
-  | "google"
-  | "bing"
-  | "youtube"
-  | "duckduckgo"
-  | "brave";
-
 export type SearchWidgetType = {
   id: string;
   engine: AllSearchEngines;
@@ -45,6 +45,9 @@ export type WidgetMappingDynamic =
   | { type: "custom"; values: CustomWidgetType }
   | { type: "clock"; values: ClockWidgetType }
   | { type: "search"; values: SearchWidgetType };
+
+export type WidgetPropsMappingDynamic<T extends WidgetMappingDynamic["type"]> =
+  Extract<WidgetMappingDynamic, { type: T }>["values"];
 
 export type WidgetTypeMapping =
   | { type: "todo"; values: TaskType }
