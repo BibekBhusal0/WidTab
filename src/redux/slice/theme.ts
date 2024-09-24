@@ -83,7 +83,6 @@ export const themeSlice = createSlice({
     },
     toggleCurrentMode: (state) => {
       var theme = state.allThemes.find((p) => p.id === state.currentThemeID);
-      console.log(theme);
       if (theme) {
         theme.mode = "light" === theme.mode ? "dark" : "light";
       }

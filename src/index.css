@@ -76,3 +76,12 @@
   height: 100%;
   cursor: w-resize;
 }
+.drag-handle {
+  cursor: grab;
+}
+.drag-handle:focus {
+  cursor: grabbing;
+}
+.drag-handle:focus-visible {
+  cursor: grabbing;
+}

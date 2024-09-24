@@ -9,17 +9,11 @@ function DynamicLayout({ height }: { height: number }) {
   const { n_cols, n_rows } = useSelector((state: StateType) => state.layout);
   const space = useCurrentLayout();
   const dispatch = useDispatch();
-  if (!space) return null;
-  const gap = 10;
-  const { compaction, locked, widgets } = space;
-  const layout = widgets.map((w) => w.gridProps);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(1500);
   const [rowHeight, setRowHeight] = useState(10);
-
-  const handleChange = (layout: Layout[]) => {
-    dispatch(currentSpaceSetGridProps(layout));
-  };
+  const gap = 10;
 
   useEffect(() => {
     const handleResize = () => {
@@ -39,6 +33,14 @@ function DynamicLayout({ height }: { height: number }) {
     };
   }, []);
 
+  if (!space) return null;
+  const { compaction, locked, widgets } = space;
+  const layout = widgets.map((w) => w.gridProps);
+
+  const handleChange = (layout: Layout[]) => {
+    dispatch(currentSpaceSetGridProps(layout));
+  };
+
   return (
     <div
       ref={containerRef}
@@ -50,6 +52,7 @@ function DynamicLayout({ height }: { height: number }) {
         layout={layout}
         cols={n_cols}
         rowHeight={rowHeight}
+        maxRows={n_rows}
         width={containerWidth}
         margin={[gap, gap]}
         //
@@ -64,7 +67,15 @@ function DynamicLayout({ height }: { height: number }) {
         preventCollision
         resizeHandles={["ne", "e", "n", "s", "w", "nw", "sw", "se"]}
         //
-      ></GridLayout>
+      >
+        {widgets.map((w) => (
+          <div className=" bg-red-200" key={w.gridProps.i}>
+            {!locked && (
+              <div className="w-full bg-green-200 opacity-15 drag-handle h-5 absolute top-0 left-0"></div>
+            )}
+          </div>
+        ))}
+      </GridLayout>
     </div>
   );
 }

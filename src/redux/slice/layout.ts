@@ -22,7 +22,73 @@ const initialState: LayoutSliceType = {
   n_rows: 8,
   n_cols: 12,
   currentSpace: { type: "dynamic", id: "1" },
-  allSpaces: [{ ...getEmptySpace(), id: "1", delete_able: false }],
+  allSpaces: [
+    {
+      ...getEmptySpace(),
+      id: "1",
+      delete_able: false,
+      widgets: [
+        {
+          gridProps: {
+            x: 8,
+            y: 6,
+            w: 4,
+            h: 2,
+            i: "0",
+          },
+          type: "custom",
+          values: {
+            id: "0",
+
+            url: "https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&autoplay=1&feed=%2Fpueblovista%2Fmorning-coffee-mixtape-chillhop-lofi-hip-hop%2F",
+          },
+        },
+        {
+          type: "custom",
+          values: {
+            id: "1",
+            url: "https://indify.co/widgets/live/weather/6IrFOuag2Pz5NlkM9qFw",
+          },
+          gridProps: {
+            isResizable: true,
+            x: 0,
+            y: 0,
+            w: 2,
+            h: 4,
+            i: "1",
+          },
+        },
+        {
+          type: "custom",
+          values: {
+            id: "2",
+            url: "https://flipclock.app/",
+          },
+          gridProps: {
+            x: 4,
+            y: 0,
+            w: 4,
+            h: 3,
+            i: "2",
+          },
+        },
+        {
+          type: "custom",
+          values: {
+            id: "3",
+            url: "https://getkairo.com/embed-local?id=07770ed8-bc63-47d5-9075-2b783d0209a7&local=true&title=Focus&type=Block&color=amber&size=3&faceType=default",
+          },
+          gridProps: {
+            x: 9,
+            y: 1,
+            w: 3,
+            h: 5,
+            i: "3",
+          },
+        },
+      ],
+    },
+  ],
 };
 
 export const layoutSlice = createSlice({
