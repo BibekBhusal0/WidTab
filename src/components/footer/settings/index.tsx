@@ -3,7 +3,6 @@ import { IconButton, Popover } from "@mui/material";
 import { useState } from "react";
 import ThemeSettings from "./theme";
 import ContainerSidebar from "@/components/containerSidebar";
-import { useTheme } from "@mui/material/styles";
 
 const width = "600px";
 const height = "500px";
@@ -35,9 +34,6 @@ function Settings() {
 }
 
 function SettingsMenu() {
-  const {
-    palette: { divider },
-  } = useTheme();
   const allSettings = [
     { index: 0, name: "Theme", component: <ThemeSettings /> },
     { index: 1, name: "Widgets", component: "Empty" },
@@ -47,7 +43,7 @@ function SettingsMenu() {
     <ContainerSidebar
       items={allSettings}
       mainProps={{ sx: { width, height } }}
-      tabsProps={{ sx: { width: w, borderRight: `2px solid ${divider}` } }}
+      tabsProps={{ sx: { width: w } }}
     />
   );
 }

@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material/styles";
+// Module '"@mui/material/styles"' has no exported member 'createTheme'.
 import {
   argbFromHex,
   themeFromSourceColor,
@@ -31,6 +32,7 @@ export const getTheme = ({
   return createTheme({
     palette: {
       mode,
+
       background: {
         default: hexFromArgb(crrPrimary.background),
         paper: hexFromArgb(crrPrimary.surface),
@@ -46,11 +48,6 @@ export const getTheme = ({
       text: {
         primary: hexFromArgb(crrPrimary.onBackground),
         secondary: hexFromArgb(crrPrimary.onSurface),
-      },
-      divider: hexFromArgb(crrPrimary.outline),
-      success: {
-        main: hexFromArgb(crrPrimary.primaryContainer),
-        contrastText: hexFromArgb(crrPrimary.onPrimaryContainer),
       },
     },
     components: {
