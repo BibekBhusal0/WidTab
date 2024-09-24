@@ -71,7 +71,7 @@ function DynamicLayout({ height }: { height: number }) {
         {widgets.map((w) => (
           <div className=" bg-red-200" key={w.gridProps.i}>
             {!locked && (
-              <div className="w-full bg-green-200 opacity-15 drag-handle h-5 absolute top-0 left-0"></div>
+              <div className="w-full bg-green-200 opacity-50 drag-handle h-5 absolute top-0 left-0"></div>
             )}
           </div>
         ))}

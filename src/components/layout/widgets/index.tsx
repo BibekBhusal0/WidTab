@@ -1,4 +1,4 @@
-// import { TransparentPaper } from "@/components/transparent";
+import { TransparentPaper } from "@/components/transparent";
 import { WidgetType } from "@/types/slice/widgets";
 import { forwardRef } from "react";
 
@@ -10,10 +10,12 @@ interface WidgetProps {
 const Widget = forwardRef<HTMLDivElement, WidgetProps>(
   ({ widget, locked = false }, ref) => {
     return (
-      <div className="bg-red-200 size-full" key={widget.gridProps.i} ref={ref}>
-        {!locked && (
-          <div className="w-full bg-green-200 opacity-15 drag-handle h-5 absolute top-0 left-0"></div>
-        )}
+      <div key={widget.gridProps.i} ref={ref} className="relative">
+        <TransparentPaper className="w-full h-full">
+          {!locked && (
+            <div className="w-full bg-green-200 opacity-50 drag-handle h-5 absolute top-0 left-0"></div>
+          )}
+        </TransparentPaper>
       </div>
     );
   }

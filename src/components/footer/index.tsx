@@ -1,3 +1,4 @@
+import Lock from "./lock";
 import Settings from "./settings";
 
 function Footer({ height }: { height: number }) {
@@ -5,7 +6,12 @@ function Footer({ height }: { height: number }) {
     <div
       style={{ height: `${height}%` }}
       className="size-full between border-t-2">
-      <Settings />
+      <div className="flex-center">
+        <Settings />
+      </div>
+      <div className="flex-center">
+        <Lock />
+      </div>
     </div>
   );
 }

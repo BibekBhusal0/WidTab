@@ -118,13 +118,13 @@ export const layoutSlice = createSlice({
     },
     currentSpaceAddWidget: (state, action: PayloadAction<WidgetType>) => {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
-      if (space) {
+      if (space && state.currentSpace.type === "dynamic") {
         space.widgets.push(action.payload);
       }
     },
     currentSpaceDeleteWidget(state, action: PayloadAction<string>) {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
-      if (space) {
+      if (space && state.currentSpace.type === "dynamic") {
         space.widgets = space.widgets.filter(
           (p) => p.values.id !== action.payload
         );
@@ -132,7 +132,7 @@ export const layoutSlice = createSlice({
     },
     currentSpaceSetGridProps(state, action: PayloadAction<Layout[]>) {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
-      if (space) {
+      if (space && state.currentSpace.type === "dynamic") {
         space.widgets = space.widgets.map((widget) => {
           const newWidget = action.payload.find(
             (w) => w.i === widget.gridProps.i
@@ -146,7 +146,7 @@ export const layoutSlice = createSlice({
     },
     currentStateDeleteState: (state) => {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
-      if (space) {
+      if (space && state.currentSpace.type === "dynamic") {
         if (space.delete_able) {
           state.allSpaces = state.allSpaces.filter((p) => p.id !== space.id);
         }
@@ -154,7 +154,7 @@ export const layoutSlice = createSlice({
     },
     currentSpaceToggleLocked: (state) => {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
-      if (space) {
+      if (space && state.currentSpace.type === "dynamic") {
         space.locked = !space.locked;
       }
     },
@@ -163,7 +163,7 @@ export const layoutSlice = createSlice({
       action: PayloadAction<"horizontal" | "vertical" | "none">
     ) => {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
-      if (space) {
+      if (space && state.currentSpace.type === "dynamic") {
         space.compaction = action.payload;
       }
     },
