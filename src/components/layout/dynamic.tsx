@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GridLayout, { Layout } from "react-grid-layout";
 import { currentSpaceSetGridProps } from "@/redux/slice/layout";
+import { Box } from "@mui/material";
 
 function DynamicLayout({ height }: { height: number }) {
   const { n_cols, n_rows } = useSelector((state: StateType) => state.layout);
@@ -69,11 +70,11 @@ function DynamicLayout({ height }: { height: number }) {
         //
       >
         {widgets.map((w) => (
-          <div className=" bg-red-200" key={w.gridProps.i}>
+          <Box sx={{ backgroundColor: "secondary.main" }} key={w.gridProps.i}>
             {!locked && (
               <div className="w-full bg-green-200 opacity-50 drag-handle h-5 absolute top-0 left-0"></div>
             )}
-          </div>
+          </Box>
         ))}
       </GridLayout>
     </div>

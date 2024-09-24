@@ -1,18 +1,22 @@
+import { Box } from "@mui/material";
 import Lock from "./lock";
 import Settings from "./settings";
 
 function Footer({ height }: { height: number }) {
   return (
-    <div
+    <Box
+      sx={{
+        borderTop: "1px solid",
+      }}
       style={{ height: `${height}%` }}
-      className="size-full between border-t-2">
+      className="size-full between ">
       <div className="flex-center">
         <Settings />
       </div>
       <div className="flex-center">
         <Lock />
       </div>
-    </div>
+    </Box>
   );
 }
 

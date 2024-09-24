@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import { alpha, createTheme } from "@mui/material/styles";
 // Module '"@mui/material/styles"' has no exported member 'createTheme'.
 import {
   argbFromHex,
@@ -14,6 +14,7 @@ export const getTheme = ({
   primaryColor,
   blur,
   roundness,
+  opacity,
 }: ThemeItemType) => {
   const primary = themeFromSourceColor(argbFromHex(primaryColor));
   const crrPrimary = primary.schemes[mode];
@@ -42,8 +43,8 @@ export const getTheme = ({
         contrastText: hexFromArgb(crrPrimary.onPrimary),
       },
       secondary: {
-        main: hexFromArgb(crrPrimary.secondary),
-        contrastText: hexFromArgb(crrPrimary.onSecondary),
+        main: alpha(hexFromArgb(crrPrimary.secondary), opacity),
+        contrastText: alpha(hexFromArgb(crrPrimary.onSecondary), opacity),
       },
       text: {
         primary: hexFromArgb(crrPrimary.onBackground),
