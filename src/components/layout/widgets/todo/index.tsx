@@ -21,9 +21,9 @@ import {
 export const transparentInput =
   "border-transparent w-full bg-transparent resize-none focus:outline-none";
 
-function TodoWidget({ id }: { id: string }) {
+function TodoWidget({ id }: { id: number }) {
   const dispatch = useDispatch();
-  const taskRefs = useRef<Map<string, HTMLTextAreaElement | null>>(new Map());
+  const taskRefs = useRef<Map<number, HTMLTextAreaElement | null>>(new Map());
   const titleRef = useRef<HTMLInputElement>(null);
   const { Tasks } = useSelector((state: StateType) => state.todo);
 
@@ -41,7 +41,7 @@ function TodoWidget({ id }: { id: string }) {
     ];
   }
 
-  const focusPrevious = (currentTodoId: string) => {
+  const focusPrevious = (currentTodoId: number) => {
     const currentIndex = dynamicTasks.findIndex(
       (task) => task.id === currentTodoId
     );
@@ -57,7 +57,7 @@ function TodoWidget({ id }: { id: string }) {
     }
     focusOn?.focus();
   };
-  const focusNext = (currentTodoId: string) => {
+  const focusNext = (currentTodoId: number) => {
     const currentIndex = dynamicTasks.findIndex(
       (task) => task.id === currentTodoId
     );
@@ -99,7 +99,7 @@ function TodoWidget({ id }: { id: string }) {
         title: e.target.value,
       })
     );
-  const handleReorder = (newOrder: string[]) => {
+  const handleReorder = (newOrder: number[]) => {
     const orderedTasks = newOrder
       .map((id) => dynamicTasks.find((task) => task.id === id))
       .filter((task): task is todoType => task !== undefined);

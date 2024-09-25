@@ -3,12 +3,12 @@ import { controlledWidgetsType, WidgetType } from "./widgets";
 export type CurrentSpaceType =
   | {
       type: "dynamic";
-      id: string;
+      id: number;
     }
   | { type: "static"; id: controlledWidgetsType };
 
 export type DynamicSpaceType = {
-  id: string;
+  id: number;
   compaction: "none" | "vertical" | "horizontal";
   locked: boolean;
   delete_able?: boolean;

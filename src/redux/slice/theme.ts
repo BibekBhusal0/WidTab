@@ -1,15 +1,14 @@
 import { ThemeItemType, ThemeSliceType } from "@/types/slice/theme";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from "uuid";
 
 const initialState: ThemeSliceType = {
-  currentThemeID: "0",
+  currentThemeID: 2,
   allThemes: [
     {
       name: "red",
       mode: "light",
-      id: "1",
+      id: 1,
       editAble: false,
       primaryColor: "#ff0000",
       blur: 1,
@@ -19,7 +18,7 @@ const initialState: ThemeSliceType = {
     {
       name: "green",
       mode: "dark",
-      id: "2",
+      id: 2,
       editAble: false,
       primaryColor: "#00ff00",
       blur: 0.5,
@@ -29,7 +28,7 @@ const initialState: ThemeSliceType = {
     {
       name: "blue",
       mode: "light",
-      id: "0",
+      id: 0,
       editAble: true,
       primaryColor: "#0000ff",
       blur: 0,
@@ -44,11 +43,11 @@ export const themeSlice = createSlice({
   initialState,
   reducers: {
     addTheme: (state, action: PayloadAction<ThemeItemType>) => {
-      const newID = uuidv4();
+      const newID = getNextId(state.allThemes.map(({ id }) => id));
       state.allThemes.push({ ...action.payload, id: newID });
       state.currentThemeID = newID;
     },
-    deleteTheme: (state, action: PayloadAction<string>) => {
+    deleteTheme: (state, action: PayloadAction<number>) => {
       const themeToDelete = state.allThemes.find(
         (p) => p.id === action.payload
       );
@@ -61,7 +60,7 @@ export const themeSlice = createSlice({
         }
       }
     },
-    switchTheme: (state, action: PayloadAction<string>) => {
+    switchTheme: (state, action: PayloadAction<number>) => {
       if (state.currentThemeID === action.payload) return;
       if (!state.allThemes.find((p) => p.id === action.payload)) return;
       console.log(state.allThemes.find((p) => p.id === action.payload));

@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import Box, { BoxProps } from "@mui/material/Box";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 import {
   styled,
   Tab,

@@ -22,12 +22,12 @@ export type AllSearchEngines =
   | "brave";
 
 export type CustomWidgetType = {
-  id: string;
+  id: number;
   url: string;
 };
 
 export type ClockWidgetType = {
-  id: string;
+  id: number;
   TwentyFourHour: boolean;
   ShowDay: boolean;
   ShowSeconds: boolean;
@@ -36,12 +36,12 @@ export type ClockWidgetType = {
 };
 
 export type SearchWidgetType = {
-  id: string;
+  id: number;
   engine: AllSearchEngines;
 };
 
 export type WidgetMappingDynamic =
-  | { type: controlledWidgetsType; values: { id: string } }
+  | { type: controlledWidgetsType; values: { id: number } }
   | { type: "custom"; values: CustomWidgetType }
   | { type: "clock"; values: ClockWidgetType }
   | { type: "search"; values: SearchWidgetType };

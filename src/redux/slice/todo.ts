@@ -1,15 +1,14 @@
 import { changeTaskType, TaskType, todoStateType } from "@/types/slice/todo";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from "uuid";
 
 const initialState: todoStateType = {
   Tasks: [
     {
       sorted: false,
       filtered: false,
-      id: uuidv4(),
+      id: 1,
       title: "All Tasks",
-      todos: [{ id: uuidv4(), task: "Task 1", checked: true }],
+      todos: [{ id: 1, task: "Task 1", checked: true }],
     },
   ],
 };
@@ -22,13 +21,13 @@ export const todoSlice = createSlice({
       state.Tasks.push({
         filtered: false,
         sorted: false,
-        id: uuidv4(),
+        id: getNextId(state.Tasks.map(({ id }) => id)),
         title: action.payload.title,
         todos: [],
       });
     },
     setTasks: (state, action: PayloadAction<TaskType[]>) => {
-      const existingTasksMap = new Map<string, TaskType>(
+      const existingTasksMap = new Map<number, TaskType>(
         state.Tasks.map((p) => [p.id, p])
       );
       action.payload.forEach((task) => {
@@ -38,23 +37,23 @@ export const todoSlice = createSlice({
     },
     addTodo: (
       state,
-      action: PayloadAction<{ task_id: string; task: string }>
+      action: PayloadAction<{ task_id: number; task: string }>
     ) => {
       const task = state.Tasks.find((p) => p.id === action.payload.task_id);
       if (task) {
         task.todos.push({
-          id: uuidv4(),
+          id: getNextId(task.todos.map(({ id }) => id)),
           task: action.payload.task,
           checked: false,
         });
       }
     },
-    deleteTask: (state, action: PayloadAction<string>) => {
+    deleteTask: (state, action: PayloadAction<number>) => {
       state.Tasks = state.Tasks.filter((p) => p.id !== action.payload);
     },
     deleteTodo: (
       state,
-      action: PayloadAction<{ task_id: string; todo_id: string }>
+      action: PayloadAction<{ task_id: number; todo_id: number }>
     ) => {
       const task = state.Tasks.find((p) => p.id === action.payload.task_id);
       if (task) {
@@ -82,8 +81,8 @@ export const todoSlice = createSlice({
     changeTodo(
       state,
       action: PayloadAction<{
-        task_id: string;
-        todo_id: string;
+        task_id: number;
+        todo_id: number;
         task: string;
       }>
     ) {
@@ -97,7 +96,7 @@ export const todoSlice = createSlice({
     },
     toggleTodo(
       state,
-      action: PayloadAction<{ task_id: string; todo_id: string }>
+      action: PayloadAction<{ task_id: number; todo_id: number }>
     ) {
       const task = state.Tasks.find((p) => p.id === action.payload.task_id);
       if (task) {
@@ -109,7 +108,7 @@ export const todoSlice = createSlice({
     },
     toggleSortedFiltered: (
       state,
-      action: PayloadAction<{ id: string; type: "sorted" | "filtered" }>
+      action: PayloadAction<{ id: number; type: "sorted" | "filtered" }>
     ) => {
       const task = state.Tasks.find((p) => p.id === action.payload.id);
       if (task) {

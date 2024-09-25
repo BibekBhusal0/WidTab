@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 export type AddItemProps = {
   word_limit?: number;
@@ -20,7 +20,6 @@ export type AddItemProps = {
   backButtonProps?: ButtonProps;
   showBackButton?: boolean;
 };
-
 
 function AddItem({
   word_limit = undefined,

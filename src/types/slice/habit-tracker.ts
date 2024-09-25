@@ -1,7 +1,7 @@
 // export type HabitTrackerHistoryType = {}
 
 export type HabitTrackerItemType = {
-  id: string;
+  id: number;
   title: string;
   target: number;
   increment: number;

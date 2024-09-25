@@ -5,13 +5,12 @@ import {
 } from "@/types/slice/layout";
 import { WidgetType } from "@/types/slice/widgets";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from "uuid";
 import { Layout } from "react-grid-layout";
 
 const getEmptySpace = (): DynamicSpaceType => {
   return {
     compaction: "none",
-    id: uuidv4(),
+    id: 0,
     locked: false,
     widgets: [],
     delete_able: true,
@@ -21,11 +20,11 @@ const getEmptySpace = (): DynamicSpaceType => {
 const initialState: LayoutSliceType = {
   n_rows: 8,
   n_cols: 12,
-  currentSpace: { type: "dynamic", id: "1" },
+  currentSpace: { type: "dynamic", id: 1 },
   allSpaces: [
     {
       ...getEmptySpace(),
-      id: "1",
+      id: 1,
       delete_able: false,
       widgets: [
         {
@@ -38,14 +37,14 @@ const initialState: LayoutSliceType = {
           },
           type: "custom",
           values: {
-            id: "0",
+            id: 0,
             url: "https://open.spotify.com/embed/playlist/1Q3d70G34mwRmhrKJ5KdZM?utm_source=generator",
           },
         },
         {
           type: "custom",
           values: {
-            id: "1",
+            id: 1,
             url: "https://indify.co/widgets/live/weather/6IrFOuag2Pz5NlkM9qFw",
           },
           gridProps: {
@@ -60,7 +59,7 @@ const initialState: LayoutSliceType = {
         {
           type: "custom",
           values: {
-            id: "2",
+            id: 2,
             url: "https://flipclock.app/",
           },
           gridProps: {
@@ -88,7 +87,7 @@ export const layoutSlice = createSlice({
       }
       state.currentSpace = action.payload;
     },
-    deleteSpace: (state, action: PayloadAction<string>) => {
+    deleteSpace: (state, action: PayloadAction<number>) => {
       const space = state.allSpaces.find((p) => p.id === action.payload);
       if (space?.delete_able) {
         state.allSpaces = state.allSpaces.filter(
@@ -97,7 +96,7 @@ export const layoutSlice = createSlice({
       }
     },
     addSpace: (state) => {
-      const newID = uuidv4();
+      const newID = getNextId(state.allSpaces.map(({ id }) => id));
       state.allSpaces.push({ ...getEmptySpace(), id: newID });
       state.currentSpace = { type: "dynamic", id: newID };
     },
@@ -107,7 +106,7 @@ export const layoutSlice = createSlice({
         space.widgets.push(action.payload);
       }
     },
-    currentSpaceDeleteWidget(state, action: PayloadAction<string>) {
+    currentSpaceDeleteWidget(state, action: PayloadAction<number>) {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
       if (space && state.currentSpace.type === "dynamic") {
         space.widgets = space.widgets.filter(

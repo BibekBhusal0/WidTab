@@ -1,11 +1,11 @@
 export interface todoType {
-  id: string;
+  id: number;
   task: string;
   checked: boolean;
 }
 
 export interface TaskType {
-  id: string;
+  id: number;
   sorted?: boolean;
   filtered?: boolean;
 
@@ -18,8 +18,8 @@ export interface todoStateType {
 }
 
 export type changeTaskType =
-  | { task_id: string; change_item: "todo"; todo: todoType[] }
-  | { task_id: string; change_item: "title"; title: string };
+  | { task_id: number; change_item: "todo"; todo: todoType[] }
+  | { task_id: number; change_item: "title"; title: string };
 
 export type sortableCheckboxProps = todoType & {
   handleChange: (val: string) => void;

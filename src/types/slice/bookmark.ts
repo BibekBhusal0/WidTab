@@ -1,5 +1,5 @@
 export type BookmarkWidgetType = {
-  id: string;
+  id: number;
   iconSize: "small" | "medium" | "large" | "fit";
   maxCols: number;
   showTabs: boolean;
