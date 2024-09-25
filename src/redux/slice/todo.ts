@@ -8,7 +8,17 @@ const initialState: todoStateType = {
       filtered: false,
       id: 1,
       title: "All Tasks",
-      todos: [{ id: 1, task: "Task 1", checked: true }],
+      todos: [
+        { id: 1, task: "Task 1", checked: true },
+        { id: 2, task: "Task 2", checked: false },
+      ],
+    },
+    {
+      sorted: false,
+      id: 2,
+      filtered: false,
+      title: "Today",
+      todos: [{ id: 3, task: "Task 3", checked: false }],
     },
   ],
 };

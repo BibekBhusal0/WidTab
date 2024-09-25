@@ -4,14 +4,13 @@ import { List, ListItemButton } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import AddTheme from "./addTheme";
 
-function AllThemeSettings() {
+function AllThemes() {
   const { allThemes, currentThemeID } = useSelector(
     (state: StateType) => state.theme
   );
   const dispatch = useDispatch();
   return (
-    <div className="w-full">
-      <div className="text-3xl">All Themes</div>
+    <>
       <List>
         {allThemes.map((p) => (
           <ListItemButton
@@ -25,7 +24,7 @@ function AllThemeSettings() {
         ))}
       </List>
       <AddTheme />
-    </div>
+    </>
   );
 }
-export default AllThemeSettings;
+export default AllThemes;

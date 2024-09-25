@@ -11,6 +11,28 @@
     @apply flex justify-between items-center;
   }
 }
+
+
+.scroll-container::-webkit-scrollbar {
+    width: 0; /* Hides the scrollbar */
+    background: transparent; /* Ensures the background is transparent */
+  }
+
+  .scroll-container {
+    -ms-overflow-style: none; /* Hides scrollbar in IE and Edge */
+    scrollbar-width: none; /* Hides scrollbar in Firefox */
+  }
+
+  /* Optional: Add custom scroll effects */
+  .scroll-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5); /* Custom color for scrollbar thumb */
+    border-radius: 10px; /* Rounded corners */
+  }
+
+  .scroll-container::-webkit-scrollbar-track {
+    background: transparent; /* Custom track color */
+  }
+
 .react-resizable-handle {
   width: 4px;
   height: 4px;

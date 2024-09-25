@@ -55,13 +55,11 @@ function TodoMenu({
         {items.map(({ name, icon, onClick }) => (
           <MenuItem className="flex-center gap-3" key={name} onClick={onClick}>
             <div>{icon}</div>
-
             <Box
               sx={{ color: name === "Sort" && sorted ? "primary.main" : "" }}
               className="text-xl">
               {name}
             </Box>
-            {/* <div className="text-xl">{name}</div> */}
           </MenuItem>
         ))}
       </Menu>

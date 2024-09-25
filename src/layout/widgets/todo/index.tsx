@@ -1,6 +1,4 @@
-import { StateType } from "@/redux/store";
-import { useSelector } from "react-redux";
-import { todoMenuProps, todoType } from "@/types/slice/todo";
+import { TaskType, todoMenuProps, todoType } from "@/types/slice/todo";
 import { useDispatch } from "react-redux";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import { AnimatePresence, Reorder } from "framer-motion";
@@ -21,15 +19,10 @@ import {
 export const transparentInput =
   "border-transparent w-full bg-transparent resize-none focus:outline-none";
 
-function TodoWidget({ id }: { id: number }) {
+function Todo({ id, title, todos, filtered, sorted }: TaskType) {
   const dispatch = useDispatch();
   const taskRefs = useRef<Map<number, HTMLTextAreaElement | null>>(new Map());
   const titleRef = useRef<HTMLInputElement>(null);
-  const { Tasks } = useSelector((state: StateType) => state.todo);
-
-  const task = Tasks.find((p) => p.id === id);
-  if (!task) return null;
-  const { title, todos, filtered, sorted } = task;
   var dynamicTasks = [...todos];
 
   if (filtered) {
@@ -88,7 +81,13 @@ function TodoWidget({ id }: { id: number }) {
       deleteThis();
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
-      focusNext(id);
+      const nextIndex = 0;
+
+      if (nextIndex < dynamicTasks.length) {
+        const nextTaskId = dynamicTasks[nextIndex].id;
+        const nextElement = taskRefs.current.get(nextTaskId);
+        nextElement?.focus();
+      }
     }
   };
   const titleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -141,7 +140,7 @@ function TodoWidget({ id }: { id: number }) {
           <TodoMenu {...TodoMenuProps} />
         </div>
       </div>
-      <div className="overflow-scroll scroll-container py-4 px-0.5 space-y-3 size-full">
+      <div className="overflow-auto scroll-container py-4 px-0.5 space-y-3 size-full">
         <Reorder.Group
           className="space-y-2"
           values={dynamicTasks.map((t) => t.id)}
@@ -181,4 +180,4 @@ function TodoWidget({ id }: { id: number }) {
   );
 }
 
-export default TodoWidget;
+export default Todo;

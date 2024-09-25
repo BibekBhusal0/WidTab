@@ -2,7 +2,7 @@ function HabitTrackerWidget({ id }: { id: string }) {
   return (
     <>
       <>
-        <></>
+        <>{id}</>
       </>
     </>
   );

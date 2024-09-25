@@ -63,7 +63,6 @@ export const themeSlice = createSlice({
     switchTheme: (state, action: PayloadAction<number>) => {
       if (state.currentThemeID === action.payload) return;
       if (!state.allThemes.find((p) => p.id === action.payload)) return;
-      console.log(state.allThemes.find((p) => p.id === action.payload));
       state.currentThemeID = action.payload;
     },
     changeTheme: (state, action: PayloadAction<ThemeItemType>) => {

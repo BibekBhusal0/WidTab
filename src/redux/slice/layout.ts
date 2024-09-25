@@ -1,14 +1,20 @@
 import {
+  compactionType,
   CurrentSpaceType,
   DynamicSpaceType,
   LayoutSliceType,
 } from "@/types/slice/layout";
-import { WidgetType } from "@/types/slice/widgets";
+import {
+  uncontrolledWidgets,
+  uncontrolledWidgetsType,
+  WidgetType,
+} from "@/types/slice/widgets";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Layout } from "react-grid-layout";
 
 const getEmptySpace = (): DynamicSpaceType => {
   return {
+    name: "name",
     compaction: "none",
     id: 0,
     locked: false,
@@ -95,15 +101,32 @@ export const layoutSlice = createSlice({
         );
       }
     },
-    addSpace: (state) => {
+    addSpace: (state, action: PayloadAction<string>) => {
       const newID = getNextId(state.allSpaces.map(({ id }) => id));
-      state.allSpaces.push({ ...getEmptySpace(), id: newID });
+      state.allSpaces.push({
+        ...getEmptySpace(),
+        id: newID,
+        name: action.payload,
+      });
       state.currentSpace = { type: "dynamic", id: newID };
     },
     currentSpaceAddWidget: (state, action: PayloadAction<WidgetType>) => {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
+
       if (space && state.currentSpace.type === "dynamic") {
-        space.widgets.push(action.payload);
+        if (
+          uncontrolledWidgets.includes(
+            action.payload.type as uncontrolledWidgetsType
+          )
+        ) {
+          const id = getNextId(space.widgets.map(({ values: { id } }) => id));
+          const values = action.payload.values;
+          values.id = id;
+          const newWidget = action.payload;
+          newWidget.gridProps.i = `${action.payload.type}-${id}`;
+          newWidget.values.id = id;
+          space.widgets.push(newWidget);
+        } else space.widgets.push(action.payload);
       }
     },
     currentSpaceDeleteWidget(state, action: PayloadAction<number>) {
@@ -128,7 +151,7 @@ export const layoutSlice = createSlice({
         });
       }
     },
-    currentStateDeleteState: (state) => {
+    currentSpaceDeleteSpace: (state) => {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
       if (space && state.currentSpace.type === "dynamic") {
         if (space.delete_able) {
@@ -144,11 +167,19 @@ export const layoutSlice = createSlice({
     },
     currentSpaceChangeCompaction: (
       state,
-      action: PayloadAction<"horizontal" | "vertical" | "none">
+      action: PayloadAction<compactionType>
     ) => {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
       if (space && state.currentSpace.type === "dynamic") {
         space.compaction = action.payload;
+      }
+    },
+    currentSpaceDuplicate: (state) => {
+      const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
+      if (space && state.currentSpace.type === "dynamic") {
+        const newID = getNextId(state.allSpaces.map(({ id }) => id));
+        state.allSpaces.push({ ...space, id: newID });
+        state.currentSpace = { type: "dynamic", id: newID };
       }
     },
   },
@@ -161,9 +192,10 @@ export const {
   currentSpaceAddWidget,
   currentSpaceDeleteWidget,
   currentSpaceSetGridProps,
-  currentStateDeleteState,
+  currentSpaceDeleteSpace,
   currentSpaceToggleLocked,
   currentSpaceChangeCompaction,
+  currentSpaceDuplicate,
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

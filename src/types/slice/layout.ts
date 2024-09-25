@@ -7,9 +7,11 @@ export type CurrentSpaceType =
     }
   | { type: "static"; id: controlledWidgetsType };
 
+export type compactionType = "none" | "vertical" | "horizontal";
 export type DynamicSpaceType = {
   id: number;
-  compaction: "none" | "vertical" | "horizontal";
+  name: string;
+  compaction: compactionType;
   locked: boolean;
   delete_able?: boolean;
   widgets: WidgetType[];

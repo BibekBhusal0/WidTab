@@ -1,7 +1,6 @@
 import useCurrentTheme from "@/hooks/useCurrentTheme";
 import { useDispatch } from "react-redux";
 import { addTheme } from "@/redux/slice/theme";
-import { v4 as uuidv4 } from "uuid";
 import AddItem from "@/components/addItem";
 
 function AddTheme() {
@@ -13,7 +12,7 @@ function AddTheme() {
       addTheme({
         ...crrTheme,
         name: text,
-        id: uuidv4(),
+        id: 0,
         editAble: true,
       })
     );

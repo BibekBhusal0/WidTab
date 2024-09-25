@@ -1,5 +1,5 @@
 import Footer from "./components/footer";
-import Main from "./components/main";
+import Main from "./layout";
 import CustomThemeProvider from "./theme";
 
 function App() {

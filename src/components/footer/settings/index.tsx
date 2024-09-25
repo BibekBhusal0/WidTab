@@ -3,9 +3,7 @@ import { IconButton, Popover } from "@mui/material";
 import { useState } from "react";
 import ThemeSettings from "./theme";
 import ContainerSidebar from "@/components/containerSidebar";
-
-const width = "600px";
-const height = "500px";
+import SpaceSettings from "./spaces";
 
 function Settings() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -36,14 +34,14 @@ function Settings() {
 function SettingsMenu() {
   const allSettings = [
     { index: 0, name: "Theme", component: <ThemeSettings /> },
-    { index: 1, name: "Widgets", component: "Empty" },
+    { index: 1, name: "Spaces", component: <SpaceSettings /> },
   ];
-  const w = "150px";
+
   return (
     <ContainerSidebar
       items={allSettings}
-      mainProps={{ sx: { width, height } }}
-      tabsProps={{ sx: { width: w } }}
+      mainProps={{ sx: { width: "600px", height: "500px" } }}
+      tabsProps={{ sx: { width: "150px" } }}
     />
   );
 }

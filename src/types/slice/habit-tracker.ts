@@ -5,9 +5,11 @@ export type HabitTrackerItemType = {
   title: string;
   target: number;
   increment: number;
+  value: number;
+
   //  history : HabitTrackerHistoryType
 };
 
 export type HabitTrackerSliceType = {
-  Trackers: HabitTrackerItemType[];
+  trackers: HabitTrackerItemType[];
 };
