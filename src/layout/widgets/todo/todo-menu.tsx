@@ -7,7 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { Box } from "@mui/material";
+import { Box, ListItemIcon } from "@mui/material";
 import { todoMenuProps } from "@/types/slice/todo";
 
 function TodoMenu({
@@ -32,7 +32,7 @@ function TodoMenu({
       onClick: handleSort,
     },
     {
-      name: `${filtered ? "Show" : "Hide"} Checked`,
+      name: `${filtered ? "Show" : "Hide"} Done`,
       icon: filtered ? <VisibilityIcon /> : <VisibilityOffIcon />,
       onClick: handleFilter,
     },
@@ -54,7 +54,7 @@ function TodoMenu({
         onClose={handleClose}>
         {items.map(({ name, icon, onClick }) => (
           <MenuItem className="flex-center gap-3" key={name} onClick={onClick}>
-            <div>{icon}</div>
+            <ListItemIcon>{icon}</ListItemIcon>
             <Box
               sx={{ color: name === "Sort" && sorted ? "primary.main" : "" }}
               className="text-xl">

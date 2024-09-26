@@ -1,12 +1,14 @@
+import SettingHeader from "../settings-header";
 import AllSpaces from "./allSpaces";
 import CurrentSpaceSetting from "./currentSpace";
 
 function SpaceSettings() {
   return (
-    <div className="size-full">
-      <CurrentSpaceSetting />
+    <>
+      <SettingHeader first>Spaces</SettingHeader>
       <AllSpaces />
-    </div>
+      <CurrentSpaceSetting />
+    </>
   );
 }
 

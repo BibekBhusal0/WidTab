@@ -79,7 +79,8 @@ function AddItem({
             color="error"
             startIcon={<ArrowBackIcon />}
             children="Back"
-            {...backButtonProps}></Button>
+            {...backButtonProps}
+          />
         )}
       </div>
     </Box>

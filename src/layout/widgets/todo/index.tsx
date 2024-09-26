@@ -15,6 +15,7 @@ import {
   toggleTodo,
   toggleSortedFiltered,
 } from "@/redux/slice/todo";
+import WidgetControls from "@/components/widgetControl";
 
 export const transparentInput =
   "border-transparent w-full bg-transparent resize-none focus:outline-none";
@@ -133,12 +134,12 @@ function Todo({ id, title, todos, filtered, sorted }: TaskType) {
           value={title}
           onChange={titleChangeHandler}
         />
-        <div className="flex gap-3">
+        <WidgetControls className="flex relative gap-3 p-1">
           <IconButton onClick={addTodoItem}>
             <AddCircleOutlineRoundedIcon />
           </IconButton>
           <TodoMenu {...TodoMenuProps} />
-        </div>
+        </WidgetControls>
       </div>
       <div className="overflow-auto scroll-container py-4 px-0.5 space-y-3 size-full">
         <Reorder.Group

@@ -19,9 +19,7 @@ function Footer({ height }: { height: number }) {
         <Settings />
         {l && <AddWidget />}
       </div>
-      <div className="flex-center">
-        <Lock />
-      </div>
+      <div className="flex-center">{l && <Lock />}</div>
     </Box>
   );
 }

@@ -4,15 +4,18 @@ import { Box, IconButton } from "@mui/material";
 import { useDispatch } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
+import WidgetControls from "@/components/widgetControl";
+import useCurrentRoundness from "@/hooks/useCurrentRoundness";
 
 function CustomWidget({ url, id }: CustomWidgetType) {
   const layout = useCurrentLayout();
+  const borderRadius = useCurrentRoundness();
   const showControls = !layout?.locked;
 
   return (
-    <Box className="size-full relative">
+    <Box className="size-full relative overflow-hidden">
       {showControls && <CustomWidgetControls id={id} />}
-      <iframe src={url} className="size-full" />
+      <iframe style={{ borderRadius }} src={url} className="size-full" />
     </Box>
   );
 }
@@ -20,11 +23,13 @@ function CustomWidget({ url, id }: CustomWidgetType) {
 function CustomWidgetControls({ id }: { id: number }) {
   const dispatch = useDispatch();
   return (
-    <Box className="absolute right-0 top-0 p-3">
-      <IconButton onClick={() => dispatch(currentSpaceDeleteWidget(id))}>
+    <WidgetControls>
+      <IconButton
+        color="error"
+        onClick={() => dispatch(currentSpaceDeleteWidget(id))}>
         <DeleteIcon />
       </IconButton>
-    </Box>
+    </WidgetControls>
   );
 }
 

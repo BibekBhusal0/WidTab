@@ -5,6 +5,7 @@ import { findNextAvailablePosition } from "@/utils/findWidgetPosition";
 import { Box, Button, Slider, TextField } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import AddIcon from "@mui/icons-material/Add";
 
 export const urlPattern = /(https?:\/\/[^\s]+|www\.[^\s]+)/;
 
@@ -47,34 +48,47 @@ function AddCustomWidget() {
     }
   };
   return (
-    <Box className="size-full">
+    <Box className="size-full flex flex-col gap-3">
       <TextField
+        error={extractedUrl === "" && text.trim() !== ""}
+        helperText={
+          extractedUrl === "" && text.trim() !== "" && "Enter valid URL"
+        }
         autoFocus
         onChange={handleTextChange}
         value={text}
         label="Widget URL"
       />
-      <Box className="flex justify-start gap-3 w-full">
-        <Box className="text-xl">X:</Box>
-        <Slider
-          value={cols}
-          onChange={(_, value) => setCols(value as number)}
-          min={1}
-          max={n_cols}
-        />
-      </Box>
-      <Box className="flex justify-start gap-3 w-full">
-        <Box className="text-xl">Y :</Box>
-        <Slider
-          value={rows}
-          onChange={(_, value) => setRows(value as number)}
-          min={1}
-          max={n_cols}
-        />
-      </Box>
+      <div className="flex items-center px-3 gap-2 flex-col">
+        <Box className="flex justify-start gap-5 w-full">
+          <Box className="text-xl">X:</Box>
+          <Slider
+            value={cols}
+            onChange={(_, value) => setCols(value as number)}
+            min={1}
+            max={n_cols}
+          />
+        </Box>
+        <Box className="flex justify-start gap-5 w-full">
+          <Box className="text-xl">Y:</Box>
+          <Slider
+            value={rows}
+            onChange={(_, value) => setRows(value as number)}
+            min={1}
+            max={n_cols}
+          />
+        </Box>
+      </div>
+
       <Button
         disabled={extractedUrl === "" || available_widgets === null}
-        onClick={add}>
+        onClick={add}
+        variant="contained"
+        className="mx-5"
+        startIcon={<AddIcon />}
+
+        //
+      >
         Add
       </Button>
     </Box>

@@ -48,7 +48,7 @@ function AddWidgetMenu() {
     <ContainerSidebar
       items={addItems}
       mainProps={{ sx: { width: "400px", height: "300px" } }}
-      tabsProps={{ sx: { width: "70px" } }}
+      tabsProps={{ sx: { width: "150px" } }}
     />
   );
 }

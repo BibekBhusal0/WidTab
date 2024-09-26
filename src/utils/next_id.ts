@@ -1,4 +1,4 @@
-const getNextId = (existingIds: number[]): number => {
+export const getNextId = (existingIds: number[]): number => {
   if (existingIds.length === 0) {
     return 1;
   }

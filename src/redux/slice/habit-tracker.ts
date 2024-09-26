@@ -2,6 +2,7 @@ import {
   HabitTrackerItemType,
   HabitTrackerSliceType,
 } from "@/types/slice/habit-tracker";
+import { getNextId } from "@/utils/next_id";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: HabitTrackerSliceType = {

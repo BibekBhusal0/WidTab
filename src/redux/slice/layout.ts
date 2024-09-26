@@ -9,6 +9,7 @@ import {
   uncontrolledWidgetsType,
   WidgetType,
 } from "@/types/slice/widgets";
+import { getNextId } from "@/utils/next_id";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Layout } from "react-grid-layout";
 
@@ -37,7 +38,7 @@ const initialState: LayoutSliceType = {
           gridProps: {
             x: 0,
             y: 0,
-            w: 3,
+            w: 4,
             h: 5,
             i: "0",
           },
@@ -55,10 +56,10 @@ const initialState: LayoutSliceType = {
           },
           gridProps: {
             isResizable: true,
-            x: 3,
+            x: 4,
             y: 0,
-            w: 6,
-            h: 2,
+            w: 4,
+            h: 3,
             i: "1",
           },
         },
@@ -71,7 +72,7 @@ const initialState: LayoutSliceType = {
           gridProps: {
             x: 0,
             y: 5,
-            w: 3,
+            w: 4,
             h: 3,
             i: "2",
           },

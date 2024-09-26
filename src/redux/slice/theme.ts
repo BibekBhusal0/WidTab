@@ -1,6 +1,7 @@
 import { ThemeItemType, ThemeSliceType } from "@/types/slice/theme";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { getNextId } from "@/utils/next_id";
 
 const initialState: ThemeSliceType = {
   currentThemeID: 2,

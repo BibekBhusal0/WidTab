@@ -1,5 +1,4 @@
 import { alpha, createTheme } from "@mui/material/styles";
-// Module '"@mui/material/styles"' has no exported member 'createTheme'.
 import {
   argbFromHex,
   themeFromSourceColor,
@@ -8,6 +7,8 @@ import {
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ThemeItemType } from "./types/slice/theme";
 import useCurrentTheme from "./hooks/useCurrentTheme";
+
+export const getBorderRadius = (roundness: number) => `${roundness * 30}px`;
 
 export const getTheme = ({
   mode,
@@ -36,20 +37,33 @@ export const getTheme = ({
 
       background: {
         default: hexFromArgb(crrPrimary.background),
-        paper: hexFromArgb(crrPrimary.surface),
+        paper: alpha(hexFromArgb(crrPrimary.surface), opacity),
       },
       primary: {
         main: hexFromArgb(crrPrimary.primary),
         contrastText: hexFromArgb(crrPrimary.onPrimary),
       },
       secondary: {
-        main: alpha(hexFromArgb(crrPrimary.secondary), opacity),
-        contrastText: alpha(hexFromArgb(crrPrimary.onSecondary), opacity),
+        main: hexFromArgb(crrPrimary.secondary),
+        contrastText: hexFromArgb(crrPrimary.onSecondary),
       },
       text: {
         primary: hexFromArgb(crrPrimary.onBackground),
         secondary: hexFromArgb(crrPrimary.onSurface),
       },
+      primaryContainer: {
+        main: hexFromArgb(crrPrimary.primaryContainer),
+      },
+      transparentPrimary: {
+        main: alpha(hexFromArgb(crrPrimary.primary), opacity),
+        contrastText: hexFromArgb(crrPrimary.onPrimary),
+        dark: alpha(hexFromArgb(crrPrimary.primary), opacity - 0.1),
+        light: alpha(hexFromArgb(crrPrimary.primary), opacity + 0.1),
+      },
+      transparentPrimaryContainer: {
+        main: alpha(hexFromArgb(crrPrimary.primaryContainer), opacity),
+      },
+      action: { selectedOpacity: opacity / 1.5 },
     },
     components: {
       MuiPaper: { ...rounded },

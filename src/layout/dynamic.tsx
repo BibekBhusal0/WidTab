@@ -4,8 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GridLayout, { Layout } from "react-grid-layout";
 import { currentSpaceSetGridProps } from "@/redux/slice/layout";
-import { Box } from "@mui/material";
+import { Paper } from "@mui/material";
 import Widget from "./widgets";
+import DragHandle from "@/components/dragHandle";
 
 function DynamicLayout({ height }: { height: number }) {
   const { n_cols, n_rows } = useSelector((state: StateType) => state.layout);
@@ -67,20 +68,16 @@ function DynamicLayout({ height }: { height: number }) {
         onLayoutChange={handleChange}
         draggableHandle=".drag-handle"
         preventCollision
-        resizeHandles={["ne", "e", "n", "s", "w", "nw", "sw", "se"]}
+        resizeHandles={["e", "n", "s", "w"]}
         //
       >
         {widgets.map((w) => (
-          <Box sx={{ backgroundColor: "secondary.main" }} key={w.gridProps.i}>
-            {!locked && (
-              <Box
-                sx={{ backgroundColor: "primary.main" }}
-                className="w-full opacity-50 drag-handle h-[9%] absolute top-0 left-0 z-20"></Box>
-            )}
+          <Paper sx={{ backgroundColor: "secondary.main" }} key={w.gridProps.i}>
+            {!locked && <DragHandle />}
             <div className="size-full z-10">
               <Widget widget={w} />
             </div>
-          </Box>
+          </Paper>
         ))}
       </GridLayout>
     </div>
