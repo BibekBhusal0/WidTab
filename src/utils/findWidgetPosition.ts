@@ -37,8 +37,8 @@ export function fits(
 
 export function findNextAvailablePosition(
   widgets: WidgetType[],
-  maxCols: number,
-  maxRows: number,
+  maxCols: number = 12,
+  maxRows: number = 8,
   w: number = 1,
   h: number = 1
 ) {
