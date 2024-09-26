@@ -1,49 +1,55 @@
-Folder Structure
+## Folder Structure
 
-```tree-structure
-src
-├── components
-│   ├── addItem.tsx
-│   ├── containerSidebar.tsx
-│   ├── footer
-│   │   ├── index.tsx
-│   │   ├── lock.tsx
-│   │   └── settings
-│   │       ├── index.tsx
-│   │       └── theme
-│   │           ├── index.tsx
-│   │           ├── allThemes.tsx
-│   │           ├── currentTheme.tsx
-│   │           ├── addTheme.tsx
-│   │           └── renameTheme.tsx
-│   ├── layout
-│   │   ├── dynamic.tsx
-│   │   └── widgets
-│   │       └── todo
-│   │           ├── checkbox.tsx
-│   │           ├── index.tsx
-│   │           └── todo-menu.tsx
-│   ├── main.tsx
-│   └── main
-│
-├── hooks
-│   ├── useCurrentLayout.tsx
-│   └── useCurrentTheme.tsx
-├── lib
-│   └── utils.ts
-├── redux
-│   ├── slice
-│   │   ├── layout.ts
-│   │   ├── theme.ts
-│   │   └── todo.ts
-│   └── store.ts
-├── types
-│   ├── slice
-│   │   ├── index.ts
-│   │   ├── layout.ts
-│   │   ├── theme.d.ts
-│   │   └── todo.ts
-│   └── slice
-│       └── widgets.ts
-└── App.tsx
+```
+src/
+├──  components/
+│   ├──  addItem.tsx
+│   ├──  containerSidebar.tsx
+│   ├──  footer/
+│   │   ├──  addWidget/
+│   │   │   ├──  index.tsx
+│   │   │   ├──  todo.tsx
+│   │   ├──  index.tsx
+│   │   ├──  lock.tsx
+│   │   ├──  settings/
+│   │   │   ├──  index.tsx
+│   │   │   ├──  spaces/
+│   │   │   │   ├──  allSpaces.tsx
+│   │   │   │   ├──  allStaticSpaces.tsx
+│   │   │   │   ├──  changeCompaction.tsx
+│   │   │   │   ├──  currentSpace.tsx
+│   │   │   │   ├──  deleteSpace.tsx
+│   │   │   │   ├──  duplicateSpace.tsx
+│   │   │   ├──  theme/
+│   │   │   │   ├──  addTheme.tsx
+│   │   │   │   ├──  allThemes.tsx
+│   │   │   │   ├──  currentTheme.tsx
+│   │   │   │   ├──  renameTheme.tsx
+├──  layout/
+│   ├──  dynamic.tsx
+│   ├──  index.tsx
+│   ├──  pages/
+│   │   ├──  todo.tsx
+│   ├──  static.tsx
+│   ├──  widgets/
+│   │   ├──  todo/
+│   │   │   ├──  index.tsx
+├──  redux/
+│   ├──  slice/
+│   │   ├──  layout.ts
+│   │   ├──  theme.ts
+│   │   ├──  todo.ts
+├──  types/
+│   ├──  slice/
+│   │   ├──  bookmark.ts
+│   │   ├──  index.ts
+│   │   ├──  theme.ts
+│   │   ├──  todo.ts
+│   │   ├──  widgets.ts
+├──  utils/
+│   ├──  cn.ts
+│   ├──  next_id.ts
+├──  hooks/
+│   ├──  useCurrentLayout.ts
+│   ├──  useCurrentTheme.ts
 ```
