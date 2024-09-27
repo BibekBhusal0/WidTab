@@ -44,7 +44,7 @@ function SortableCheckbox({
       transition={{ ease: "easeInOut" }}
       dragControls={controls}
       dragListener={false}
-      className="flex align-center group items-start justify-center gap-2 "
+      className="flex align-center group items-start justify-center gap-2"
       //
     >
       <div className="w-8 h-full">

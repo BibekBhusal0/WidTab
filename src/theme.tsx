@@ -39,6 +39,7 @@ export const getTheme = ({
         default: hexFromArgb(crrPrimary.background),
         paper: alpha(hexFromArgb(crrPrimary.surface), opacity),
       },
+      surfaceVariant: { main: hexFromArgb(crrPrimary.surfaceVariant) },
       primary: {
         main: hexFromArgb(crrPrimary.primary),
         contrastText: hexFromArgb(crrPrimary.onPrimary),
@@ -51,19 +52,37 @@ export const getTheme = ({
         primary: hexFromArgb(crrPrimary.onBackground),
         secondary: hexFromArgb(crrPrimary.onSurface),
       },
-      primaryContainer: {
-        main: hexFromArgb(crrPrimary.primaryContainer),
-      },
+      error: { main: hexFromArgb(crrPrimary.error) },
+
       transparentPrimary: {
         main: alpha(hexFromArgb(crrPrimary.primary), opacity),
         contrastText: hexFromArgb(crrPrimary.onPrimary),
         dark: alpha(hexFromArgb(crrPrimary.primary), opacity - 0.1),
         light: alpha(hexFromArgb(crrPrimary.primary), opacity + 0.1),
       },
+
+      primaryContainer: {
+        main: hexFromArgb(crrPrimary.primaryContainer),
+      },
+
       transparentPrimaryContainer: {
         main: alpha(hexFromArgb(crrPrimary.primaryContainer), opacity),
       },
+      transparentSecondaryContainer: {
+        main: alpha(hexFromArgb(crrPrimary.secondaryContainer), opacity),
+      },
+      tertiaryContainer: {
+        main: hexFromArgb(crrPrimary.tertiaryContainer),
+      },
+      transparentTertiaryContainer: {
+        main: alpha(hexFromArgb(crrPrimary.tertiaryContainer), opacity),
+      },
+
+      secondaryContainer: {
+        main: hexFromArgb(crrPrimary.secondaryContainer),
+      },
       action: { selectedOpacity: opacity / 1.5 },
+      divider: hexFromArgb(crrPrimary.outline),
     },
     components: {
       MuiPaper: { ...rounded },

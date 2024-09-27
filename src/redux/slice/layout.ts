@@ -5,6 +5,7 @@ import {
   LayoutSliceType,
 } from "@/types/slice/layout";
 import {
+  allWidgetsType,
   uncontrolledWidgets,
   uncontrolledWidgetsType,
   WidgetType,
@@ -130,14 +131,22 @@ export const layoutSlice = createSlice({
         } else space.widgets.push(action.payload);
       }
     },
-    currentSpaceDeleteWidget(state, action: PayloadAction<number>) {
+    currentSpaceDeleteWidget(
+      state,
+      action: PayloadAction<{ type: allWidgetsType; id: number }>
+    ) {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
       if (space && state.currentSpace.type === "dynamic") {
         space.widgets = space.widgets.filter(
-          (p) => p.values.id !== action.payload
+          (p) =>
+            !(
+              p.values.id === action.payload.id &&
+              p.type === action.payload.type
+            )
         );
       }
     },
+
     currentSpaceSetGridProps(state, action: PayloadAction<Layout[]>) {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
       if (space && state.currentSpace.type === "dynamic") {

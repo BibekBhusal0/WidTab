@@ -28,15 +28,22 @@ function TodoMenu({
   const items = [
     {
       name: "Sort",
-      icon: <SwapVertIcon color={sorted ? "primary" : "action"} />,
+      Icon: SwapVertIcon,
       onClick: handleSort,
+      color: sorted ? "primary.main" : "action.main",
     },
     {
       name: `${filtered ? "Show" : "Hide"} Done`,
-      icon: filtered ? <VisibilityIcon /> : <VisibilityOffIcon />,
+      Icon: filtered ? VisibilityIcon : VisibilityOffIcon,
       onClick: handleFilter,
+      color: "action.main",
     },
-    { name: "Delete", icon: <DeleteIcon />, onClick: handleDelete },
+    {
+      name: "Delete",
+      Icon: DeleteIcon,
+      onClick: handleDelete,
+      color: "error.main",
+    },
   ];
 
   return (
@@ -52,12 +59,16 @@ function TodoMenu({
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}>
-        {items.map(({ name, icon, onClick }) => (
-          <MenuItem className="flex-center gap-3" key={name} onClick={onClick}>
-            <ListItemIcon>{icon}</ListItemIcon>
-            <Box
-              sx={{ color: name === "Sort" && sorted ? "primary.main" : "" }}
-              className="text-xl">
+        {items.map(({ name, Icon, onClick, color }) => (
+          <MenuItem
+            sx={{ color: color }}
+            className="flex-center gap-3"
+            key={name}
+            onClick={onClick}>
+            <ListItemIcon>
+              <Icon sx={{ color: color }} />
+            </ListItemIcon>
+            <Box sx={{ color: color }} className="text-xl">
               {name}
             </Box>
           </MenuItem>

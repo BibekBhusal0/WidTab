@@ -7,10 +7,10 @@ function TodoPage() {
   const { Tasks } = useSelector((state: StateType) => state.todo);
 
   return (
-    <div className="grid gap-3 grid-cols-1 p-3 overflow-auto sm:grid-cols-2 md:grid-cols-3 h-80">
+    <div className="grid gap-3 grid-cols-1 p-3 overflow-auto sm:grid-cols-2 md:grid-cols-3">
       {Tasks.map((task) => (
-        <Paper>
-          <Todo key={task.id} {...task} />
+        <Paper key={task.id} className="h-80 overflow-hidden">
+          <Todo {...task} />
         </Paper>
       ))}
     </div>

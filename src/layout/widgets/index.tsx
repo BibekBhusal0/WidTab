@@ -1,8 +1,10 @@
 import {
   allWidgetsType,
-  WidgetMappingDynamic,
-  WidgetPropsMappingDynamic,
+  controlledWidgets,
+  controlledWidgetsType,
+  AllWidgetPropsMapping,
   WidgetType,
+  WidgetMappingAll,
 } from "@/types/slice/widgets";
 import CustomWidget from "./custom";
 import TodoWidget from "./todo/widget";
@@ -11,13 +13,13 @@ import ClockWidget from "./clock";
 import HabitTrackerWidget from "./habit-tracker";
 import SearchWidget from "./search";
 import { FunctionComponent } from "react";
+import { useDispatch } from "react-redux";
+import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
 
 export const done: allWidgetsType[] = ["custom", "todo"];
 
 export const widgetElementMapping: {
-  [K in WidgetMappingDynamic["type"]]: FunctionComponent<
-    WidgetPropsMappingDynamic<K>
-  >;
+  [K in WidgetMappingAll["type"]]: FunctionComponent<AllWidgetPropsMapping<K>>;
 } = {
   custom: CustomWidget,
   todo: TodoWidget,
@@ -28,10 +30,21 @@ export const widgetElementMapping: {
 };
 
 function Widget({ widget }: { widget: WidgetType }) {
+  const dispatch = useDispatch();
   if (!done.includes(widget.type)) return null;
   const Element = widgetElementMapping[widget.type] as FunctionComponent<
-    WidgetPropsMappingDynamic<typeof widget.type>
+    AllWidgetPropsMapping<allWidgetsType>
   >;
+  if (controlledWidgets.includes(widget.type as controlledWidgetsType)) {
+    return (
+      <Element
+        {...widget.values}
+        deleteAction={(id) => {
+          dispatch(currentSpaceDeleteWidget({ type: widget.type, id }));
+        }}
+      />
+    );
+  }
 
   return <Element {...widget.values} />;
 }

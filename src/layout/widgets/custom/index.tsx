@@ -26,7 +26,9 @@ function CustomWidgetControls({ id }: { id: number }) {
     <WidgetControls>
       <IconButton
         color="error"
-        onClick={() => dispatch(currentSpaceDeleteWidget(id))}>
+        onClick={() =>
+          dispatch(currentSpaceDeleteWidget({ type: "custom", id }))
+        }>
         <DeleteIcon />
       </IconButton>
     </WidgetControls>

@@ -11,7 +11,7 @@ export type uncontrolledWidgetsType = (typeof UW)[number];
 export type allWidgetsType = controlledWidgetsType | uncontrolledWidgetsType;
 
 export const allWidgets: allWidgetsType[] = [...CW, ...UW];
-export const customWidgets: controlledWidgetsType[] = [...CW];
+export const controlledWidgets: controlledWidgetsType[] = [...CW];
 export const uncontrolledWidgets: uncontrolledWidgetsType[] = [...UW];
 
 export type AllSearchEngines =
@@ -40,14 +40,26 @@ export type SearchWidgetType = {
   engine: AllSearchEngines;
 };
 
+export type controlledWidgetValues = {
+  id: number;
+  deleteAction?: (id: number) => void;
+};
+
+export type WidgetMappingStatic = {
+  type: controlledWidgetsType;
+  values: controlledWidgetValues;
+};
 export type WidgetMappingDynamic =
-  | { type: controlledWidgetsType; values: { id: number } }
   | { type: "custom"; values: CustomWidgetType }
   | { type: "clock"; values: ClockWidgetType }
   | { type: "search"; values: SearchWidgetType };
 
-export type WidgetPropsMappingDynamic<T extends WidgetMappingDynamic["type"]> =
-  Extract<WidgetMappingDynamic, { type: T }>["values"];
+export type WidgetMappingAll = WidgetMappingStatic | WidgetMappingDynamic;
+
+export type AllWidgetPropsMapping<T extends allWidgetsType> = Extract<
+  WidgetMappingAll,
+  { type: T }
+>["values"];
 
 export type WidgetTypeMapping =
   | { type: "todo"; values: TaskType }
@@ -59,4 +71,4 @@ export type WidgetTypeMapping =
 
 export type WidgetType = {
   gridProps: Layout;
-} & WidgetMappingDynamic;
+} & WidgetMappingAll;

@@ -19,8 +19,9 @@ import WidgetControls from "@/components/widgetControl";
 
 export const transparentInput =
   "border-transparent w-full bg-transparent resize-none focus:outline-none";
+type TodoProps = TaskType & { deleteAction?: (id: number) => void };
 
-function Todo({ id, title, todos, filtered, sorted }: TaskType) {
+function Todo({ id, title, todos, filtered, sorted, deleteAction }: TodoProps) {
   const dispatch = useDispatch();
   const taskRefs = useRef<Map<number, HTMLTextAreaElement | null>>(new Map());
   const titleRef = useRef<HTMLInputElement>(null);
@@ -79,7 +80,9 @@ function Todo({ id, title, todos, filtered, sorted }: TaskType) {
       todos.length === 0
     ) {
       e.preventDefault();
-      deleteThis();
+      if (deleteAction === undefined) {
+        deleteThis();
+      }
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
       const nextIndex = 0;
@@ -112,10 +115,12 @@ function Todo({ id, title, todos, filtered, sorted }: TaskType) {
       })
     );
   };
+
   const TodoMenuProps: todoMenuProps = {
     sorted,
     filtered,
-    handleDelete: deleteThis,
+    handleDelete:
+      deleteAction !== undefined ? () => deleteAction(id) : deleteThis,
     handleFilter: () =>
       dispatch(toggleSortedFiltered({ id, type: "filtered" })),
     handleSort: () => dispatch(toggleSortedFiltered({ id, type: "sorted" })),
@@ -141,7 +146,7 @@ function Todo({ id, title, todos, filtered, sorted }: TaskType) {
           <TodoMenu {...TodoMenuProps} />
         </WidgetControls>
       </div>
-      <div className="overflow-auto scroll-container py-4 px-0.5 space-y-3 size-full">
+      <div className="overflow-auto scroll-container py-4 px-0.5 space-y-3 w-full h-5/6">
         <Reorder.Group
           className="space-y-2"
           values={dynamicTasks.map((t) => t.id)}
