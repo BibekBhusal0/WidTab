@@ -19,7 +19,7 @@ const getEmptySpace = (): DynamicSpaceType => {
     name: "name",
     compaction: "none",
     id: 0,
-    locked: false,
+    locked: true,
     widgets: [],
     delete_able: true,
   };
@@ -95,14 +95,6 @@ export const layoutSlice = createSlice({
       }
       state.currentSpace = action.payload;
     },
-    deleteSpace: (state, action: PayloadAction<number>) => {
-      const space = state.allSpaces.find((p) => p.id === action.payload);
-      if (space?.delete_able) {
-        state.allSpaces = state.allSpaces.filter(
-          (p) => p.id !== action.payload
-        );
-      }
-    },
     addSpace: (state, action: PayloadAction<string>) => {
       const newID = getNextId(state.allSpaces.map(({ id }) => id));
       state.allSpaces.push({
@@ -169,6 +161,12 @@ export const layoutSlice = createSlice({
         }
       }
     },
+    currentSpaceRename: (state, action: PayloadAction<string>) => {
+      const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
+      if (space && state.currentSpace.type === "dynamic") {
+        space.name = action.payload;
+      }
+    },
     currentSpaceToggleLocked: (state) => {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
       if (space && state.currentSpace.type === "dynamic") {
@@ -188,7 +186,7 @@ export const layoutSlice = createSlice({
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
       if (space && state.currentSpace.type === "dynamic") {
         const newID = getNextId(state.allSpaces.map(({ id }) => id));
-        state.allSpaces.push({ ...space, id: newID });
+        state.allSpaces.push({ ...space, id: newID, delete_able: true });
         state.currentSpace = { type: "dynamic", id: newID };
       }
     },
@@ -197,7 +195,6 @@ export const layoutSlice = createSlice({
 
 export const {
   changeCurrentSpace,
-  deleteSpace,
   addSpace,
   currentSpaceAddWidget,
   currentSpaceDeleteWidget,
@@ -206,6 +203,7 @@ export const {
   currentSpaceToggleLocked,
   currentSpaceChangeCompaction,
   currentSpaceDuplicate,
+  currentSpaceRename,
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

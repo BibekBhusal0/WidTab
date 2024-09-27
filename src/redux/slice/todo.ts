@@ -28,12 +28,12 @@ export const todoSlice = createSlice({
   name: "todo",
   initialState,
   reducers: {
-    addTask: (state, action: PayloadAction<{ title: string }>) => {
+    addTask: (state, action: PayloadAction<string>) => {
       state.Tasks.push({
         filtered: false,
         sorted: false,
         id: getNextId(state.Tasks.map(({ id }) => id)),
-        title: action.payload.title,
+        title: action.payload,
         todos: [],
       });
     },

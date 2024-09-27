@@ -19,7 +19,7 @@ const StaticLayout: FunctionComponent<StaticLayoutProps> = ({
   return (
     <div
       style={{ height: `${height}%` }}
-      className="relative w-full"
+      className="relative w-full overflow-auto"
       //
     >
       {layoutMapping[widgetType]}
