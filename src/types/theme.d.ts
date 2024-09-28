@@ -2,24 +2,18 @@ import { Palette, PaletteOptions } from "@mui/material";
 
 declare module "@mui/material/styles" {
   interface Palette {
-    primaryContainer: Palette["primary"];
-    transparentPrimaryContainer: Palette["primary"];
-    transparentSecondaryContainer: Palette["primary"];
-    secondaryContainer: Palette["primary"];
-    tertiaryContainer: Palette["primary"];
-    transparentTertiaryContainer: Palette["primary"];
+    primaryContainer: Palette["background"];
+    secondaryContainer: Palette["background"];
+    tertiaryContainer: Palette["background"];
     transparentPrimary: Palette["primary"];
     surfaceVariant: Palette["primary"];
   }
 
   interface PaletteOptions {
     surfaceVariant?: PaletteOptions["primary"];
-    primaryContainer?: PaletteOptions["primary"];
-    transparentSecondaryContainer?: PaletteOptions["primary"];
-    secondaryContainer?: PaletteOptions["primary"];
-    tertiaryContainer?: PaletteOptions["primary"];
-    transparentTertiaryContainer?: PaletteOptions["primary"];
-    transparentPrimaryContainer?: PaletteOptions["primary"];
+    primaryContainer?: PaletteOptions["background"];
+    secondaryContainer?: PaletteOptions["background"];
+    tertiaryContainer?: PaletteOptions["background"];
     transparentPrimary?: PaletteOptions["primary"];
   }
 }

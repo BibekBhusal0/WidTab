@@ -84,7 +84,7 @@ function DynamicLayout() {
       >
         {widgets.map((w) => (
           <Paper
-            sx={{ backgroundColor: "transparentSecondaryContainer.main" }}
+            sx={{ backgroundColor: "secondaryContainer.paper" }}
             key={w.gridProps.i}>
             {!locked && <DragHandle />}
             <div className="size-full z-10">

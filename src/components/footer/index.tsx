@@ -21,7 +21,7 @@ function Footer() {
       {...footerProps}
       sx={{
         ...footerProps?.sx,
-        backgroundColor: "transparentSecondaryContainer.main",
+        backgroundColor: "secondaryContainer.paper",
       }}
       className={cn("size-full between bg-green-800", footerProps?.className)}
       //

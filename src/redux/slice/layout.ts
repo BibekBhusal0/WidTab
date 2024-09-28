@@ -28,7 +28,7 @@ const getEmptySpace = (): DynamicSpaceType => {
 
 const initialState: LayoutSliceType = {
   linkInNewTab: false,
-  controlBarPosition: "top",
+  controlBarPosition: "bottom",
   n_rows: 8,
   n_cols: 12,
   currentSpace: { type: "dynamic", id: 1 },

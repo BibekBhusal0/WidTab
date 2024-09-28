@@ -60,26 +60,17 @@ export const getTheme = ({
         dark: alpha(hexFromArgb(crrPrimary.primary), opacity - 0.1),
         light: alpha(hexFromArgb(crrPrimary.primary), opacity + 0.1),
       },
-
       primaryContainer: {
-        main: hexFromArgb(crrPrimary.primaryContainer),
+        default: hexFromArgb(crrPrimary.primaryContainer),
+        paper: alpha(hexFromArgb(crrPrimary.primaryContainer), opacity),
       },
-
-      transparentPrimaryContainer: {
-        main: alpha(hexFromArgb(crrPrimary.primaryContainer), opacity),
-      },
-      transparentSecondaryContainer: {
-        main: alpha(hexFromArgb(crrPrimary.secondaryContainer), opacity),
+      secondaryContainer: {
+        default: hexFromArgb(crrPrimary.secondaryContainer),
+        paper: alpha(hexFromArgb(crrPrimary.secondaryContainer), opacity),
       },
       tertiaryContainer: {
-        main: hexFromArgb(crrPrimary.tertiaryContainer),
-      },
-      transparentTertiaryContainer: {
-        main: alpha(hexFromArgb(crrPrimary.tertiaryContainer), opacity),
-      },
-
-      secondaryContainer: {
-        main: hexFromArgb(crrPrimary.secondaryContainer),
+        default: hexFromArgb(crrPrimary.tertiaryContainer),
+        paper: alpha(hexFromArgb(crrPrimary.tertiaryContainer), opacity),
       },
       action: { selectedOpacity: opacity / 1.5 },
       divider: hexFromArgb(crrPrimary.outline),
