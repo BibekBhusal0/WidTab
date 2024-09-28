@@ -4,6 +4,7 @@ import { useState } from "react";
 import ThemeSettings from "./theme";
 import ContainerSidebar from "@/components/containerSidebar";
 import SpaceSettings from "./spaces";
+import GeneralSettings from "./general";
 
 function Settings() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -33,8 +34,9 @@ function Settings() {
 
 function SettingsMenu() {
   const allSettings = [
-    { index: 0, name: "Theme", component: <ThemeSettings /> },
-    { index: 1, name: "Spaces", component: <SpaceSettings /> },
+    { index: 0, name: "General", component: <GeneralSettings /> },
+    { index: 1, name: "Theme", component: <ThemeSettings /> },
+    { index: 2, name: "Spaces", component: <SpaceSettings /> },
   ];
 
   return (

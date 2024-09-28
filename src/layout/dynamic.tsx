@@ -4,11 +4,18 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GridLayout, { Layout } from "react-grid-layout";
 import { currentSpaceSetGridProps } from "@/redux/slice/layout";
-import { Paper } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 import Widget from "./widgets";
 import DragHandle from "@/components/dragHandle";
+import { positionProps } from "@/types/slice/layout";
+import { cn } from "@/utils/cn";
 
-function DynamicLayout({ height }: { height: number }) {
+function DynamicLayout() {
+  const { controlBarPosition } = useSelector(
+    (state: StateType) => state.layout
+  );
+  const { mainComponentProps } = positionProps[controlBarPosition];
+
   const { n_cols, n_rows } = useSelector((state: StateType) => state.layout);
   const space = useCurrentLayout();
   const dispatch = useDispatch();
@@ -45,10 +52,14 @@ function DynamicLayout({ height }: { height: number }) {
   };
 
   return (
-    <div
+    <Box
       ref={containerRef}
-      style={{ height: `${height}%` }}
-      className="relative w-full overflow-hidden"
+      {...mainComponentProps}
+      className={cn(
+        "relative w-full overflow-hidden",
+        mainComponentProps?.className
+      )}
+      sx={mainComponentProps?.sx}
       //
     >
       <GridLayout
@@ -82,7 +93,7 @@ function DynamicLayout({ height }: { height: number }) {
           </Paper>
         ))}
       </GridLayout>
-    </div>
+    </Box>
   );
 }
 

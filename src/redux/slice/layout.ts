@@ -1,5 +1,6 @@
 import {
   compactionType,
+  ControlBarPositions,
   CurrentSpaceType,
   DynamicSpaceType,
   LayoutSliceType,
@@ -26,6 +27,8 @@ const getEmptySpace = (): DynamicSpaceType => {
 };
 
 const initialState: LayoutSliceType = {
+  linkInNewTab: false,
+  controlBarPosition: "top",
   n_rows: 8,
   n_cols: 12,
   currentSpace: { type: "dynamic", id: 1 },
@@ -103,6 +106,15 @@ export const layoutSlice = createSlice({
         name: action.payload,
       });
       state.currentSpace = { type: "dynamic", id: newID };
+    },
+    changeControlBarPosition: (
+      state,
+      action: PayloadAction<ControlBarPositions>
+    ) => {
+      state.controlBarPosition = action.payload;
+    },
+    toggleLink: (state) => {
+      state.linkInNewTab = !state.linkInNewTab;
     },
     currentSpaceAddWidget: (state, action: PayloadAction<WidgetType>) => {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
@@ -204,6 +216,8 @@ export const {
   currentSpaceChangeCompaction,
   currentSpaceDuplicate,
   currentSpaceRename,
+  changeControlBarPosition,
+  toggleLink,
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

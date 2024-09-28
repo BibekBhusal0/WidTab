@@ -6,23 +6,30 @@ import useCurrentLayout from "./hooks/useCurrentLayout";
 import { controlledWidgetsType } from "./types/slice/widgets";
 import DynamicLayout from "./layout/dynamic";
 import StaticLayout from "./layout/static";
+import { Box } from "@mui/material";
+import { positionProps } from "./types/slice/layout";
+import { cn } from "./utils/cn";
 
 function App() {
-  const { currentSpace } = useSelector((state: StateType) => state.layout);
+  const { currentSpace, controlBarPosition } = useSelector(
+    (state: StateType) => state.layout
+  );
+  const { appProps } = positionProps[controlBarPosition];
   const layout = useCurrentLayout();
-  const height = 94;
-  var crrLayout = <DynamicLayout height={height} />;
+  var crrLayout = <DynamicLayout />;
   if (!layout) {
     const l: controlledWidgetsType =
       typeof currentSpace.id === "number" ? "todo" : currentSpace.id;
-    crrLayout = <StaticLayout widgetType={l} height={height} />;
+    crrLayout = <StaticLayout widgetType={l} />;
   }
   return (
     <CustomThemeProvider>
-      <div className="size-full h-screen relative">
+      <Box
+        {...appProps}
+        className={cn("size-full h-screen relative flex", appProps?.className)}>
         {crrLayout}
-        <Footer height={100 - height} />
-      </div>
+        <Footer />
+      </Box>
     </CustomThemeProvider>
   );
 }
