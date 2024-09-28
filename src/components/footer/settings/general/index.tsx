@@ -3,17 +3,18 @@ import { StateType } from "@/redux/store";
 import { ControlBarPositions } from "@/types/slice/layout";
 import { MenuItem, Select, Switch } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import SettingHeader from "../settings-header";
 
 function GeneralSettings() {
   return (
-    <div className="w-full ">
-      <div className="between">
+    <div className="w-full flex flex-col gap-4 ">
+      <div className="between gap-4">
         <div className="text-xl">Open Link in New Tab</div>
         <ToggleLinkInNT />
       </div>
-      <SettingHeader> Control Bar Position</SettingHeader>
-      <SelectControlBarPosition />
+      <div className="between gap-4">
+        <div className="text-xl">Control Bar Position</div>
+        <SelectControlBarPosition />
+      </div>
     </div>
   );
 }

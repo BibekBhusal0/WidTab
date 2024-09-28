@@ -41,11 +41,19 @@ const CustomTab = styled(Tab)(({ theme }) => ({
     color: alpha(theme.palette.text.primary, 0.8),
   },
   "&.Mui-selected": {
-    backgroundColor: alpha(theme.palette.primary.main, 0.4),
+    backgroundColor: alpha(theme.palette.primary.main, 0.1),
     color: theme.palette.text.primary,
     fontWeight: theme.typography.fontWeightBold,
   },
 }));
+
+const CustomTabs = styled(Tabs)({
+  "& .MuiTabs-indicator": {
+    width: "100%",
+    opacity: 0.5,
+    zIndex: -1,
+  },
+});
 
 function ContainerSidebar({
   items,
@@ -70,8 +78,8 @@ function ContainerSidebar({
       className={cn("flex h-full", mainProps?.className)}
       //
     >
-      <Tabs
-        TabIndicatorProps={{ style: { display: "none" } }}
+      <CustomTabs
+        // TabIndicatorProps={{ style: { display: "none" } }}
         orientation="vertical"
         value={value}
         onChange={handleChange}
@@ -91,7 +99,7 @@ function ContainerSidebar({
             //
           />
         ))}
-      </Tabs>
+      </CustomTabs>
       <Box
         {...panelProps}
         className={cn(
