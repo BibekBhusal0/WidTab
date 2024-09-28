@@ -4,6 +4,7 @@ import {
   CurrentSpaceType,
   DynamicSpaceType,
   LayoutSliceType,
+  RemovableToolbarIcons,
 } from "@/types/slice/layout";
 import {
   allWidgetsType,
@@ -29,7 +30,7 @@ const getEmptySpace = (): DynamicSpaceType => {
 const initialState: LayoutSliceType = {
   linkInNewTab: false,
   toolBarPosition: "bottom",
-
+  toolBarIcons: ["lock", "spaces", "todo"],
   n_rows: 8,
   n_cols: 12,
   currentSpace: { type: "dynamic", id: 1 },
@@ -114,6 +115,16 @@ export const layoutSlice = createSlice({
     toggleLink: (state) => {
       state.linkInNewTab = !state.linkInNewTab;
     },
+    toggleIcon: (state, action: PayloadAction<RemovableToolbarIcons>) => {
+      if (state.toolBarIcons.includes(action.payload)) {
+        state.toolBarIcons = state.toolBarIcons.filter(
+          (p) => p !== action.payload
+        );
+      } else {
+        state.toolBarIcons.push(action.payload);
+      }
+    },
+
     currentSpaceAddWidget: (state, action: PayloadAction<WidgetType>) => {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
 
@@ -148,7 +159,6 @@ export const layoutSlice = createSlice({
         );
       }
     },
-
     currentSpaceSetGridProps(state, action: PayloadAction<Layout[]>) {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
       if (space && state.currentSpace.type === "dynamic") {
@@ -216,6 +226,7 @@ export const {
   currentSpaceRename,
   changeToolBarPosition,
   toggleLink,
+  toggleIcon,
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

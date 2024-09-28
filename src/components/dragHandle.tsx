@@ -14,7 +14,7 @@ function DragHandle() {
         sx={{
           backgroundColor: "primary.main",
         }}
-        className="w-full opacity-50 drag-handle h-[9%] absolute top-0 left-0 z-20"></Box>
+        className="w-full opacity-50 drag-handle h-[9%] absolute top-0 left-0 z-[3]"></Box>
     </Box>
   );
 }

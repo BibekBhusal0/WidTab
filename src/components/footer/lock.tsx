@@ -8,20 +8,21 @@ import { useDispatch } from "react-redux";
 function Lock({ type = "button" }: { type?: "button" | "toggle" }) {
   const dispatch = useDispatch();
   const space = useCurrentLayout();
-  var locked = false;
-  if (space?.locked) locked = true;
+  if (!space) return null;
+
+  //   if (space?.locked) locked = true;
   const toggle = () => dispatch(currentSpaceToggleLocked());
 
   return (
     <>
       {type === "button" ? (
-        <Tooltip title={locked ? "Unlock" : "Lock"}>
+        <Tooltip title={space.locked ? "Unlock" : "Lock"}>
           <IconButton onClick={toggle}>
-            {locked ? <LockOutlinedIcon /> : <LockOpenOutlinedIcon />}
+            {space.locked ? <LockOutlinedIcon /> : <LockOpenOutlinedIcon />}
           </IconButton>
         </Tooltip>
       ) : (
-        <Switch checked={locked} onChange={toggle} />
+        <Switch checked={space.locked} onChange={toggle} />
       )}
     </>
   );

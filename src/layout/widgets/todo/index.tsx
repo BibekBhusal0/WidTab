@@ -156,7 +156,7 @@ function Todo({
           onChange={titleChangeHandler}
         />
         {showControls && (
-          <WidgetControls className="flex relative gap-3 p-1">
+          <WidgetControls className="flex gap-3 p-1">
             <IconButton onClick={addTodoItem}>
               <AddCircleOutlineRoundedIcon />
             </IconButton>

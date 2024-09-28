@@ -1,8 +1,10 @@
-import { changeToolBarPosition, toggleLink } from "@/redux/slice/layout";
+import { toggleLink } from "@/redux/slice/layout";
 import { StateType } from "@/redux/store";
-import { ToolBarPositions } from "@/types/slice/layout";
-import { MenuItem, Select, Switch } from "@mui/material";
+import { Switch } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import SelectToolBarPosition from "./toolBarPosition";
+import SettingHeader from "../settings-header";
+import ToggleIcons from "./toggle-icons";
 
 function GeneralSettings() {
   return (
@@ -15,6 +17,8 @@ function GeneralSettings() {
         <div className="text-xl">Tool Bar Position</div>
         <SelectToolBarPosition />
       </div>
+      <SettingHeader className="pb-0 ">Toolbar Icons</SettingHeader>
+      <ToggleIcons />
     </div>
   );
 }
@@ -25,27 +29,6 @@ function ToggleLinkInNT() {
 
   return (
     <Switch checked={linkInNewTab} onChange={() => dispatch(toggleLink())} />
-  );
-}
-
-function SelectToolBarPosition() {
-  const { toolBarPosition } = useSelector((state: StateType) => state.layout);
-  const dispatch = useDispatch();
-  const sides: ToolBarPositions[] = ["top", "left", "bottom", "right"];
-
-  return (
-    <Select
-      className="w-full capitalize"
-      value={toolBarPosition}
-      onChange={(e) =>
-        dispatch(changeToolBarPosition(e.target.value as ToolBarPositions))
-      }>
-      {sides.map((c) => (
-        <MenuItem className="capitalize" key={c} value={c}>
-          {c}
-        </MenuItem>
-      ))}
-    </Select>
   );
 }
 
