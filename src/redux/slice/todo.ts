@@ -3,6 +3,7 @@ import { getNextId } from "@/utils/next_id";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: todoStateType = {
+  pinnedTodo: null,
   Tasks: [
     {
       sorted: false,
@@ -61,6 +62,9 @@ export const todoSlice = createSlice({
     },
     deleteTask: (state, action: PayloadAction<number>) => {
       state.Tasks = state.Tasks.filter((p) => p.id !== action.payload);
+      if (state.pinnedTodo === action.payload) {
+        state.pinnedTodo = null;
+      }
     },
     deleteTodo: (
       state,
@@ -128,6 +132,10 @@ export const todoSlice = createSlice({
         if (action.payload.type === "filtered") task.sorted = false;
       }
     },
+    changePinnedTodo: (state, action: PayloadAction<number>) => {
+      if (state.pinnedTodo === action.payload) state.pinnedTodo = null;
+      else state.pinnedTodo = action.payload;
+    },
   },
 });
 
@@ -141,5 +149,6 @@ export const {
   toggleTodo,
   toggleSortedFiltered,
   setTasks,
+  changePinnedTodo,
 } = todoSlice.actions;
 export default todoSlice.reducer;

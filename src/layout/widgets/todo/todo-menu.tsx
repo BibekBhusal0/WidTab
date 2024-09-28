@@ -9,11 +9,14 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Box, ListItemIcon } from "@mui/material";
 import { todoMenuProps } from "@/types/slice/todo";
+import { BsPinAngleFill } from "react-icons/bs";
 
 function TodoMenu({
   handleDelete,
   handleSort,
   handleFilter,
+  handlePin,
+  pinned,
   sorted,
   filtered,
 }: todoMenuProps) {
@@ -26,6 +29,12 @@ function TodoMenu({
     setAnchorEl(null);
   };
   const items = [
+    {
+      name: pinned ? "Unpin" : "Pin",
+      Icon: BsPinAngleFill,
+      onClick: handlePin,
+      color: pinned ? "primary.main" : "action.main",
+    },
     {
       name: "Sort",
       Icon: SwapVertIcon,
@@ -65,8 +74,8 @@ function TodoMenu({
             className="flex-center gap-3"
             key={name}
             onClick={onClick}>
-            <ListItemIcon>
-              <Icon sx={{ color: color }} />
+            <ListItemIcon sx={{ color: color }}>
+              <Icon />
             </ListItemIcon>
             <Box sx={{ color: color }} className="text-xl">
               {name}

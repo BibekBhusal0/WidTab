@@ -1,6 +1,6 @@
-import { changeControlBarPosition, toggleLink } from "@/redux/slice/layout";
+import { changeToolBarPosition, toggleLink } from "@/redux/slice/layout";
 import { StateType } from "@/redux/store";
-import { ControlBarPositions } from "@/types/slice/layout";
+import { ToolBarPositions } from "@/types/slice/layout";
 import { MenuItem, Select, Switch } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -12,8 +12,8 @@ function GeneralSettings() {
         <ToggleLinkInNT />
       </div>
       <div className="between gap-4">
-        <div className="text-xl">Control Bar Position</div>
-        <SelectControlBarPosition />
+        <div className="text-xl">Tool Bar Position</div>
+        <SelectToolBarPosition />
       </div>
     </div>
   );
@@ -28,21 +28,17 @@ function ToggleLinkInNT() {
   );
 }
 
-function SelectControlBarPosition() {
-  const { controlBarPosition } = useSelector(
-    (state: StateType) => state.layout
-  );
+function SelectToolBarPosition() {
+  const { toolBarPosition } = useSelector((state: StateType) => state.layout);
   const dispatch = useDispatch();
-  const sides: ControlBarPositions[] = ["top", "left", "bottom", "right"];
+  const sides: ToolBarPositions[] = ["top", "left", "bottom", "right"];
 
   return (
     <Select
       className="w-full capitalize"
-      value={controlBarPosition}
+      value={toolBarPosition}
       onChange={(e) =>
-        dispatch(
-          changeControlBarPosition(e.target.value as ControlBarPositions)
-        )
+        dispatch(changeToolBarPosition(e.target.value as ToolBarPositions))
       }>
       {sides.map((c) => (
         <MenuItem className="capitalize" key={c} value={c}>

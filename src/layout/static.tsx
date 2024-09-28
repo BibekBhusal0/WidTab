@@ -12,10 +12,8 @@ interface StaticLayoutProps {
 }
 
 const StaticLayout: FunctionComponent<StaticLayoutProps> = ({ widgetType }) => {
-  const { controlBarPosition } = useSelector(
-    (state: StateType) => state.layout
-  );
-  const { mainComponentProps } = positionProps[controlBarPosition];
+  const { toolBarPosition } = useSelector((state: StateType) => state.layout);
+  const { mainComponentProps } = positionProps[toolBarPosition];
   const layoutMapping: Record<controlledWidgetsType, ReactNode> = {
     todo: <TodoPage />,
     "habit-tracker": null,

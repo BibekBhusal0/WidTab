@@ -15,6 +15,7 @@ export interface TaskType {
 
 export interface todoStateType {
   Tasks: TaskType[];
+  pinnedTodo: null | number;
 }
 
 export type changeTaskType =
@@ -31,9 +32,11 @@ export type sortableCheckboxProps = todoType & {
   focusNext?: () => void;
 };
 export type todoMenuProps = {
+  handlePin?: () => void;
   handleDelete?: () => void;
   handleSort?: () => void;
   handleFilter?: () => void;
   sorted?: boolean;
+  pinned?: boolean;
   filtered?: boolean;
 };

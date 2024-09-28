@@ -11,10 +11,10 @@ import { positionProps } from "./types/slice/layout";
 import { cn } from "./utils/cn";
 
 function App() {
-  const { currentSpace, controlBarPosition } = useSelector(
+  const { currentSpace, toolBarPosition } = useSelector(
     (state: StateType) => state.layout
   );
-  const { appProps } = positionProps[controlBarPosition];
+  const { appProps } = positionProps[toolBarPosition];
   const layout = useCurrentLayout();
   var crrLayout = <DynamicLayout />;
   if (!layout) {

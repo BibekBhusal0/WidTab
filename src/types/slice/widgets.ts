@@ -30,7 +30,6 @@ export type ClockWidgetType = {
   id: number;
   TwentyFourHour: boolean;
   ShowDay: boolean;
-  ShowSeconds: boolean;
   // TimeZone: string,
   // clockType : 'analog' | 'digital'
 };
@@ -42,7 +41,6 @@ export type SearchWidgetType = {
 
 export type controlledWidgetValues = {
   id: number;
-  deleteAction?: (id: number) => void;
 };
 
 export type WidgetMappingStatic = {

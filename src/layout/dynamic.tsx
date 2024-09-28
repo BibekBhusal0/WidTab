@@ -11,10 +11,8 @@ import { positionProps } from "@/types/slice/layout";
 import { cn } from "@/utils/cn";
 
 function DynamicLayout() {
-  const { controlBarPosition } = useSelector(
-    (state: StateType) => state.layout
-  );
-  const { mainComponentProps } = positionProps[controlBarPosition];
+  const { toolBarPosition } = useSelector((state: StateType) => state.layout);
+  const { mainComponentProps } = positionProps[toolBarPosition];
 
   const { n_cols, n_rows } = useSelector((state: StateType) => state.layout);
   const space = useCurrentLayout();
@@ -87,7 +85,7 @@ function DynamicLayout() {
             sx={{ backgroundColor: "secondaryContainer.paper" }}
             key={w.gridProps.i}>
             {!locked && <DragHandle />}
-            <div className="size-full z-10">
+            <div className="size-full relative z-10">
               <Widget widget={w} />
             </div>
           </Paper>

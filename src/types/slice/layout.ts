@@ -18,9 +18,9 @@ export type DynamicSpaceType = {
   widgets: WidgetType[];
 };
 
-export type ControlBarPositions = "top" | "left" | "right" | "bottom";
+export type ToolBarPositions = "top" | "left" | "right" | "bottom";
 export type LayoutSliceType = {
-  controlBarPosition: ControlBarPositions;
+  toolBarPosition: ToolBarPositions;
   linkInNewTab: boolean;
   n_rows: number;
   n_cols: number;
@@ -32,7 +32,7 @@ export type LayoutSliceType = {
 const height = 94;
 const width = 97;
 export type positionPropsType = Record<
-  ControlBarPositions,
+  ToolBarPositions,
   Record<majorComponentsProps, BoxProps>
 >;
 type majorComponentsProps = "appProps" | "footerProps" | "mainComponentProps";

@@ -7,14 +7,13 @@ import { useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import { positionProps } from "@/types/slice/layout";
 import { cn } from "@/utils/cn";
+import TodoButton from "./todoButton";
 
 function Footer() {
   const l = useCurrentLayout();
 
-  const { controlBarPosition } = useSelector(
-    (state: StateType) => state.layout
-  );
-  const { footerProps } = positionProps[controlBarPosition];
+  const { toolBarPosition } = useSelector((state: StateType) => state.layout);
+  const { footerProps } = positionProps[toolBarPosition];
 
   return (
     <Box
@@ -31,6 +30,7 @@ function Footer() {
         {l && <AddWidget />}
       </div>
       <div className={cn("flex-center", footerProps?.className)}>
+        <TodoButton />
         {l && <Lock />}
       </div>
     </Box>

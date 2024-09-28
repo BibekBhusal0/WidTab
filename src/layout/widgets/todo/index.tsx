@@ -1,5 +1,5 @@
 import { TaskType, todoMenuProps, todoType } from "@/types/slice/todo";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import { AnimatePresence, Reorder } from "framer-motion";
 import SortableCheckbox from "./checkbox";
@@ -14,14 +14,28 @@ import {
   changeTodo,
   toggleTodo,
   toggleSortedFiltered,
+  changePinnedTodo,
 } from "@/redux/slice/todo";
 import WidgetControls from "@/components/widgetControl";
+import { StateType } from "@/redux/store";
 
 export const transparentInput =
   "border-transparent w-full bg-transparent resize-none focus:outline-none";
-type TodoProps = TaskType & { deleteAction?: (id: number) => void };
+type TodoProps = TaskType & {
+  deleteAction?: (id: number) => void;
+  showControls?: boolean;
+};
 
-function Todo({ id, title, todos, filtered, sorted, deleteAction }: TodoProps) {
+function Todo({
+  id,
+  title,
+  todos,
+  filtered,
+  sorted,
+  deleteAction,
+  showControls = true,
+}: TodoProps) {
+  const { pinnedTodo } = useSelector((state: StateType) => state.todo);
   const dispatch = useDispatch();
   const taskRefs = useRef<Map<number, HTMLTextAreaElement | null>>(new Map());
   const titleRef = useRef<HTMLInputElement>(null);
@@ -119,16 +133,18 @@ function Todo({ id, title, todos, filtered, sorted, deleteAction }: TodoProps) {
   const TodoMenuProps: todoMenuProps = {
     sorted,
     filtered,
+    pinned: pinnedTodo === id,
     handleDelete:
       deleteAction !== undefined ? () => deleteAction(id) : deleteThis,
     handleFilter: () =>
       dispatch(toggleSortedFiltered({ id, type: "filtered" })),
     handleSort: () => dispatch(toggleSortedFiltered({ id, type: "sorted" })),
+    handlePin: () => dispatch(changePinnedTodo(id)),
   };
 
   return (
     <Box className="size-full">
-      <div className="flex justify-between items-center gap-2 px-3">
+      <div className="flex justify-between items-center gap-2 px-3 h-12">
         <input
           ref={titleRef}
           onKeyDown={titleKeyDown}
@@ -139,12 +155,14 @@ function Todo({ id, title, todos, filtered, sorted, deleteAction }: TodoProps) {
           value={title}
           onChange={titleChangeHandler}
         />
-        <WidgetControls className="flex relative gap-3 p-1">
-          <IconButton onClick={addTodoItem}>
-            <AddCircleOutlineRoundedIcon />
-          </IconButton>
-          <TodoMenu {...TodoMenuProps} />
-        </WidgetControls>
+        {showControls && (
+          <WidgetControls className="flex relative gap-3 p-1">
+            <IconButton onClick={addTodoItem}>
+              <AddCircleOutlineRoundedIcon />
+            </IconButton>
+            <TodoMenu {...TodoMenuProps} />
+          </WidgetControls>
+        )}
       </div>
       <div className="overflow-auto scroll-container py-4 px-0.5 space-y-3 w-full h-5/6">
         <Reorder.Group

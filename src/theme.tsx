@@ -34,7 +34,6 @@ export const getTheme = ({
   return createTheme({
     palette: {
       mode,
-
       background: {
         default: hexFromArgb(crrPrimary.background),
         paper: alpha(hexFromArgb(crrPrimary.surface), opacity),
