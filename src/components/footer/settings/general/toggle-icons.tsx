@@ -11,7 +11,7 @@ function ToggleIcons() {
   return (
     <div className="flex-center flex-col gap-4 px-4">
       {allRemovableToolbarIcons.map((icon) => (
-        <div className="between gap-4 w-full">
+        <div key={icon} className="between gap-4 w-full">
           <div className="text-xl capitalize">{icon} </div>
           <Switch
             key={icon}

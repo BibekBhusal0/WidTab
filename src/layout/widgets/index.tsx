@@ -1,7 +1,5 @@
 import {
   allWidgetsType,
-  //   controlledWidgets,
-  //   controlledWidgetsType,
   AllWidgetPropsMapping,
   WidgetType,
   WidgetMappingAll,
@@ -14,6 +12,7 @@ import HabitTrackerWidget from "./habit-tracker";
 import SearchWidget from "./search";
 import { FunctionComponent } from "react";
 import Calendar from "./calendar";
+import { Box } from "@mui/material";
 
 export const done: allWidgetsType[] = ["custom", "todo", "clock", "calendar"];
 
@@ -35,7 +34,11 @@ function Widget({ widget }: { widget: WidgetType }) {
     AllWidgetPropsMapping<allWidgetsType>
   >;
 
-  return <Element {...widget.values} />;
+  return (
+    <Box className="size-full z-[20]">
+      <Element {...widget.values} />
+    </Box>
+  );
 }
 
 export default Widget;

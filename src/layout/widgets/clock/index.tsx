@@ -1,16 +1,16 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import moment from "moment-timezone";
-import Clock from "react-clock";
-import "react-clock/dist/Clock.css";
+import { useEffect, useState } from "react";
 import { ClockWidgetType } from "@/types/slice/widgets";
-import { Textfit } from "@ataverascrespo/react18-ts-textfit";
+import DigitalClock from "./digital";
+import AnalogClock from "./analog";
+import ClockControls from "./controls";
 
-interface DigitalClockProps extends ClockWidgetType {
+export interface DigitalClockProps extends ClockWidgetType {
   time: Date;
 }
 
 function ClockWidget({ ...props }: ClockWidgetType) {
   const [time, setTime] = useState<Date>(new Date());
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const updateTime = () => {
@@ -23,64 +23,18 @@ function ClockWidget({ ...props }: ClockWidgetType) {
   const { clockType = "digital" } = props;
 
   return (
-    <div className="size-full flex-center p-2">
+    <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="size-full flex-center">
       {clockType === "digital" ? (
         <DigitalClock time={time} {...props} />
       ) : (
         <AnalogClock time={time} {...props} />
       )}
+      {isHovered && <ClockControls {...props} />}
     </div>
   );
 }
 
 export default ClockWidget;
-
-const DigitalClock = ({
-  time,
-  timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone,
-  TwentyFourHour,
-  showSeconds,
-}: DigitalClockProps) => {
-  const [resizeFlag, setResizeFlag] = useState(0);
-  const textFitRef = useRef<HTMLDivElement | null>(null);
-
-  const formatTime = useCallback(() => {
-    const format = `${TwentyFourHour ? "HH:mm" : "hh:mm"}${showSeconds ? ":ss" : ""}`;
-    return moment.tz(time, timeZone).format(format);
-  }, [time, timeZone, TwentyFourHour, showSeconds]);
-
-  useEffect(() => {
-    const observer = new ResizeObserver(() => {
-      setResizeFlag((prev) => prev + 1);
-    });
-
-    if (textFitRef.current) {
-      observer.observe(textFitRef.current);
-    }
-
-    return () => {
-      if (textFitRef.current) {
-        observer.unobserve(textFitRef.current);
-      }
-    };
-  }, []);
-
-  return (
-    <div ref={textFitRef} className="text-center size-full flex-center">
-      <Textfit
-        min={20}
-        max={400}
-        className="size-full flex-center"
-        key={resizeFlag}>
-        {formatTime()}
-      </Textfit>
-    </div>
-  );
-};
-
-const AnalogClock = ({
-  time,
-  timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone,
-}: DigitalClockProps) => {
-  return <Clock value={moment.tz(time, timeZone).toDate()} />;
-};

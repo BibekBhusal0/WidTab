@@ -9,7 +9,12 @@ function Calendar({ id }: controlledWidgetValues) {
   return (
     <SimpleWidget id={id} type="calendar">
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DateCalendar defaultValue={dayjs()} readOnly views={["day"]} />
+        <DateCalendar
+          value={dayjs()}
+          onChange={() => null}
+          readOnly
+          views={["day"]}
+        />
       </LocalizationProvider>
     </SimpleWidget>
   );

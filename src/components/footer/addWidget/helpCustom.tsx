@@ -39,7 +39,7 @@ function HelpInCustomWidget() {
       </IconButton>
       <Modal open={open} onClose={() => setOpen(false)}>
         <Paper
-          className="p-5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex-center flex-col gap-3"
+          className="p-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-3"
           sx={{ background: paper }}>
           <div className="text-xl">
             You can personalize your experience by adding custom widgets! Simply

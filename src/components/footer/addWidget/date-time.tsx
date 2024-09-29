@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 
 function DateTime() {
   return (
-    <div className="flex-center flex-col p-2 gap-4">
+    <div className="flex-center flex-col p-2 gap-4 size-full">
       <AddCalendar />
       <AddClock />
     </div>
@@ -32,14 +32,12 @@ function AddCalendar() {
   };
 
   return (
-    <div className="w-full flex-center">
-      <Button
-        variant="contained"
-        disabled={availablePosition === null}
-        onClick={add}>
-        Add Calendar
-      </Button>
-    </div>
+    <Button
+      variant="contained"
+      disabled={availablePosition === null}
+      onClick={add}>
+      Add Calendar
+    </Button>
   );
 }
 
