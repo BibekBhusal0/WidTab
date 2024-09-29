@@ -42,7 +42,7 @@ const AnalogClock = ({
       }
     };
   }, []);
-
+  const fontSize = size <= 150 ? 6 : Math.max(6, size / 25);
   return (
     <div
       ref={clockContainerRef}
@@ -67,6 +67,10 @@ const AnalogClock = ({
           .custom-clock .react-clock__second-hand__body{
             background-color: ${main};
           }
+          .custom-clock .react-clock__mark__number{
+            font-size: ${fontSize}px;
+          }
+
       `}</style>
     </div>
   );

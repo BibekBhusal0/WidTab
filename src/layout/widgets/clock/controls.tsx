@@ -1,10 +1,22 @@
-import { ReactNode } from "react";
 import { ClockWidgetType } from "@/types/slice/widgets";
 import MenuPopover from "@/components/popoverMenu";
 import WidgetControls from "@/components/widgetControl";
-import { Switch } from "@mui/material";
+import {
+  Box,
+  Divider,
+  ListItemButton,
+  ListItemIcon,
+  MenuItem,
+  Switch,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@mui/material";
 import { useDispatch } from "react-redux";
-import { currentSpaceEditWidget } from "@/redux/slice/layout";
+import {
+  currentSpaceDeleteWidget,
+  currentSpaceEditWidget,
+} from "@/redux/slice/layout";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function ClockControls({
   id,
@@ -22,7 +34,7 @@ function ClockControls({
       })
     );
   };
-  const toggleShowSeconds = () => {
+  const toggleSeconds = () => {
     dispatch(
       currentSpaceEditWidget({
         type: "clock",
@@ -30,50 +42,90 @@ function ClockControls({
       })
     );
   };
-
-  const toggleClockType = () => {
-    const newClockType = clockType === "analog" ? "digital" : "analog";
+  const onClockTypeChange = (
+    _: React.MouseEvent<HTMLElement>,
+    newClockType: string | null
+  ) => {
+    if (!newClockType) return;
+    if (!["analog", "digital"].includes(newClockType)) return;
     dispatch(
       currentSpaceEditWidget({
         type: "clock",
-        values: { id, TwentyFourHour, clockType: newClockType, showSeconds },
+        values: {
+          id,
+          TwentyFourHour,
+          clockType: newClockType as ClockWidgetType["clockType"],
+          showSeconds,
+        },
       })
     );
   };
-
-  const switches = [
-    {
-      title: "24 H",
-      toggled: TwentyFourHour,
-      toggle: toggleTwentyFourHour,
-    },
-    { title: "Seconds", toggled: showSeconds, toggle: toggleShowSeconds },
-    {
-      title: "Analog",
-      toggled: clockType === "analog",
-      toggle: toggleClockType,
-    },
-  ];
+  const deleteThis = () => {
+    dispatch(currentSpaceDeleteWidget({ type: "clock", id }));
+  };
 
   return (
-    <WidgetControls className="">
+    <WidgetControls>
       <MenuPopover>
-        {switches.map(({ title, toggled, toggle }) => (
-          <TwoItems
-            key={title}
-            item1={title}
-            item2={<Switch checked={toggled} onChange={toggle} />}
-          />
-        ))}
+        <MenuItem
+          sx={{ justifyContent: "space-between", flexDirection: "column" }}
+          className="gap-2">
+          <div className="text-2xl">Clock Type</div>
+          <ToggleButtonGroup
+            value={clockType}
+            exclusive
+            onChange={onClockTypeChange}
+            aria-label="text alignment">
+            <ToggleButton value="digital"> Digital</ToggleButton>
+            <ToggleButton value="analog"> Analog</ToggleButton>
+          </ToggleButtonGroup>
+        </MenuItem>
+
+        <Divider />
+        <MenuSwitchItem
+          checked={TwentyFourHour}
+          onChange={toggleTwentyFourHour}
+          title={clockType === "analog" ? "Show Numbers" : "24 Hours"}
+        />
+        <MenuSwitchItem
+          checked={showSeconds}
+          onChange={toggleSeconds}
+          title="Show Seconds"
+        />
+        <Divider />
+        <ListItemButton
+          sx={{ justifyContent: "space-around" }}
+          className="gap-5 items-center"
+          onClick={deleteThis}>
+          <ListItemIcon>
+            <DeleteIcon color="error" />
+          </ListItemIcon>
+          <Box sx={{ color: "error.main" }} className="text-xl">
+            Delete
+          </Box>
+        </ListItemButton>
       </MenuPopover>
     </WidgetControls>
   );
 }
-const TwoItems = ({ item1, item2 }: { item1: ReactNode; item2: ReactNode }) => {
+
+const MenuSwitchItem = ({
+  checked,
+  onChange,
+  title,
+}: {
+  checked?: boolean;
+  onChange: () => void;
+  title: string;
+}) => {
   return (
-    <div className="between gap-2 w-full">
-      <div>{item1}</div> {item2}{" "}
-    </div>
+    <MenuItem
+      sx={{ justifyContent: "space-between" }}
+      onClick={onChange}
+      className="capitalize between gap-4 w-full">
+      <div className="text-xl">{title}</div>
+      <Switch checked={checked} onChange={onChange} />
+    </MenuItem>
   );
 };
 

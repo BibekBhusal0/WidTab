@@ -36,7 +36,7 @@ const DigitalClock = ({
   return (
     <div
       ref={textFitRef}
-      className="text-center size-full flex-center p-3 uppercase">
+      className="text-center size-full flex-center p-5 uppercase">
       <Textfit
         min={20}
         max={400}
