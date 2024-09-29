@@ -60,44 +60,34 @@ function ChangeURL({ url, id }: CustomWidgetType) {
     setExtractedUrl(matchedUrl ? matchedUrl[0] : "");
   };
 
+  const valid = extractedUrl !== "";
   const add = () => {
-    if (extractedUrl !== "" && extractedUrl !== url) {
+    if (valid && extractedUrl !== url) {
       dispatch(
         currentSpaceEditWidget({
           type: "custom",
           values: { id: id, url: extractedUrl },
         })
       );
-
-      setText("");
-      setExtractedUrl("");
     }
   };
   return (
-    <MenuPopover icon={<HiPencilAlt />}>
+    <MenuPopover icon={<HiPencilAlt className="text-2xl" />}>
       <div className="p-4 flex-center flex-col gap-4">
-        <div className="flex flex-col gap-2">
-          <TextField
-            autoFocus
-            placeholder="Widget URL"
-            label="Widget URL"
-            value={text}
-            onChange={handleTextChange}
-          />
-          <Box sx={{ color: "error.main" }}>
-            {extractedUrl === ""
-              ? text.trim() === ""
-                ? ""
-                : "Invalid URL"
-              : ""}
-          </Box>
-        </div>
+        <TextField
+          error={!valid}
+          helperText={!valid ? "URL not valid" : ""}
+          autoFocus
+          placeholder="Widget URL"
+          label="Widget URL"
+          value={text}
+          onChange={handleTextChange}
+        />
 
         <Button
           disabled={extractedUrl === "" || extractedUrl === url}
           onClick={add}>
-          {" "}
-          Done{" "}
+          Done
         </Button>
       </div>
     </MenuPopover>

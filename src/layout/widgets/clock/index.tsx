@@ -9,10 +9,6 @@ interface DigitalClockProps extends ClockWidgetType {
   time: Date;
 }
 
-interface AnalogClockProps extends ClockWidgetType {
-  time: Date;
-}
-
 function ClockWidget({ ...props }: ClockWidgetType) {
   const [time, setTime] = useState<Date>(new Date());
 
@@ -85,6 +81,6 @@ const DigitalClock = ({
 const AnalogClock = ({
   time,
   timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone,
-}: AnalogClockProps) => {
+}: DigitalClockProps) => {
   return <Clock value={moment.tz(time, timeZone).toDate()} />;
 };

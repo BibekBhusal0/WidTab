@@ -156,7 +156,7 @@ export const layoutSlice = createSlice({
 
       if (space && state.currentSpace.type === "dynamic") {
         const newWidget = action.payload;
-        var id = action.payload.values.id;
+        var id = newWidget.values.id;
         if (
           uncontrolledWidgets.includes(
             action.payload.type as uncontrolledWidgetsType

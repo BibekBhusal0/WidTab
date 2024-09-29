@@ -1,31 +1,21 @@
-import useCurrentLayout from "@/hooks/useCurrentLayout";
 import { currentSpaceAddWidget } from "@/redux/slice/layout";
 import { StateType } from "@/redux/store";
-import { findNextAvailablePosition } from "@/utils/findWidgetPosition";
 import { Box, Button, Slider, TextField } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddIcon from "@mui/icons-material/Add";
+import useAvailablePosition from "@/hooks/useAvailablePosition";
 
 export const urlPattern = /(https?:\/\/[^\s]+|www\.[^\s]+)/;
 
 function AddCustomWidget() {
   const dispatch = useDispatch();
-  const crrLayout = useCurrentLayout();
-  const { n_cols, n_rows } = useSelector((state: StateType) => state.layout);
-  if (!crrLayout) return null;
-  const { widgets } = crrLayout;
+  const { n_cols } = useSelector((state: StateType) => state.layout);
   const [text, setText] = useState("");
   const [extractedUrl, setExtractedUrl] = useState("");
   const [rows, setRows] = useState(1);
   const [cols, setCols] = useState(1);
-  const available_widgets = findNextAvailablePosition(
-    widgets,
-    n_cols,
-    n_rows,
-    cols,
-    rows
-  );
+  const available_widgets = useAvailablePosition(cols, rows);
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;

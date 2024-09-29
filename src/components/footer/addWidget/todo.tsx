@@ -1,9 +1,8 @@
 import AddItem from "@/components/addItem";
-import useCurrentLayout from "@/hooks/useCurrentLayout";
+import useAvailablePosition from "@/hooks/useAvailablePosition";
 import { currentSpaceAddWidget } from "@/redux/slice/layout";
 import { addTask } from "@/redux/slice/todo";
 import { StateType } from "@/redux/store";
-import { findNextAvailablePosition } from "@/utils/findWidgetPosition";
 import { widgetDimensions } from "@/utils/getWidget";
 import { getNextId } from "@/utils/next_id";
 import { Box, List, ListItemButton } from "@mui/material";
@@ -12,19 +11,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 function AddTodo() {
   const dispatch = useDispatch();
-  const crrLayout = useCurrentLayout();
-  const { n_cols, n_rows } = useSelector((state: StateType) => state.layout);
   const { Tasks, pinnedTodo } = useSelector((state: StateType) => state.todo);
-  if (!crrLayout) return null;
   const todoDimensions = widgetDimensions["todo"];
   const { minH, minW } = todoDimensions;
-  const availablePosition = findNextAvailablePosition(
-    crrLayout.widgets,
-    n_cols,
-    n_rows,
-    minW,
-    minH
-  );
+  const availablePosition = useAvailablePosition(minW, minH);
 
   const addWidget = (id: number) => {
     if (!availablePosition) return;

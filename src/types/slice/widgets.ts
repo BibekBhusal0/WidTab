@@ -69,12 +69,10 @@ export type AllWidgetPropsMapping<T extends allWidgetsType> = Extract<
 >["values"];
 
 export type WidgetTypeMapping =
+  | WidgetMappingUncontrolled
   | { type: "todo"; values: TaskType }
   | { type: "habit-tracker"; values: HabitTrackerItemType }
-  | { type: "bookmark"; values: BookmarkWidgetType }
-  | { type: "custom"; values: CustomWidgetType }
-  | { type: "clock"; values: ClockWidgetType }
-  | { type: "search"; values: SearchWidgetType };
+  | { type: "bookmark"; values: BookmarkWidgetType };
 
 export type WidgetType = {
   gridProps: Layout;

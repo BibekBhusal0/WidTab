@@ -5,20 +5,19 @@ import { useDispatch } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
 import WidgetControls from "@/components/widgetControl";
+import { ReactNode } from "react";
 
-function SimpleWidget({
-  children,
-  id,
-}: {
-  children: React.ReactNode;
-  id: number;
-}) {
+type simpleWidgetProps = DeleteWidgetParameters & {
+  children: ReactNode;
+};
+
+function SimpleWidget({ children, ...props }: simpleWidgetProps) {
   const layout = useCurrentLayout();
   const showControls = !layout?.locked;
 
   return (
     <Box className="size-full relative overflow-hidden">
-      {showControls && <DeleteWidgetButton type="custom" id={id} />}
+      {showControls && <DeleteWidgetButton {...props} />}
       {children}
     </Box>
   );
