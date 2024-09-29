@@ -13,10 +13,9 @@ import ClockWidget from "./clock";
 import HabitTrackerWidget from "./habit-tracker";
 import SearchWidget from "./search";
 import { FunctionComponent } from "react";
-// import { useDispatch } from "react-redux";
-// import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
+import Calendar from "./calendar";
 
-export const done: allWidgetsType[] = ["custom", "todo"];
+export const done: allWidgetsType[] = ["custom", "todo", "clock", "calendar"];
 
 export const widgetElementMapping: {
   [K in WidgetMappingAll["type"]]: FunctionComponent<AllWidgetPropsMapping<K>>;
@@ -27,24 +26,14 @@ export const widgetElementMapping: {
   clock: ClockWidget,
   "habit-tracker": HabitTrackerWidget,
   search: SearchWidget,
+  calendar: Calendar,
 };
 
 function Widget({ widget }: { widget: WidgetType }) {
-  //   const dispatch = useDispatch();
   if (!done.includes(widget.type)) return null;
   const Element = widgetElementMapping[widget.type] as FunctionComponent<
     AllWidgetPropsMapping<allWidgetsType>
   >;
-  //   if (controlledWidgets.includes(widget.type as controlledWidgetsType)) {
-  //     return (
-  //       <Element
-  //         {...widget.values}
-  //         deleteAction={(id) => {
-  //           dispatch(currentSpaceDeleteWidget({ type: widget.type, id }));
-  //         }}
-  //       />
-  //     );
-  //   }
 
   return <Element {...widget.values} />;
 }

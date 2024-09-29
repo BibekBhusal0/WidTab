@@ -4,7 +4,7 @@ import { HabitTrackerItemType } from "./habit-tracker";
 import { BookmarkWidgetType } from "./bookmark";
 
 const CW = ["todo", "bookmark", "habit-tracker"] as const;
-const UW = ["custom", "clock", "search"] as const;
+const UW = ["custom", "clock", "search", "calendar"] as const;
 
 export type controlledWidgetsType = (typeof CW)[number];
 export type uncontrolledWidgetsType = (typeof UW)[number];
@@ -28,10 +28,11 @@ export type CustomWidgetType = {
 
 export type ClockWidgetType = {
   id: number;
-  TwentyFourHour: boolean;
-  ShowDay: boolean;
-  // TimeZone: string,
-  // clockType : 'analog' | 'digital'
+  TwentyFourHour?: boolean;
+  clockType?: "analog" | "digital";
+  timeZone?: string;
+  showSeconds?: boolean;
+  //   ShowDay: boolean;
 };
 
 export type SearchWidgetType = {
@@ -50,7 +51,8 @@ export type WidgetMappingStatic = {
 export type WidgetMappingDynamic =
   | { type: "custom"; values: CustomWidgetType }
   | { type: "clock"; values: ClockWidgetType }
-  | { type: "search"; values: SearchWidgetType };
+  | { type: "search"; values: SearchWidgetType }
+  | { type: "calendar"; values: controlledWidgetValues };
 
 export type WidgetMappingAll = WidgetMappingStatic | WidgetMappingDynamic;
 

@@ -4,7 +4,7 @@ import { StateType } from "@/redux/store";
 import { RemovableToolbarIcons } from "@/types/slice/layout";
 import TodoButton from "./todoButton";
 import Spaces from "./spaces";
-import { ReactNode } from "react";
+import { Fragment, ReactNode } from "react";
 
 function RemovableButtons() {
   const { toolBarIcons } = useSelector((state: StateType) => state.layout);
@@ -18,7 +18,7 @@ function RemovableButtons() {
     <>
       {Object.entries(iconsMapping).map(([key, component]) => {
         if (toolBarIcons.includes(key as RemovableToolbarIcons)) {
-          return <>{component}</>;
+          return <Fragment key={key}>{component}</Fragment>;
         } else {
           return null;
         }

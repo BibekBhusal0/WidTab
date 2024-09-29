@@ -85,7 +85,7 @@ function DynamicLayout() {
             sx={{ backgroundColor: "secondaryContainer.paper" }}
             key={w.gridProps.i}>
             {!locked && <DragHandle />}
-            <div className="size-full relative z-[2]">
+            <div className="size-full relative">
               <Widget widget={w} />
             </div>
           </Paper>

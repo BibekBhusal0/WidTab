@@ -6,7 +6,7 @@ function DragHandle() {
 
   return (
     <Box
-      className="size-full absolute overflow-hidden top-0 left-0"
+      className="absolute w-full h-[50%] overflow-hidden top-0 left-0 z-10"
       sx={{ borderRadius }}
       //
     >
@@ -14,7 +14,7 @@ function DragHandle() {
         sx={{
           backgroundColor: "primary.main",
         }}
-        className="w-full opacity-50 drag-handle h-[9%] absolute top-0 left-0 z-[3]"></Box>
+        className="w-full opacity-50 drag-handle h-[9%] absolute top-0 left-0"></Box>
     </Box>
   );
 }

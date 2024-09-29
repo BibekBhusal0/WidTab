@@ -33,7 +33,7 @@ const initialState: LayoutSliceType = {
   toolBarIcons: ["lock", "spaces", "todo"],
   n_rows: 8,
   n_cols: 12,
-  currentSpace: { type: "dynamic", id: 1 },
+  currentSpace: { type: "dynamic", id: 2 },
   allSpaces: [
     {
       ...getEmptySpace(),
@@ -81,6 +81,31 @@ const initialState: LayoutSliceType = {
             w: 4,
             h: 3,
             i: "2",
+          },
+        },
+      ],
+    },
+    {
+      ...getEmptySpace(),
+      id: 2,
+      delete_able: false,
+      name: "test",
+      widgets: [
+        {
+          type: "clock",
+          values: { id: 2, clockType: "digital", TwentyFourHour: true },
+          gridProps: { i: "2", x: 7, y: 0, w: 3, h: 4 },
+        },
+        {
+          type: "calendar",
+          values: { id: 3 },
+          gridProps: {
+            i: "3",
+            x: 2,
+            y: 0,
+            w: 3,
+            h: 4,
+            isResizable: false,
           },
         },
       ],
