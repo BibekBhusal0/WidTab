@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddIcon from "@mui/icons-material/Add";
 import useAvailablePosition from "@/hooks/useAvailablePosition";
+import HelpInCustomWidget from "./helpCustom";
 
 export const urlPattern = /(https?:\/\/[^\s]+|www\.[^\s]+)/;
 
@@ -38,7 +39,7 @@ function AddCustomWidget() {
     }
   };
   return (
-    <Box className="size-full flex flex-col gap-3">
+    <Box className="size-full relative flex flex-col gap-3">
       <TextField
         error={extractedUrl === "" && text.trim() !== ""}
         helperText={
@@ -81,6 +82,7 @@ function AddCustomWidget() {
       >
         Add
       </Button>
+      <HelpInCustomWidget />
     </Box>
   );
 }
