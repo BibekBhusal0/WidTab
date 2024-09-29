@@ -25,7 +25,8 @@ function AddTodo() {
     minW,
     minH
   );
-  const handleClick = (id: number) => {
+
+  const addWidget = (id: number) => {
     if (!availablePosition) return;
     dispatch(
       currentSpaceAddWidget({
@@ -46,19 +47,7 @@ function AddTodo() {
     if (!availablePosition) return;
     const newId = getNextId(Tasks.map(({ id }) => id));
     dispatch(addTask(title));
-    dispatch(
-      currentSpaceAddWidget({
-        type: "todo",
-        values: {
-          id: newId,
-        },
-        gridProps: {
-          ...todoDimensions,
-          ...availablePosition,
-          i: `todo-${newId}`,
-        },
-      })
-    );
+    addWidget(newId);
   };
 
   return (
@@ -69,7 +58,7 @@ function AddTodo() {
             sx={{ justifyContent: "space-between" }}
             disabled={!availablePosition}
             key={id}
-            onClick={() => handleClick(id)}
+            onClick={() => addWidget(id)}
             //
           >
             {title}

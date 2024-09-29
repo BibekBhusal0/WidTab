@@ -44,17 +44,24 @@ export type controlledWidgetValues = {
   id: number;
 };
 
-export type WidgetMappingStatic = {
+export type DeleteWidgetParameters = {
+  type: allWidgetsType;
+  id: number;
+};
+
+export type WidgetMappingControlled = {
   type: controlledWidgetsType;
   values: controlledWidgetValues;
 };
-export type WidgetMappingDynamic =
+export type WidgetMappingUncontrolled =
   | { type: "custom"; values: CustomWidgetType }
   | { type: "clock"; values: ClockWidgetType }
   | { type: "search"; values: SearchWidgetType }
   | { type: "calendar"; values: controlledWidgetValues };
 
-export type WidgetMappingAll = WidgetMappingStatic | WidgetMappingDynamic;
+export type WidgetMappingAll =
+  | WidgetMappingControlled
+  | WidgetMappingUncontrolled;
 
 export type AllWidgetPropsMapping<T extends allWidgetsType> = Extract<
   WidgetMappingAll,

@@ -7,9 +7,10 @@ import {
   RemovableToolbarIcons,
 } from "@/types/slice/layout";
 import {
-  allWidgetsType,
+  DeleteWidgetParameters,
   uncontrolledWidgets,
   uncontrolledWidgetsType,
+  WidgetMappingUncontrolled,
   WidgetType,
 } from "@/types/slice/widgets";
 import { getNextId } from "@/utils/next_id";
@@ -154,24 +155,37 @@ export const layoutSlice = createSlice({
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
 
       if (space && state.currentSpace.type === "dynamic") {
+        const newWidget = action.payload;
+        var id = action.payload.values.id;
         if (
           uncontrolledWidgets.includes(
             action.payload.type as uncontrolledWidgetsType
           )
         ) {
-          const id = getNextId(space.widgets.map(({ values: { id } }) => id));
-          const values = action.payload.values;
-          values.id = id;
-          const newWidget = action.payload;
-          newWidget.gridProps.i = `${action.payload.type}-${id}`;
+          id = getNextId(space.widgets.map(({ values: { id } }) => id));
           newWidget.values.id = id;
-          space.widgets.push(newWidget);
-        } else space.widgets.push(action.payload);
+        }
+        newWidget.gridProps.i = `${action.payload.type}-${id}`;
+        space.widgets.push(newWidget);
+      }
+    },
+    currentSpaceEditWidget: (
+      state,
+      action: PayloadAction<WidgetMappingUncontrolled>
+    ) => {
+      const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
+      if (space && state.currentSpace.type === "dynamic") {
+        const widget = space.widgets.find(
+          (p) => p.values.id === action.payload.values.id
+        );
+        if (widget) {
+          widget.values = action.payload.values;
+        }
       }
     },
     currentSpaceDeleteWidget(
       state,
-      action: PayloadAction<{ type: allWidgetsType; id: number }>
+      action: PayloadAction<DeleteWidgetParameters>
     ) {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
       if (space && state.currentSpace.type === "dynamic") {
@@ -240,7 +254,10 @@ export const layoutSlice = createSlice({
 
 export const {
   changeCurrentSpace,
+  changeToolBarPosition,
   addSpace,
+  toggleLink,
+  toggleIcon,
   currentSpaceAddWidget,
   currentSpaceDeleteWidget,
   currentSpaceSetGridProps,
@@ -249,9 +266,7 @@ export const {
   currentSpaceChangeCompaction,
   currentSpaceDuplicate,
   currentSpaceRename,
-  changeToolBarPosition,
-  toggleLink,
-  toggleIcon,
+  currentSpaceEditWidget,
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;
