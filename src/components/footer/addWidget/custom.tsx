@@ -7,15 +7,15 @@ import AddIcon from "@mui/icons-material/Add";
 import useAvailablePosition from "@/hooks/useAvailablePosition";
 import HelpInCustomWidget from "./helpCustom";
 
-export const urlPattern = /(https?:\/\/[^\s]+|www\.[^\s]+)/;
+export const urlPattern = /(https?:\/\/[^\s"'"]+|www\.[^\s"'"]+)/;
 
 function AddCustomWidget() {
   const dispatch = useDispatch();
-  const { n_cols } = useSelector((state: StateType) => state.layout);
+  const { n_cols, n_rows } = useSelector((state: StateType) => state.layout);
   const [text, setText] = useState("");
   const [extractedUrl, setExtractedUrl] = useState("");
-  const [rows, setRows] = useState(1);
-  const [cols, setCols] = useState(1);
+  const [rows, setRows] = useState(2);
+  const [cols, setCols] = useState(2);
   const available_widgets = useAvailablePosition(cols, rows);
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,8 +66,15 @@ function AddCustomWidget() {
             value={rows}
             onChange={(_, value) => setRows(value as number)}
             min={1}
-            max={n_cols}
+            max={n_rows}
           />
+        </Box>
+        <Box className="text-xl">
+          Position: ({cols}, {rows})
+        </Box>
+        <Box sx={{ color: "error.main" }}>
+          {" "}
+          {available_widgets === null ? "No space available" : ""}{" "}
         </Box>
       </div>
 
@@ -77,7 +84,6 @@ function AddCustomWidget() {
         variant="contained"
         className="mx-5"
         startIcon={<AddIcon />}
-
         //
       >
         Add
