@@ -11,10 +11,10 @@ import { positionProps } from "@/types/slice/layout";
 import { cn } from "@/utils/cn";
 
 function DynamicLayout() {
-  const { toolBarPosition } = useSelector((state: StateType) => state.layout);
+  const { n_cols, n_rows, currentSpace, toolBarPosition } = useSelector(
+    (state: StateType) => state.layout
+  );
   const { mainComponentProps } = positionProps[toolBarPosition];
-
-  const { n_cols, n_rows } = useSelector((state: StateType) => state.layout);
   const space = useCurrentLayout();
   const dispatch = useDispatch();
 
@@ -23,23 +23,22 @@ function DynamicLayout() {
   const [rowHeight, setRowHeight] = useState(10);
   const gap = 10;
 
+  const handleResize = () => {
+    if (containerRef.current) {
+      setContainerWidth(containerRef.current.offsetWidth);
+      setRowHeight((containerRef.current.offsetHeight - gap * n_rows) / n_rows);
+    }
+  };
   useEffect(() => {
-    const handleResize = () => {
-      if (containerRef.current) {
-        setContainerWidth(containerRef.current.offsetWidth);
-        setRowHeight(
-          (containerRef.current.offsetHeight - gap * n_rows) / n_rows
-        );
-      }
-    };
-
     handleResize();
     window.addEventListener("resize", handleResize);
-
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  useEffect(() => {
+    handleResize();
+  }, [currentSpace, toolBarPosition]);
 
   if (!space) return null;
   const { compaction, locked, widgets } = space;

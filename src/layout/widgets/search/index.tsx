@@ -16,19 +16,19 @@ import {
   SiMicrosoftbing,
   SiYoutube,
   SiBrave,
-  SiGoogle,
 } from "react-icons/si";
 import { IoSearch } from "react-icons/io5";
 import { StateType } from "@/redux/store";
 import { IconContext } from "react-icons/lib";
 import SimpleWidget from "../simpleWidget";
+import { FaGoogle } from "react-icons/fa";
 
 export type SearchEngineMapping = Record<
   AllSearchEngines,
   { icon: ReactNode; link: string }
 >;
-const searchEngineLogoAndLink: SearchEngineMapping = {
-  Google: { icon: <SiGoogle />, link: "https://www.google.com/search?q=%s" },
+export const searchEngineLogoAndLink: SearchEngineMapping = {
+  Google: { icon: <FaGoogle />, link: "https://www.google.com/search?q=%s" },
   Bing: { icon: <SiMicrosoftbing />, link: "https://www.bing.com/search?q=%s" },
   YouTube: {
     icon: <SiYoutube />,
