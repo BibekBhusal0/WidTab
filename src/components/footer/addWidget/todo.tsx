@@ -1,5 +1,6 @@
 import AddItem from "@/components/addItem";
 import useAvailablePosition from "@/hooks/useAvailablePosition";
+import useCurrentLayout from "@/hooks/useCurrentLayout";
 import { currentSpaceAddWidget } from "@/redux/slice/layout";
 import { addTask } from "@/redux/slice/todo";
 import { StateType } from "@/redux/store";
@@ -12,9 +13,15 @@ import { useDispatch, useSelector } from "react-redux";
 function AddTodo() {
   const dispatch = useDispatch();
   const { Tasks, pinnedTodo } = useSelector((state: StateType) => state.todo);
+  const layout = useCurrentLayout();
+
   const todoDimensions = widgetDimensions["todo"];
   const { minH, minW } = todoDimensions;
   const availablePosition = useAvailablePosition(minW, minH);
+  if (!layout) return null;
+  const { widgets } = layout;
+  const presentTodos = widgets.filter(({ type }) => type === "todo");
+  const presentTodosId = presentTodos.map(({ values: { id } }) => id);
 
   const addWidget = (id: number) => {
     if (!availablePosition) return;
@@ -46,7 +53,7 @@ function AddTodo() {
         {Tasks.map(({ id, title }) => (
           <ListItemButton
             sx={{ justifyContent: "space-between" }}
-            disabled={!availablePosition}
+            disabled={!availablePosition || presentTodosId.includes(id)}
             key={id}
             onClick={() => addWidget(id)}
             //

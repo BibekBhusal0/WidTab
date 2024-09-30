@@ -21,6 +21,7 @@ import {
 import { IoSearch } from "react-icons/io5";
 import { StateType } from "@/redux/store";
 import { IconContext } from "react-icons/lib";
+import SimpleWidget from "../simpleWidget";
 
 export type SearchEngineMapping = Record<
   AllSearchEngines,
@@ -81,58 +82,60 @@ function SearchWidget({ id, engine }: SearchWidgetType) {
   };
 
   return (
-    <IconContext.Provider value={{ size: "30px" }}>
-      <OutlinedInput
-        placeholder="Search..."
-        autoFocus
-        className="size-full"
-        sx={{ fontSize: "32px" }}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            handleSearch();
+    <SimpleWidget id={id} type="search">
+      <IconContext.Provider value={{ size: "30px" }}>
+        <OutlinedInput
+          placeholder="Search..."
+          autoFocus
+          className="size-full"
+          sx={{ fontSize: "32px" }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSearch();
+            }
+          }}
+          startAdornment={
+            <InputAdornment position="start">
+              <IconButton onClick={handleSearch}>
+                <IoSearch />
+              </IconButton>
+            </InputAdornment>
           }
-        }}
-        startAdornment={
-          <InputAdornment position="start">
-            <IconButton onClick={handleSearch}>
-              <IoSearch />
-            </IconButton>
-          </InputAdornment>
-        }
-        endAdornment={
-          <InputAdornment position="end">
-            <Select
-              variant="filled"
-              size="small"
-              disableUnderline
-              value={engine}
-              onChange={changeSearchEngine}
-              renderValue={renderValue}
-              sx={{
-                ".MuiSelect-select": {
-                  padding: "10px",
-                  paddingBottom: "4px",
-                },
-              }}>
-              {Object.entries(searchEngineLogoAndLink).map(
-                ([key, { icon }]) => (
-                  <MenuItem
-                    className="gap-4"
-                    key={key}
-                    value={key as AllSearchEngines}>
-                    <ListItemIcon>{icon}</ListItemIcon>
-                    <span>{key}</span>
-                  </MenuItem>
-                )
-              )}
-            </Select>
-          </InputAdornment>
-        }
-        size="small"
-        value={text}
-        onChange={handleInputChange}
-      />
-    </IconContext.Provider>
+          endAdornment={
+            <InputAdornment position="end">
+              <Select
+                variant="filled"
+                size="small"
+                disableUnderline
+                value={engine}
+                onChange={changeSearchEngine}
+                renderValue={renderValue}
+                sx={{
+                  ".MuiSelect-select": {
+                    padding: "10px",
+                    paddingBottom: "4px",
+                  },
+                }}>
+                {Object.entries(searchEngineLogoAndLink).map(
+                  ([key, { icon }]) => (
+                    <MenuItem
+                      className="gap-4"
+                      key={key}
+                      value={key as AllSearchEngines}>
+                      <ListItemIcon>{icon}</ListItemIcon>
+                      <span>{key}</span>
+                    </MenuItem>
+                  )
+                )}
+              </Select>
+            </InputAdornment>
+          }
+          size="small"
+          value={text}
+          onChange={handleInputChange}
+        />
+      </IconContext.Provider>
+    </SimpleWidget>
   );
 }
 export default SearchWidget;

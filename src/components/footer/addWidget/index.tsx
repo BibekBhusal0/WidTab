@@ -14,7 +14,7 @@ function AddWidget() {
   const addItems: widgetAddObjectType[] = [
     { index: 0, name: "custom", component: <AddCustomWidget /> },
     { index: 1, name: "todo", component: <AddTodo /> },
-    { index: 2, name: "Date-Time", component: <DateTime /> },
+    { index: 2, name: "DateTime", component: <DateTime /> },
   ];
   return (
     <FooterPopover tooltip="Add Widget" icon={<HiViewGridAdd />}>
