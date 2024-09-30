@@ -5,21 +5,17 @@ import { BookmarkWidgetType } from "./bookmark";
 
 const CW = ["todo", "bookmark", "habit-tracker"] as const;
 const UW = ["custom", "clock", "search", "calendar"] as const;
+const SE = ["Google", "Bing", "YouTube", "Brave", "DuckDuckGo"] as const;
 
 export type controlledWidgetsType = (typeof CW)[number];
 export type uncontrolledWidgetsType = (typeof UW)[number];
+export type AllSearchEngines = (typeof SE)[number];
 export type allWidgetsType = controlledWidgetsType | uncontrolledWidgetsType;
 
 export const allWidgets: allWidgetsType[] = [...CW, ...UW];
 export const controlledWidgets: controlledWidgetsType[] = [...CW];
 export const uncontrolledWidgets: uncontrolledWidgetsType[] = [...UW];
-
-export type AllSearchEngines =
-  | "google"
-  | "bing"
-  | "youtube"
-  | "duckduckgo"
-  | "brave";
+export const searchEngines: AllSearchEngines[] = [...SE];
 
 export type CustomWidgetType = {
   id: number;
@@ -32,7 +28,6 @@ export type ClockWidgetType = {
   clockType?: "analog" | "digital";
   timeZone?: string;
   showSeconds?: boolean;
-  //   ShowDay: boolean;
 };
 
 export type SearchWidgetType = {

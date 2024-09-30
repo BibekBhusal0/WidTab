@@ -79,7 +79,6 @@ function ContainerSidebar({
       //
     >
       <CustomTabs
-        // TabIndicatorProps={{ style: { display: "none" } }}
         orientation="vertical"
         value={value}
         onChange={handleChange}

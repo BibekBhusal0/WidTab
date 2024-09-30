@@ -14,7 +14,13 @@ import { FunctionComponent } from "react";
 import Calendar from "./calendar";
 import { Box } from "@mui/material";
 
-export const done: allWidgetsType[] = ["custom", "todo", "clock", "calendar"];
+export const done: allWidgetsType[] = [
+  "custom",
+  "todo",
+  "clock",
+  "calendar",
+  "search",
+];
 
 export const widgetElementMapping: {
   [K in WidgetMappingAll["type"]]: FunctionComponent<AllWidgetPropsMapping<K>>;

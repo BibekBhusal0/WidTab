@@ -30,8 +30,8 @@ function SortableCheckbox({
 
   useEffect(() => {
     if (ref.current) {
-      ref.current.style.height = "auto"; // Reset height
-      ref.current.style.height = `${ref.current.scrollHeight}px`; // Adjust height
+      ref.current.style.height = "auto";
+      ref.current.style.height = `${ref.current.scrollHeight}px`;
     }
   }, [task]);
 
@@ -89,7 +89,7 @@ function SortableCheckbox({
         <button
           className="rounded-full cursor-pointer h-full hidden group-hover:block"
           onClick={handleDelete}
-          //    s
+          //
         >
           <DeleteIcon />
         </button>

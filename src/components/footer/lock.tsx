@@ -10,7 +10,6 @@ function Lock({ type = "button" }: { type?: "button" | "toggle" }) {
   const space = useCurrentLayout();
   if (!space) return null;
 
-  //   if (space?.locked) locked = true;
   const toggle = () => dispatch(currentSpaceToggleLocked());
 
   return (
