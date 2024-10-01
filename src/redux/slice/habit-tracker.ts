@@ -6,7 +6,19 @@ import { getNextId } from "@/utils/next_id";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: HabitTrackerSliceType = {
-  trackers: [{ id: 1, increment: 10, target: 100, title: "breathe", value: 0 }],
+  pinned: null,
+  trackers: [
+    {
+      id: 1,
+      increment: 10,
+      target: 100,
+      title: "breathe",
+      value: 0,
+      tag: "useless",
+      completedToday: false,
+      streak: 1,
+    },
+  ],
 };
 const habitTrackerSlice = createSlice({
   name: "habit-tracker",
@@ -23,15 +35,22 @@ const habitTrackerSlice = createSlice({
     },
     changeValue: (
       state,
-      action: PayloadAction<{ id: number; action: "increment" | "decrement" }>
+      action: PayloadAction<{
+        id: number;
+        action: "increment" | "decrement" | "reset";
+      }>
     ) => {
       const crr = state.trackers.find(({ id }) => id === action.payload.id);
       if (crr) {
-        const valChange =
-          action.payload.action === "increment"
-            ? crr.increment
-            : -crr.increment;
-        crr.value += valChange;
+        if (action.payload.action === "reset") {
+          crr.value = 0;
+        } else {
+          const valChange =
+            action.payload.action === "increment"
+              ? crr.increment
+              : -crr.increment;
+          crr.value += valChange;
+        }
       }
     },
     setItem: (state, action: PayloadAction<HabitTrackerItemType>) => {
@@ -43,9 +62,18 @@ const habitTrackerSlice = createSlice({
         crr.value = action.payload.value;
       }
     },
+    changePinnedHabitTracker: (state, action: PayloadAction<number>) => {
+      if (state.pinned === action.payload) state.pinned = null;
+      else state.pinned = action.payload;
+    },
   },
 });
 
-export const { addItem, changeValue, deleteItem, setItem } =
-  habitTrackerSlice.actions;
+export const {
+  addItem,
+  changeValue,
+  deleteItem,
+  setItem,
+  changePinnedHabitTracker,
+} = habitTrackerSlice.actions;
 export default habitTrackerSlice.reducer;

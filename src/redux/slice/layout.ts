@@ -255,16 +255,15 @@ const initialState: LayoutSliceType = {
       widgets: [
         {
           gridProps: {
-            x: 0,
+            x: 1,
             y: 0,
-            w: 9,
-            h: 6,
-            i: "custom-1",
+            w: 4,
+            h: 2,
+            i: "habit-tracker-1",
           },
-          type: "custom",
+          type: "habit-tracker",
           values: {
             id: 1,
-            url: "https://witeboard.com/",
           },
         },
       ],

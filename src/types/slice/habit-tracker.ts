@@ -6,10 +6,12 @@ export type HabitTrackerItemType = {
   target: number;
   increment: number;
   value: number;
-
-  //  history : HabitTrackerHistoryType
+  streak: number;
+  completedToday: boolean;
+  tag?: string;
 };
 
 export type HabitTrackerSliceType = {
   trackers: HabitTrackerItemType[];
+  pinned: number | null;
 };
