@@ -1,6 +1,8 @@
 import useCurrentLayout from "@/hooks/useCurrentLayout";
 import { DeleteWidgetParameters } from "@/types/slice/widgets";
-import { Box, IconButton } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import Box from "@mui/material/Box";
+
 import { useDispatch } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { currentSpaceDeleteWidget } from "@/redux/slice/layout";

@@ -1,6 +1,6 @@
 import { toggleLink } from "@/redux/slice/layout";
 import { StateType } from "@/redux/store";
-import { Switch } from "@mui/material";
+import Switch from "@mui/material/Switch";
 import { useDispatch, useSelector } from "react-redux";
 import SelectToolBarPosition from "./toolBarPosition";
 import SettingHeader from "../settings-header";

@@ -1,7 +1,8 @@
 import { changeCurrentSpace } from "@/redux/slice/layout";
 import { StateType } from "@/redux/store";
 import { controlledWidgetsType } from "@/types/slice/widgets";
-import { List, ListItemButton } from "@mui/material";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
 import { useDispatch, useSelector } from "react-redux";
 
 function AllStaticLayout() {

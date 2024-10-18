@@ -6,7 +6,7 @@ import useCurrentLayout from "./hooks/useCurrentLayout";
 import { controlledWidgetsType } from "./types/slice/widgets";
 import DynamicLayout from "./layout/dynamic";
 import StaticLayout from "./layout/static";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import { positionProps } from "./types/slice/layout";
 import { cn } from "./utils/cn";
 

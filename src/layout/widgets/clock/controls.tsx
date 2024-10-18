@@ -1,16 +1,15 @@
 import { ClockWidgetType } from "@/types/slice/widgets";
 import MenuPopover from "@/components/popoverMenu";
 import WidgetControls from "@/components/widgetControl";
-import {
-  Box,
-  Divider,
-  ListItemButton,
-  ListItemIcon,
-  MenuItem,
-  Switch,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import MenuItem from "@mui/material/MenuItem";
+import Switch from "@mui/material/Switch";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+
 import { useDispatch } from "react-redux";
 import {
   currentSpaceDeleteWidget,

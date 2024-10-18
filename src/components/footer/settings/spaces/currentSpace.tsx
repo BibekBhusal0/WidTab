@@ -1,5 +1,5 @@
 import useCurrentLayout from "@/hooks/useCurrentLayout";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import Lock from "../../lock";
 import SettingHeader from "../settings-header";
 import DuplicateThisSpace from "./duplicateSpace";

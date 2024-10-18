@@ -1,7 +1,7 @@
 import AllDynamicSpace from "./allDynamicSpaces";
 import AllStaticLayout from "./allStaticSpaces";
 import SettingHeader from "../settings-header";
-import { BoxProps } from "@mui/material";
+import { BoxProps } from "@mui/material/Box";
 import { cn } from "@/utils/cn";
 
 function AllSpaces({ headerProps = undefined }: { headerProps?: BoxProps }) {

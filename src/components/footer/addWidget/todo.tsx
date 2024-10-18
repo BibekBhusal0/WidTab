@@ -6,9 +6,11 @@ import { addTask } from "@/redux/slice/todo";
 import { StateType } from "@/redux/store";
 import { widgetDimensions } from "@/utils/getWidget";
 import { getNextId } from "@/utils/next_id";
-import { Box, List, ListItemButton } from "@mui/material";
-import { BsPinAngleFill } from "react-icons/bs";
+import Box from "@mui/material/Box";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
 import { useDispatch, useSelector } from "react-redux";
+import { BsPinAngleFill } from "react-icons/bs";
 
 function AddTodo() {
   const dispatch = useDispatch();

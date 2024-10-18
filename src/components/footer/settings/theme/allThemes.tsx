@@ -1,6 +1,8 @@
 import { switchTheme } from "@/redux/slice/theme";
 import { StateType } from "@/redux/store";
-import { List, ListItemButton } from "@mui/material";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+
 import { useDispatch, useSelector } from "react-redux";
 import AddTheme from "./addTheme";
 

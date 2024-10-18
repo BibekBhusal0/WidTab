@@ -1,5 +1,5 @@
 import useCurrentLayout from "@/hooks/useCurrentLayout";
-import { Button, ButtonProps } from "@mui/material";
+import Button, { ButtonProps } from "@mui/material/Button";
 import { useDispatch } from "react-redux";
 import { currentSpaceDuplicate } from "@/redux/slice/layout";
 

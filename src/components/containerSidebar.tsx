@@ -1,14 +1,10 @@
 import { ReactNode, useState } from "react";
 import Box, { BoxProps } from "@mui/material/Box";
 import { cn } from "@/utils/cn";
-import {
-  styled,
-  Tab,
-  TabProps,
-  Tabs,
-  TabsProps,
-  useTheme,
-} from "@mui/material";
+import Tab, { TabProps } from "@mui/material/Tab";
+import Tabs, { TabsProps } from "@mui/material/Tabs";
+import useTheme from "@mui/material/styles/useTheme";
+import { styled } from "@mui/material/styles";
 import { alpha } from "@mui/material/styles";
 
 export type SidebarComponent = {

@@ -1,5 +1,8 @@
 import HelpIcon from "@mui/icons-material/Help";
-import { IconButton, Link, Paper, useTheme } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
 

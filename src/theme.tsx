@@ -4,7 +4,8 @@ import {
   themeFromSourceColor,
   hexFromArgb,
 } from "@material/material-color-utilities";
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
+import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeItemType } from "./types/slice/theme";
 import useCurrentTheme from "./hooks/useCurrentTheme";
 

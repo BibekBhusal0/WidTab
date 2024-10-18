@@ -1,5 +1,6 @@
 import { cn } from "@/utils/cn";
-import { Box, BoxProps, useTheme } from "@mui/material";
+import Box, { BoxProps } from "@mui/material/Box";
+import { useTheme } from "@mui/material/styles";
 import { FunctionComponent } from "react";
 
 type SettingHeaderProps = {

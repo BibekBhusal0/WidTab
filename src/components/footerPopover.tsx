@@ -1,6 +1,7 @@
 import SettingsIcon from "@mui/icons-material/Settings";
-import { IconButton, Popover, Tooltip } from "@mui/material";
-
+import IconButton from "@mui/material/IconButton";
+import Popover from "@mui/material/Popover";
+import Tooltip from "@mui/material/Tooltip";
 import { ReactNode, useState } from "react";
 
 function FooterPopover({

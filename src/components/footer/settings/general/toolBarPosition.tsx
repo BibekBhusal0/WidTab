@@ -1,7 +1,8 @@
 import { changeToolBarPosition } from "@/redux/slice/layout";
 import { StateType } from "@/redux/store";
 import { ToolBarPositions } from "@/types/slice/layout";
-import { MenuItem, Select } from "@mui/material";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 import { useDispatch, useSelector } from "react-redux";
 
 function SelectToolBarPosition() {

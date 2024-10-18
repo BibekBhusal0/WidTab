@@ -3,7 +3,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { Box, ListItemIcon } from "@mui/material";
+import Box from "@mui/material/Box";
+import ListItemIcon from "@mui/material/ListItemIcon";
+
 import { todoMenuProps } from "@/types/slice/todo";
 import { BsPinAngleFill } from "react-icons/bs";
 import MenuPopover from "@/components/popoverMenu";

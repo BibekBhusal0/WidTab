@@ -1,5 +1,7 @@
 import useCurrentLayout from "@/hooks/useCurrentLayout";
-import { MenuItem, Select } from "@mui/material";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+
 import { compactionType } from "@/types/slice/layout";
 import { useDispatch } from "react-redux";
 import { currentSpaceChangeCompaction } from "@/redux/slice/layout";

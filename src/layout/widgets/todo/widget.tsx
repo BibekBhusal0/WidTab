@@ -4,7 +4,8 @@ import Todo from ".";
 import { controlledWidgetValues } from "@/types/slice/widgets";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
-import { IconButton } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+
 import { useState } from "react";
 
 function TodoWidget({ id }: controlledWidgetValues) {

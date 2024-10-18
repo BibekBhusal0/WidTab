@@ -1,7 +1,8 @@
 import { StateType } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import Todo from "../widgets/todo";
-import { Paper, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import Paper from "@mui/material/Paper";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import { addTask } from "@/redux/slice/todo";
 

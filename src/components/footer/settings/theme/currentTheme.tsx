@@ -5,7 +5,10 @@ import {
   toggleCurrentMode,
 } from "@/redux/slice/theme";
 import { numericalThemeValues } from "@/types/slice/theme";
-import { Button, Slider, SliderProps, Switch } from "@mui/material";
+import Button from "@mui/material/Button";
+import Slider, { SliderProps } from "@mui/material/Slider";
+import Switch from "@mui/material/Switch";
+
 import { useDispatch } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RenameTheme from "./renameTheme";

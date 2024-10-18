@@ -1,14 +1,11 @@
 import { currentSpaceEditWidget } from "@/redux/slice/layout";
 import { AllSearchEngines, SearchWidgetType } from "@/types/slice/widgets";
-import {
-  IconButton,
-  InputAdornment,
-  ListItemIcon,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  SelectChangeEvent,
-} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import MenuItem from "@mui/material/MenuItem";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { ChangeEvent, ReactNode, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {

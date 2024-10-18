@@ -1,11 +1,14 @@
 import { currentSpaceAddWidget } from "@/redux/slice/layout";
 import { StateType } from "@/redux/store";
-import { Box, Button, Slider, TextField } from "@mui/material";
-import { useState } from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Slider from "@mui/material/Slider";
+import TextField from "@mui/material/TextField";
 import { useDispatch, useSelector } from "react-redux";
 import AddIcon from "@mui/icons-material/Add";
 import useAvailablePosition from "@/hooks/useAvailablePosition";
 import HelpInCustomWidget from "./helpCustom";
+import { useState } from "react";
 
 export const urlPattern = /(https?:\/\/[^\s"'"]+|www\.[^\s"'"]+)/;
 

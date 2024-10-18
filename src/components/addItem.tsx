@@ -1,11 +1,6 @@
-import {
-  Box,
-  BoxProps,
-  Button,
-  ButtonProps,
-  TextField,
-  TextFieldProps,
-} from "@mui/material";
+import Box, { BoxProps } from "@mui/material/Box";
+import Button, { ButtonProps } from "@mui/material/Button";
+import TextField, { TextFieldProps } from "@mui/material/TextField";
 import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";

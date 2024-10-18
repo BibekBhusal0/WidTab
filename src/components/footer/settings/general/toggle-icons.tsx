@@ -1,7 +1,7 @@
 import { toggleIcon } from "@/redux/slice/layout";
 import { StateType } from "@/redux/store";
 import { allRemovableToolbarIcons } from "@/types/slice/layout";
-import { Switch } from "@mui/material";
+import Switch from "@mui/material/Switch";
 import { useDispatch, useSelector } from "react-redux";
 
 function ToggleIcons() {

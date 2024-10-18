@@ -4,7 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GridLayout, { Layout } from "react-grid-layout";
 import { currentSpaceSetGridProps } from "@/redux/slice/layout";
-import { Box, Paper } from "@mui/material";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+
 import Widget from "./widgets";
 import DragHandle from "@/components/dragHandle";
 import { positionProps } from "@/types/slice/layout";

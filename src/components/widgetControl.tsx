@@ -1,5 +1,5 @@
 import { cn } from "@/utils/cn";
-import { Paper, PaperProps } from "@mui/material";
+import Paper, { PaperProps } from "@mui/material/Paper";
 
 function WidgetControls(props: PaperProps) {
   return (

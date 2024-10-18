@@ -1,5 +1,5 @@
 import { controlledWidgetsType, WidgetType } from "./widgets";
-import { BoxProps } from "@mui/material";
+import { BoxProps } from "@mui/material/Box";
 
 export type CurrentSpaceType =
   | {

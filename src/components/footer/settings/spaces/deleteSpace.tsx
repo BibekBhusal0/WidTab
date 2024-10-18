@@ -1,5 +1,5 @@
 import useCurrentLayout from "@/hooks/useCurrentLayout";
-import { Button, ButtonProps } from "@mui/material";
+import Button, { ButtonProps } from "@mui/material/Button";
 import { useDispatch } from "react-redux";
 import { currentSpaceDeleteSpace } from "@/redux/slice/layout";
 import DeleteIcon from "@mui/icons-material/Delete";

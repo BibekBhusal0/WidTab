@@ -3,15 +3,14 @@ import { searchEngineLogoAndLink } from "@/layout/widgets/search";
 import { currentSpaceAddWidget } from "@/redux/slice/layout";
 import { AllSearchEngines } from "@/types/slice/widgets";
 import { widgetDimensions } from "@/utils/getWidget";
-import {
-  Button,
-  FormControl,
-  InputLabel,
-  ListItemIcon,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from "@mui/material";
+import Button from "@mui/material/Button";
+import type { SelectChangeEvent } from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+
 import { useState } from "react";
 import { IconContext } from "react-icons/lib";
 import { useDispatch } from "react-redux";

@@ -3,7 +3,7 @@ import moment from "moment-timezone";
 import Clock from "react-clock";
 import "react-clock/dist/Clock.css";
 import { DigitalClockProps } from ".";
-import { useTheme } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 const AnalogClock = ({
   time,

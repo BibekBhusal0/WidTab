@@ -4,7 +4,7 @@ import TodoPage from "./pages/todo";
 import { useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import { positionProps } from "@/types/slice/layout";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import { cn } from "@/utils/cn";
 
 interface StaticLayoutProps {

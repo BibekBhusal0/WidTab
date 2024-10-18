@@ -1,6 +1,10 @@
 import useCurrentLayout from "@/hooks/useCurrentLayout";
 import { CustomWidgetType } from "@/types/slice/widgets";
-import { Box, Button, IconButton, TextField } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+
 import { useDispatch } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {

@@ -2,7 +2,9 @@ import useCurrentLayout from "@/hooks/useCurrentLayout";
 import { currentSpaceToggleLocked } from "@/redux/slice/layout";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { IconButton, Switch, Tooltip } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import Switch from "@mui/material/Switch";
+import Tooltip from "@mui/material/Tooltip";
 import { useDispatch } from "react-redux";
 
 function Lock({ type = "button" }: { type?: "button" | "toggle" }) {

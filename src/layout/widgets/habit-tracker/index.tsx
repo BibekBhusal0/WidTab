@@ -12,7 +12,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import LoopIcon from "@mui/icons-material/Loop";
 import { BsPinAngleFill } from "react-icons/bs";
 import { FaFire } from "react-icons/fa";
-import { Box, Button } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+
 import { StateType } from "@/redux/store";
 import IconMenu from "@/components/menuWithIcon";
 import HoverControls from "@/components/hoverControls";

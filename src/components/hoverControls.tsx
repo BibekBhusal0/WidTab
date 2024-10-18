@@ -1,5 +1,5 @@
 import { cn } from "@/utils/cn";
-import { Box, BoxProps } from "@mui/material";
+import Box, { BoxProps } from "@mui/material/Box";
 import { ReactNode, useState } from "react";
 
 export type hoverControlsProps = {

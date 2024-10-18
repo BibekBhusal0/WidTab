@@ -1,7 +1,7 @@
 import useAvailablePosition from "@/hooks/useAvailablePosition";
 import { currentSpaceAddWidget } from "@/redux/slice/layout";
 import { widgetDimensions } from "@/utils/getWidget";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import { useDispatch } from "react-redux";
 
 function DateTime() {
