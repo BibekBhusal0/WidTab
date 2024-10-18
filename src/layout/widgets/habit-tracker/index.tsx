@@ -6,24 +6,24 @@ import {
   changePinnedHabitTracker,
 } from "@/redux/slice/habit-tracker";
 import WidgetControls from "@/components/widgetControl";
-import MenuPopover from "@/components/popoverMenu";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete";
 import LoopIcon from "@mui/icons-material/Loop";
 import { BsPinAngleFill } from "react-icons/bs";
 import { FaFire } from "react-icons/fa";
-import { Box, Button, IconButton, ListItemIcon, MenuItem } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { StateType } from "@/redux/store";
+import IconMenu from "@/components/menuWithIcon";
+import HoverControls from "@/components/hoverControls";
 
 function HabitTracker({
-  completedToday,
   id,
-  streak,
   target,
   title,
-  tag,
   value,
+  icon,
+  unit,
 }: HabitTrackerItemType) {
   const dispatch = useDispatch();
   const { pinned } = useSelector((state: StateType) => state["habit-tracker"]);
@@ -46,42 +46,52 @@ function HabitTracker({
     { icon: <RemoveIcon />, onClick: handleDecrement },
     { icon: <AddIcon />, onClick: handleIncrement },
   ];
+  const completedToday = value >= target;
 
   return (
-    <Box className="flex-center flex-col gap-4 p-2 w-full">
-      <Box className="between gap-4 w-full">
-        <Box className="flex-center gap-4">
-          <Box
-            className="flex-center gap-2 p-1.5 rounded-xl"
-            sx={{ border: "2px solid" }}>
-            <Box
-              sx={{ border: `2px ${completedToday ? "solid" : "dashed"}` }}
-              className="aspect-square w-10 rounded-full">
-              {completedToday ? <FaFire /> : ""}
-            </Box>
-            {streak}
-          </Box>
-
-          {tag && (
-            <Box className="rounded-xl py-2 px-3" sx={{ border: "1px solid" }}>
-              {tag}
-            </Box>
-          )}
-        </Box>
+    <HoverControls
+      controls={
         <HabitTrackerControls
           handleDelete={handleDelete}
           handlePin={handlePin}
           handleReset={handleReset}
           pinned={pinned === id}
         />
-      </Box>
+      }
+      className="flex-center flex-col gap-4 p-2 w-full">
+      <div className="between w-full gap-4">
+        <div className="w-28 bg-white h-16 text-4xl flex-center">{icon}</div>
+        <Box className="text-4xl">{title}</Box>
+        <div></div>
+      </div>
+
       <Box className="between gap-4 w-full">
-        <div className="w-28 bg-white h-16"></div>
-        <Box className="flex-center flex-col gap-2">
-          <Box className="text-3xl">
-            {value} / {target}
+        <Box className="between gap-4">
+          <Box className="flex-center gap-4">
+            <Box
+              className="flex-center gap-2 p-1.5 rounded-xl"
+              sx={{ border: "2px solid" }}>
+              <Box
+                sx={{ border: `2px ${completedToday ? "solid" : "dashed"}` }}
+                className="aspect-square w-10 rounded-full relative p-0.5">
+                {completedToday && (
+                  <FaFire style={{ width: "100%", height: "100%" }} />
+                )}
+              </Box>
+              0
+            </Box>
           </Box>
-          <Box className="text-md">{title}</Box>
+        </Box>
+        <Box className="flex-center flex-col gap-2">
+          <div>
+            <span className="text-3xl">
+              {value} / {target}
+            </span>
+            <span className="text-md">
+              {"  "}
+              {unit}
+            </span>
+          </div>
         </Box>
         <Box>
           {icons.map(({ icon, onClick }, index) => (
@@ -95,7 +105,7 @@ function HabitTracker({
           ))}
         </Box>
       </Box>
-    </Box>
+    </HoverControls>
   );
 }
 
@@ -113,39 +123,22 @@ function HabitTrackerControls({
   const items = [
     {
       name: pinned ? "Unpin" : "Pin",
-      Icon: BsPinAngleFill,
+      Icon: <BsPinAngleFill />,
       onClick: handlePin,
       color: pinned ? "primary.main" : "action.main",
     },
 
     {
       name: "Delete",
-      Icon: DeleteIcon,
+      Icon: <DeleteIcon />,
       onClick: handleDelete,
       color: "error.main",
     },
+    { name: "Reset", Icon: <LoopIcon />, onClick: handleReset },
   ];
   return (
-    <WidgetControls className="relative flex-center">
-      <IconButton onClick={handleReset}>
-        <LoopIcon />
-      </IconButton>
-      <MenuPopover>
-        {items.map(({ name, Icon, onClick, color }) => (
-          <MenuItem
-            sx={{ color: color }}
-            className="flex-center gap-3"
-            key={name}
-            onClick={onClick}>
-            <ListItemIcon sx={{ color: color }}>
-              <Icon />
-            </ListItemIcon>
-            <Box sx={{ color: color }} className="text-xl">
-              {name}
-            </Box>
-          </MenuItem>
-        ))}
-      </MenuPopover>
+    <WidgetControls>
+      <IconMenu menuItems={items} />
     </WidgetControls>
   );
 }

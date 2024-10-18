@@ -3,12 +3,11 @@
 export type HabitTrackerItemType = {
   id: number;
   title: string;
+  icon: string;
   target: number;
   increment: number;
   value: number;
-  streak: number;
-  completedToday: boolean;
-  tag?: string;
+  unit: string;
 };
 
 export type HabitTrackerSliceType = {

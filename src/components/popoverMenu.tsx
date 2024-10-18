@@ -5,17 +5,19 @@ import ListItemButton, {
 import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 
+export interface MenuPopoverProps {
+  children: React.ReactNode;
+  icon?: React.ReactNode;
+  buttonProps?: ListItemButtonProps;
+  menuProps?: MenuProps;
+}
+
 function MenuPopover({
   children,
   icon = <MenuIcon />,
   buttonProps = undefined,
   menuProps = undefined,
-}: {
-  children: React.ReactNode;
-  icon?: React.ReactNode;
-  buttonProps?: ListItemButtonProps;
-  menuProps?: MenuProps;
-}) {
+}: MenuPopoverProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = !!anchorEl;
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {

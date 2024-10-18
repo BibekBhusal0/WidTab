@@ -14,9 +14,8 @@ const initialState: HabitTrackerSliceType = {
       target: 100,
       title: "breathe",
       value: 0,
-      tag: "useless",
-      completedToday: false,
-      streak: 1,
+      icon: "💧",
+      unit: "times",
     },
   ],
 };
@@ -49,7 +48,10 @@ const habitTrackerSlice = createSlice({
             action.payload.action === "increment"
               ? crr.increment
               : -crr.increment;
-          crr.value += valChange;
+          const newValue = crr.value + valChange;
+          if (newValue >= 0) {
+            crr.value = newValue;
+          }
         }
       }
     },
