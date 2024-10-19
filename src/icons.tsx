@@ -1,6 +1,5 @@
 import { Icon, IconifyIcon, IconProps } from "@iconify/react";
 import { ReactNode } from "react";
-// import { icons } from "@iconify-json/ri/icons.json";
 
 export type iconAsProp = IconifyIcon | ReactNode;
 export type iconRN = Record<allRequiredIcons, ReactNode>;
@@ -115,10 +114,11 @@ export const ri_fill = {
   hide: "eye-off-fill",
   space: "rocket-2-fill",
 };
+export const ri_line = transformIcons(ri_fill, "ri", "fill", "line");
 
-export const SelectedIcons: Record<string, iconData> = {
-  "Remix Icon Filled": transformIcons(ri_fill, "ri", "fill", "fill"),
-  "Remix Icon Line": transformIcons(ri_fill, "ri", "fill", "line"),
+export const SelectedIconPacks: Record<string, iconData> = {
+  "Remix Icon Filled": transformIcons(ri_fill, "ri"),
+  "Remix Icon Line": ri_line,
   "material-symbols": {
     settings: "settings-rounded",
     widget: "widgets-rounded",
@@ -185,7 +185,7 @@ export const SelectedIcons: Record<string, iconData> = {
     space: "rocket",
   },
   lucide: {
-    ...ri_fill,
+    ...ri_line,
     settings: "settings",
     widget: "grid-2x2-plus",
     lock: "lock",
@@ -205,7 +205,7 @@ export const SelectedIcons: Record<string, iconData> = {
     space: "rocket",
   },
   uil: {
-    ...ri_fill,
+    ...ri_line,
     settings: "setting",
     widget: "apps",
     lock: "lock",
@@ -225,7 +225,7 @@ export const SelectedIcons: Record<string, iconData> = {
     space: "rocket",
   },
   carbon: {
-    ...ri_fill,
+    ...ri_line,
     settings: "settings",
     widget: "grid",
     lock: "locked",
@@ -265,25 +265,21 @@ export const SelectedIcons: Record<string, iconData> = {
     hide: "view-off",
     space: "rocket",
   },
-
-  "Solar Bold": {
-    ...ri_fill,
-    ...transformIcons(solar_bold, "solar", "bold", "bold"),
-  },
+  "Solar Bold": { ...ri_fill, ...solar_bold },
   "Solar Bold Duotone": {
     ...ri_fill,
     ...transformIcons(solar_bold, "solar", "bold", "bold-duotone"),
   },
   "Solar Line Duotone": {
-    ...ri_fill,
+    ...ri_line,
     ...transformIcons(solar_bold, "solar", "bold", "line-duotone"),
   },
   "Solar Broken": {
-    ...ri_fill,
+    ...ri_line,
     ...transformIcons(solar_bold, "solar", "bold", "broken"),
   },
   "Solar Line": {
-    ...ri_fill,
+    ...ri_line,
     ...transformIcons(solar_bold, "solar", "bold", "linear"),
   },
 };

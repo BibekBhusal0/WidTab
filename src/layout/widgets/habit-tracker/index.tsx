@@ -6,7 +6,6 @@ import {
   changePinnedHabitTracker,
 } from "@/redux/slice/habit-tracker";
 import WidgetControls from "@/components/widgetControl";
-import { FaFire } from "react-icons/fa";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { StateType } from "@/redux/store";
@@ -75,7 +74,7 @@ function HabitTracker({
                 sx={{ border: `2px ${completedToday ? "solid" : "dashed"}` }}
                 className="aspect-square w-10 rounded-full relative p-0.5">
                 {completedToday && (
-                  <FaFire style={{ width: "100%", height: "100%" }} />
+                  <Icon className="size-full" icon="heroicons:fire-16-solid" />
                 )}
               </Box>
               0

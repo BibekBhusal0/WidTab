@@ -1,27 +1,11 @@
-import {
-  HabitTrackerItemType,
-  HabitTrackerSliceType,
-} from "@/types/slice/habit-tracker";
+import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
 import { getNextId } from "@/utils/next_id";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { initialHabitTrackerState } from "./initialStates";
 
-const initialState: HabitTrackerSliceType = {
-  pinned: null,
-  trackers: [
-    {
-      id: 1,
-      increment: 10,
-      target: 100,
-      title: "breathe",
-      value: 0,
-      icon: "💧",
-      unit: "times",
-    },
-  ],
-};
 const habitTrackerSlice = createSlice({
   name: "habit-tracker",
-  initialState,
+  initialState: initialHabitTrackerState,
   reducers: {
     addItem: (state, action: PayloadAction<HabitTrackerItemType>) => {
       state.trackers.push({

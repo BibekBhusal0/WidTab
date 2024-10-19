@@ -23,10 +23,7 @@ function FooterPopover({
     setAnchorEl(null);
   };
   const btn = (
-    <IconButton
-      className="text-center overflow-visible"
-      onClick={handleOpen}
-      aria-label="settings">
+    <IconButton className="text-center overflow-visible" onClick={handleOpen}>
       <Icon2RN icon={icon} />
     </IconButton>
   );

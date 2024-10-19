@@ -12,6 +12,7 @@ import Switch from "@mui/material/Switch";
 import { useDispatch } from "react-redux";
 import RenameTheme from "./renameTheme";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
+import SelectIconPack from "./iconPack";
 
 function CurrentThemeSettings() {
   const theme = useCurrentTheme();
@@ -44,6 +45,7 @@ function CurrentThemeSettings() {
               }
             />
           </div>
+          <SelectIconPack showLabel />
           <div className="flex flex-col items-center gap-4">
             {numValues.map((val) => (
               <ChangeSlider

@@ -1,50 +1,13 @@
-import { ThemeItemType, ThemeSliceType } from "@/types/slice/theme";
+import { ThemeItemType } from "@/types/slice/theme";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { getNextId } from "@/utils/next_id";
-
-const initialState: ThemeSliceType = {
-  currentThemeID: 2,
-  allThemes: [
-    {
-      name: "red",
-      mode: "light",
-      id: 1,
-      editAble: false,
-      primaryColor: "#ff0000",
-      blur: 1,
-      roundness: 0.7,
-      opacity: 0.4,
-      iconPack: "Remix Icon Line",
-    },
-    {
-      name: "green",
-      mode: "dark",
-      id: 2,
-      editAble: false,
-      primaryColor: "#00ff00",
-      blur: 0.5,
-      roundness: 0.3,
-      opacity: 0.7,
-      iconPack: "Remix Icon Filled",
-    },
-    {
-      name: "blue",
-      mode: "light",
-      id: 0,
-      editAble: true,
-      primaryColor: "#0000ff",
-      blur: 0,
-      roundness: 0.2,
-      opacity: 1,
-      iconPack: "uil",
-    },
-  ],
-};
+import { initialThemeState } from "./initialStates";
+import { SelectedIconPacks } from "@/icons";
 
 export const themeSlice = createSlice({
   name: "theme",
-  initialState,
+  initialState: initialThemeState,
   reducers: {
     addTheme: (state, action: PayloadAction<ThemeItemType>) => {
       const newID = getNextId(state.allThemes.map(({ id }) => id));
@@ -89,6 +52,12 @@ export const themeSlice = createSlice({
         theme.mode = "light" === theme.mode ? "dark" : "light";
       }
     },
+    changeIconPack: (state, action: PayloadAction<string>) => {
+      var theme = state.allThemes.find((p) => p.id === state.currentThemeID);
+      if (theme && SelectedIconPacks[action.payload]) {
+        theme.iconPack = action.payload;
+      }
+    },
   },
 });
 
@@ -98,5 +67,6 @@ export const {
   switchTheme,
   changeTheme,
   toggleCurrentMode,
+  changeIconPack,
 } = themeSlice.actions;
 export default themeSlice.reducer;

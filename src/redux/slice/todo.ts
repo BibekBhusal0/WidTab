@@ -1,95 +1,11 @@
-import { changeTaskType, TaskType, todoStateType } from "@/types/slice/todo";
+import { changeTaskType, TaskType } from "@/types/slice/todo";
 import { getNextId } from "@/utils/next_id";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-const initialState: todoStateType = {
-  pinnedTodo: null,
-  Tasks: [
-    {
-      sorted: false,
-      filtered: false,
-      id: 1,
-      title: "All Tasks",
-      todos: [
-        {
-          id: 1,
-          task: "Task 1",
-          checked: true,
-        },
-        {
-          id: 2,
-          task: "Task 2",
-          checked: true,
-        },
-        {
-          id: 3,
-          task: "Task 4",
-          checked: false,
-        },
-        {
-          id: 4,
-          task: "Task 5",
-          checked: false,
-        },
-      ],
-    },
-    {
-      sorted: false,
-      id: 2,
-      filtered: false,
-      title: "Today",
-      todos: [
-        {
-          id: 3,
-          task: "Task 3",
-          checked: false,
-        },
-      ],
-    },
-    {
-      filtered: false,
-      sorted: false,
-      id: 3,
-      title: "Focus on these",
-      todos: [
-        {
-          id: 1,
-          task: "focus 1",
-          checked: false,
-        },
-        {
-          id: 2,
-          task: "focus 2",
-          checked: false,
-        },
-        {
-          id: 3,
-          task: "focus 3",
-          checked: true,
-        },
-        {
-          id: 4,
-          task: "focus 4",
-          checked: true,
-        },
-        {
-          id: 5,
-          task: "focus 5",
-          checked: false,
-        },
-        {
-          id: 6,
-          task: "focus 6",
-          checked: false,
-        },
-      ],
-    },
-  ],
-};
+import { initialTodoState } from "./initialStates";
 
 export const todoSlice = createSlice({
   name: "todo",
-  initialState,
+  initialState: initialTodoState,
   reducers: {
     addTask: (state, action: PayloadAction<string>) => {
       state.Tasks.push({
