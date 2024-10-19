@@ -49,9 +49,8 @@ const habitTrackerSlice = createSlice({
               ? crr.increment
               : -crr.increment;
           const newValue = crr.value + valChange;
-          if (newValue >= 0) {
-            crr.value = newValue;
-          }
+          if (newValue >= 0) crr.value = newValue;
+          else crr.value = 0;
         }
       }
     },

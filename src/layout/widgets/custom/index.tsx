@@ -4,9 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-
 import { useDispatch } from "react-redux";
-import DeleteIcon from "@mui/icons-material/Delete";
 import {
   currentSpaceDeleteWidget,
   currentSpaceEditWidget,
@@ -16,7 +14,7 @@ import useCurrentRoundness from "@/hooks/useCurrentRoundness";
 import { useEffect, useState } from "react";
 import MenuPopover from "@/components/popoverMenu";
 import { urlPattern } from "@/components/footer/addWidget/custom";
-import { HiPencilAlt } from "react-icons/hi";
+import useCurrentIcons from "@/hooks/useCurrentIcons";
 
 function CustomWidget(props: CustomWidgetType) {
   const layout = useCurrentLayout();
@@ -32,6 +30,7 @@ function CustomWidget(props: CustomWidgetType) {
 }
 
 function CustomWidgetControls(props: CustomWidgetType) {
+  const { delete_ } = useCurrentIcons();
   const dispatch = useDispatch();
   return (
     <WidgetControls className="flex-center gap-3">
@@ -42,7 +41,7 @@ function CustomWidgetControls(props: CustomWidgetType) {
         onClick={() =>
           dispatch(currentSpaceDeleteWidget({ type: "custom", id: props.id }))
         }>
-        <DeleteIcon />
+        {delete_}
       </IconButton>
     </WidgetControls>
   );
@@ -50,6 +49,7 @@ function CustomWidgetControls(props: CustomWidgetType) {
 
 function ChangeURL({ url, id }: CustomWidgetType) {
   const dispatch = useDispatch();
+  const { edit } = useCurrentIcons();
   const [text, setText] = useState(url);
   const [extractedUrl, setExtractedUrl] = useState(url);
   useEffect(() => {
@@ -76,7 +76,7 @@ function ChangeURL({ url, id }: CustomWidgetType) {
     }
   };
   return (
-    <MenuPopover icon={<HiPencilAlt className="text-2xl" />}>
+    <MenuPopover icon={edit}>
       <div className="p-4 flex-center flex-col gap-4">
         <TextField
           error={!valid}

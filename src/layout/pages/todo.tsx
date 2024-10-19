@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Todo from "../widgets/todo";
 import { useTheme } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
+import { Icon } from "@iconify/react";
 import { addTask } from "@/redux/slice/todo";
 
 function TodoPage() {
@@ -36,7 +36,7 @@ function TodoPage() {
         onClick={() => dispatch(addTask(""))}
         className="flex-center group cursor-pointer h-80">
         <div className="group-hover:scale-[6] scale-[3] transition-all">
-          <AddCircleOutlineRoundedIcon />
+          <Icon icon="material-symbols:add-circle-outline-rounded" />
         </div>
       </Paper>
     </div>

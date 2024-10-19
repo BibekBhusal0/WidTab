@@ -10,12 +10,13 @@ import Slider, { SliderProps } from "@mui/material/Slider";
 import Switch from "@mui/material/Switch";
 
 import { useDispatch } from "react-redux";
-import DeleteIcon from "@mui/icons-material/Delete";
 import RenameTheme from "./renameTheme";
+import useCurrentIcons from "@/hooks/useCurrentIcons";
 
 function CurrentThemeSettings() {
   const theme = useCurrentTheme();
   const dispatch = useDispatch();
+  const { delete_ } = useCurrentIcons();
   const numValues: numericalThemeValues[] = ["blur", "opacity", "roundness"];
 
   return (
@@ -61,7 +62,7 @@ function CurrentThemeSettings() {
             variant="outlined"
             onClick={() => dispatch(deleteTheme(theme.id))}
             color="error"
-            startIcon={<DeleteIcon />}
+            startIcon={delete_}
             //
           >
             Delete This Theme

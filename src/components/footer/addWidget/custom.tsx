@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import Slider from "@mui/material/Slider";
 import TextField from "@mui/material/TextField";
 import { useDispatch, useSelector } from "react-redux";
-import AddIcon from "@mui/icons-material/Add";
+import { Icon } from "@iconify/react";
 import useAvailablePosition from "@/hooks/useAvailablePosition";
 import HelpInCustomWidget from "./helpCustom";
 import { useState } from "react";
@@ -86,7 +86,7 @@ function AddCustomWidget() {
         onClick={add}
         variant="contained"
         className="mx-5"
-        startIcon={<AddIcon />}
+        startIcon={<Icon icon="material-symbols:add" />}
         //
       >
         Add

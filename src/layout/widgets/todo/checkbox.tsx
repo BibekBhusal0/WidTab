@@ -1,10 +1,10 @@
-import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 import { sortableCheckboxProps } from "@/types/slice/todo";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { useEffect, useRef } from "react";
 import { Reorder, useDragControls } from "framer-motion";
 import { transparentInput } from "./index";
 import Checkbox from "@mui/material/Checkbox";
+import { Icon } from "@iconify/react";
+import useCurrentIcons from "@/hooks/useCurrentIcons";
 
 function SortableCheckbox({
   id,
@@ -19,7 +19,7 @@ function SortableCheckbox({
   focusNext = () => {},
 }: sortableCheckboxProps) {
   const controls = useDragControls();
-
+  const { delete_ } = useCurrentIcons();
   const ref = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -54,7 +54,7 @@ function SortableCheckbox({
             controls.start(e);
           }}
           className="opacity-45 cursor-grab focus:cursor-grabbing hidden group-hover:block m-0 p-0">
-          <DragIndicatorIcon />
+          <Icon icon="material-symbols:drag-indicator" />
         </div>
       </div>
       <Checkbox checked={checked} sx={{ padding: 0 }} onChange={handleToggle} />
@@ -91,7 +91,7 @@ function SortableCheckbox({
           onClick={handleDelete}
           //
         >
-          <DeleteIcon />
+          {delete_}
         </button>
       </div>
     </Reorder.Item>

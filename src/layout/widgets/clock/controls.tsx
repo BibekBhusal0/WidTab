@@ -9,13 +9,12 @@ import MenuItem from "@mui/material/MenuItem";
 import Switch from "@mui/material/Switch";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-
 import { useDispatch } from "react-redux";
 import {
   currentSpaceDeleteWidget,
   currentSpaceEditWidget,
 } from "@/redux/slice/layout";
-import DeleteIcon from "@mui/icons-material/Delete";
+import useCurrentIcons from "@/hooks/useCurrentIcons";
 
 function ClockControls({
   id,
@@ -24,7 +23,7 @@ function ClockControls({
   showSeconds,
 }: ClockWidgetType) {
   const dispatch = useDispatch();
-
+  const { delete_ } = useCurrentIcons();
   const toggleTwentyFourHour = () => {
     dispatch(
       currentSpaceEditWidget({
@@ -96,9 +95,7 @@ function ClockControls({
           sx={{ justifyContent: "space-around" }}
           className="gap-5 items-center"
           onClick={deleteThis}>
-          <ListItemIcon>
-            <DeleteIcon color="error" />
-          </ListItemIcon>
+          <ListItemIcon>{delete_}</ListItemIcon>
           <Box sx={{ color: "error.main" }} className="text-xl">
             Delete
           </Box>

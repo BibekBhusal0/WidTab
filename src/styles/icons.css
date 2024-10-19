@@ -1,0 +1,34 @@
+.icon-xs .iconify {
+  width: 10px;
+  height: 10px;
+}
+
+.icon-sm .iconify {
+  width: 15px;
+  height: 15px;
+}
+
+.icon-md .iconify {
+  width: 20px;
+  height: 20px;
+}
+
+.icon-lg .iconify {
+  width: 25px;
+  height: 25px;
+}
+
+.icon-xl .iconify {
+  width: 30px;
+  height: 30px;
+}
+
+.icon-2xl .iconify {
+  width: 40px;
+  height: 40px;
+}
+
+.icon-3xl .iconify {
+  width: 50px;
+  height: 50px;
+}

@@ -1,5 +1,6 @@
 import AddItem from "@/components/addItem";
 import useAvailablePosition from "@/hooks/useAvailablePosition";
+import useCurrentIcons from "@/hooks/useCurrentIcons";
 import useCurrentLayout from "@/hooks/useCurrentLayout";
 import { currentSpaceAddWidget } from "@/redux/slice/layout";
 import { addTask } from "@/redux/slice/todo";
@@ -10,12 +11,12 @@ import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import { useDispatch, useSelector } from "react-redux";
-import { BsPinAngleFill } from "react-icons/bs";
 
 function AddTodo() {
   const dispatch = useDispatch();
   const { Tasks, pinnedTodo } = useSelector((state: StateType) => state.todo);
   const layout = useCurrentLayout();
+  const { pin } = useCurrentIcons();
 
   const todoDimensions = widgetDimensions["todo"];
   const { minH, minW } = todoDimensions;
@@ -61,7 +62,7 @@ function AddTodo() {
             //
           >
             {title}
-            {id === pinnedTodo && <BsPinAngleFill />}
+            {id === pinnedTodo && pin}
           </ListItemButton>
         ))}
       </List>

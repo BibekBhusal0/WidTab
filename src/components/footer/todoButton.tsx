@@ -5,15 +5,16 @@ import { StateType } from "@/redux/store";
 import Todo from "@/layout/widgets/todo";
 import { changeCurrentSpace } from "@/redux/slice/layout";
 import FooterPopover from "../footerPopover";
-import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
+import useCurrentIcons from "@/hooks/useCurrentIcons";
 
 function TodoButton() {
   const dispatch = useDispatch();
+  const { checklist } = useCurrentIcons();
   const { Tasks, pinnedTodo } = useSelector((state: StateType) => state.todo);
   const pinned = Tasks.find((t) => t.id === pinnedTodo);
 
   return (
-    <FooterPopover tooltip="To-dos" icon={<ChecklistRtlIcon />}>
+    <FooterPopover tooltip="To-dos" icon={checklist}>
       <div className="flex h-56 overflow-clip">
         {pinned && (
           <Box

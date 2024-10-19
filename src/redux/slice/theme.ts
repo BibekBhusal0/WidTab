@@ -15,6 +15,7 @@ const initialState: ThemeSliceType = {
       blur: 1,
       roundness: 0.7,
       opacity: 0.4,
+      iconPack: "Remix Icon Line",
     },
     {
       name: "green",
@@ -25,6 +26,7 @@ const initialState: ThemeSliceType = {
       blur: 0.5,
       roundness: 0.3,
       opacity: 0.7,
+      iconPack: "Remix Icon Filled",
     },
     {
       name: "blue",
@@ -35,6 +37,7 @@ const initialState: ThemeSliceType = {
       blur: 0,
       roundness: 0.2,
       opacity: 1,
+      iconPack: "uil",
     },
   ],
 };

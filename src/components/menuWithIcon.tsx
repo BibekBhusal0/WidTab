@@ -1,36 +1,38 @@
 import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import MenuPopover, { MenuPopoverProps } from "@/components/popoverMenu";
 import { ReactNode } from "react";
+import { Icon2RN, iconAsProp } from "@/icons";
 
 export type IconMenuType = {
   name: ReactNode;
-  Icon: ReactNode;
-  onClick: () => void;
+  icon: iconAsProp;
+  onClick?: () => void;
   color?: string;
 };
 
 export type IconMenuProps = {
   menuItems: IconMenuType[];
-} & Partial<MenuPopoverProps>;
+};
 
-function IconMenu({ menuItems, ...menuPopoverProps }: IconMenuProps) {
+function IconMenu({ menuItems }: IconMenuProps) {
   return (
-    <MenuPopover {...menuPopoverProps}>
-      {menuItems.map(({ name, Icon, onClick, color }, i) => (
+    <>
+      {menuItems.map(({ name, icon, onClick, color }, i) => (
         <MenuItem
           sx={{ color: color }}
-          className="flex-center gap-3"
+          className="flex-center gap-3 icon-lg"
           key={i}
           onClick={onClick}>
-          <ListItemIcon sx={{ color: color }}>{Icon}</ListItemIcon>
+          <ListItemIcon sx={{ color: color }}>
+            <Icon2RN icon={icon} />
+          </ListItemIcon>
           <Box sx={{ color: color }} className="text-xl">
             {name}
           </Box>
         </MenuItem>
       ))}
-    </MenuPopover>
+    </>
   );
 }
 

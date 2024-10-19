@@ -2,9 +2,8 @@ import Box, { BoxProps } from "@mui/material/Box";
 import Button, { ButtonProps } from "@mui/material/Button";
 import TextField, { TextFieldProps } from "@mui/material/TextField";
 import { useState } from "react";
-import AddIcon from "@mui/icons-material/Add";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { cn } from "@/utils/cn";
+import { Icon } from "@iconify/react";
 
 export type AddItemProps = {
   word_limit?: number;
@@ -53,7 +52,7 @@ function AddItem({
           variant="outlined"
           value={text}
           error={reached_word_limit}
-          helperText={reached_word_limit && `${20} Character Max`}
+          helperText={reached_word_limit && `${word_limit} Character Max`}
           {...inputProps}
           onChange={(e) => setText(e.target.value)}
         />
@@ -62,7 +61,7 @@ function AddItem({
         <Button
           children="Add"
           variant={inp ? "contained" : "outlined"}
-          startIcon={<AddIcon />}
+          startIcon={<Icon icon="material-symbols:add" />}
           disabled={inp && (text.trim().length === 0 || reached_word_limit)}
           {...addButtonProps}
           onClick={handleClick}
@@ -72,7 +71,7 @@ function AddItem({
             onClick={() => setInp(false)}
             variant="outlined"
             color="error"
-            startIcon={<ArrowBackIcon />}
+            startIcon={<Icon icon="material-symbols:arrow-back" />}
             children="Back"
             {...backButtonProps}
           />

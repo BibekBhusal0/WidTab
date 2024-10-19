@@ -6,18 +6,16 @@ import {
   changePinnedHabitTracker,
 } from "@/redux/slice/habit-tracker";
 import WidgetControls from "@/components/widgetControl";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import DeleteIcon from "@mui/icons-material/Delete";
-import LoopIcon from "@mui/icons-material/Loop";
-import { BsPinAngleFill } from "react-icons/bs";
 import { FaFire } from "react-icons/fa";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-
 import { StateType } from "@/redux/store";
-import IconMenu from "@/components/menuWithIcon";
+import IconMenu, { IconMenuType } from "@/components/menuWithIcon";
 import HoverControls from "@/components/hoverControls";
+import { Icon } from "@iconify/react";
+import useCurrentIcons from "@/hooks/useCurrentIcons";
+import MenuPopover from "@/components/popoverMenu";
+import { cn } from "@/utils/cn";
 
 function HabitTracker({
   id,
@@ -45,8 +43,8 @@ function HabitTracker({
     dispatch(changeValue({ id, action: "reset" }));
   };
   const icons = [
-    { icon: <RemoveIcon />, onClick: handleDecrement },
-    { icon: <AddIcon />, onClick: handleIncrement },
+    { icon: "material-symbols:remove", onClick: handleDecrement },
+    { icon: "material-symbols:add-2-rounded", onClick: handleIncrement },
   ];
   const completedToday = value >= target;
 
@@ -96,15 +94,25 @@ function HabitTracker({
           </div>
         </Box>
         <Box>
-          {icons.map(({ icon, onClick }, index) => (
-            <Button
-              key={index}
-              onClick={onClick}
-              sx={{ padding: "4px", margin: "2px", minWidth: "0" }}
-              variant="outlined">
-              {icon}
-            </Button>
-          ))}
+          {icons.map(({ icon, onClick }, index) => {
+            const add = icon.includes("add");
+            const disabled = !add && value <= 0;
+            return (
+              <Button
+                key={index}
+                onClick={onClick}
+                sx={{ padding: "4px", margin: "2px", minWidth: "0" }}
+                variant="outlined"
+                disabled={disabled}>
+                {
+                  <Icon
+                    icon={icon}
+                    className={cn({ "text-4xl": add, "text-2xl": !add })}
+                  />
+                }
+              </Button>
+            );
+          })}
         </Box>
       </Box>
     </HoverControls>
@@ -122,25 +130,28 @@ function HabitTrackerControls({
   handlePin: () => void;
   handleDelete: () => void;
 }) {
-  const items = [
+  const { delete_, reset, pin } = useCurrentIcons();
+  const items: IconMenuType[] = [
     {
       name: pinned ? "Unpin" : "Pin",
-      Icon: <BsPinAngleFill />,
+      icon: pin,
       onClick: handlePin,
       color: pinned ? "primary.main" : "action.main",
     },
 
     {
       name: "Delete",
-      Icon: <DeleteIcon />,
+      icon: delete_,
       onClick: handleDelete,
       color: "error.main",
     },
-    { name: "Reset", Icon: <LoopIcon />, onClick: handleReset },
+    { name: "Reset", icon: reset, onClick: handleReset },
   ];
   return (
     <WidgetControls>
-      <IconMenu menuItems={items} />
+      <MenuPopover>
+        <IconMenu menuItems={items} />
+      </MenuPopover>
     </WidgetControls>
   );
 }

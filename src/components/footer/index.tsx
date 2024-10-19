@@ -20,7 +20,7 @@ function Footer() {
         ...footerProps?.sx,
         backgroundColor: "secondaryContainer.paper",
       }}
-      className={cn("size-full between gap-3", footerProps?.className)}
+      className={cn("size-full between gap-3 footer", footerProps?.className)}
       //
     >
       <div className={cn("flex-center gap-1", footerProps?.className)}>

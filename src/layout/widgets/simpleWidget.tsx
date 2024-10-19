@@ -4,10 +4,10 @@ import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
 
 import { useDispatch } from "react-redux";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
 import WidgetControls from "@/components/widgetControl";
 import { ReactNode } from "react";
+import useCurrentIcons from "@/hooks/useCurrentIcons";
 
 type simpleWidgetProps = DeleteWidgetParameters & {
   children: ReactNode;
@@ -26,13 +26,14 @@ function SimpleWidget({ children, ...props }: simpleWidgetProps) {
 }
 
 export function DeleteWidgetButton(props: DeleteWidgetParameters) {
+  const { delete_ } = useCurrentIcons();
   const dispatch = useDispatch();
   return (
     <WidgetControls>
       <IconButton
         color="error"
         onClick={() => dispatch(currentSpaceDeleteWidget(props))}>
-        <DeleteIcon />
+        {delete_}
       </IconButton>
     </WidgetControls>
   );

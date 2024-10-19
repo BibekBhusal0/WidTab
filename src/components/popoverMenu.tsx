@@ -3,18 +3,18 @@ import ListItemButton, {
   ListItemButtonProps,
 } from "@mui/material/ListItemButton";
 import Menu, { MenuProps } from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
+import { Icon2RN, iconAsProp } from "@/icons";
 
 export interface MenuPopoverProps {
   children: React.ReactNode;
-  icon?: React.ReactNode;
+  icon?: iconAsProp;
   buttonProps?: ListItemButtonProps;
   menuProps?: MenuProps;
 }
 
 function MenuPopover({
   children,
-  icon = <MenuIcon />,
+  icon = "material-symbols:menu",
   buttonProps = undefined,
   menuProps = undefined,
 }: MenuPopoverProps) {
@@ -30,7 +30,7 @@ function MenuPopover({
   return (
     <>
       <ListItemButton {...buttonProps} onClick={handleClick}>
-        {icon}
+        <Icon2RN icon={icon} />
       </ListItemButton>
       <Menu
         anchorOrigin={{

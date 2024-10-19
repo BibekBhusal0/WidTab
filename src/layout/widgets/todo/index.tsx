@@ -1,6 +1,5 @@
 import { TaskType, todoMenuProps, todoType } from "@/types/slice/todo";
 import { useDispatch, useSelector } from "react-redux";
-import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import { AnimatePresence, Reorder } from "framer-motion";
 import SortableCheckbox from "./checkbox";
 import IconButton from "@mui/material/IconButton";
@@ -20,6 +19,7 @@ import {
 } from "@/redux/slice/todo";
 import WidgetControls from "@/components/widgetControl";
 import { StateType } from "@/redux/store";
+import { Icon } from "@iconify/react";
 
 export const transparentInput =
   "border-transparent w-full bg-transparent resize-none focus:outline-none";
@@ -160,7 +160,7 @@ function Todo({
         {showControls && (
           <WidgetControls className="flex gap-3 p-1">
             <IconButton onClick={addTodoItem}>
-              <AddCircleOutlineRoundedIcon />
+              <Icon icon="material-symbols:add-circle-outline-rounded" />
             </IconButton>
             <TodoMenu {...TodoMenuProps} />
           </WidgetControls>

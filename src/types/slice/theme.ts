@@ -9,6 +9,7 @@ export type ThemeItemType = {
   blur: number;
   roundness: number;
   opacity: number;
+  iconPack: string;
   editAble?: boolean;
 };
 

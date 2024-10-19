@@ -3,8 +3,8 @@ import FormHelperText from "@mui/material/FormHelperText";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput, { OutlinedInputProps } from "@mui/material/OutlinedInput";
-import DoneIcon from "@mui/icons-material/Done";
 import { ChangeEvent, useEffect, useState } from "react";
+import { Icon } from "@iconify/react";
 
 type RenameItemProps = {
   initialText: string;
@@ -50,7 +50,7 @@ function RenameItem({
             <InputAdornment position="end">
               <IconButton
                 disabled={hitsWordLimit || isEmpty}
-                children={<DoneIcon />}
+                children={<Icon icon="material-symbols:done" />}
                 onClick={handleClick}
               />
             </InputAdornment>

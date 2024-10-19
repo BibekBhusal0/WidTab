@@ -1,15 +1,15 @@
-import SettingsIcon from "@mui/icons-material/Settings";
+import { Icon2RN, iconAsProp } from "@/icons";
 import IconButton from "@mui/material/IconButton";
 import Popover from "@mui/material/Popover";
 import Tooltip from "@mui/material/Tooltip";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 
 function FooterPopover({
-  icon = <SettingsIcon />,
+  icon = "material-symbols:settings",
   children = <></>,
   tooltip = undefined,
 }: {
-  icon?: ReactNode;
+  icon?: iconAsProp;
   children?: JSX.Element;
   tooltip?: string;
 }) {
@@ -22,20 +22,18 @@ function FooterPopover({
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const btn = (
+    <IconButton
+      className="text-center overflow-visible"
+      onClick={handleOpen}
+      aria-label="settings">
+      <Icon2RN icon={icon} />
+    </IconButton>
+  );
 
   return (
     <>
-      {tooltip ? (
-        <Tooltip title={tooltip}>
-          <IconButton onClick={handleOpen} aria-label="settings">
-            {icon}
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <IconButton onClick={handleOpen} aria-label="settings">
-          {icon}
-        </IconButton>
-      )}
+      {tooltip ? <Tooltip title={tooltip}>{btn}</Tooltip> : btn}
       <Popover
         anchorEl={anchorEl}
         marginThreshold={30}

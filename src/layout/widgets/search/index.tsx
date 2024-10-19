@@ -2,41 +2,14 @@ import { currentSpaceEditWidget } from "@/redux/slice/layout";
 import { AllSearchEngines, SearchWidgetType } from "@/types/slice/widgets";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import MenuItem from "@mui/material/MenuItem";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { ChangeEvent, ReactNode, useState } from "react";
+import { SelectChangeEvent } from "@mui/material/Select";
+import { ChangeEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  SiDuckduckgo,
-  SiMicrosoftbing,
-  SiYoutube,
-  SiBrave,
-} from "react-icons/si";
-import { IoSearch } from "react-icons/io5";
 import { StateType } from "@/redux/store";
-import { IconContext } from "react-icons/lib";
 import SimpleWidget from "../simpleWidget";
-import { FaGoogle } from "react-icons/fa";
-
-export type SearchEngineMapping = Record<
-  AllSearchEngines,
-  { icon: ReactNode; link: string }
->;
-export const searchEngineLogoAndLink: SearchEngineMapping = {
-  Google: { icon: <FaGoogle />, link: "https://www.google.com/search?q=%s" },
-  Bing: { icon: <SiMicrosoftbing />, link: "https://www.bing.com/search?q=%s" },
-  YouTube: {
-    icon: <SiYoutube />,
-    link: "https://www.youtube.com/results?search_query=%s",
-  },
-  DuckDuckGo: { icon: <SiDuckduckgo />, link: "https://duckduckgo.com/?q=%s" },
-  Brave: {
-    icon: <SiBrave />,
-    link: "https://search.brave.com/search?q=%s",
-  },
-};
+import SearchEngineSelect, { searchEngineLogoAndLink } from "./select";
+import { Icon } from "@iconify/react";
 
 function SearchWidget({ id, engine }: SearchWidgetType) {
   const [text, setText] = useState("");
@@ -61,7 +34,7 @@ function SearchWidget({ id, engine }: SearchWidgetType) {
       }
     }
   };
-  const changeSearchEngine = (e: SelectChangeEvent<AllSearchEngines>) => {
+  const changeSearchEngine = (e: SelectChangeEvent<unknown>) => {
     if (e.target.value) {
       dispatch(
         currentSpaceEditWidget({
@@ -72,66 +45,34 @@ function SearchWidget({ id, engine }: SearchWidgetType) {
     }
   };
 
-  const renderValue = (selected: AllSearchEngines) => {
-    return (
-      <ListItemIcon>{searchEngineLogoAndLink[selected].icon}</ListItemIcon>
-    );
-  };
-
   return (
     <SimpleWidget id={id} type="search">
-      <IconContext.Provider value={{ size: "30px" }}>
-        <OutlinedInput
-          placeholder="Search..."
-          autoFocus
-          className="size-full"
-          sx={{ fontSize: "32px" }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              handleSearch();
-            }
-          }}
-          startAdornment={
-            <InputAdornment position="start">
-              <IconButton onClick={handleSearch}>
-                <IoSearch />
-              </IconButton>
-            </InputAdornment>
+      <OutlinedInput
+        placeholder="Search..."
+        autoFocus
+        className="size-full"
+        sx={{ fontSize: "32px" }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleSearch();
           }
-          endAdornment={
-            <InputAdornment position="end">
-              <Select
-                variant="filled"
-                size="small"
-                disableUnderline
-                value={engine}
-                onChange={changeSearchEngine}
-                renderValue={renderValue}
-                sx={{
-                  ".MuiSelect-select": {
-                    padding: "10px",
-                    paddingBottom: "4px",
-                  },
-                }}>
-                {Object.entries(searchEngineLogoAndLink).map(
-                  ([key, { icon }]) => (
-                    <MenuItem
-                      className="gap-4"
-                      key={key}
-                      value={key as AllSearchEngines}>
-                      <ListItemIcon>{icon}</ListItemIcon>
-                      <span>{key}</span>
-                    </MenuItem>
-                  )
-                )}
-              </Select>
-            </InputAdornment>
-          }
-          size="small"
-          value={text}
-          onChange={handleInputChange}
-        />
-      </IconContext.Provider>
+        }}
+        startAdornment={
+          <InputAdornment position="start">
+            <IconButton className="icon-2xl" onClick={handleSearch}>
+              <Icon icon="material-symbols:search" />
+            </IconButton>
+          </InputAdornment>
+        }
+        endAdornment={
+          <InputAdornment position="end">
+            <SearchEngineSelect value={engine} onChange={changeSearchEngine} />
+          </InputAdornment>
+        }
+        size="small"
+        value={text}
+        onChange={handleInputChange}
+      />
     </SimpleWidget>
   );
 }

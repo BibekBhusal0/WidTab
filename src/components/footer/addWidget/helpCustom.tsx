@@ -1,4 +1,4 @@
-import HelpIcon from "@mui/icons-material/Help";
+import { Icon } from "@iconify/react";
 import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
@@ -38,7 +38,7 @@ function HelpInCustomWidget() {
         color="primary"
         //
       >
-        <HelpIcon />
+        <Icon icon="material-symbols:help" />
       </IconButton>
       <Modal open={open} onClose={() => setOpen(false)}>
         <Paper
