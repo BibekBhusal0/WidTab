@@ -10,7 +10,6 @@ import {
   currentSpaceEditWidget,
 } from "@/redux/slice/layout";
 import WidgetControls from "@/components/widgetControl";
-import useCurrentRoundness from "@/hooks/useCurrentRoundness";
 import { useEffect, useState } from "react";
 import MenuPopover from "@/components/popoverMenu";
 import { urlPattern } from "@/components/footer/addWidget/custom";
@@ -18,13 +17,12 @@ import useCurrentIcons from "@/hooks/useCurrentIcons";
 
 function CustomWidget(props: CustomWidgetType) {
   const layout = useCurrentLayout();
-  const borderRadius = useCurrentRoundness();
   const showControls = !layout?.locked;
 
   return (
     <Box className="size-full relative overflow-hidden">
       {showControls && <CustomWidgetControls {...props} />}
-      <iframe style={{ borderRadius }} src={props.url} className="size-full" />
+      <iframe src={props.url} className="size-full rounded-themed" />
     </Box>
   );
 }

@@ -22,7 +22,21 @@ export const getTheme = ({
   const crrPrimary = primary.schemes[mode];
 
   const borderRadius = `${roundness * 30}px`;
-  const backdropFilter = `blur(${blur * 10}px)`;
+  const b = `${blur * 10}px`;
+  const backdropFilter = `blur(${b})`;
+  document.documentElement.style.setProperty(
+    "--custom-border-radius",
+    borderRadius
+  );
+  document.documentElement.style.setProperty("--custom-blur", b);
+  for (let i = 1; i <= 9; i++) {
+    const opacityValue = i / 10;
+    document.documentElement.style.setProperty(
+      `--primary-opacity-${i}`,
+      alpha(hexFromArgb(crrPrimary.primary), opacityValue)
+    );
+  }
+
   const rounded = {
     styleOverrides: {
       root: {
@@ -33,6 +47,7 @@ export const getTheme = ({
   };
 
   return createTheme({
+    cssVariables: true,
     palette: {
       mode,
       background: {

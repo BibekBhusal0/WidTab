@@ -16,11 +16,11 @@ function Footer() {
   return (
     <Box
       {...footerProps}
-      sx={{
-        ...footerProps?.sx,
-        backgroundColor: "secondaryContainer.paper",
-      }}
-      className={cn("size-full between gap-3 footer", footerProps?.className)}
+      sx={{ ...footerProps?.sx }}
+      className={cn(
+        "size-full between gap-3 footer bg-secondaryContainer-paper",
+        footerProps?.className
+      )}
       //
     >
       <div className={cn("flex-center gap-1", footerProps?.className)}>

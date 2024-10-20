@@ -1,8 +1,6 @@
 import { Icon } from "@iconify/react";
 import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
 
@@ -24,11 +22,6 @@ function HelpInCustomWidget() {
     { name: "MixCloud", link: "https://mixcloud.com/" },
   ];
 
-  const {
-    palette: {
-      primaryContainer: { paper },
-    },
-  } = useTheme();
   const [open, setOpen] = useState(false);
 
   return (
@@ -41,9 +34,7 @@ function HelpInCustomWidget() {
         <Icon icon="material-symbols:help" />
       </IconButton>
       <Modal open={open} onClose={() => setOpen(false)}>
-        <Paper
-          className="p-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-3"
-          sx={{ background: paper }}>
+        <div className="p-10 bg-primaryContainer-paper absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-3">
           <div className="text-xl">
             You can personalize your experience by adding custom widgets! Simply
             enter the URL of your desired widget.
@@ -59,7 +50,7 @@ function HelpInCustomWidget() {
           </div>
           <div className="text-xl">Here are some Sites for music Widgets </div>
           <LinkList links={musicLinks} />
-        </Paper>
+        </div>
       </Modal>
     </div>
   );

@@ -7,8 +7,8 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import { FixedSizeGrid as Grid, GridChildComponentProps } from "react-window";
-import { useTheme, alpha } from "@mui/material/styles";
 import MenuPopover, { MenuPopoverProps } from "./popoverMenu";
+import { cn } from "@/utils/cn";
 
 const SelectIcon = ({ icon, setIcon }: SelectIconProps) => {
   const [currentMode, setCurrentMode] = useState("Loaded");
@@ -174,22 +174,12 @@ export function IconsGrid({ iconsList, selected, setSelected }: IconGridProps) {
 }
 
 function SingleIcon({ icon, selected, style, setSelected }: singleIconProps) {
-  const [hov, setHov] = useState(false);
-  const {
-    palette: {
-      primary: { main },
-    },
-  } = useTheme();
-
   return (
     <div
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      className="p-2"
+      className={cn("p-2 hover:bg-primary-6", { "bg-primary-5": selected })}
       onClick={() => setSelected(icon)}
       style={{
         ...style,
-        backgroundColor: alpha(main, selected ? 0.8 : hov ? 0.5 : 0),
       }}>
       <Icon className="size-full" icon={icon} />
     </div>

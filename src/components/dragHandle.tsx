@@ -1,17 +1,6 @@
-import Box from "@mui/material/Box";
-import useCurrentRoundness from "@/hooks/useCurrentRoundness";
-
 function DragHandle() {
-  const borderRadius = useCurrentRoundness();
-
   return (
-    <Box
-      sx={{
-        backgroundColor: "primary.main",
-        borderTopLeftRadius: borderRadius,
-        borderTopRightRadius: borderRadius,
-      }}
-      className="w-full opacity-50 drag-handle h-[9%] absolute top-0 left-0 z-10"></Box>
+    <div className="w-full opacity-50 drag-handle h-[9%] absolute top-0 left-0 z-10 bg-primary-main rounded-tl-themed rounded-tr-themed"></div>
   );
 }
 
