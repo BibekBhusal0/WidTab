@@ -26,7 +26,7 @@ export const initialThemeState: ThemeSliceType = {
       blur: 0.5,
       roundness: 0.3,
       opacity: 0.7,
-      iconPack: "Remix Icon Filled",
+      iconPack: "Solar Bold",
     },
     {
       name: "blue",

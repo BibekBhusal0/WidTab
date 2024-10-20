@@ -14,10 +14,7 @@ function SelectIconPack({ showLabel = true }: { showLabel?: boolean }) {
   const getSampleIcon = (name: string) => {
     const needsPrefix = iconPackNames[name];
     var icon = SelectedIconPacks[name].settings;
-    if (needsPrefix && typeof icon === "string") {
-      icon = `${name}:${icon}`;
-      console.log(icon);
-    }
+    if (needsPrefix && typeof icon === "string") icon = `${name}:${icon}`;
     return <Icon2RN icon={icon} />;
   };
 

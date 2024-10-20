@@ -9,12 +9,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import SimpleWidget from "../simpleWidget";
 import SearchEngineSelect, { searchEngineLogoAndLink } from "./select";
-import { Icon } from "@iconify/react";
+import useCurrentIcons from "@/hooks/useCurrentIcons";
 
 function SearchWidget({ id, engine }: SearchWidgetType) {
   const [text, setText] = useState("");
   const { linkInNewTab } = useSelector((state: StateType) => state.layout);
 
+  const { search } = useCurrentIcons();
   const dispatch = useDispatch();
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
@@ -60,7 +61,7 @@ function SearchWidget({ id, engine }: SearchWidgetType) {
         startAdornment={
           <InputAdornment position="start">
             <IconButton className="icon-2xl" onClick={handleSearch}>
-              <Icon icon="material-symbols:search" />
+              {search}
             </IconButton>
           </InputAdornment>
         }

@@ -42,7 +42,7 @@ export type allRequiredIcons = (typeof ri)[number];
 export const requiredIcons: allRequiredIcons[] = [...ri];
 export type iconData = Record<allRequiredIcons, iconAsProp>;
 
-const solar_bold: Record<allRequiredIcons, string> = {
+const solar_bold: Partial<iconRN> = {
   settings: "settings-bold",
   widget: "widget-add-bold",
   unlock: "lock-unlocked-bold",
@@ -51,7 +51,6 @@ const solar_bold: Record<allRequiredIcons, string> = {
   pin: "pin-bold",
   filter: "filter-bold",
   sort: "sort-from-top-to-bottom-bold",
-  search: "search-bold",
   reset: "refresh-bold",
   checklist: "checklist-minimalistic-bold",
   bookmark: "bookmark-bold",
@@ -64,36 +63,33 @@ const solar_bold: Record<allRequiredIcons, string> = {
   space: "planet-2-bold",
 };
 
-export function transformIcons(
-  iconObject: iconData,
+export function transformIcons<T extends Partial<iconData>>(
+  iconObject: T,
   prefix: string | null = null,
   itemToReplace: string = "",
   replacementItem: string = ""
-): iconRN {
+): T extends iconData ? iconRN : Partial<iconRN> {
   const transformed: Partial<iconRN> = {};
 
-  for (const name of requiredIcons) {
-    const val = iconObject[name];
-    if (val) {
-      var transformedVal: iconAsProp = val;
-      if (typeof val === "string") {
-        if (itemToReplace !== replacementItem) {
-          transformedVal = val.replace(itemToReplace, replacementItem);
-        }
-        if (prefix) {
-          transformedVal = `${prefix}:${transformedVal}`;
-        }
+  for (const [name, val] of Object.entries(iconObject)) {
+    let transformedVal: iconAsProp = val;
+    if (typeof val === "string") {
+      if (itemToReplace !== replacementItem) {
+        transformedVal = val.replace(itemToReplace, replacementItem);
       }
-      transformed[name] = (
-        <Icon2RN className="theme-icons" icon={transformedVal} />
-      );
+      if (prefix) {
+        transformedVal = `${prefix}:${transformedVal}`;
+      }
     }
+    transformed[name as allRequiredIcons] = (
+      <Icon2RN className="theme-icons" icon={transformedVal} />
+    );
   }
 
-  return transformed as iconRN;
+  return transformed as T extends iconData ? iconRN : Partial<iconRN>;
 }
 
-export const ri_fill = {
+export const _ri_fill = {
   settings: "settings-4-fill",
   widget: "apps-2-add-fill",
   lock: "lock-fill",
@@ -114,10 +110,11 @@ export const ri_fill = {
   hide: "eye-off-fill",
   space: "rocket-2-fill",
 };
-export const ri_line = transformIcons(ri_fill, "ri", "fill", "line");
+export const ri_line = transformIcons(_ri_fill, "ri", "fill", "line");
+export const ri_fill = transformIcons(_ri_fill, "ri");
 
 export const SelectedIconPacks: Record<string, iconData> = {
-  "Remix Icon Filled": transformIcons(ri_fill, "ri"),
+  "Remix Icon Filled": _ri_fill,
   "Remix Icon Line": ri_line,
   "material-symbols": {
     settings: "settings-rounded",

@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import HabitTracker from ".";
 
 function HabitTrackerWidget({ id }: controlledWidgetValues) {
-  console.log("habit tracker widget here");
   const habitTracker = useSelector(
     (state: StateType) => state["habit-tracker"]
   );
