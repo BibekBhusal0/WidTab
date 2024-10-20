@@ -10,7 +10,7 @@ export interface MenuPopoverProps {
   children: React.ReactNode;
   icon?: iconAsProp;
   buttonProps?: ListItemButtonProps;
-  menuProps?: MenuProps;
+  menuProps?: Partial<MenuProps>;
 }
 
 function MenuPopover({

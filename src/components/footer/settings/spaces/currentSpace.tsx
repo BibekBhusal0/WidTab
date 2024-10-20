@@ -1,5 +1,4 @@
 import useCurrentLayout from "@/hooks/useCurrentLayout";
-import Box from "@mui/material/Box";
 import Lock from "../../lock";
 import SettingHeader from "../settings-header";
 import DuplicateThisSpace from "./duplicateSpace";
@@ -8,24 +7,52 @@ import ChangeCompaction from "./changeCompaction";
 import AddSpace from "./addSpace";
 import RenameItem from "@/components/renameItem";
 import { useDispatch } from "react-redux";
-import { currentSpaceRename } from "@/redux/slice/layout";
+import {
+  currentSpaceChangeIcon,
+  currentSpaceRename,
+} from "@/redux/slice/layout";
+import SelectIcon from "@/components/select-icon";
+import MenuPopover from "@/components/popoverMenu";
 
 function CurrentSpaceSetting() {
   const layout = useCurrentLayout();
   const dispatch = useDispatch();
+
   if (!layout) return null;
 
   return (
     <>
       <SettingHeader>Current Space</SettingHeader>
-      <Box className="w-full flex flex-col items-center gap-5">
+      <div
+        aria-label="Current Space Settings"
+        className="w-full flex flex-col items-center gap-5">
         <ChangeCompaction />
-        <div className="between gap-4 w-full">
+        <div aria-label="Lock widgets" className="between gap-4 w-full">
           <div className="text-xl">Lock Widgets</div>
           <Lock type="toggle" />
         </div>
 
-        <div className="between gap-4 w-full">
+        <div aria-label="Icons" className="between gap-4 w-full icon-xl">
+          <div className="text-xl">Change Icons</div>
+          <div className="w-14 flex-center">
+            <MenuPopover
+              key={layout.icon}
+              icon={layout.icon}
+              menuProps={{
+                anchorOrigin: { vertical: "bottom", horizontal: "right" },
+                transformOrigin: { vertical: "bottom", horizontal: "left" },
+              }}>
+              <SelectIcon
+                icon={layout.icon}
+                setIcon={(icon: string) =>
+                  dispatch(currentSpaceChangeIcon(icon))
+                }
+              />
+            </MenuPopover>
+          </div>
+        </div>
+
+        <div aria-label="rename" className="between gap-4 w-full">
           <div className="text-xl">Rename Space</div>
           <RenameItem
             initialText={layout.name}
@@ -38,9 +65,9 @@ function CurrentSpaceSetting() {
         </div>
 
         <DuplicateThisSpace />
-        <DeleteThisSpace />
         <AddSpace />
-      </Box>
+        <DeleteThisSpace />
+      </div>
     </>
   );
 }

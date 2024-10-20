@@ -114,7 +114,7 @@ export const ri_line = transformIcons(_ri_fill, "ri", "fill", "line");
 export const ri_fill = transformIcons(_ri_fill, "ri");
 
 export const SelectedIconPacks: Record<string, iconData> = {
-  "Remix Icon Filled": _ri_fill,
+  "Remix Icon Filled": ri_fill,
   "Remix Icon Line": ri_line,
   "material-symbols": {
     settings: "settings-rounded",
