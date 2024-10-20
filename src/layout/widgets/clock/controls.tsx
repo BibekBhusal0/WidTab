@@ -4,7 +4,6 @@ import WidgetControls from "@/components/widgetControl";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import MenuItem from "@mui/material/MenuItem";
 import Switch from "@mui/material/Switch";
 import ToggleButton from "@mui/material/ToggleButton";
@@ -92,13 +91,11 @@ function ClockControls({
         />
         <Divider />
         <ListItemButton
-          sx={{ justifyContent: "space-around" }}
-          className="gap-5 items-center"
+          sx={{ justifyContent: "space-around", color: "error.main" }}
+          className="gap-5 items-center icon-lg"
           onClick={deleteThis}>
-          <ListItemIcon>{delete_}</ListItemIcon>
-          <Box sx={{ color: "error.main" }} className="text-xl">
-            Delete
-          </Box>
+          {delete_}
+          <Box className="text-xl">Delete</Box>
         </ListItemButton>
       </MenuPopover>
     </WidgetControls>

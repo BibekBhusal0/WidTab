@@ -25,6 +25,7 @@ const getEmptySpace = (): DynamicSpaceType => {
     locked: true,
     widgets: [],
     delete_able: true,
+    icon: "majesticons:planet-rocket-line",
   };
 };
 
@@ -140,6 +141,12 @@ export const layoutSlice = createSlice({
         space.name = action.payload;
       }
     },
+    currentSpaceChangeIcon: (state, action: PayloadAction<string>) => {
+      const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
+      if (space && state.currentSpace.type === "dynamic") {
+        space.icon = action.payload;
+      }
+    },
     currentSpaceToggleLocked: (state) => {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
       if (space && state.currentSpace.type === "dynamic") {
@@ -181,6 +188,7 @@ export const {
   currentSpaceDuplicate,
   currentSpaceRename,
   currentSpaceEditWidget,
+  currentSpaceChangeIcon,
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

@@ -50,6 +50,7 @@ export const initialTodoState: todoStateType = {
       filtered: false,
       id: 1,
       title: "All Tasks",
+      icon: "fluent-mdl2:task-list",
       todos: [
         {
           id: 1,
@@ -78,6 +79,7 @@ export const initialTodoState: todoStateType = {
       id: 2,
       filtered: false,
       title: "Today",
+      icon: "tdesign:calendar-2",
       todos: [
         {
           id: 3,
@@ -90,6 +92,7 @@ export const initialTodoState: todoStateType = {
       filtered: false,
       sorted: false,
       id: 3,
+      icon: "mdi:brain-freeze",
       title: "Focus on these",
       todos: [
         {
@@ -143,6 +146,7 @@ export const initialLayoutState: LayoutSliceType = {
       compaction: "none",
       id: 1,
       locked: true,
+      icon: "jam:home-f",
       widgets: [
         {
           type: "custom",
@@ -234,6 +238,7 @@ export const initialLayoutState: LayoutSliceType = {
       name: "Full",
       compaction: "none",
       id: 2,
+      icon: "mage:dashboard-fill",
       locked: true,
       widgets: [
         {
@@ -350,6 +355,7 @@ export const initialLayoutState: LayoutSliceType = {
       name: "New",
       compaction: "none",
       id: 3,
+      icon: "mage:trophy-fill",
       locked: false,
       widgets: [
         {

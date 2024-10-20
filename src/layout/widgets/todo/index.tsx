@@ -20,6 +20,8 @@ import {
 import WidgetControls from "@/components/widgetControl";
 import { StateType } from "@/redux/store";
 import { Icon } from "@iconify/react";
+import { cn } from "@/utils/cn";
+import { Icon2RN } from "@/icons";
 
 export const transparentInput =
   "border-transparent w-full bg-transparent resize-none focus:outline-none";
@@ -35,6 +37,7 @@ function Todo({
   filtered,
   sorted,
   deleteAction,
+  icon,
   showControls = true,
 }: TodoProps) {
   const { pinnedTodo } = useSelector((state: StateType) => state.todo);
@@ -147,10 +150,11 @@ function Todo({
   return (
     <Box className="size-full">
       <div className="flex justify-between items-center gap-2 px-3 h-12">
+        <Icon2RN icon={icon} className="text-4xl" />
         <input
           ref={titleRef}
           onKeyDown={titleKeyDown}
-          className={`${transparentInput} text-3xl`}
+          className={cn(transparentInput, "text-3xl")}
           type="text"
           autoFocus={title.trim() === ""}
           placeholder="Title Here"

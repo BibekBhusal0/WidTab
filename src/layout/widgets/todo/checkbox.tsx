@@ -54,7 +54,7 @@ function SortableCheckbox({
             controls.start(e);
           }}
           className="opacity-45 cursor-grab focus:cursor-grabbing hidden group-hover:block m-0 p-0">
-          <Icon icon="material-symbols:drag-indicator" />
+          <Icon className="text-2xl" icon="material-symbols:drag-indicator" />
         </div>
       </div>
       <Checkbox checked={checked} sx={{ padding: 0 }} onChange={handleToggle} />
@@ -87,7 +87,7 @@ function SortableCheckbox({
       />
       <div className="w-8 h-full">
         <button
-          className="rounded-full cursor-pointer h-full hidden group-hover:block"
+          className="rounded-full cursor-pointer h-full hidden group-hover:block icon-md"
           onClick={handleDelete}
           //
         >

@@ -313,6 +313,7 @@ export const chosenIcons = [
   "mingcute:game-2-fill",
   "fluent:board-games-20-filled",
   "fluent:video-32-filled",
+  "jam:home-f",
 ];
 
 export const IconPacks = [

@@ -15,6 +15,7 @@ export type DynamicSpaceType = {
   compaction: compactionType;
   locked: boolean;
   delete_able?: boolean;
+  icon: string;
   widgets: WidgetType[];
 };
 

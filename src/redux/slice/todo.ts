@@ -1,4 +1,4 @@
-import { changeTaskType, TaskType } from "@/types/slice/todo";
+import { changeTaskType, TaskTodoID, TaskType } from "@/types/slice/todo";
 import { getNextId } from "@/utils/next_id";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialTodoState } from "./initialStates";
@@ -14,6 +14,7 @@ export const todoSlice = createSlice({
         id: getNextId(state.Tasks.map(({ id }) => id)),
         title: action.payload,
         todos: [],
+        icon: "fluent:task-list-square-16-filled",
       });
     },
     setTasks: (state, action: PayloadAction<TaskType[]>) => {
@@ -44,10 +45,7 @@ export const todoSlice = createSlice({
         state.pinnedTodo = null;
       }
     },
-    deleteTodo: (
-      state,
-      action: PayloadAction<{ task_id: number; todo_id: number }>
-    ) => {
+    deleteTodo: (state, action: PayloadAction<TaskTodoID>) => {
       const task = state.Tasks.find((p) => p.id === action.payload.task_id);
       if (task) {
         task.todos = task.todos.filter((t) => t.id !== action.payload.todo_id);
@@ -56,7 +54,8 @@ export const todoSlice = createSlice({
     changeTask(state, action: PayloadAction<changeTaskType>) {
       const task = state.Tasks.find((p) => p.id === action.payload.task_id);
       if (task) {
-        if (action.payload.change_item === "todo") {
+        const type = action.payload.change_item;
+        if (type === "todo") {
           if (task.filtered) {
             task.todos = [
               ...action.payload.todo,
@@ -66,19 +65,11 @@ export const todoSlice = createSlice({
             task.todos = action.payload.todo;
           }
           task.sorted = false;
-        } else {
-          task.title = action.payload.title;
-        }
+        } else if (type === "title") task.title = action.payload.title;
+        else if (type === "icon") task.icon = action.payload.icon;
       }
     },
-    changeTodo(
-      state,
-      action: PayloadAction<{
-        task_id: number;
-        todo_id: number;
-        task: string;
-      }>
-    ) {
+    changeTodo(state, action: PayloadAction<TaskTodoID & { task: string }>) {
       const task = state.Tasks.find((p) => p.id === action.payload.task_id);
       if (task) {
         const todo = task.todos.find((t) => t.id === action.payload.todo_id);
@@ -87,10 +78,7 @@ export const todoSlice = createSlice({
         }
       }
     },
-    toggleTodo(
-      state,
-      action: PayloadAction<{ task_id: number; todo_id: number }>
-    ) {
+    toggleTodo(state, action: PayloadAction<TaskTodoID>) {
       const task = state.Tasks.find((p) => p.id === action.payload.task_id);
       if (task) {
         const todo = task.todos.find((t) => t.id === action.payload.todo_id);
