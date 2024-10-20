@@ -265,7 +265,7 @@ export const SelectedIconPacks: Record<string, iconData> = {
     hide: "view-off",
     space: "rocket",
   },
-  "Solar Bold": { ...ri_fill, ...solar_bold },
+  "Solar Bold": { ...ri_fill, ...transformIcons(solar_bold, "solar") },
   "Solar Bold Duotone": {
     ...ri_fill,
     ...transformIcons(solar_bold, "solar", "bold", "bold-duotone"),

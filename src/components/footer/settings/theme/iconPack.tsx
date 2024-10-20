@@ -10,15 +10,25 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 function SelectIconPack({ showLabel = true }: { showLabel?: boolean }) {
   const { iconPack } = useCurrentTheme();
   const dispatch = useDispatch();
-  const reformat = (name: string) => iconPackNames[name] || name;
+  const reformatName = (name: string) => iconPackNames[name] || name;
+  const getSampleIcon = (name: string) => {
+    const needsPrefix = iconPackNames[name];
+    var icon = SelectedIconPacks[name].settings;
+    if (needsPrefix && typeof icon === "string") {
+      icon = `${name}:${icon}`;
+      console.log(icon);
+    }
+    return <Icon2RN icon={icon} />;
+  };
+
   const selectItem = (
     <Select
       className="w-full capitalize icon-xl"
       MenuProps={{ style: { maxHeight: 350 } }}
       renderValue={(selected) => (
         <div className="flex-center gap-4">
-          <Icon2RN icon={SelectedIconPacks[selected].pin} />
-          {reformat(selected)}
+          {getSampleIcon(selected)}
+          {reformatName(selected)}
         </div>
       )}
       value={iconPack}
@@ -27,10 +37,8 @@ function SelectIconPack({ showLabel = true }: { showLabel?: boolean }) {
       }>
       {Object.keys(SelectedIconPacks).map((c) => (
         <MenuItem className="capitalize icon-xl" key={c} value={c}>
-          <ListItemIcon>
-            {<Icon2RN icon={SelectedIconPacks[c].settings} />}
-          </ListItemIcon>
-          {reformat(c)}
+          <ListItemIcon>{getSampleIcon(c)}</ListItemIcon>
+          {reformatName(c)}
         </MenuItem>
       ))}
     </Select>
