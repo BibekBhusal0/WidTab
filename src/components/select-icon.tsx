@@ -1,11 +1,5 @@
 import { Icon, listIcons } from "@iconify/react";
-import {
-  CSSProperties,
-  FunctionComponent,
-  useDeferredValue,
-  useEffect,
-  useState,
-} from "react";
+import { CSSProperties, useDeferredValue, useEffect, useState } from "react";
 import type { IconifyInfo, IconifyJSON } from "@iconify/types";
 import { iconPackNames, IconPacks } from "@/icons";
 import Button from "@mui/material/Button";
@@ -14,8 +8,9 @@ import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import { FixedSizeGrid as Grid, GridChildComponentProps } from "react-window";
 import { useTheme, alpha } from "@mui/material/styles";
+import MenuPopover, { MenuPopoverProps } from "./popoverMenu";
 
-const SelectIcon: FunctionComponent<SelectIconProps> = ({ icon, setIcon }) => {
+const SelectIcon = ({ icon, setIcon }: SelectIconProps) => {
   const [currentMode, setCurrentMode] = useState("Loaded");
   const [selected, setSelected] = useState(icon);
   const [iconsList, setIconsList] = useState<string[]>([]);
@@ -126,6 +121,27 @@ const SelectIcon: FunctionComponent<SelectIconProps> = ({ icon, setIcon }) => {
   );
 };
 
+export const SelectIconMenu = ({
+  icon,
+  setIcon,
+  children,
+  ...props
+}: SelectIconMenuProps) => {
+  return (
+    <MenuPopover
+      key={icon}
+      icon={icon}
+      {...props}
+      menuProps={{
+        anchorOrigin: { vertical: "bottom", horizontal: "right" },
+        transformOrigin: { vertical: "bottom", horizontal: "left" },
+        ...props.menuProps,
+      }}>
+      <SelectIcon icon={icon} setIcon={setIcon} />
+    </MenuPopover>
+  );
+};
+
 export function IconsGrid({ iconsList, selected, setSelected }: IconGridProps) {
   const columnCount = 5;
   const width = 40;
@@ -204,6 +220,7 @@ function SelectIconType({
   );
 }
 
+export type SelectIconMenuProps = SelectIconProps & Partial<MenuPopoverProps>;
 export interface SelectIconProps {
   icon: string;
   setIcon: (icon: string) => void;

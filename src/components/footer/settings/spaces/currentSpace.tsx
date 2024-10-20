@@ -11,8 +11,7 @@ import {
   currentSpaceChangeIcon,
   currentSpaceRename,
 } from "@/redux/slice/layout";
-import SelectIcon from "@/components/select-icon";
-import MenuPopover from "@/components/popoverMenu";
+import { SelectIconMenu } from "@/components/select-icon";
 
 function CurrentSpaceSetting() {
   const layout = useCurrentLayout();
@@ -35,20 +34,10 @@ function CurrentSpaceSetting() {
         <div aria-label="Icons" className="between gap-4 w-full icon-xl">
           <div className="text-xl">Change Icons</div>
           <div className="w-14 flex-center">
-            <MenuPopover
-              key={layout.icon}
+            <SelectIconMenu
               icon={layout.icon}
-              menuProps={{
-                anchorOrigin: { vertical: "bottom", horizontal: "right" },
-                transformOrigin: { vertical: "bottom", horizontal: "left" },
-              }}>
-              <SelectIcon
-                icon={layout.icon}
-                setIcon={(icon: string) =>
-                  dispatch(currentSpaceChangeIcon(icon))
-                }
-              />
-            </MenuPopover>
+              setIcon={(icon: string) => dispatch(currentSpaceChangeIcon(icon))}
+            />
           </div>
         </div>
 

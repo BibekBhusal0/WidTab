@@ -356,7 +356,7 @@ export const initialLayoutState: LayoutSliceType = {
       compaction: "none",
       id: 3,
       icon: "mage:trophy-fill",
-      locked: false,
+      locked: true,
       widgets: [
         {
           gridProps: {

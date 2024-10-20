@@ -21,7 +21,7 @@ import WidgetControls from "@/components/widgetControl";
 import { StateType } from "@/redux/store";
 import { Icon } from "@iconify/react";
 import { cn } from "@/utils/cn";
-import { Icon2RN } from "@/icons";
+import { SelectIconMenu } from "@/components/select-icon";
 
 export const transparentInput =
   "border-transparent w-full bg-transparent resize-none focus:outline-none";
@@ -134,6 +134,9 @@ function Todo({
       })
     );
   };
+  const iconChangeHandler = (icon: string) => {
+    dispatch(changeTask({ task_id: id, change_item: "icon", icon }));
+  };
 
   const TodoMenuProps: todoMenuProps = {
     sorted,
@@ -149,8 +152,12 @@ function Todo({
 
   return (
     <Box className="size-full">
-      <div className="flex justify-between items-center gap-2 px-3 h-12">
-        <Icon2RN icon={icon} className="text-4xl" />
+      <div className="flex justify-between items-center gap-2 px-3 h-12 icon-xl">
+        <SelectIconMenu
+          icon={icon}
+          setIcon={iconChangeHandler}
+          buttonProps={{ sx: { p: 0.7, m: 0 } }}
+        />
         <input
           ref={titleRef}
           onKeyDown={titleKeyDown}
