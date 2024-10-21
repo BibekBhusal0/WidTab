@@ -5,16 +5,12 @@ import {
   deleteItem,
   changePinnedHabitTracker,
 } from "@/redux/slice/habit-tracker";
-import WidgetControls from "@/components/widgetControl";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { StateType } from "@/redux/store";
-import IconMenu, { IconMenuType } from "@/components/menuWithIcon";
 import HoverControls from "@/components/hoverControls";
 import { Icon } from "@iconify/react";
-import useCurrentIcons from "@/hooks/useCurrentIcons";
-import MenuPopover from "@/components/popoverMenu";
 import { cn } from "@/utils/cn";
+import HabitTrackerControls from "./controls";
 
 function HabitTracker({
   id,
@@ -58,30 +54,36 @@ function HabitTracker({
         />
       }
       className="flex-center flex-col gap-4 p-2 w-full">
-      <div className="between w-full gap-4">
-        <div className="w-28 bg-white h-16 text-4xl flex-center">{icon}</div>
-        <Box className="text-4xl">{title}</Box>
+      <div aria-label="icon and title" className="full-between">
+        <div className="w-16 bg-primary-6 rounded-full aspect-square p-2">
+          <Icon icon={icon} className="size-full" />
+        </div>
+        <div className="text-4xl">{title}</div>
         <div></div>
       </div>
 
-      <Box className="between gap-4 w-full">
-        <Box className="between gap-4">
-          <Box className="flex-center gap-4">
-            <Box
-              className="flex-center gap-2 p-1.5 rounded-xl"
-              sx={{ border: "2px solid" }}>
-              <Box
-                sx={{ border: `2px ${completedToday ? "solid" : "dashed"}` }}
-                className="aspect-square w-10 rounded-full relative p-0.5">
+      <div aria-label="streak, progress and buttons" className="full-between">
+        <div aria-label="streak" className="between gap-4">
+          <div className="flex-center gap-4">
+            <div className="flex-center gap-2 p-1.5 rounded-xl border-text-primary border-2">
+              <div
+                className={cn(
+                  "aspect-square w-10 relative p-0.5 transition-all",
+                  "rounded-full border-text-primary border-2",
+                  {
+                    "border-solid": completedToday,
+                    "border-dashed": !completedToday,
+                  }
+                )}>
                 {completedToday && (
                   <Icon className="size-full" icon="heroicons:fire-16-solid" />
                 )}
-              </Box>
+              </div>
               0
-            </Box>
-          </Box>
-        </Box>
-        <Box className="flex-center flex-col gap-2">
+            </div>
+          </div>
+        </div>
+        <div aria-label="progress" className="flex-center flex-col gap-2">
           <div>
             <span className="text-3xl">
               {value} / {target}
@@ -91,8 +93,8 @@ function HabitTracker({
               {unit}
             </span>
           </div>
-        </Box>
-        <Box>
+        </div>
+        <div aria-label="buttons">
           {icons.map(({ icon, onClick }, index) => {
             const add = icon.includes("add");
             const disabled = !add && value <= 0;
@@ -112,46 +114,9 @@ function HabitTracker({
               </Button>
             );
           })}
-        </Box>
-      </Box>
+        </div>
+      </div>
     </HoverControls>
-  );
-}
-
-function HabitTrackerControls({
-  handleReset,
-  handlePin,
-  handleDelete,
-  pinned,
-}: {
-  handleReset: () => void;
-  pinned?: boolean;
-  handlePin: () => void;
-  handleDelete: () => void;
-}) {
-  const { delete_, reset, pin } = useCurrentIcons();
-  const items: IconMenuType[] = [
-    {
-      name: pinned ? "Unpin" : "Pin",
-      icon: pin,
-      onClick: handlePin,
-      color: pinned ? "primary.main" : "action.main",
-    },
-
-    {
-      name: "Delete",
-      icon: delete_,
-      onClick: handleDelete,
-      color: "error.main",
-    },
-    { name: "Reset", icon: reset, onClick: handleReset },
-  ];
-  return (
-    <WidgetControls>
-      <MenuPopover>
-        <IconMenu menuItems={items} />
-      </MenuPopover>
-    </WidgetControls>
   );
 }
 

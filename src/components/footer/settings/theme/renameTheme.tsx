@@ -11,7 +11,7 @@ function RenameTheme() {
     dispatch(changeTheme({ ...theme, name: e }));
 
   return (
-    <div className="between w-full gap-4">
+    <div className="full-between">
       <div className="text-xl">Theme Name</div>
       <RenameItem
         handleChange={handleChange}

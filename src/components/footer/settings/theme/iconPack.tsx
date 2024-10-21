@@ -42,7 +42,7 @@ function SelectIconPack({ showLabel = true }: { showLabel?: boolean }) {
   );
   if (!showLabel) return selectItem;
   return (
-    <div className="between gap-5 w-full">
+    <div className="full-between">
       <div className="text-xl">Select Icon Pack</div>
       {selectItem}
     </div>

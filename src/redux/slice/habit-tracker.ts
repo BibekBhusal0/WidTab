@@ -39,12 +39,9 @@ const habitTrackerSlice = createSlice({
       }
     },
     setItem: (state, action: PayloadAction<HabitTrackerItemType>) => {
-      const crr = state.trackers.find(({ id }) => id === action.payload.id);
+      let crr = state.trackers.find(({ id }) => id === action.payload.id);
       if (crr) {
-        crr.increment = action.payload.increment;
-        crr.target = action.payload.target;
-        crr.title = action.payload.title;
-        crr.value = action.payload.value;
+        crr = action.payload;
       }
     },
     changePinnedHabitTracker: (state, action: PayloadAction<number>) => {

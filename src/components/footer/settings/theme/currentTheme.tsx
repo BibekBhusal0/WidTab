@@ -22,7 +22,7 @@ function CurrentThemeSettings() {
 
   return (
     <div className="flex flex-col gap-4 px-3">
-      <div className="between gap-5">
+      <div className="full-between">
         <div className="text-xl">Dark Mode</div>
         <Switch
           checked={theme.mode === "dark"}
@@ -31,7 +31,7 @@ function CurrentThemeSettings() {
       </div>
       {theme.editAble ? (
         <>
-          <div className="between gap-5">
+          <div className="full-between">
             <div className="text-xl">Primary Color</div>
             <input
               type="color"
@@ -89,7 +89,7 @@ function ChangeSlider({ val, ...props }: changeSliderProps) {
   const dispatch = useDispatch();
 
   return (
-    <div className="between w-full gap-4">
+    <div className="full-between">
       <div className="text-xl w-40 capitalize">{val}</div>
       <Slider
         value={theme[val]}

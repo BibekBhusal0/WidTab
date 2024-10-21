@@ -386,7 +386,7 @@ export const initialHabitTrackerState: HabitTrackerSliceType = {
       target: 100,
       title: "breathe",
       value: 0,
-      icon: "💧",
+      icon: "ic:twotone-air",
       unit: "times",
     },
   ],

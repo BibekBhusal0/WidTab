@@ -45,10 +45,13 @@ module.exports = {
       colors: {
         ...generateColorMapping(),
         ...generateOpacityMapping("primary"),
+        "text-primary": "var(--mui-palette-text-primary)",
+        "text-secondary": "var(--mui-palette-text-secondary)",
+        divider: "var(--mui-palette-divider)",
       },
+      backdropBlur: { themed: "var(--custom-blur)" },
+      borderRadius: { themed: "var(--custom-border-radius)" },
     },
-    backdropBlur: { themed: "var(--custom-blur)" },
-    borderRadius: { themed: "var(--custom-border-radius)" },
   },
   darkMode: "class",
 };

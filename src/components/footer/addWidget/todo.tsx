@@ -7,7 +7,6 @@ import { addTask } from "@/redux/slice/todo";
 import { StateType } from "@/redux/store";
 import { widgetDimensions } from "@/utils/getWidget";
 import { getNextId } from "@/utils/next_id";
-import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,7 +26,7 @@ function AddTodo() {
   const presentTodosId = presentTodos.map(({ values: { id } }) => id);
 
   const addWidget = (id: number) => {
-    if (!availablePosition) return;
+    if (!availablePosition || presentTodosId.includes(id)) return;
     dispatch(
       currentSpaceAddWidget({
         type: "todo",
@@ -73,9 +72,9 @@ function AddTodo() {
         word_limit={undefined}
       />
       {!availablePosition && (
-        <Box color="error.main" className="text-lg pt-3">
+        <div className="text-lg text-error-main pt-3">
           Not Enough Space For Todo
-        </Box>
+        </div>
       )}
     </div>
   );

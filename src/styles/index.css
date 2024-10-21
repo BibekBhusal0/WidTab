@@ -10,6 +10,9 @@
   .between {
     @apply flex justify-between items-center;
   }
+  .full-between {
+    @apply between w-full gap-4;
+  }
 }
 
 .scroll-container::-webkit-scrollbar {

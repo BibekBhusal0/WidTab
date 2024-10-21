@@ -18,7 +18,7 @@ function Footer() {
       {...footerProps}
       sx={{ ...footerProps?.sx }}
       className={cn(
-        "size-full between gap-3 footer bg-secondaryContainer-paper",
+        "full-between bg-secondaryContainer-paper",
         footerProps?.className
       )}
       //

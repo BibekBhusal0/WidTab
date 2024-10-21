@@ -6,6 +6,7 @@ import { StateType } from "@/redux/store";
 import { positionProps } from "@/types/slice/layout";
 import Box from "@mui/material/Box";
 import { cn } from "@/utils/cn";
+import HabitTrackerPage from "./pages/habitTracker";
 
 interface StaticLayoutProps {
   widgetType: controlledWidgetsType;
@@ -16,7 +17,7 @@ const StaticLayout: FunctionComponent<StaticLayoutProps> = ({ widgetType }) => {
   const { mainComponentProps } = positionProps[toolBarPosition];
   const layoutMapping: Record<controlledWidgetsType, ReactNode> = {
     todo: <TodoPage />,
-    "habit-tracker": null,
+    "habit-tracker": <HabitTrackerPage />,
     bookmark: null,
   };
   return (

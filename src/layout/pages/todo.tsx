@@ -5,6 +5,7 @@ import { useTheme } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import { Icon } from "@iconify/react";
 import { addTask } from "@/redux/slice/todo";
+import { cn } from "@/utils/cn";
 
 function TodoPage() {
   const {
@@ -17,24 +18,22 @@ function TodoPage() {
   const unPinned = Tasks.filter((t) => t.id !== pinnedTodo);
 
   const dispatch = useDispatch();
+  const commonCls = "h-80 overflow-hidden";
   return (
     <div className="grid gap-3 grid-cols-1 p-3 overflow-auto sm:grid-cols-2 md:grid-cols-3">
       {pinned.map((task) => (
-        <Paper
-          sx={{ background: paper }}
-          key={task.id}
-          className="h-80 overflow-hidden">
+        <Paper sx={{ background: paper }} key={task.id} className={commonCls}>
           <Todo {...task} />
         </Paper>
       ))}
       {unPinned.map((task) => (
-        <Paper key={task.id} className="h-80 overflow-hidden">
+        <Paper key={task.id} className={commonCls}>
           <Todo {...task} />
         </Paper>
       ))}
       <Paper
         onClick={() => dispatch(addTask(""))}
-        className="flex-center group cursor-pointer h-80">
+        className={cn(commonCls, "flex-center group cursor-pointer")}>
         <div className="group-hover:scale-[6] scale-[3] transition-all">
           <Icon icon="material-symbols:add-circle-outline-rounded" />
         </div>

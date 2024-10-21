@@ -87,7 +87,7 @@ function SortableCheckbox({
       />
       <div className="w-8 h-full">
         <button
-          className="rounded-full cursor-pointer h-full hidden group-hover:block icon-md"
+          className="h-full hidden group-hover:block icon-md"
           onClick={handleDelete}
           //
         >

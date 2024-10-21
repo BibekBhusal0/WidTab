@@ -9,11 +9,11 @@ import ToggleIcons from "./toggle-icons";
 function GeneralSettings() {
   return (
     <div className="w-full flex flex-col gap-4 ">
-      <div className="between gap-4">
+      <div className="full-between">
         <div className="text-xl">Open Link in New Tab</div>
         <ToggleLinkInNT />
       </div>
-      <div className="between gap-4">
+      <div className="full-between">
         <div className="text-xl">Tool Bar Position</div>
         <SelectToolBarPosition />
       </div>

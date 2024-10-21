@@ -26,12 +26,12 @@ function CurrentSpaceSetting() {
         aria-label="Current Space Settings"
         className="w-full flex flex-col items-center gap-5">
         <ChangeCompaction />
-        <div aria-label="Lock widgets" className="between gap-4 w-full">
+        <div aria-label="Lock widgets" className="full-between">
           <div className="text-xl">Lock Widgets</div>
           <Lock type="toggle" />
         </div>
 
-        <div aria-label="Icons" className="between gap-4 w-full icon-xl">
+        <div aria-label="Icons" className="full-between icon-xl">
           <div className="text-xl">Change Icons</div>
           <div className="w-14 flex-center">
             <SelectIconMenu
@@ -41,7 +41,7 @@ function CurrentSpaceSetting() {
           </div>
         </div>
 
-        <div aria-label="rename" className="between gap-4 w-full">
+        <div aria-label="rename" className="full-between">
           <div className="text-xl">Rename Space</div>
           <RenameItem
             initialText={layout.name}
