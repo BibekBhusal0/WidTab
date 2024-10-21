@@ -1,17 +1,35 @@
-import { todoMenuProps } from "@/types/slice/todo";
 import MenuPopover from "@/components/popoverMenu";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import IconMenu, { IconMenuType } from "@/components/menuWithIcon";
+import { TaskType } from "@/types/slice/todo";
+import {
+  changePinnedTodo,
+  deleteTask,
+  toggleSortedFiltered,
+} from "@/redux/slice/todo";
+import { useDispatch, useSelector } from "react-redux";
+import { StateType } from "@/redux/store";
+import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
 
-function TodoMenu({
-  handleDelete,
-  handleSort,
-  handleFilter,
-  handlePin,
-  pinned,
-  sorted,
-  filtered,
-}: todoMenuProps) {
+function TodoMenu({ id, sorted, filtered }: TaskType) {
+  const dispatch = useDispatch();
+  const { pinnedTodo } = useSelector((state: StateType) => state.todo);
+  const { currentSpace } = useSelector((state: StateType) => state.layout);
+
+  const pinned = pinnedTodo === id;
+  const handleFilter = () =>
+    dispatch(toggleSortedFiltered({ id, type: "filtered" }));
+  const handleSort = () =>
+    dispatch(toggleSortedFiltered({ id, type: "sorted" }));
+  const handlePin = () => dispatch(changePinnedTodo(id));
+  const handleDelete = () => {
+    if (currentSpace.type === "dynamic") {
+      dispatch(currentSpaceDeleteWidget({ id, type: "todo" }));
+    } else {
+      dispatch(deleteTask(id));
+    }
+  };
+
   const { pin, delete_, sort, show, hide } = useCurrentIcons();
   const items: IconMenuType[] = [
     {
@@ -41,11 +59,9 @@ function TodoMenu({
   ];
 
   return (
-    <div>
-      <MenuPopover>
-        <IconMenu menuItems={items} />
-      </MenuPopover>
-    </div>
+    <MenuPopover>
+      <IconMenu menuItems={items} />
+    </MenuPopover>
   );
 }
 

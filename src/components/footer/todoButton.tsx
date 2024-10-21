@@ -1,4 +1,3 @@
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
@@ -17,13 +16,9 @@ function TodoButton() {
     <FooterPopover tooltip="To-dos" icon={checklist}>
       <div className="flex h-56 overflow-clip">
         {pinned && (
-          <Box
-            sx={{ borderRight: "1px solid" }}
-            className="w-56"
-            //
-          >
-            <Todo {...pinned} showControls={false} />
-          </Box>
+          <div className="w-56 border-r-2 hide-widget-controls border-divider">
+            <Todo {...pinned} />
+          </div>
         )}
         <div className="flex-center flex-col px-3">
           <Button

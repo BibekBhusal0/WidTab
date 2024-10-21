@@ -34,12 +34,3 @@ export type sortableCheckboxProps = todoType & {
   focusPrevious?: () => void;
   focusNext?: () => void;
 };
-export type todoMenuProps = {
-  handlePin?: () => void;
-  handleDelete?: () => void;
-  handleSort?: () => void;
-  handleFilter?: () => void;
-  sorted?: boolean;
-  pinned?: boolean;
-  filtered?: boolean;
-};

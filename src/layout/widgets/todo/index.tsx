@@ -1,46 +1,28 @@
-import { TaskType, todoMenuProps, todoType } from "@/types/slice/todo";
-import { useDispatch, useSelector } from "react-redux";
+import { TaskType, todoType } from "@/types/slice/todo";
+import { useDispatch } from "react-redux";
 import { AnimatePresence, Reorder } from "framer-motion";
 import SortableCheckbox from "./checkbox";
 import IconButton from "@mui/material/IconButton";
-import Box from "@mui/material/Box";
 
 import TodoMenu from "./todo-menu";
 import { useRef } from "react";
 import {
   addTodo,
-  deleteTask,
   deleteTodo,
   changeTask,
   changeTodo,
   toggleTodo,
-  toggleSortedFiltered,
-  changePinnedTodo,
 } from "@/redux/slice/todo";
-import WidgetControls from "@/components/widgetControl";
-import { StateType } from "@/redux/store";
-import { Icon } from "@iconify/react";
 import { cn } from "@/utils/cn";
 import { SelectIconMenu } from "@/components/select-icon";
+import HoverControls from "@/components/hoverControls";
+import { Icon } from "@iconify/react";
+import WidgetControls from "@/components/widgetControl";
 
 export const transparentInput =
   "border-transparent w-full bg-transparent resize-none focus:outline-none";
-type TodoProps = TaskType & {
-  deleteAction?: (id: number) => void;
-  showControls?: boolean;
-};
 
-function Todo({
-  id,
-  title,
-  todos,
-  filtered,
-  sorted,
-  deleteAction,
-  icon,
-  showControls = true,
-}: TodoProps) {
-  const { pinnedTodo } = useSelector((state: StateType) => state.todo);
+function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
   const dispatch = useDispatch();
   const taskRefs = useRef<Map<number, HTMLTextAreaElement | null>>(new Map());
   const titleRef = useRef<HTMLInputElement>(null);
@@ -86,22 +68,10 @@ function Todo({
   const addTodoItem = () => {
     dispatch(addTodo({ task_id: id, task: "" }));
   };
-  const deleteThis = () => {
-    dispatch(deleteTask(id));
-  };
   const titleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       e.preventDefault();
       addTodoItem();
-    } else if (
-      (e.key === "Escape" || e.key === "Backspace") &&
-      title.trim() === "" &&
-      todos.length === 0
-    ) {
-      e.preventDefault();
-      if (deleteAction === undefined) {
-        deleteThis();
-      }
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
       const nextIndex = 0;
@@ -138,20 +108,17 @@ function Todo({
     dispatch(changeTask({ task_id: id, change_item: "icon", icon }));
   };
 
-  const TodoMenuProps: todoMenuProps = {
-    sorted,
-    filtered,
-    pinned: pinnedTodo === id,
-    handleDelete:
-      deleteAction !== undefined ? () => deleteAction(id) : deleteThis,
-    handleFilter: () =>
-      dispatch(toggleSortedFiltered({ id, type: "filtered" })),
-    handleSort: () => dispatch(toggleSortedFiltered({ id, type: "sorted" })),
-    handlePin: () => dispatch(changePinnedTodo(id)),
-  };
-
   return (
-    <Box className="size-full">
+    <HoverControls
+      controls={
+        <WidgetControls className="flex">
+          <IconButton onClick={addTodoItem}>
+            <Icon icon="material-symbols:add-circle-outline-rounded" />
+          </IconButton>
+          <TodoMenu {...{ id, icon, title, todos, filtered, sorted }} />
+        </WidgetControls>
+      }
+      className="size-full">
       <div className="flex justify-between items-center gap-2 px-3 h-12 icon-xl">
         <SelectIconMenu
           icon={icon}
@@ -168,14 +135,6 @@ function Todo({
           value={title}
           onChange={titleChangeHandler}
         />
-        {showControls && (
-          <WidgetControls className="flex gap-3 p-1">
-            <IconButton onClick={addTodoItem}>
-              <Icon icon="material-symbols:add-circle-outline-rounded" />
-            </IconButton>
-            <TodoMenu {...TodoMenuProps} />
-          </WidgetControls>
-        )}
       </div>
       <div className="overflow-auto scroll-container py-4 px-0.5 space-y-3 w-full h-5/6">
         <Reorder.Group
@@ -213,7 +172,7 @@ function Todo({
           </AnimatePresence>
         </Reorder.Group>
       </div>
-    </Box>
+    </HoverControls>
   );
 }
 

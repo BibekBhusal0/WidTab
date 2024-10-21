@@ -14,7 +14,9 @@
     @apply between w-full gap-4;
   }
 }
-
+.hide-widget-controls .widget-control {
+  display: none;
+}
 .scroll-container::-webkit-scrollbar {
   width: 0; /* Hides the scrollbar */
   background: transparent; /* Ensures the background is transparent */
