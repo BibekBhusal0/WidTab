@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Todo from "../widgets/todo";
 import { useTheme } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-import { Icon } from "@iconify/react";
 import { addTask } from "@/redux/slice/todo";
 import { cn } from "@/utils/cn";
+import useCurrentIcons from "@/hooks/useCurrentIcons";
 
 function TodoPage() {
   const {
@@ -13,6 +13,7 @@ function TodoPage() {
       primaryContainer: { paper },
     },
   } = useTheme();
+  const { add } = useCurrentIcons();
   const { Tasks, pinnedTodo } = useSelector((state: StateType) => state.todo);
   const pinned = Tasks.filter((t) => t.id === pinnedTodo);
   const unPinned = Tasks.filter((t) => t.id !== pinnedTodo);
@@ -35,7 +36,7 @@ function TodoPage() {
         onClick={() => dispatch(addTask(""))}
         className={cn(commonCls, "flex-center group cursor-pointer")}>
         <div className="group-hover:scale-[6] scale-[3] transition-all">
-          <Icon icon="material-symbols:add-circle-outline-rounded" />
+          {add}
         </div>
       </Paper>
     </div>

@@ -17,7 +17,7 @@ export function Icon2RN({
   return icon;
 }
 
-const ri = [
+const R_icons = [
   "settings",
   "widget",
   "lock",
@@ -37,31 +37,11 @@ const ri = [
   "delete_",
   "menu",
   "readingList",
+  "add",
 ] as const;
-export type allRequiredIcons = (typeof ri)[number];
-export const requiredIcons: allRequiredIcons[] = [...ri];
+export type allRequiredIcons = (typeof R_icons)[number];
+export const requiredIcons: allRequiredIcons[] = [...R_icons];
 export type iconData = Record<allRequiredIcons, iconAsProp>;
-
-const solar_bold: Partial<iconRN> = {
-  settings: "settings-bold",
-  widget: "widget-add-bold",
-  unlock: "lock-unlocked-bold",
-  lock: "lock-bold",
-  habitTracker: "calendar-mark-bold",
-  pin: "pin-bold",
-  filter: "filter-bold",
-  sort: "sort-from-top-to-bottom-bold",
-  reset: "refresh-bold",
-  checklist: "checklist-minimalistic-bold",
-  bookmark: "bookmark-bold",
-  edit: "pen-new-square-bold",
-  delete_: "trash-bin-trash-bold",
-  menu: "hamburger-menu-bold",
-  readingList: "notebook-minimalistic-bold",
-  show: "eye-bold",
-  hide: "eye-closed-bold",
-  space: "planet-2-bold",
-};
 
 export function transformIcons<T extends Partial<iconData>>(
   iconObject: T,
@@ -89,6 +69,27 @@ export function transformIcons<T extends Partial<iconData>>(
   return transformed as T extends iconData ? iconRN : Partial<iconRN>;
 }
 
+const solar_bold: Partial<iconRN> = {
+  settings: "settings-bold",
+  widget: "widget-add-bold",
+  unlock: "lock-unlocked-bold",
+  lock: "lock-bold",
+  habitTracker: "calendar-mark-bold",
+  pin: "pin-bold",
+  filter: "filter-bold",
+  sort: "sort-from-top-to-bottom-bold",
+  reset: "refresh-bold",
+  checklist: "checklist-minimalistic-bold",
+  bookmark: "bookmark-bold",
+  edit: "pen-new-square-bold",
+  delete_: "trash-bin-trash-bold",
+  menu: "hamburger-menu-bold",
+  readingList: "notebook-minimalistic-bold",
+  show: "eye-bold",
+  hide: "eye-closed-bold",
+  space: "planet-2-bold",
+  add: "add-square-bold",
+};
 export const _ri_fill = {
   settings: "settings-4-fill",
   widget: "apps-2-add-fill",
@@ -109,6 +110,7 @@ export const _ri_fill = {
   show: "eye-fill",
   hide: "eye-off-fill",
   space: "rocket-2-fill",
+  add: "add-circle-fill",
 };
 export const ri_line = transformIcons(_ri_fill, "ri", "fill", "line");
 export const ri_fill = transformIcons(_ri_fill, "ri");
@@ -117,6 +119,7 @@ export const SelectedIconPacks: Record<string, iconData> = {
   "Remix Icon Filled": ri_fill,
   "Remix Icon Line": ri_line,
   "material-symbols": {
+    ...ri_fill,
     settings: "settings-rounded",
     widget: "widgets-rounded",
     lock: "lock",
@@ -137,8 +140,10 @@ export const SelectedIconPacks: Record<string, iconData> = {
     hide: "visibility-off",
     show: "visibility",
     space: "rocket-launch-rounded",
+    add: "add-circle-rounded",
   },
   "material-symbols-light": {
+    ...ri_line,
     settings: "settings-outline-rounded",
     widget: "widgets-outline-rounded",
     lock: "lock-outline",
@@ -159,8 +164,10 @@ export const SelectedIconPacks: Record<string, iconData> = {
     hide: "visibility-off-outline",
     space: "rocket-launch-outline-rounded",
     show: "visibility-outline",
+    add: "add-circle-outline-rounded",
   },
   tabler: {
+    ...ri_line,
     settings: "settings",
     widget: "apps",
     lock: "lock",
@@ -180,6 +187,7 @@ export const SelectedIconPacks: Record<string, iconData> = {
     show: "eye",
     hide: "eye-off",
     space: "rocket",
+    add: "square-rounded-plus",
   },
   lucide: {
     ...ri_line,
@@ -200,6 +208,7 @@ export const SelectedIconPacks: Record<string, iconData> = {
     show: "eye",
     hide: "eye-off",
     space: "rocket",
+    add: "circle-plus",
   },
   uil: {
     ...ri_line,
@@ -220,6 +229,7 @@ export const SelectedIconPacks: Record<string, iconData> = {
     show: "eye",
     hide: "eye-slash",
     space: "rocket",
+    add: "plus-circle",
   },
   carbon: {
     ...ri_line,
@@ -240,8 +250,10 @@ export const SelectedIconPacks: Record<string, iconData> = {
     menu: "menu",
     readingList: "book",
     space: "rocket",
+    add: "add-alt",
   },
   hugeicons: {
+    ...ri_line,
     settings: "settings-01",
     widget: "resources-add",
     lock: "circle-lock-01",
@@ -261,6 +273,26 @@ export const SelectedIconPacks: Record<string, iconData> = {
     show: "view",
     hide: "view-off",
     space: "rocket",
+    add: "add-square",
+  },
+  "line-md": {
+    ...ri_line,
+    add: "plus-circle",
+    checklist: "check-list-3-filled",
+    menu: "menu",
+    edit: "edit",
+    filter: "filter",
+    sort: "filter-alt",
+    show: "watch-loop",
+    hide: "watch-off-loop",
+    search: "search",
+    settings: "cog-loop",
+    space: "compass-loop",
+    habitTracker: "calendar",
+    bookmark: "star",
+    reset: "backup-restore",
+    delete_: "close-circle-filled",
+    widget: <Icon icon="svg-spinners:blocks-scale" />,
   },
   "Solar Bold": { ...ri_fill, ...transformIcons(solar_bold, "solar") },
   "Solar Bold Duotone": {

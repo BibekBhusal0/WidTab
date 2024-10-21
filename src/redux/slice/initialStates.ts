@@ -26,7 +26,7 @@ export const initialThemeState: ThemeSliceType = {
       blur: 0.5,
       roundness: 0.3,
       opacity: 0.7,
-      iconPack: "Solar Bold",
+      iconPack: "hugeicons",
     },
     {
       name: "blue",
@@ -37,7 +37,7 @@ export const initialThemeState: ThemeSliceType = {
       blur: 0,
       roundness: 0.2,
       opacity: 1,
-      iconPack: "uil",
+      iconPack: "line-md",
     },
   ],
 };
@@ -148,21 +148,6 @@ export const initialLayoutState: LayoutSliceType = {
       locked: true,
       icon: "jam:home-f",
       widgets: [
-        {
-          type: "custom",
-          values: {
-            id: 1,
-            url: "https://indify.co/widgets/live/weather/6IrFOuag2Pz5NlkM9qFw",
-          },
-          gridProps: {
-            isResizable: true,
-            x: 5,
-            y: 3,
-            w: 3,
-            h: 4,
-            i: "1",
-          },
-        },
         {
           type: "search",
           gridProps: {

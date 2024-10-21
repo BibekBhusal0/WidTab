@@ -16,14 +16,15 @@ import {
 import { cn } from "@/utils/cn";
 import { SelectIconMenu } from "@/components/select-icon";
 import HoverControls from "@/components/hoverControls";
-import { Icon } from "@iconify/react";
 import WidgetControls from "@/components/widgetControl";
+import useCurrentIcons from "@/hooks/useCurrentIcons";
 
 export const transparentInput =
   "border-transparent w-full bg-transparent resize-none focus:outline-none";
 
 function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
   const dispatch = useDispatch();
+  const { add } = useCurrentIcons();
   const taskRefs = useRef<Map<number, HTMLTextAreaElement | null>>(new Map());
   const titleRef = useRef<HTMLInputElement>(null);
   var dynamicTasks = [...todos];
@@ -112,9 +113,7 @@ function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
     <HoverControls
       controls={
         <WidgetControls className="flex">
-          <IconButton onClick={addTodoItem}>
-            <Icon icon="material-symbols:add-circle-outline-rounded" />
-          </IconButton>
+          <IconButton onClick={addTodoItem}>{add}</IconButton>
           <TodoMenu {...{ id, icon, title, todos, filtered, sorted }} />
         </WidgetControls>
       }

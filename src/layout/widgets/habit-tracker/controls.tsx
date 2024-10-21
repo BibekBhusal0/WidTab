@@ -69,7 +69,7 @@ function HabitTrackerControls({ id }: { id: number }) {
               initialState={trackers.find(({ id }) => id === id)}
               onChange={handleChange}
             />
-            <div className="w-full flex-center">
+            <div className="w-full flex-center mt-5">
               <Button onClick={() => setEditing(false)}>Back</Button>
             </div>
           </div>
