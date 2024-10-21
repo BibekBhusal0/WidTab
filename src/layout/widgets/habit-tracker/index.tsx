@@ -1,12 +1,7 @@
 import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  changeValue,
-  deleteItem,
-  changePinnedHabitTracker,
-} from "@/redux/slice/habit-tracker";
+import { useDispatch } from "react-redux";
+import { changeValue } from "@/redux/slice/habit-tracker";
 import Button from "@mui/material/Button";
-import { StateType } from "@/redux/store";
 import HoverControls from "@/components/hoverControls";
 import { Icon } from "@iconify/react";
 import { cn } from "@/utils/cn";
@@ -21,21 +16,11 @@ function HabitTracker({
   unit,
 }: HabitTrackerItemType) {
   const dispatch = useDispatch();
-  const { pinned } = useSelector((state: StateType) => state["habit-tracker"]);
-  const handlePin = () => {
-    dispatch(changePinnedHabitTracker(id));
-  };
-  const handleDelete = () => {
-    dispatch(deleteItem(id));
-  };
   const handleIncrement = () => {
     dispatch(changeValue({ id, action: "increment" }));
   };
   const handleDecrement = () => {
     dispatch(changeValue({ id, action: "decrement" }));
-  };
-  const handleReset = () => {
-    dispatch(changeValue({ id, action: "reset" }));
   };
   const icons = [
     { icon: "material-symbols:remove", onClick: handleDecrement },
@@ -45,14 +30,7 @@ function HabitTracker({
 
   return (
     <HoverControls
-      controls={
-        <HabitTrackerControls
-          handleDelete={handleDelete}
-          handlePin={handlePin}
-          handleReset={handleReset}
-          pinned={pinned === id}
-        />
-      }
+      controls={<HabitTrackerControls id={id} />}
       className="flex-center flex-col gap-4 p-2 w-full">
       <div aria-label="icon and title" className="full-between">
         <div className="w-16 bg-primary-6 rounded-full aspect-square p-2">

@@ -39,6 +39,7 @@ const DigitalClock = ({
       className="text-center size-full flex-center p-5 uppercase">
       <Textfit
         min={20}
+        style={{ height: "100%" }}
         max={400}
         className="size-full flex-center"
         key={resizeKey}>
