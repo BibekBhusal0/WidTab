@@ -8,14 +8,22 @@ import {
   changePinnedHabitTracker,
   changeValue,
   deleteItem,
+  setItem,
 } from "@/redux/slice/habit-tracker";
 import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
+import { useState } from "react";
+import Button from "@mui/material/Button";
+import HabitTrackerEdit from "./edit";
+import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
 
 function HabitTrackerControls({ id }: { id: number }) {
-  const { delete_, reset, pin } = useCurrentIcons();
+  const [editing, setEditing] = useState(false);
+  const { delete_, reset, pin, edit } = useCurrentIcons();
 
   const dispatch = useDispatch();
-  const { pinned } = useSelector((state: StateType) => state["habit-tracker"]);
+  const { pinned, trackers } = useSelector(
+    (state: StateType) => state["habit-tracker"]
+  );
   const { currentSpace } = useSelector((state: StateType) => state.layout);
   const handlePin = () => {
     dispatch(changePinnedHabitTracker(id));
@@ -30,7 +38,13 @@ function HabitTrackerControls({ id }: { id: number }) {
   const handleReset = () => {
     dispatch(changeValue({ id, action: "reset" }));
   };
+
+  const handleChange = (tracker: HabitTrackerItemType) => {
+    dispatch(setItem(tracker));
+    setEditing(false);
+  };
   const items: IconMenuType[] = [
+    { name: "Edit", icon: edit, onClick: () => setEditing(true) },
     {
       name: pinned ? "Unpin" : "Pin",
       icon: pin,
@@ -38,18 +52,30 @@ function HabitTrackerControls({ id }: { id: number }) {
       color: pinned ? "primary.main" : "action.main",
     },
 
+    { name: "Reset", icon: reset, onClick: handleReset },
     {
       name: "Delete",
       icon: delete_,
       onClick: handleDelete,
       color: "error.main",
     },
-    { name: "Reset", icon: reset, onClick: handleReset },
   ];
   return (
     <WidgetControls>
       <MenuPopover>
-        <IconMenu menuItems={items} />
+        {editing ? (
+          <div className="p-4">
+            <HabitTrackerEdit
+              initialState={trackers.find(({ id }) => id === id)}
+              onChange={handleChange}
+            />
+            <div className="w-full flex-center">
+              <Button onClick={() => setEditing(false)}>Back</Button>
+            </div>
+          </div>
+        ) : (
+          <IconMenu menuItems={items} />
+        )}
       </MenuPopover>
     </WidgetControls>
   );
