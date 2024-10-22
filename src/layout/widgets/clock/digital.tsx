@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import moment from "moment-timezone";
 import { Textfit } from "@ataverascrespo/react18-ts-textfit";
 import { DigitalClockProps } from ".";
+import dayjs from "@/dayjsConfig";
 
 const DigitalClock = ({
   time,
@@ -14,7 +14,7 @@ const DigitalClock = ({
 
   const formatTime = useCallback(() => {
     const format = `${TwentyFourHour ? "HH:mm" : "hh:mm"}${showSeconds ? ":ss" : ""} ${TwentyFourHour ? "" : "a"}`;
-    return moment.tz(time, timeZone).format(format);
+    return dayjs.tz(time, timeZone).format(format);
   }, [time, timeZone, TwentyFourHour, showSeconds]);
 
   useEffect(() => {

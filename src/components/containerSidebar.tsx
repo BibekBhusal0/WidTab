@@ -3,7 +3,6 @@ import Box, { BoxProps } from "@mui/material/Box";
 import { cn } from "@/utils/cn";
 import Tab, { TabProps } from "@mui/material/Tab";
 import Tabs, { TabsProps } from "@mui/material/Tabs";
-import useTheme from "@mui/material/styles/useTheme";
 import { styled } from "@mui/material/styles";
 import { alpha } from "@mui/material/styles";
 
@@ -61,9 +60,6 @@ function ContainerSidebar({
   const [value, setValue] = useState(items[0].index);
   const crrComponent =
     items.find((p) => p.index === value)?.component || items[0].component;
-  const {
-    palette: { divider },
-  } = useTheme();
   const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -79,8 +75,10 @@ function ContainerSidebar({
         value={value}
         onChange={handleChange}
         {...tabsProps}
-        sx={{ borderRight: `2px solid ${divider}`, ...tabsProps?.sx }}
-        className={cn("h-full ", tabsProps?.className)}
+        className={cn(
+          "h-full border-r-2 border-r-divider",
+          tabsProps?.className
+        )}
         //
       >
         {items.map(({ name, index }) => (

@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import moment from "moment-timezone";
+import dayjs from "@/dayjsConfig";
 import Clock from "react-clock";
 import "react-clock/dist/Clock.css";
 import { DigitalClockProps } from ".";
-import { useTheme } from "@mui/material/styles";
 
 const AnalogClock = ({
   time,
@@ -11,12 +10,6 @@ const AnalogClock = ({
   timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone,
   TwentyFourHour,
 }: DigitalClockProps) => {
-  const {
-    palette: {
-      primary: { main },
-      text: { primary },
-    },
-  } = useTheme();
   const [size, setSize] = useState(150);
   const clockContainerRef = useRef<HTMLDivElement | null>(null);
 
@@ -50,27 +43,14 @@ const AnalogClock = ({
       <Clock
         size={size}
         renderSecondHand={showSeconds === true}
-        value={moment.tz(time, timeZone).toDate()}
-        className="custom-clock"
+        value={dayjs.tz(time, timeZone).toDate()}
+        className="clock-widget"
         renderNumbers={TwentyFourHour}
       />
       <style>{`
-        .custom-clock .react-clock__face {
-            border: 2px solid ${primary};
-        }
-          .custom-clock .react-clock__mark__body{
-            background-color: ${primary};
-        }
-        .custom-clock .react-clock__hand__body{
-          background-color: ${primary};
-        }
-          .custom-clock .react-clock__second-hand__body{
-            background-color: ${main};
-          }
-          .custom-clock .react-clock__mark__number{
+          .clock-widget .react-clock__mark__number{
             font-size: ${fontSize}px;
           }
-
       `}</style>
     </div>
   );

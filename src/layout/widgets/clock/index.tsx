@@ -4,9 +4,7 @@ import DigitalClock from "./digital";
 import AnalogClock from "./analog";
 import ClockControls from "./controls";
 
-export interface DigitalClockProps extends ClockWidgetType {
-  time: Date;
-}
+export type DigitalClockProps = { time: Date } & ClockWidgetType;
 
 function ClockWidget({ ...props }: ClockWidgetType) {
   const [time, setTime] = useState<Date>(new Date());

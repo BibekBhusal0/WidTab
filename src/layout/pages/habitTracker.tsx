@@ -1,16 +1,10 @@
 import { StateType } from "@/redux/store";
 import { useSelector } from "react-redux";
-import { useTheme } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import HabitTracker from "../widgets/habit-tracker";
 
 const commonCls = "h-[150px] overflow-hidden";
 function HabitTrackerPage() {
-  const {
-    palette: {
-      primaryContainer: { paper },
-    },
-  } = useTheme();
   const { pinned, trackers } = useSelector(
     (state: StateType) => state["habit-tracker"]
   );
@@ -21,7 +15,7 @@ function HabitTrackerPage() {
     <div className="grid gap-3 grid-cols-1 p-3 overflow-auto sm:grid-cols-2 md:grid-cols-3">
       {pinned_.map((tracker) => (
         <Paper
-          sx={{ background: paper }}
+          sx={{ backgroundColor: "primaryContainer.paper" }}
           key={tracker.id}
           className={commonCls}>
           <HabitTracker {...tracker} />
