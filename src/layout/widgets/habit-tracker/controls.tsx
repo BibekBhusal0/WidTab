@@ -46,10 +46,10 @@ function HabitTrackerControls({ id }: { id: number }) {
   const items: IconMenuType[] = [
     { name: "Edit", icon: edit, onClick: () => setEditing(true) },
     {
-      name: pinned ? "Unpin" : "Pin",
+      name: pinned === id ? "Unpin" : "Pin",
       icon: pin,
       onClick: handlePin,
-      color: pinned ? "primary.main" : "action.main",
+      color: pinned === id ? "primary.main" : "action.main",
     },
 
     { name: "Reset", icon: reset, onClick: handleReset },

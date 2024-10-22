@@ -2,6 +2,7 @@ import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
 import { getNextId } from "@/utils/next_id";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialHabitTrackerState } from "./initialStates";
+import dayjs from "@/dayjsConfig";
 
 const habitTrackerSlice = createSlice({
   name: "habit-tracker",
@@ -36,6 +37,9 @@ const habitTrackerSlice = createSlice({
           if (newValue >= 0) crr.value = newValue;
           else crr.value = 0;
         }
+        const today = dayjs().format("YYYY-MM-DD");
+        if (!crr.history) crr.history = {};
+        crr.history[today] = crr.value;
       }
     },
     setItem: (state, action: PayloadAction<HabitTrackerItemType>) => {

@@ -2,57 +2,40 @@ import { StateType } from "@/redux/store";
 import { useSelector } from "react-redux";
 import Paper from "@mui/material/Paper";
 import HabitTracker from "../widgets/habit-tracker";
+import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
+import HabitTrackerStatsSingle from "../widgets/habit-tracker/stats/single";
 
-const commonCls = "h-[150px] overflow-hidden";
 function HabitTrackerPage() {
   const { pinned, trackers } = useSelector(
     (state: StateType) => state["habit-tracker"]
   );
-  const pinned_ = trackers.filter((t) => t.id === pinned);
-  const unPinned = trackers.filter((t) => t.id !== pinned);
+  const pinnedTracker = trackers.filter((t) => t.id === pinned);
+  const unPinnedTrackers = trackers.filter((t) => t.id !== pinned);
+
+  const renderTrackers = (trackerList: HabitTrackerItemType[]) =>
+    trackerList.map((tracker) => (
+      <Paper
+        key={tracker.id}
+        sx={{
+          backgroundColor:
+            tracker.id === pinned ? "primaryContainer.paper" : undefined,
+        }}
+        className="h-[550px] overflow-hidden">
+        <div className="w-full h-2/5">
+          <HabitTracker {...tracker} />
+        </div>
+        <div className="h-3/5 pt-4 border-t-4 border-t-divider">
+          <HabitTrackerStatsSingle {...tracker} />
+        </div>
+      </Paper>
+    ));
 
   return (
     <div className="grid gap-3 grid-cols-1 p-3 overflow-auto sm:grid-cols-2 md:grid-cols-3">
-      {pinned_.map((tracker) => (
-        <Paper
-          sx={{ backgroundColor: "primaryContainer.paper" }}
-          key={tracker.id}
-          className={commonCls}>
-          <HabitTracker {...tracker} />
-        </Paper>
-      ))}
-      {unPinned.map((tracker) => (
-        <Paper key={tracker.id} className={commonCls}>
-          <HabitTracker {...tracker} />
-        </Paper>
-      ))}
-      {/* <AddHabitTracker /> */}
+      {renderTrackers(pinnedTracker)}
+      {renderTrackers(unPinnedTrackers)}
     </div>
   );
 }
-
-// const AddHabitTracker = () => {
-//   const [editing, setEditing] = useState(false);
-//   return (
-//     <Paper
-//       onClick={() => setEditing(true)}
-//       className={cn(
-//         commonCls,
-//         "flex-center group cursor-pointer overflow-auto"
-//       )}
-//       //
-//     >
-//       {editing ? (
-//         <div className="p-4">
-//           <HabitTrackerEdit onChange={() => setEditing(false)} />
-//         </div>
-//       ) : (
-//         <div className="group-hover:scale-[6] scale-[3] transition-all">
-//           <Icon icon="material-symbols:add-circle-outline-rounded" />
-//         </div>
-//       )}
-//     </Paper>
-//   );
-// };
 
 export default HabitTrackerPage;

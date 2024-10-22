@@ -33,7 +33,7 @@ function HabitTracker({
       controls={<HabitTrackerControls id={id} />}
       className="flex-center flex-col gap-4 p-2 w-full">
       <div aria-label="icon and title" className="full-between">
-        <div className="w-16 bg-primary-6 rounded-full aspect-square p-2">
+        <div className="w-16 bg-primaryContainer-default rounded-full aspect-square p-2">
           <Icon icon={icon} className="size-full" />
         </div>
         <div className="text-4xl">{title}</div>

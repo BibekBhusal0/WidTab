@@ -1,5 +1,5 @@
 import { ButtonProps } from "@mui/material/Button";
-// export type HabitTrackerHistoryType = {}
+export type HabitTrackerHistoryType = Record<string, number>;
 
 export type HabitTrackerItemType = {
   id: number;
@@ -9,6 +9,7 @@ export type HabitTrackerItemType = {
   increment: number;
   value: number;
   unit: string;
+  history?: HabitTrackerHistoryType;
 };
 
 export interface HabitTrackerEditProps {

@@ -8,8 +8,7 @@ import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeItemType } from "./types/slice/theme";
 import useCurrentTheme from "./hooks/useCurrentTheme";
-
-export const getBorderRadius = (roundness: number) => `${roundness * 30}px`;
+import type {} from "@mui/x-charts/themeAugmentation";
 
 export const getTheme = ({
   mode,
@@ -24,14 +23,12 @@ export const getTheme = ({
   const borderRadius = `${roundness * 30}px`;
   const b = `${blur * 10}px`;
   const backdropFilter = `blur(${b})`;
-  document.documentElement.style.setProperty(
-    "--custom-border-radius",
-    borderRadius
-  );
-  document.documentElement.style.setProperty("--custom-blur", b);
+  const CSSv = document.documentElement.style;
+  CSSv.setProperty("--custom-border-radius", borderRadius);
+  CSSv.setProperty("--custom-blur", b);
   for (let i = 1; i <= 9; i++) {
     const opacityValue = i / 10;
-    document.documentElement.style.setProperty(
+    CSSv.setProperty(
       `--primary-opacity-${i}`,
       alpha(hexFromArgb(crrPrimary.primary), opacityValue)
     );
@@ -98,6 +95,15 @@ export const getTheme = ({
       MuiInput: { ...rounded },
       MuiFilledInput: { ...rounded },
       MuiOutlinedInput: { ...rounded },
+      MuiBarChart: {
+        defaultProps: {
+          borderRadius: roundness * 30,
+          colors: [hexFromArgb(crrPrimary.primary)],
+          skipAnimation: false,
+          tooltip: { trigger: "none" },
+          axisHighlight: { x: "none", y: "none" },
+        },
+      },
     },
   });
 };

@@ -19,6 +19,7 @@
     "@emotion/styled": "^11.13.0",
     "@material/material-color-utilities": "^0.3.0",
     "@mui/material": "^6.1.1",
+    "@mui/x-charts": "^7.21.0",
     "@mui/x-date-pickers": "^7.18.0",
     "@reduxjs/toolkit": "^2.2.7",
     "@types/react-window": "^1.8.8",
