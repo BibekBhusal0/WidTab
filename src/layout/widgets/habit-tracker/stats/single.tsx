@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
 import { useTheme } from "@mui/material/styles";
 
-const generateCompleteData = (
+export const generateCompleteData = (
   history: Record<string, number>,
   startDate: string,
   endDate: string
@@ -11,14 +11,12 @@ const generateCompleteData = (
   const start = dayjs(startDate);
   const end = dayjs(endDate);
   const data: { date: string; value: number }[] = [];
-  console.log(history);
   for (
     let date = start;
     date.isBefore(end) || date.isSame(end);
     date = date.add(1, "day")
   ) {
     const formattedDate = date.format("YYYY-MM-DD");
-    console.log(`${formattedDate} : ${history[formattedDate]}`);
     data.push({
       date: formattedDate,
       value: history[formattedDate] || 0,

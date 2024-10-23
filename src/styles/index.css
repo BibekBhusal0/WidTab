@@ -105,9 +105,11 @@
   cursor: grabbing;
 }
 
-.clock-widget .react-clock__face,
 .clock-widget .react-clock__mark__body,
 .clock-widget .react-clock__hand__body {
+  background-color: var(--mui-palette-text-primary);
+}
+.clock-widget .react-clock__face {
   border: 2px solid var(--mui-palette-text-primary);
 }
 .clock-widget .react-clock__second-hand__body {

@@ -1,6 +1,5 @@
 import useCurrentLayout from "@/hooks/useCurrentLayout";
 import { StateType } from "@/redux/store";
-import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GridLayout, { Layout } from "react-grid-layout";
 import { currentSpaceSetGridProps } from "@/redux/slice/layout";
@@ -11,6 +10,7 @@ import Widget from "./widgets";
 import DragHandle from "@/components/dragHandle";
 import { positionProps } from "@/types/slice/layout";
 import { cn } from "@/utils/cn";
+import useFullSize from "@/hooks/useFullSize";
 
 function DynamicLayout() {
   const { n_cols, n_rows, currentSpace, toolBarPosition } = useSelector(
@@ -19,29 +19,12 @@ function DynamicLayout() {
   const { mainComponentProps } = positionProps[toolBarPosition];
   const space = useCurrentLayout();
   const dispatch = useDispatch();
-
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [containerWidth, setContainerWidth] = useState(1500);
-  const [rowHeight, setRowHeight] = useState(10);
   const gap = 10;
-
-  const handleResize = () => {
-    if (containerRef.current) {
-      setContainerWidth(containerRef.current.offsetWidth);
-      setRowHeight((containerRef.current.offsetHeight - gap * n_rows) / n_rows);
-    }
-  };
-  useEffect(() => {
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-  useEffect(() => {
-    handleResize();
-  }, [currentSpace, toolBarPosition]);
-
+  const {
+    ref,
+    size: { width, height },
+  } = useFullSize([currentSpace, toolBarPosition]);
+  const rowHeight = (height - gap * n_rows) / n_rows;
   if (!space) return null;
   const { compaction, locked, widgets } = space;
   const layout = widgets.map((w) => w.gridProps);
@@ -52,7 +35,7 @@ function DynamicLayout() {
 
   return (
     <Box
-      ref={containerRef}
+      ref={ref}
       {...mainComponentProps}
       className={cn(
         "relative w-full overflow-hidden",
@@ -66,7 +49,7 @@ function DynamicLayout() {
         cols={n_cols}
         rowHeight={rowHeight}
         maxRows={n_rows}
-        width={containerWidth}
+        width={width}
         margin={[gap, gap]}
         //
         className={`size-full ${locked ? "hide-resize" : ""}`}

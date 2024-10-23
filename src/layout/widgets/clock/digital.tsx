@@ -18,18 +18,11 @@ const DigitalClock = ({
   }, [time, timeZone, TwentyFourHour, showSeconds]);
 
   useEffect(() => {
-    const observer = new ResizeObserver(() => {
-      setResizeKey((prev) => prev + 1);
-    });
-
-    if (textFitRef.current) {
-      observer.observe(textFitRef.current);
-    }
+    const observer = new ResizeObserver(() => setResizeKey((prev) => prev + 1));
+    if (textFitRef.current) observer.observe(textFitRef.current);
 
     return () => {
-      if (textFitRef.current) {
-        observer.unobserve(textFitRef.current);
-      }
+      if (textFitRef.current) observer.unobserve(textFitRef.current);
     };
   }, []);
 
@@ -39,7 +32,6 @@ const DigitalClock = ({
       className="text-center size-full flex-center p-5 uppercase">
       <Textfit
         min={20}
-        style={{ height: "100%" }}
         max={400}
         className="size-full flex-center"
         key={resizeKey}>
