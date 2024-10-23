@@ -12,7 +12,6 @@ import HabitTrackerWidget from "./habit-tracker/widget";
 import SearchWidget from "./search";
 import { FunctionComponent } from "react";
 import Calendar from "./calendar";
-import Box from "@mui/material/Box";
 
 export const done: allWidgetsType[] = [
   "custom",
@@ -40,12 +39,7 @@ function Widget({ widget }: { widget: WidgetType }) {
   const Element = widgetElementMapping[widget.type] as FunctionComponent<
     AllWidgetPropsMapping<allWidgetsType>
   >;
-
-  return (
-    <Box className="size-full z-[20]">
-      <Element {...widget.values} />
-    </Box>
-  );
+  return <Element {...widget.values} />;
 }
 
 export default Widget;

@@ -1,7 +1,6 @@
 import useCurrentLayout from "@/hooks/useCurrentLayout";
 import { CustomWidgetType } from "@/types/slice/widgets";
 import IconButton from "@mui/material/IconButton";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { useDispatch } from "react-redux";
@@ -20,10 +19,10 @@ function CustomWidget(props: CustomWidgetType) {
   const showControls = !layout?.locked;
 
   return (
-    <Box className="size-full relative overflow-hidden">
+    <div className="size-full relative overflow-hidden">
       {showControls && <CustomWidgetControls {...props} />}
       <iframe src={props.url} className="size-full rounded-themed" />
-    </Box>
+    </div>
   );
 }
 

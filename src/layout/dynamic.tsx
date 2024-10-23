@@ -7,7 +7,6 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 
 import Widget from "./widgets";
-import DragHandle from "@/components/dragHandle";
 import { positionProps } from "@/types/slice/layout";
 import { cn } from "@/utils/cn";
 import useFullSize from "@/hooks/useFullSize";
@@ -67,11 +66,12 @@ function DynamicLayout() {
         {widgets.map((w) => (
           <Paper
             sx={{ backgroundColor: "secondaryContainer.paper" }}
-            key={w.gridProps.i}>
-            {!locked && <DragHandle />}
-            <div className="size-full relative">
-              <Widget widget={w} />
-            </div>
+            key={w.gridProps.i}
+            className="relative">
+            {!locked && (
+              <div className="w-full drag-handle h-[9%] absolute top-0 left-0 z-10 bg-primary-5 rounded-tl-themed rounded-tr-themed" />
+            )}
+            <Widget widget={w} />
           </Paper>
         ))}
       </GridLayout>

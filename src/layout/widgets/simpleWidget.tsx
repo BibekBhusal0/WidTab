@@ -1,7 +1,6 @@
 import useCurrentLayout from "@/hooks/useCurrentLayout";
 import { DeleteWidgetParameters } from "@/types/slice/widgets";
 import IconButton from "@mui/material/IconButton";
-import Box from "@mui/material/Box";
 
 import { useDispatch } from "react-redux";
 import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
@@ -18,10 +17,10 @@ function SimpleWidget({ children, ...props }: simpleWidgetProps) {
   const showControls = !layout?.locked;
 
   return (
-    <Box className="size-full relative overflow-hidden">
+    <div className="size-full relative overflow-hidden">
       {showControls && <DeleteWidgetButton {...props} />}
       {children}
-    </Box>
+    </div>
   );
 }
 

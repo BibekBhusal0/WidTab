@@ -3,12 +3,12 @@ import { ClockWidgetType } from "@/types/slice/widgets";
 import DigitalClock from "./digital";
 import AnalogClock from "./analog";
 import ClockControls from "./controls";
+import HoverControls from "@/components/hoverControls";
 
 export type DigitalClockProps = { time: Date } & ClockWidgetType;
 
 function ClockWidget({ ...props }: ClockWidgetType) {
   const [time, setTime] = useState<Date>(new Date());
-  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const updateTime = () => {
@@ -21,17 +21,15 @@ function ClockWidget({ ...props }: ClockWidgetType) {
   const { clockType = "digital" } = props;
 
   return (
-    <div
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="size-full flex-center">
+    <HoverControls
+      className="size-full flex-center"
+      controls={<ClockControls {...props} />}>
       {clockType === "digital" ? (
         <DigitalClock time={time} {...props} />
       ) : (
         <AnalogClock time={time} {...props} />
       )}
-      {isHovered && <ClockControls {...props} />}
-    </div>
+    </HoverControls>
   );
 }
 
