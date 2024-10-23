@@ -1,12 +1,9 @@
 import Button from "@mui/material/Button";
 import useAvailablePosition from "@/hooks/useAvailablePosition";
-import useCurrentIcons from "@/hooks/useCurrentIcons";
 import { currentSpaceAddWidget } from "@/redux/slice/layout";
 import { StateType } from "@/redux/store";
 import { widgetDimensions } from "@/utils/getWidget";
 import { getNextId } from "@/utils/next_id";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
 import { useDispatch, useSelector } from "react-redux";
 import useCurrentLayout from "@/hooks/useCurrentLayout";
 import { addItem } from "@/redux/slice/habit-tracker";
@@ -14,6 +11,8 @@ import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
 import HabitTrackerEdit from "@/layout/widgets/habit-tracker/edit";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
+import AllItemsList from "./allItemsList";
+import SettingHeader from "../settings/settings-header";
 
 function AddHabitTracer() {
   const dispatch = useDispatch();
@@ -22,17 +21,41 @@ function AddHabitTracer() {
   );
   const dimensions = widgetDimensions["habit-tracker"];
   const { minH, minW } = dimensions;
+  const statsDimensions = widgetDimensions["habit-tracker-stats-single"];
+  const availablePositionForStats = useAvailablePosition(
+    statsDimensions.minW,
+    statsDimensions.minH
+  );
   const availablePosition = useAvailablePosition(minW, minH);
   const layout = useCurrentLayout();
-  const { pin } = useCurrentIcons();
 
   if (!layout) return null;
   const { widgets } = layout;
-  const presentTodos = widgets.filter(({ type }) => type === "habit-tracker");
-  const presentTodosId = presentTodos.map(({ values: { id } }) => id);
+  const presentTrackersId = widgets
+    .filter(({ type }) => type === "habit-tracker")
+    .map(({ values: { id } }) => id);
+  const presentStatsId = widgets
+    .filter(({ type }) => type === "habit-tracker-stats-single")
+    .map(({ values: { id } }) => id);
 
-  const addWidget = (id: number) => {
-    if (!availablePosition || presentTodosId.includes(id)) return;
+  const addStatsWidget = (id: number) => {
+    if (!availablePositionForStats || presentStatsId.includes(id)) return;
+    dispatch(
+      currentSpaceAddWidget({
+        type: "habit-tracker-stats-single",
+        values: {
+          id,
+        },
+        gridProps: {
+          ...statsDimensions,
+          ...availablePositionForStats,
+          i: `habit-tracker-stats-single-${id}`,
+        },
+      })
+    );
+  };
+  const addTrackerWidget = (id: number) => {
+    if (!availablePosition || presentTrackersId.includes(id)) return;
     dispatch(
       currentSpaceAddWidget({
         type: "habit-tracker",
@@ -48,33 +71,39 @@ function AddHabitTracer() {
     );
   };
 
-  const addHabitTracker = (tracker: HabitTrackerItemType) => {
+  const handleNewHabitTracker = (tracker: HabitTrackerItemType) => {
     if (!availablePosition) return;
     const newId = getNextId(trackers.map(({ id }) => id));
     dispatch(addItem(tracker));
-    addWidget(newId);
+    addTrackerWidget(newId);
   };
 
   return (
-    <div className="text-xl size-full">
-      <List>
-        {trackers.map(({ id, title }) => (
-          <ListItemButton
-            sx={{ justifyContent: "space-between" }}
-            disabled={!availablePosition || presentTodosId.includes(id)}
-            key={id}
-            onClick={() => addWidget(id)}
-            //
-          >
-            {title}
-            {id === pinned && pin}
-          </ListItemButton>
-        ))}
-      </List>
-      <AddNewHabitTracker
-        addHabitTracker={addHabitTracker}
-        disabled={!availablePosition}
-      />
+    <div className="text-xl size-full relative">
+      <div>
+        <SettingHeader first>Habit Tracker</SettingHeader>
+        <AllItemsList
+          addWidget={addTrackerWidget}
+          items={trackers}
+          availablePosition={!!availablePosition}
+          disabledId={presentTrackersId}
+          pinned={pinned}
+        />
+        <SettingHeader>Habit Tracker Stats </SettingHeader>
+        <AllItemsList
+          addWidget={addStatsWidget}
+          items={trackers}
+          availablePosition={!!availablePositionForStats}
+          disabledId={presentStatsId}
+          pinned={pinned}
+        />
+
+        <AddNewHabitTracker
+          addHabitTracker={handleNewHabitTracker}
+          disabled={!availablePosition}
+        />
+      </div>
+      {/* <div className="absolute pb-4 bottom-0"></div> */}
       {!availablePosition && (
         <div className="text-lg text-error-main pt-3">
           Not Enough Space For Habit Tacker

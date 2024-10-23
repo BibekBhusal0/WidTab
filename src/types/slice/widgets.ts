@@ -3,7 +3,12 @@ import { TaskType } from "./todo";
 import { HabitTrackerItemType } from "./habit-tracker";
 import { BookmarkWidgetType } from "./bookmark";
 
-const CW = ["todo", "bookmark", "habit-tracker"] as const;
+const CW = [
+  "todo",
+  "bookmark",
+  "habit-tracker",
+  "habit-tracker-stats-single",
+] as const;
 const UW = ["custom", "clock", "search", "calendar"] as const;
 const SE = ["Google", "Bing", "YouTube", "Brave", "DuckDuckGo"] as const;
 

@@ -1,22 +1,18 @@
 import AddItem from "@/components/addItem";
 import useAvailablePosition from "@/hooks/useAvailablePosition";
-import useCurrentIcons from "@/hooks/useCurrentIcons";
 import useCurrentLayout from "@/hooks/useCurrentLayout";
 import { currentSpaceAddWidget } from "@/redux/slice/layout";
 import { addTask } from "@/redux/slice/todo";
 import { StateType } from "@/redux/store";
 import { widgetDimensions } from "@/utils/getWidget";
 import { getNextId } from "@/utils/next_id";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
 import { useDispatch, useSelector } from "react-redux";
+import AllItemsList from "./allItemsList";
 
 function AddTodo() {
   const dispatch = useDispatch();
   const { Tasks, pinnedTodo } = useSelector((state: StateType) => state.todo);
   const layout = useCurrentLayout();
-  const { pin } = useCurrentIcons();
-
   const todoDimensions = widgetDimensions["todo"];
   const { minH, minW } = todoDimensions;
   const availablePosition = useAvailablePosition(minW, minH);
@@ -51,20 +47,14 @@ function AddTodo() {
 
   return (
     <div className="text-xl size-full">
-      <List>
-        {Tasks.map(({ id, title }) => (
-          <ListItemButton
-            sx={{ justifyContent: "space-between" }}
-            disabled={!availablePosition || presentTodosId.includes(id)}
-            key={id}
-            onClick={() => addWidget(id)}
-            //
-          >
-            {title}
-            {id === pinnedTodo && pin}
-          </ListItemButton>
-        ))}
-      </List>
+      <AllItemsList
+        addWidget={addWidget}
+        items={Tasks}
+        availablePosition={!!availablePosition}
+        disabledId={presentTodosId}
+        pinned={pinnedTodo}
+      />
+
       <AddItem
         inputProps={{ label: "Todo title", placeholder: "Todo title" }}
         addButtonProps={{ children: "Add Todo", disabled: !availablePosition }}

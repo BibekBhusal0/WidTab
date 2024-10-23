@@ -2,6 +2,7 @@ import { HabitTrackerSliceType } from "@/types/slice/habit-tracker";
 import { LayoutSliceType } from "@/types/slice/layout";
 import { ThemeSliceType } from "@/types/slice/theme";
 import { todoStateType } from "@/types/slice/todo";
+import dayjs from "@/dayjsConfig";
 
 export const initialThemeState: ThemeSliceType = {
   currentThemeID: 2,
@@ -399,30 +400,17 @@ export const initialHabitTrackerState: HabitTrackerSliceType = {
       id: 3,
       title: "Reading",
       icon: "mdi:book-open-page-variant",
-      target: 20,
+      target: 15,
       increment: 2,
       value: 10,
       unit: "pages",
       history: {
-        "2024-10-19": 5,
-        "2024-10-21": 8,
-        "2024-10-22": 10,
-        "2024-10-23": 10,
-      },
-    },
-    {
-      id: 4,
-      title: "Meditation",
-      icon: "mdi:meditation",
-      target: 15,
-      increment: 3,
-      value: 6,
-      unit: "min",
-      history: {
-        "2024-10-18": 5,
-        "2024-10-20": 8,
-        "2024-10-22": 6,
-        "2024-10-23": 6,
+        [dayjs().subtract(5, "day").format("YYYY-MM-DD")]: 19,
+        [dayjs().subtract(4, "day").format("YYYY-MM-DD")]: 15,
+        [dayjs().subtract(3, "day").format("YYYY-MM-DD")]: 18,
+        [dayjs().subtract(2, "day").format("YYYY-MM-DD")]: 19,
+        [dayjs().subtract(1, "day").format("YYYY-MM-DD")]: 16,
+        [dayjs().format("YYYY-MM-DD")]: 12,
       },
     },
   ],

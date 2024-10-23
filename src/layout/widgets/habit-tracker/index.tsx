@@ -6,6 +6,7 @@ import HoverControls from "@/components/hoverControls";
 import { Icon } from "@iconify/react";
 import { cn } from "@/utils/cn";
 import HabitTrackerControls from "./controls";
+import dayjs from "dayjs";
 
 function HabitTracker({
   id,
@@ -14,19 +15,40 @@ function HabitTracker({
   value,
   icon,
   unit,
+  history = {},
 }: HabitTrackerItemType) {
   const dispatch = useDispatch();
+
   const handleIncrement = () => {
     dispatch(changeValue({ id, action: "increment" }));
   };
+
   const handleDecrement = () => {
     dispatch(changeValue({ id, action: "decrement" }));
   };
+
   const icons = [
     { icon: "material-symbols:remove", onClick: handleDecrement },
     { icon: "material-symbols:add-2-rounded", onClick: handleIncrement },
   ];
   const completedToday = value >= target;
+
+  const calculateStreak = () => {
+    let streak = 0;
+    let currentDate = dayjs().subtract(1, "day");
+
+    while (true) {
+      const date = currentDate.format("YYYY-MM-DD");
+      if (history[date] >= target) {
+        streak++;
+        currentDate = currentDate.subtract(1, "day");
+      } else break;
+    }
+
+    return streak;
+  };
+
+  const streak = calculateStreak() + Number(completedToday);
 
   return (
     <HoverControls
@@ -57,7 +79,7 @@ function HabitTracker({
                   <Icon className="size-full" icon="heroicons:fire-16-solid" />
                 )}
               </div>
-              0
+              {streak}
             </div>
           </div>
         </div>

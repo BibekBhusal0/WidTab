@@ -3,6 +3,7 @@ import { Layout } from "react-grid-layout";
 
 export const widgetDimensions: Record<allWidgetsType, Partial<Layout>> = {
   "habit-tracker": { minW: 4, minH: 2, maxH: 2, maxW: 8 },
+  "habit-tracker-stats-single": { minW: 4, minH: 3 },
   todo: { minW: 3, minH: 4 },
   bookmark: { minW: 2, minH: 2 },
   clock: { maxH: 5, maxW: 8, minH: 1, minW: 2 },

@@ -7,7 +7,7 @@ import { Icon2RN, iconAsProp } from "@/icons";
 export type IconMenuType = {
   name: ReactNode;
   icon: iconAsProp;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
   color?: string;
 };
 
