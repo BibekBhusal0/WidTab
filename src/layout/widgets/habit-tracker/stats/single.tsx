@@ -1,47 +1,13 @@
-import { BarPlot } from "@mui/x-charts/BarChart";
-import { ChartsXAxis } from "@mui/x-charts/ChartsXAxis";
-import { ChartsYAxis } from "@mui/x-charts/ChartsYAxis";
-import { ChartsReferenceLine } from "@mui/x-charts/ChartsReferenceLine";
-import { ResponsiveChartContainer } from "@mui/x-charts/ResponsiveChartContainer";
 import dayjs from "@/dayjsConfig";
 import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
-import { useTheme } from "@mui/material/styles";
 import useFullSize from "@/hooks/useFullSize";
 import Button, { ButtonProps } from "@mui/material/Button";
 import { useState } from "react";
-import { Icon } from "@iconify/react/dist/iconify.js";
+import { Icon } from "@iconify/react";
+import BarGraph from "./graphs/bar";
+import { generateCompleteData } from "@/utils/getCompleteData";
 
-export const generateCompleteData = (
-  history: Record<string, number>,
-  startDate: string,
-  endDate: string
-) => {
-  const start = dayjs(startDate);
-  const end = dayjs(endDate);
-  const data: { date: string; value: number }[] = [];
-  for (
-    let date = start;
-    date.isBefore(end) || date.isSame(end);
-    date = date.add(1, "day")
-  ) {
-    const formattedDate = date.format("YYYY-MM-DD");
-    data.push({
-      date: formattedDate,
-      value: history[formattedDate] || 0,
-    });
-  }
-  return data;
-};
-
-function HabitTrackerStatsSingle({
-  unit,
-  title,
-  target,
-  history = {},
-}: HabitTrackerItemType) {
-  const {
-    palette: { error, success },
-  } = useTheme();
+function HabitTrackerStatsSingle({ ...props }: HabitTrackerItemType) {
   const { ref, size } = useFullSize();
   const weekly = size.width < 800;
 
@@ -54,11 +20,7 @@ function HabitTrackerStatsSingle({
     ? currentDate.endOf("week")
     : currentDate.endOf("month");
 
-  const completeData = generateCompleteData(
-    history,
-    startDate.format("YYYY-MM-DD"),
-    endDate.format("YYYY-MM-DD")
-  );
+  const completeData = generateCompleteData(props.history, startDate, endDate);
 
   const handlePrevious = () => {
     setCurrentDate((prev: dayjs.Dayjs) =>
@@ -87,65 +49,23 @@ function HabitTrackerStatsSingle({
   return (
     <div className="size-full p-2">
       <div className="size-full flex-center flex-col gap-2" ref={ref}>
-        <div className="full-between px-3">
-          <Button {...btnProps} onClick={handlePrevious}>
-            <Icon icon="bi:arrow-left" />
+        <div aria-label="title-and-buttons" className="full-between px-3">
+          <Button
+            startIcon={<Icon icon="bi:arrow-left" />}
+            {...btnProps}
+            onClick={handlePrevious}>
             Previous
           </Button>
-          <h6>{title}</h6>
+          <h6>{props.title}</h6>
           <Button
             {...btnProps}
             onClick={handleNext}
+            endIcon={<Icon icon="bi:arrow-right" />}
             disabled={isCurrentPeriod()}>
             Next
-            <Icon icon="bi:arrow-right" />
           </Button>
         </div>
-        <ResponsiveChartContainer
-          title={title}
-          dataset={completeData}
-          series={[
-            { type: "bar", dataKey: "value" },
-            { type: "line", data: [target, target, target, target] },
-          ]}
-          xAxis={[
-            {
-              dataKey: "date",
-              valueFormatter(value: string) {
-                return weekly
-                  ? dayjs(value).format("ddd")
-                  : `${dayjs(value).format("MMM")}\n ${dayjs(value).format("DD")}`;
-              },
-              scaleType: "band",
-              id: "date",
-            },
-          ]}
-          yAxis={[
-            {
-              label: `${unit}`,
-              min: 0,
-              max: Math.max(target, ...completeData.map((d) => d.value)),
-              colorMap: {
-                type: "piecewise",
-                thresholds: [target],
-                colors: [error.main, success.main],
-              },
-              id: "value",
-            },
-          ]}
-          height={size.height - 20}
-          width={size.width - 10}>
-          <BarPlot borderRadius={10} />
-          <ChartsReferenceLine
-            y={target}
-            lineStyle={{ strokeDasharray: "10 5" }}
-            labelStyle={{ fontSize: "10" }}
-            label={`target`}
-            labelAlign="end"
-          />
-          <ChartsXAxis axisId="date" position="bottom" />
-          <ChartsYAxis axisId="value" position="left" />
-        </ResponsiveChartContainer>
+        <BarGraph data={completeData} size={size} {...props} />
       </div>
     </div>
   );

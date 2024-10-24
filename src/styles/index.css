@@ -17,6 +17,12 @@
 .hide-widget-controls .widget-control {
   display: none;
 }
+
+.commit-graph th,
+.commit-graph td {
+  padding: 5px;
+}
+
 .scroll-container::-webkit-scrollbar {
   width: 0; /* Hides the scrollbar */
   background: transparent; /* Ensures the background is transparent */
@@ -27,7 +33,6 @@
   scrollbar-width: none; /* Hides scrollbar in Firefox */
 }
 
-/* Optional: Add custom scroll effects */
 .scroll-container::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.5); /* Custom color for scrollbar thumb */
   border-radius: 10px; /* Rounded corners */

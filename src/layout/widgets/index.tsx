@@ -14,6 +14,7 @@ import HabitTrackerWidget, {
 import SearchWidget from "./search";
 import { FunctionComponent } from "react";
 import Calendar from "./calendar";
+import { HabitTrackerStatsAllWidget } from "./habit-tracker/stats/all";
 
 export const done: allWidgetsType[] = [
   "custom",
@@ -23,6 +24,7 @@ export const done: allWidgetsType[] = [
   "search",
   "habit-tracker",
   "habit-tracker-stats-single",
+  "habit-tracker-stats-all",
 ];
 
 export const widgetElementMapping: {
@@ -36,6 +38,7 @@ export const widgetElementMapping: {
   search: SearchWidget,
   calendar: Calendar,
   "habit-tracker-stats-single": HabitTrackerStatsSingleWidget,
+  "habit-tracker-stats-all": HabitTrackerStatsAllWidget,
 };
 
 function Widget({ widget }: { widget: WidgetType }) {

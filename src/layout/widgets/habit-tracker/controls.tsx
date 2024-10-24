@@ -53,21 +53,21 @@ function HabitTrackerControls({ id }: { id: number }) {
   };
 
   const items: IconMenuType[] = [
-    { name: "Edit", icon: edit, onClick: () => setEditing(true) },
     {
       name: pinned === id ? "Unpin" : "Pin",
       icon: pin,
       onClick: handlePin,
       color: pinned === id ? "primary.main" : "action.main",
     },
-
-    { name: "Reset", icon: reset, onClick: handleReset },
     {
       name: "Stats",
       icon: "proicons:graph",
       onClick: handleStatsOpen,
       color: statsOpen ? "primary.main" : "action.main",
     },
+
+    { name: "Edit", icon: edit, onClick: () => setEditing(true) },
+    { name: "Reset", icon: reset, onClick: handleReset },
     {
       name: "Delete",
       icon: delete_,

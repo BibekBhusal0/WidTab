@@ -85,7 +85,6 @@ function ContainerSidebar({
           <CustomTab
             {...tabProps}
             {...a11yProps(index)}
-            sx={tabProps?.sx}
             value={index}
             key={index}
             label={name}

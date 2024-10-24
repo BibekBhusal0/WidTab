@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import Paper from "@mui/material/Paper";
 import HabitTracker from "../widgets/habit-tracker";
 import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
+import HabitTrackerStatsAll from "../widgets/habit-tracker/stats/all";
 
 function HabitTrackerPage() {
   const { pinned, trackers } = useSelector(
@@ -25,10 +26,15 @@ function HabitTrackerPage() {
     ));
 
   return (
-    <div className="grid gap-3 grid-cols-1 p-3 overflow-auto sm:grid-cols-2 md:grid-cols-3">
-      {renderTrackers(pinnedTracker)}
-      {renderTrackers(unPinnedTrackers)}
-    </div>
+    <>
+      <div className="w-full h-80 relative">
+        <HabitTrackerStatsAll />
+      </div>
+      <div className="grid gap-3 grid-cols-1 p-3 overflow-auto sm:grid-cols-2 md:grid-cols-3">
+        {renderTrackers(pinnedTracker)}
+        {renderTrackers(unPinnedTrackers)}
+      </div>
+    </>
   );
 }
 

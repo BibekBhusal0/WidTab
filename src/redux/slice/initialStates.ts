@@ -368,17 +368,19 @@ export const initialHabitTrackerState: HabitTrackerSliceType = {
   trackers: [
     {
       id: 1,
-      title: "Water Intake",
+      title: "Water",
       icon: "ion:water",
       target: 2000,
       increment: 250,
       value: 1000,
       unit: "ml",
       history: {
-        "2024-10-18": 500,
-        "2024-10-19": 750,
-        "2024-10-21": 1000,
-        "2024-10-23": 1000,
+        [dayjs().subtract(5, "day").format("YYYY-MM-DD")]: 1500,
+        [dayjs().subtract(4, "day").format("YYYY-MM-DD")]: 1500,
+        [dayjs().subtract(3, "day").format("YYYY-MM-DD")]: 1800,
+        [dayjs().subtract(2, "day").format("YYYY-MM-DD")]: 1900,
+        [dayjs().subtract(1, "day").format("YYYY-MM-DD")]: 2000,
+        [dayjs().format("YYYY-MM-DD")]: 1200,
       },
     },
     {
@@ -390,10 +392,12 @@ export const initialHabitTrackerState: HabitTrackerSliceType = {
       value: 15,
       unit: "min",
       history: {
-        "2024-10-17": 10,
-        "2024-10-20": 20,
-        "2024-10-21": 15,
-        "2024-10-23": 15,
+        [dayjs().subtract(5, "day").format("YYYY-MM-DD")]: 19,
+        [dayjs().subtract(4, "day").format("YYYY-MM-DD")]: 25,
+        [dayjs().subtract(3, "day").format("YYYY-MM-DD")]: 22,
+        [dayjs().subtract(2, "day").format("YYYY-MM-DD")]: 34,
+        [dayjs().subtract(1, "day").format("YYYY-MM-DD")]: 32,
+        [dayjs().format("YYYY-MM-DD")]: 12,
       },
     },
     {

@@ -25,7 +25,7 @@ function AddWidget() {
     <FooterPopover tooltip="Add Widget" icon={widget}>
       <ContainerSidebar
         items={addItems}
-        mainProps={{ sx: { width: "400px", height: "300px" } }}
+        mainProps={{ sx: { width: "500px", height: "350px" } }}
         tabsProps={{ sx: { width: "150px" } }}
       />
     </FooterPopover>

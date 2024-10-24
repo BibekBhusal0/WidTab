@@ -79,36 +79,80 @@ function AddHabitTracer() {
   };
 
   return (
-    <div className="text-xl size-full relative">
-      <div>
-        <SettingHeader first>Habit Tracker</SettingHeader>
-        <AllItemsList
-          addWidget={addTrackerWidget}
-          items={trackers}
-          availablePosition={!!availablePosition}
-          disabledId={presentTrackersId}
-          pinned={pinned}
-        />
-        <SettingHeader>Habit Tracker Stats </SettingHeader>
-        <AllItemsList
-          addWidget={addStatsWidget}
-          items={trackers}
-          availablePosition={!!availablePositionForStats}
-          disabledId={presentStatsId}
-          pinned={pinned}
-        />
-
-        <AddNewHabitTracker
-          addHabitTracker={handleNewHabitTracker}
-          disabled={!availablePosition}
-        />
-      </div>
-      {/* <div className="absolute pb-4 bottom-0"></div> */}
+    <div className="text-lg mb-6">
+      <SettingHeader first>Habit Tracker</SettingHeader>
+      <AllItemsList
+        addWidget={addTrackerWidget}
+        items={trackers}
+        availablePosition={!!availablePosition}
+        disabledId={presentTrackersId}
+        pinned={pinned}
+      />
       {!availablePosition && (
         <div className="text-lg text-error-main pt-3">
           Not Enough Space For Habit Tacker
         </div>
       )}
+      <SettingHeader>Habit Tracker Stats </SettingHeader>
+      <AllItemsList
+        addWidget={addStatsWidget}
+        items={trackers}
+        availablePosition={!!availablePositionForStats}
+        disabledId={presentStatsId}
+        pinned={pinned}
+      />
+      {!availablePositionForStats && (
+        <div className="text-lg text-error-main pt-3">
+          Not Enough Space For Habit Tacker Stats
+        </div>
+      )}
+      <AddHabitTracerStatsAll />
+      <AddNewHabitTracker
+        addHabitTracker={handleNewHabitTracker}
+        disabled={!availablePosition}
+      />
+    </div>
+  );
+}
+
+function AddHabitTracerStatsAll() {
+  const dispatch = useDispatch();
+  const dimensions = widgetDimensions["habit-tracker-stats-all"];
+  const { minH, minW } = dimensions;
+  const availablePosition = useAvailablePosition(minW, minH);
+  const layout = useCurrentLayout();
+
+  if (!layout) return null;
+  const { widgets } = layout;
+  const present = widgets.find((w) => w.type === "habit-tracker-stats-all");
+  const disabled = !availablePosition || !!present;
+
+  const addStatsWidget = () => {
+    const id = 0;
+    if (disabled) return;
+    dispatch(
+      currentSpaceAddWidget({
+        type: "habit-tracker-stats-all",
+        values: { id },
+        gridProps: {
+          ...dimensions,
+          ...availablePosition,
+          i: `habit-tracker-stats-all-${id}`,
+        },
+      })
+    );
+  };
+
+  return (
+    <div className="flex-center w-full my-5">
+      <Button
+        onClick={addStatsWidget}
+        variant="outlined"
+        color="primary"
+        startIcon={<Icon icon="material-symbols:add" />}
+        children="Add All Habit Stats"
+        disabled={disabled}
+      />
     </div>
   );
 }

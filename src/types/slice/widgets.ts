@@ -1,3 +1,5 @@
+/// src /types/slice /widgets.ts
+
 import { Layout } from "react-grid-layout";
 import { TaskType } from "./todo";
 import { HabitTrackerItemType } from "./habit-tracker";
@@ -8,6 +10,7 @@ const CW = [
   "bookmark",
   "habit-tracker",
   "habit-tracker-stats-single",
+  "habit-tracker-stats-all",
 ] as const;
 const UW = ["custom", "clock", "search", "calendar"] as const;
 const SE = ["Google", "Bing", "YouTube", "Brave", "DuckDuckGo"] as const;
