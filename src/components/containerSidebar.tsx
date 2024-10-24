@@ -4,7 +4,7 @@ import { cn } from "@/utils/cn";
 import Tab, { TabProps } from "@mui/material/Tab";
 import Tabs, { TabsProps } from "@mui/material/Tabs";
 import { styled } from "@mui/material/styles";
-import { alpha } from "@mui/material/styles";
+import alphaColor from "@/utils/alpha";
 
 export type SidebarComponent = {
   index: number;
@@ -28,15 +28,15 @@ function a11yProps(index: number) {
 
 const CustomTab = styled(Tab)(({ theme }) => ({
   color: theme.palette.text.primary,
-  backgroundColor: alpha(theme.palette.primary.main, 0.1),
+  backgroundColor: alphaColor(theme.palette.primary.main, 0.1),
   fontWeight: theme.typography.fontWeightRegular,
 
   "&:hover": {
-    backgroundColor: alpha(theme.palette.primary.main, 0.2),
-    color: alpha(theme.palette.text.primary, 0.8),
+    backgroundColor: alphaColor(theme.palette.primary.main, 0.2),
+    color: alphaColor(theme.palette.text.primary, 0.8),
   },
   "&.Mui-selected": {
-    backgroundColor: alpha(theme.palette.primary.main, 0.1),
+    backgroundColor: alphaColor(theme.palette.primary.main, 0.1),
     color: theme.palette.text.primary,
     fontWeight: theme.typography.fontWeightBold,
   },

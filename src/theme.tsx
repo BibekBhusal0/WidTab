@@ -1,4 +1,4 @@
-import { alpha, createTheme } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 import {
   argbFromHex,
   themeFromSourceColor,
@@ -9,6 +9,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeItemType } from "./types/slice/theme";
 import useCurrentTheme from "./hooks/useCurrentTheme";
 import type {} from "@mui/x-charts/themeAugmentation";
+import alphaColor from "./utils/alpha";
 
 export const getTheme = ({
   mode,
@@ -30,7 +31,7 @@ export const getTheme = ({
     const opacityValue = i / 10;
     CSSv.setProperty(
       `--primary-opacity-${i}`,
-      alpha(hexFromArgb(crrPrimary.primary), opacityValue)
+      alphaColor(hexFromArgb(crrPrimary.primary), opacityValue)
     );
   }
 
@@ -49,7 +50,7 @@ export const getTheme = ({
       mode,
       background: {
         default: hexFromArgb(crrPrimary.background),
-        paper: alpha(hexFromArgb(crrPrimary.surface), opacity),
+        paper: alphaColor(hexFromArgb(crrPrimary.surface), opacity),
       },
       surfaceVariant: { main: hexFromArgb(crrPrimary.surfaceVariant) },
       primary: {
@@ -67,22 +68,22 @@ export const getTheme = ({
       error: { main: hexFromArgb(crrPrimary.error) },
 
       transparentPrimary: {
-        main: alpha(hexFromArgb(crrPrimary.primary), opacity),
+        main: alphaColor(hexFromArgb(crrPrimary.primary), opacity),
         contrastText: hexFromArgb(crrPrimary.onPrimary),
-        dark: alpha(hexFromArgb(crrPrimary.primary), opacity - 0.1),
-        light: alpha(hexFromArgb(crrPrimary.primary), opacity + 0.1),
+        dark: alphaColor(hexFromArgb(crrPrimary.primary), opacity - 0.1),
+        light: alphaColor(hexFromArgb(crrPrimary.primary), opacity + 0.1),
       },
       primaryContainer: {
         default: hexFromArgb(crrPrimary.primaryContainer),
-        paper: alpha(hexFromArgb(crrPrimary.primaryContainer), opacity),
+        paper: alphaColor(hexFromArgb(crrPrimary.primaryContainer), opacity),
       },
       secondaryContainer: {
         default: hexFromArgb(crrPrimary.secondaryContainer),
-        paper: alpha(hexFromArgb(crrPrimary.secondaryContainer), opacity),
+        paper: alphaColor(hexFromArgb(crrPrimary.secondaryContainer), opacity),
       },
       tertiaryContainer: {
         default: hexFromArgb(crrPrimary.tertiaryContainer),
-        paper: alpha(hexFromArgb(crrPrimary.tertiaryContainer), opacity),
+        paper: alphaColor(hexFromArgb(crrPrimary.tertiaryContainer), opacity),
       },
       action: { selectedOpacity: opacity / 1.5 },
       divider: hexFromArgb(crrPrimary.outline),

@@ -8,6 +8,7 @@ import { Icon } from "@iconify/react";
 import SimpleWidget from "../../simpleWidget";
 import { controlledWidgetValues } from "@/types/slice/widgets";
 import CommitGraph from "./graphs/commit";
+import ProgressGraph, { allProgressGraphTypes } from "./graphs/progress";
 
 function HabitTrackerStatsAll() {
   const { trackers } = useSelector(
@@ -15,7 +16,7 @@ function HabitTrackerStatsAll() {
   );
   const { ref, size } = useFullSize();
   const weekThreshold = 500;
-  const monthThreshold = 1120;
+  const monthThreshold = 1200;
   const weekly = size.width < weekThreshold;
   const monthly = monthThreshold <= size.width;
 
@@ -63,28 +64,50 @@ function HabitTrackerStatsAll() {
     return now.isBetween(startDate, endDate, null, "[]");
   };
 
-  const btnProps: ButtonProps = {
-    variant: "text",
-    size: "small",
-    className: "flex-center gap-3",
-  };
+  const btnProps: ButtonProps = { variant: "text", size: "small" };
+  const gaugeHeight = 150;
 
   return (
     <div ref={ref} className="size-full p-2 flex flex-col gap-2">
-      <div aria-label="title-and-buttons" className="full-between px-3">
-        <Button {...btnProps} onClick={() => handleChangePeriod("previous")}>
-          <Icon icon="bi:arrow-left" />
-          Previous
-        </Button>
-        <Button
-          {...btnProps}
-          onClick={() => handleChangePeriod("next")}
-          disabled={isCurrentPeriod()}>
-          Next
-          <Icon icon="bi:arrow-right" />
-        </Button>
-      </div>
-      <CommitGraph {...{ trackers, startDate, endDate }} />
+      {trackers.length === 0 ? (
+        <div className="text-xl text-center">No Habit Tracker</div>
+      ) : (
+        <div className="flex size-full gap-2">
+          <div>
+            <div aria-label="title-and-buttons" className="full-between px-3">
+              <Button
+                {...btnProps}
+                onClick={() => handleChangePeriod("previous")}
+                startIcon={<Icon icon="bi:arrow-left" />}>
+                Previous
+              </Button>
+              <Button
+                {...btnProps}
+                onClick={() => handleChangePeriod("next")}
+                endIcon={<Icon icon="bi:arrow-right" />}
+                disabled={isCurrentPeriod()}>
+                Next
+              </Button>
+            </div>
+            <CommitGraph {...{ trackers, startDate, endDate }} />{" "}
+          </div>
+          {monthly && size.height > gaugeHeight && (
+            <div className="flex flex-col justify-around border-l-2 border-l-divider">
+              {allProgressGraphTypes.map((type, i) => {
+                if (size.height > gaugeHeight * (i + 1)) {
+                  return (
+                    <div className="flex-center flex-col gap-1">
+                      <ProgressGraph type={type} trackers={trackers} />
+                      <div className="capitalize">{type}</div>
+                    </div>
+                  );
+                }
+                return null;
+              })}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

@@ -2,8 +2,8 @@ import dayjs from "@/dayjsConfig";
 import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
 import { Icon } from "@iconify/react";
 import { useTheme } from "@mui/material/styles";
-import { alpha } from "@mui/material/styles";
 import { generateCompleteData } from "@/utils/getCompleteData";
+import alphaColor from "@/utils/alpha";
 
 export type commitGraphProps = {
   trackers: HabitTrackerItemType[];
@@ -43,18 +43,18 @@ function CommitGraph({ trackers, startDate, endDate }: commitGraphProps) {
             endDate
           );
           return (
-            <tr>
+            <tr key={tracker.id}>
               <th className="truncate">{tracker.title}</th>
               {completeData.map((data) => {
                 const progress = data.value / tracker.target;
                 return (
-                  <td>
+                  <td key={data.date}>
                     <div
-                      className="h-full aspect-square p-1"
+                      className="h-full aspect-square p-1 rounded-md"
                       style={{
-                        backgroundColor: alpha(
+                        backgroundColor: alphaColor(
                           main,
-                          Math.max(0.1, Math.min(1, progress))
+                          Math.max(0.05, progress)
                         ),
                       }}>
                       {progress >= 1 && (
