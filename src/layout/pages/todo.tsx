@@ -22,7 +22,7 @@ function TodoPage() {
         key={task.id}
         sx={{
           backgroundColor:
-            task.id === pinnedTodo ? "primaryContainer.paper" : undefined,
+            task.id === pinnedTodo ? "secondaryContainer.paper" : undefined,
         }}
         className={commonCls}>
         <Todo {...task} />

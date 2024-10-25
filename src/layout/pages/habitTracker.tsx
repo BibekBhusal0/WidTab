@@ -6,7 +6,7 @@ import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
 import HabitTrackerStatsAll from "../widgets/habit-tracker/stats/all";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import HabitTrackerEdit from "../widgets/habit-tracker/edit";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { addItem } from "@/redux/slice/habit-tracker";
@@ -27,7 +27,7 @@ function HabitTrackerPage() {
         key={tracker.id}
         sx={{
           backgroundColor:
-            tracker.id === pinned ? "primaryContainer.paper" : undefined,
+            tracker.id === pinned ? "secondaryContainer.paper" : undefined,
         }}
         className="h-[150px] overflow-hidden">
         <HabitTracker {...tracker} />
@@ -36,15 +36,14 @@ function HabitTrackerPage() {
 
   return (
     <>
-      <AnimatePresence mode="sync">
+      <AnimatePresence>
         {showStats && (
           <motion.div
-            layout
-            initial={{ y: "-100%" }}
-            exit={{ y: "-100%" }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="w-full mb-4 border-b-2 border-divider">
+            initial={{ y: "-100%", height: 0 }}
+            exit={{ y: "-100%", height: 0 }}
+            animate={{ y: 0, height: "auto" }}
+            transition={{ duration: 0.007, ease: "easeInOut" }}
+            className="w-full pb-4  border-b-2 border-divider overflow-hidden">
             <HabitTrackerStatsAll />
           </motion.div>
         )}

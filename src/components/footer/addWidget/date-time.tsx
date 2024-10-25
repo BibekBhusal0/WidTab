@@ -1,72 +1,10 @@
-import useAvailablePosition from "@/hooks/useAvailablePosition";
-import { currentSpaceAddWidget } from "@/redux/slice/layout";
-import { widgetDimensions } from "@/utils/getWidget";
-import Button from "@mui/material/Button";
-import { useDispatch } from "react-redux";
+import SimpleAddWidgetButton from "./simpleAddWidget";
 
 function DateTime() {
   return (
     <div className="flex-center flex-col p-2 gap-4 size-full">
-      <AddCalendar />
-      <AddClock />
-    </div>
-  );
-}
-
-function AddCalendar() {
-  const dispatch = useDispatch();
-  const dimensions = widgetDimensions["calendar"];
-  const { minH, minW } = dimensions;
-  const availablePosition = useAvailablePosition(minW, minH);
-
-  const add = () => {
-    if (availablePosition) {
-      dispatch(
-        currentSpaceAddWidget({
-          type: "calendar",
-          gridProps: { ...dimensions, ...availablePosition },
-          values: { id: 0 },
-        })
-      );
-    }
-  };
-
-  return (
-    <Button
-      variant="contained"
-      disabled={availablePosition === null}
-      onClick={add}>
-      Add Calendar
-    </Button>
-  );
-}
-
-function AddClock() {
-  const dispatch = useDispatch();
-  const dimensions = widgetDimensions["clock"];
-  const { minH, minW } = dimensions;
-  const availablePosition = useAvailablePosition(minW, minH);
-
-  const add = () => {
-    if (availablePosition) {
-      dispatch(
-        currentSpaceAddWidget({
-          type: "clock",
-          gridProps: { ...dimensions, ...availablePosition },
-          values: { id: 0 },
-        })
-      );
-    }
-  };
-
-  return (
-    <div className="w-full flex-center">
-      <Button
-        variant="contained"
-        disabled={availablePosition === null}
-        onClick={add}>
-        Add Clock
-      </Button>
+      <SimpleAddWidgetButton widget={{ type: "calendar", values: { id: 0 } }} />
+      <SimpleAddWidgetButton widget={{ type: "clock", values: { id: 0 } }} />
     </div>
   );
 }

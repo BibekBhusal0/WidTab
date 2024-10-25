@@ -1,4 +1,4 @@
-import { controlledWidgetsType, WidgetType } from "./widgets";
+import { StaticPagesType, WidgetType } from "./widgets";
 import { BoxProps } from "@mui/material/Box";
 
 export type CurrentSpaceType =
@@ -6,7 +6,7 @@ export type CurrentSpaceType =
       type: "dynamic";
       id: number;
     }
-  | { type: "static"; id: controlledWidgetsType };
+  | { type: "static"; id: StaticPagesType };
 
 export type compactionType = "none" | "vertical" | "horizontal";
 export type DynamicSpaceType = {

@@ -11,4 +11,5 @@ export const widgetDimensions: Record<allWidgetsType, Partial<Layout>> = {
   search: { maxH: 1, minW: 4 },
   custom: { minW: 1, minH: 1 },
   calendar: { minH: 4, minW: 3, isResizable: false },
+  navigation: { minH: 2, minW: 4, maxH: 3, maxW: 5 },
 };

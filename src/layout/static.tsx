@@ -1,4 +1,4 @@
-import { controlledWidgetsType } from "@/types/slice/widgets";
+import { StaticPagesType } from "@/types/slice/widgets";
 import { FunctionComponent, ReactNode } from "react";
 import TodoPage from "./pages/todo";
 import { useSelector } from "react-redux";
@@ -9,13 +9,13 @@ import { cn } from "@/utils/cn";
 import HabitTrackerPage from "./pages/habitTracker";
 
 interface StaticLayoutProps {
-  widgetType: controlledWidgetsType;
+  widgetType: StaticPagesType;
 }
 
 const StaticLayout: FunctionComponent<StaticLayoutProps> = ({ widgetType }) => {
   const { toolBarPosition } = useSelector((state: StateType) => state.layout);
   const { mainComponentProps } = positionProps[toolBarPosition];
-  const layoutMapping: Record<controlledWidgetsType, ReactNode> = {
+  const layoutMapping: Record<StaticPagesType, ReactNode> = {
     todo: <TodoPage />,
     "habit-tracker": <HabitTrackerPage />,
     bookmark: null,

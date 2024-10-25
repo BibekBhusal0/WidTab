@@ -81,6 +81,10 @@ function HabitTrackerStatsAll() {
                 startIcon={<Icon icon="bi:arrow-left" />}>
                 Previous
               </Button>
+              <div>
+                {startDate.format("MMM D, YYYY")} -{" "}
+                {endDate.format("MMM D, YYYY")}
+              </div>
               <Button
                 {...btnProps}
                 onClick={() => handleChangePeriod("next")}
@@ -92,18 +96,21 @@ function HabitTrackerStatsAll() {
             <CommitGraph {...{ trackers, startDate, endDate }} />{" "}
           </div>
           {monthly && size.height > gaugeHeight && (
-            <div className="flex flex-col justify-around border-l-2 border-l-divider">
-              {allProgressGraphTypes.map((type, i) => {
-                if (size.height > gaugeHeight * (i + 1)) {
-                  return (
-                    <div className="flex-center flex-col gap-1">
-                      <ProgressGraph type={type} trackers={trackers} />
-                      <div className="capitalize">{type}</div>
-                    </div>
-                  );
-                }
-                return null;
-              })}
+            <div className="border-l-2 border-l-divider flex items-center flex-col size-full px-[6px]">
+              <div className="text-xl">Progress</div>
+              <div className="flex flex-col justify-around size-full">
+                {allProgressGraphTypes.map((type, i) => {
+                  if (size.height > gaugeHeight * (i + 1)) {
+                    return (
+                      <div className="flex-center flex-col">
+                        <ProgressGraph type={type} trackers={trackers} />
+                        <div className="capitalize">{type}</div>
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
+              </div>
             </div>
           )}
         </div>

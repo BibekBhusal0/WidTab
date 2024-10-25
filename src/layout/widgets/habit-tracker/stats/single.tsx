@@ -44,7 +44,6 @@ function HabitTrackerStatsSingle({ ...props }: HabitTrackerItemType) {
   const btnProps: ButtonProps = {
     variant: "text",
     size: "small",
-    className: "flex-center gap-3",
   };
   return (
     <div className="size-full p-2">

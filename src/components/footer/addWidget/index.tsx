@@ -7,6 +7,7 @@ import DateTime from "./date-time";
 import AddSearch from "./search";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import AddHabitTracer from "./habitTracker";
+import AddNavigation from "./navigation";
 type widgetAddObjectType = {
   index: number;
   name: string;
@@ -20,6 +21,7 @@ function AddWidget() {
     { index: 2, name: "DateTime", component: <DateTime /> },
     { index: 3, name: "Search", component: <AddSearch /> },
     { index: 4, name: "Habit Tracker", component: <AddHabitTracer /> },
+    { index: 5, name: "Navigation", component: <AddNavigation /> },
   ];
   return (
     <FooterPopover tooltip="Add Widget" icon={widget}>

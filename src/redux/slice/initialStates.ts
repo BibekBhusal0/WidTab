@@ -148,6 +148,7 @@ export const initialLayoutState: LayoutSliceType = {
       id: 1,
       locked: true,
       icon: "jam:home-f",
+
       widgets: [
         {
           type: "search",
@@ -174,7 +175,7 @@ export const initialLayoutState: LayoutSliceType = {
             maxW: 8,
             minH: 1,
             minW: 2,
-            x: 5,
+            x: 7,
             y: 0,
             i: "clock-3",
           },
@@ -194,7 +195,7 @@ export const initialLayoutState: LayoutSliceType = {
             minW: 3,
             maxH: 4,
             maxW: 3,
-            x: 2,
+            x: 3,
             y: 3,
             i: "calendar-5",
           },
@@ -212,12 +213,34 @@ export const initialLayoutState: LayoutSliceType = {
             minH: 4,
             w: 3,
             h: 4,
-            x: 8,
+            x: 7,
             y: 3,
             i: "todo-1",
+            moved: false,
+            static: false,
+          },
+        },
+        {
+          gridProps: {
+            minH: 2,
+            minW: 4,
+            maxH: 3,
+            maxW: 5,
+            x: 3,
+            y: 0,
+            w: 4,
+            h: 2,
+            i: "navigation-4",
+            moved: false,
+            static: false,
+          },
+          type: "navigation",
+          values: {
+            id: 4,
           },
         },
       ],
+
       delete_able: false,
     },
     {
