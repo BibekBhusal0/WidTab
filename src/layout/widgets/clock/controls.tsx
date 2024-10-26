@@ -1,11 +1,8 @@
 import { ClockWidgetType } from "@/types/slice/widgets";
 import MenuPopover from "@/components/popoverMenu";
 import WidgetControls from "@/components/widgetControl";
-import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import ListItemButton from "@mui/material/ListItemButton";
 import MenuItem from "@mui/material/MenuItem";
-import Switch from "@mui/material/Switch";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { useDispatch } from "react-redux";
@@ -14,31 +11,63 @@ import {
   currentSpaceEditWidget,
 } from "@/redux/slice/layout";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
+import Autocomplete from "@mui/material/Autocomplete";
 
-function ClockControls({
-  id,
-  TwentyFourHour,
-  clockType,
-  showSeconds,
-}: ClockWidgetType) {
+import TextField from "@mui/material/TextField";
+import IconMenu from "@/components/menuWithIcon";
+import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
+import moment from "moment-timezone";
+
+function ClockControls({ ...props }: ClockWidgetType) {
+  const { id, TwentyFourHour, clockType, showSeconds, timeZone, showTimeZone } =
+    props;
   const dispatch = useDispatch();
   const { delete_ } = useCurrentIcons();
-  const toggleTwentyFourHour = () => {
+
+  const toggleValue = (
+    type: "TwentyFourHour" | "showSeconds" | "showTimeZone"
+  ) => {
     dispatch(
       currentSpaceEditWidget({
         type: "clock",
-        values: { id, TwentyFourHour: !TwentyFourHour, clockType, showSeconds },
+        values: { ...props, [type]: !props[type] },
       })
     );
   };
-  const toggleSeconds = () => {
+
+  const changeTimezone = (_: any, newValue: string | null) => {
     dispatch(
       currentSpaceEditWidget({
         type: "clock",
-        values: { id, TwentyFourHour, clockType, showSeconds: !showSeconds },
+        values: { ...props, timeZone: newValue || undefined },
       })
     );
   };
+
+  const switches: MenuSwitchProps["items"] = [
+    {
+      onChange() {
+        toggleValue("TwentyFourHour");
+      },
+      title: clockType === "analog" ? "Show Numbers" : "24 Hours",
+      checked: TwentyFourHour,
+    },
+    {
+      onChange() {
+        toggleValue("showSeconds");
+      },
+      title: "Show Seconds",
+      checked: showSeconds,
+    },
+    {
+      onChange() {
+        toggleValue("showTimeZone");
+      },
+      title: "Show TimeZone",
+      checked: showTimeZone,
+    },
+  ];
+
   const onClockTypeChange = (
     _: React.MouseEvent<HTMLElement>,
     newClockType: string | null
@@ -49,17 +78,16 @@ function ClockControls({
       currentSpaceEditWidget({
         type: "clock",
         values: {
-          id,
-          TwentyFourHour,
+          ...props,
           clockType: newClockType as ClockWidgetType["clockType"],
-          showSeconds,
         },
       })
     );
   };
-  const deleteThis = () => {
+
+  const deleteThis = () =>
     dispatch(currentSpaceDeleteWidget({ type: "clock", id }));
-  };
+  const allTimezones = moment.tz.names();
 
   return (
     <WidgetControls>
@@ -77,49 +105,32 @@ function ClockControls({
             <ToggleButton value="analog"> Analog</ToggleButton>
           </ToggleButtonGroup>
         </MenuItem>
-
         <Divider />
-        <MenuSwitchItem
-          checked={TwentyFourHour}
-          onChange={toggleTwentyFourHour}
-          title={clockType === "analog" ? "Show Numbers" : "24 Hours"}
-        />
-        <MenuSwitchItem
-          checked={showSeconds}
-          onChange={toggleSeconds}
-          title="Show Seconds"
-        />
+        <div className="p-2">
+          <Autocomplete
+            disableClearable
+            value={timeZone}
+            onChange={changeTimezone}
+            options={allTimezones}
+            renderInput={(params) => <TextField {...params} label="Timezone" />}
+          />
+        </div>
         <Divider />
-        <ListItemButton
-          sx={{ justifyContent: "space-around", color: "error.main" }}
-          className="gap-5 items-center icon-lg"
-          onClick={deleteThis}>
-          {delete_}
-          <Box className="text-xl">Delete</Box>
-        </ListItemButton>
+        <MenuSwitch items={switches} />
+        <Divider />
+        <IconMenu
+          menuItems={[
+            {
+              icon: delete_,
+              name: "Delete",
+              onClick: deleteThis,
+              color: "error.main",
+            },
+          ]}
+        />
       </MenuPopover>
     </WidgetControls>
   );
 }
-
-const MenuSwitchItem = ({
-  checked,
-  onChange,
-  title,
-}: {
-  checked?: boolean;
-  onChange: () => void;
-  title: string;
-}) => {
-  return (
-    <MenuItem
-      sx={{ justifyContent: "space-between" }}
-      onClick={onChange}
-      className="capitalize between gap-4 w-full">
-      <div className="text-xl">{title}</div>
-      <Switch checked={checked} onChange={onChange} />
-    </MenuItem>
-  );
-};
 
 export default ClockControls;

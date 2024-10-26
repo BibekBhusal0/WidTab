@@ -31,6 +31,7 @@ export type ClockWidgetType = {
   clockType?: "analog" | "digital";
   timeZone?: string;
   showSeconds?: boolean;
+  showTimeZone?: boolean;
 };
 export type SearchWidgetType = { id: number; engine: AllSearchEngines };
 export type controlledWidgetValues = { id: number };

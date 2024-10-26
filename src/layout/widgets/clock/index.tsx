@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { ClockWidgetType } from "@/types/slice/widgets";
-import DigitalClock from "./digital";
+import DigitalClock, { FitText } from "./digital";
 import AnalogClock from "./analog";
 import ClockControls from "./controls";
 import HoverControls from "@/components/hoverControls";
+import { cn } from "@/utils/cn";
 
 export type DigitalClockProps = { time: Date } & ClockWidgetType;
 
@@ -18,17 +19,30 @@ function ClockWidget({ ...props }: ClockWidgetType) {
     return () => clearInterval(intervalId);
   }, []);
 
-  const { clockType = "digital" } = props;
+  const { clockType = "digital", showTimeZone, timeZone } = props;
+  props.clockType = clockType;
+  props.timeZone = timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   return (
     <HoverControls
-      className="size-full flex-center"
+      className="size-full"
       controls={<ClockControls {...props} />}>
-      {clockType === "digital" ? (
-        <DigitalClock time={time} {...props} />
-      ) : (
-        <AnalogClock time={time} {...props} />
-      )}
+      <div
+        className={cn("relative w-full flex-col items-center", {
+          "h-full": !showTimeZone,
+          "h-[90%]": showTimeZone,
+        })}>
+        {clockType === "digital" ? (
+          <DigitalClock time={time} {...props} />
+        ) : (
+          <AnalogClock time={time} {...props} />
+        )}
+        {showTimeZone && (
+          <div className="relative h-[10%]">
+            <FitText>{timeZone}</FitText>
+          </div>
+        )}
+      </div>
     </HoverControls>
   );
 }

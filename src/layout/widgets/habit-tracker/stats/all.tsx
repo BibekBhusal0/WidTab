@@ -96,7 +96,7 @@ function HabitTrackerStatsAll() {
             <CommitGraph {...{ trackers, startDate, endDate }} />{" "}
           </div>
           {monthly && size.height > gaugeHeight && (
-            <div className="border-l-2 border-l-divider flex items-center flex-col size-full px-[6px]">
+            <div className="border-l-2 border-l-divider flex items-center flex-col w-full px-[6px]">
               <div className="text-xl">Progress</div>
               <div className="flex flex-col justify-around size-full">
                 {allProgressGraphTypes.map((type, i) => {

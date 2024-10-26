@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Textfit } from "@ataverascrespo/react18-ts-textfit";
+import { Textfit, TextfitProps } from "@ataverascrespo/react18-ts-textfit";
 import { DigitalClockProps } from ".";
 import dayjs from "@/dayjsConfig";
+import Box, { BoxProps } from "@mui/material/Box";
+import { cn } from "@/utils/cn";
 
 const DigitalClock = ({
   time,
@@ -9,13 +11,22 @@ const DigitalClock = ({
   TwentyFourHour,
   showSeconds,
 }: DigitalClockProps) => {
-  const [resizeKey, setResizeKey] = useState(0);
-  const textFitRef = useRef<HTMLDivElement | null>(null);
-
   const formatTime = useCallback(() => {
-    const format = `${TwentyFourHour ? "HH:mm" : "hh:mm"}${showSeconds ? ":ss" : ""} ${TwentyFourHour ? "" : "a"}`;
+    const format = `${TwentyFourHour ? "HH:mm" : "hh:mm"}${showSeconds ? ":ss" : ""} ${TwentyFourHour ? "" : "A"}`;
     return dayjs.tz(time, timeZone).format(format);
   }, [time, timeZone, TwentyFourHour, showSeconds]);
+
+  return (
+    <FitText min={20} max={400} className="size-full flex-center">
+      {formatTime()}
+    </FitText>
+  );
+};
+
+export type FitTextProps = { containerProps?: BoxProps } & TextfitProps;
+export const FitText = ({ containerProps, ...props }: FitTextProps) => {
+  const [resizeKey, setResizeKey] = useState(0);
+  const textFitRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const observer = new ResizeObserver(() => setResizeKey((prev) => prev + 1));
@@ -27,17 +38,21 @@ const DigitalClock = ({
   }, []);
 
   return (
-    <div
+    <Box
+      {...containerProps}
       ref={textFitRef}
-      className="text-center size-full flex-center p-5 uppercase">
+      className={cn(
+        "text-center size-full flex-center",
+        containerProps?.className
+      )}>
       <Textfit
-        min={20}
-        max={400}
-        className="size-full flex-center"
-        key={resizeKey}>
-        {formatTime()}
-      </Textfit>
-    </div>
+        {...props}
+        key={resizeKey}
+        // min={20}
+        // max={400}
+        // className="size-full flex-center"
+      ></Textfit>
+    </Box>
   );
 };
 

@@ -19,7 +19,7 @@ const AnalogClock = ({
   return (
     <div
       ref={ref}
-      className="size-full flex-center relative aspect-square"
+      className="size-full flex-center relative"
       style={{ fontSize }}>
       <Clock
         size={clockSize}

@@ -1,5 +1,5 @@
 {
-  "name": "vite-template",
+  "name": "chrome-extension",
   "private": true,
   "homepage": "https://bibekbhusal0.github.io/chrome-extension",
   "version": "0.0.0",
@@ -26,7 +26,7 @@
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
     "framer-motion": "~11.1.1",
-    "moment-timezone": "^0.5.45",
+    "moment-timezone": "^0.5.46",
     "react": "18.3.1",
     "react-clock": "^5.0.0",
     "react-dom": "18.3.1",

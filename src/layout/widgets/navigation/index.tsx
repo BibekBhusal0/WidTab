@@ -59,10 +59,12 @@ export function CylindricalNavigation() {
   const rotation = useMotionValue(0);
   const controls = useAnimation();
 
-  const isCurrent = (space: CurrentSpaceType) =>
-    space.id === currentSpace.id && space.type === currentSpace.type;
+  const isCurrent = (space?: CurrentSpaceType) => {
+    if (!space) return false;
+    return space.id === currentSpace.id && space.type === currentSpace.type;
+  };
   const changeSpace = () => {
-    if (isCurrent(selected.space) || !selected) return;
+    if (isCurrent(selected?.space) || !selected) return;
     console.log("changing");
     dispatch(changeCurrentSpace(selected.space));
   };
@@ -157,7 +159,7 @@ export function CylindricalNavigation() {
         variant="outlined"
         className="text-xl text-center"
         onClick={changeSpace}>
-        Go to {selected.name || "Space"}
+        Go to {selected?.name || "Space"}
       </Button>
     </div>
   );
