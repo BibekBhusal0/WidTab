@@ -21,6 +21,7 @@
     "@mui/material": "^6.1.1",
     "@mui/x-charts": "^7.21.0",
     "@mui/x-date-pickers": "^7.18.0",
+    "@radix-ui/react-scroll-area": "^1.2.0",
     "@reduxjs/toolkit": "^2.2.7",
     "@types/react-window": "^1.8.8",
     "clsx": "^2.1.1",

@@ -106,15 +106,16 @@ function ClockControls({ ...props }: ClockWidgetType) {
           </ToggleButtonGroup>
         </MenuItem>
         <Divider />
-        <div className="p-2">
+        <MenuItem className="p-2 ">
           <Autocomplete
+            fullWidth
             disableClearable
             value={timeZone}
             onChange={changeTimezone}
             options={allTimezones}
             renderInput={(params) => <TextField {...params} label="Timezone" />}
           />
-        </div>
+        </MenuItem>
         <Divider />
         <MenuSwitch items={switches} />
         <Divider />

@@ -45,13 +45,7 @@ export const FitText = ({ containerProps, ...props }: FitTextProps) => {
         "text-center size-full flex-center",
         containerProps?.className
       )}>
-      <Textfit
-        {...props}
-        key={resizeKey}
-        // min={20}
-        // max={400}
-        // className="size-full flex-center"
-      ></Textfit>
+      <Textfit {...props} key={resizeKey}></Textfit>
     </Box>
   );
 };
