@@ -33,7 +33,10 @@ function SelectIconPack({ showLabel = true }: { showLabel?: boolean }) {
         dispatch(changeIconPack(e.target.value as compactionType))
       }>
       {Object.keys(SelectedIconPacks).map((c) => (
-        <MenuItem className="capitalize icon-xl" key={c} value={c}>
+        <MenuItem
+          className="capitalize icon-xl flex-center gap-3"
+          key={c}
+          value={c}>
           <ListItemIcon>{getSampleIcon(c)}</ListItemIcon>
           {reformatName(c)}
         </MenuItem>

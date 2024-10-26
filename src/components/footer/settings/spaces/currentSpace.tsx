@@ -1,5 +1,4 @@
 import useCurrentLayout from "@/hooks/useCurrentLayout";
-import Lock from "../../lock";
 import SettingHeader from "../settings-header";
 import DuplicateThisSpace from "./duplicateSpace";
 import DeleteThisSpace from "./deleteSpace";
@@ -10,12 +9,23 @@ import { useDispatch } from "react-redux";
 import {
   currentSpaceChangeIcon,
   currentSpaceRename,
+  currentSpaceToggleLocked,
 } from "@/redux/slice/layout";
 import { SelectIconMenu } from "@/components/select-icon";
+import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
 
 function CurrentSpaceSetting() {
   const layout = useCurrentLayout();
   const dispatch = useDispatch();
+  const space = useCurrentLayout();
+
+  const toggle: MenuSwitchProps["items"] = [
+    {
+      onChange: () => dispatch(currentSpaceToggleLocked()),
+      title: "Lock Widgets",
+      checked: space?.locked,
+    },
+  ];
 
   if (!layout) return null;
 
@@ -26,10 +36,7 @@ function CurrentSpaceSetting() {
         aria-label="Current Space Settings"
         className="w-full flex flex-col items-center gap-5">
         <ChangeCompaction />
-        <div aria-label="Lock widgets" className="full-between">
-          <div className="text-xl">Lock Widgets</div>
-          <Lock type="toggle" />
-        </div>
+        <MenuSwitch plain items={toggle} />
 
         <div aria-label="Icons" className="full-between icon-xl">
           <div className="text-xl">Change Icons</div>

@@ -56,6 +56,9 @@ export const layoutSlice = createSlice({
     toggleLink: (state) => {
       state.linkInNewTab = !state.linkInNewTab;
     },
+    toggleDock: (state) => {
+      state.dock = !state.dock;
+    },
     toggleIcon: (state, action: PayloadAction<RemovableToolbarIcons>) => {
       if (state.toolBarIcons.includes(action.payload)) {
         state.toolBarIcons = state.toolBarIcons.filter(
@@ -189,6 +192,7 @@ export const {
   currentSpaceRename,
   currentSpaceEditWidget,
   currentSpaceChangeIcon,
+  toggleDock,
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

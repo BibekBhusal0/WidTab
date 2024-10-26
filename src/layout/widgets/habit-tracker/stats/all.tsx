@@ -102,7 +102,7 @@ function HabitTrackerStatsAll() {
                 {allProgressGraphTypes.map((type, i) => {
                   if (size.height > gaugeHeight * (i + 1)) {
                     return (
-                      <div className="flex-center flex-col">
+                      <div key={i} className="flex-center flex-col">
                         <ProgressGraph type={type} trackers={trackers} />
                         <div className="capitalize">{type}</div>
                       </div>

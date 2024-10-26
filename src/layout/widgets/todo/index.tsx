@@ -18,6 +18,7 @@ import { SelectIconMenu } from "@/components/select-icon";
 import HoverControls from "@/components/hoverControls";
 import WidgetControls from "@/components/widgetControl";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
+import { ScrollArea } from "@/components/scrollarea";
 
 export const transparentInput =
   "border-transparent w-full bg-transparent resize-none focus:outline-none";
@@ -135,7 +136,7 @@ function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
           onChange={titleChangeHandler}
         />
       </div>
-      <div className="overflow-auto scroll-container py-4 px-0.5 space-y-3 w-full h-5/6">
+      <ScrollArea className="py-4 px-0.5 space-y-3 h-5/6">
         <Reorder.Group
           className="space-y-2"
           values={dynamicTasks.map((t) => t.id)}
@@ -170,7 +171,7 @@ function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
             ))}
           </AnimatePresence>
         </Reorder.Group>
-      </div>
+      </ScrollArea>
     </HoverControls>
   );
 }

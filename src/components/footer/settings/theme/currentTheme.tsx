@@ -7,28 +7,28 @@ import {
 import { numericalThemeValues } from "@/types/slice/theme";
 import Button from "@mui/material/Button";
 import Slider, { SliderProps } from "@mui/material/Slider";
-import Switch from "@mui/material/Switch";
-
 import { useDispatch } from "react-redux";
 import RenameTheme from "./renameTheme";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import SelectIconPack from "./iconPack";
+import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
 
 function CurrentThemeSettings() {
   const theme = useCurrentTheme();
   const dispatch = useDispatch();
   const { delete_ } = useCurrentIcons();
   const numValues: numericalThemeValues[] = ["blur", "opacity", "roundness"];
+  const toggle: MenuSwitchProps["items"] = [
+    {
+      onChange: () => dispatch(toggleCurrentMode()),
+      title: "Dark Mode",
+      checked: theme.mode === "dark",
+    },
+  ];
 
   return (
     <div className="flex flex-col gap-4 px-3">
-      <div className="full-between">
-        <div className="text-xl">Dark Mode</div>
-        <Switch
-          checked={theme.mode === "dark"}
-          onChange={() => dispatch(toggleCurrentMode())}
-        />
-      </div>
+      <MenuSwitch plain items={toggle} />
       {theme.editAble ? (
         <>
           <div className="full-between">

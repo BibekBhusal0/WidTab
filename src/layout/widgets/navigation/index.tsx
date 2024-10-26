@@ -1,5 +1,5 @@
-import { Icon2RN, iconAsProp } from "@/icons";
-import { controlledWidgetValues, StaticPagesType } from "@/types/slice/widgets";
+import { Icon2RN } from "@/icons";
+import { controlledWidgetValues } from "@/types/slice/widgets";
 import { cn } from "@/utils/cn";
 import {
   type PanInfo,
@@ -9,10 +9,8 @@ import {
   useTransform,
 } from "framer-motion";
 import SimpleWidget from "../simpleWidget";
-import { staticPagesIcon } from "@/components/footer/settings/spaces/allStaticSpaces";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
-import useCurrentIcons from "@/hooks/useCurrentIcons";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import useFullSize from "@/hooks/useFullSize";
@@ -20,36 +18,19 @@ import { CurrentSpaceType } from "@/types/slice/layout";
 import { changeCurrentSpace } from "@/redux/slice/layout";
 import { useTheme } from "@mui/material/styles";
 import alphaColor from "@/utils/alpha";
-
-type SpaceMapping = { name: string; icon: iconAsProp; space: CurrentSpaceType };
+import { useGetSpaceAndIcon } from "@/hooks/useAllSpaceAndIcon";
 
 export function CylindricalNavigation() {
   const {
     ref,
     size: { width, height },
   } = useFullSize();
-  const themedIcons = useCurrentIcons();
   const {
     palette: { primaryContainer, divider },
   } = useTheme();
-  const staticIcons: SpaceMapping[] = Object.entries(staticPagesIcon).map(
-    ([space, { icon, name }]) => {
-      return {
-        name,
-        icon: themedIcons[icon],
-        space: { id: space as StaticPagesType, type: "static" },
-      };
-    }
-  );
-  const { allSpaces, currentSpace } = useSelector(
-    (state: StateType) => state.layout
-  );
-  const dynamicIcons: SpaceMapping[] = allSpaces.map(({ name, icon, id }) => {
-    return { name, icon, space: { id, type: "dynamic" } };
-  });
+  const { currentSpace } = useSelector((state: StateType) => state.layout);
   const dispatch = useDispatch();
-  const IconList = [...dynamicIcons, ...staticIcons];
-
+  const IconList = useGetSpaceAndIcon();
   const cylinderWidth = width * 2.7;
   const faceCount = IconList.length;
   const faceWidth = cylinderWidth / faceCount;
@@ -65,7 +46,6 @@ export function CylindricalNavigation() {
   };
   const changeSpace = () => {
     if (isCurrent(selected?.space) || !selected) return;
-    console.log("changing");
     dispatch(changeCurrentSpace(selected.space));
   };
 
@@ -78,7 +58,6 @@ export function CylindricalNavigation() {
     const fullRotations = Math.floor(newRotation / 360);
     const angle = Math.abs(newRotation % 360);
     const closestFaceAngle = Math.round(angle / anglePerFace) * anglePerFace;
-    console.log(closestFaceAngle + fullRotations * 360);
 
     controls.start({
       rotateY: closestFaceAngle + fullRotations * 360,

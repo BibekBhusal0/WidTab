@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import Todo from "@/layout/widgets/todo";
 import { changeCurrentSpace } from "@/redux/slice/layout";
-import FooterPopover from "../footerPopover";
+// import FooterPopover from "../../footerPopover";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
+import FooterPopover from "@/components/footerPopover";
 
 function TodoButton() {
   const dispatch = useDispatch();

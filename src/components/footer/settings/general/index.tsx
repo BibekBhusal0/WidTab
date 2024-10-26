@@ -1,18 +1,32 @@
-import { toggleLink } from "@/redux/slice/layout";
+import { toggleDock, toggleLink } from "@/redux/slice/layout";
 import { StateType } from "@/redux/store";
-import Switch from "@mui/material/Switch";
 import { useDispatch, useSelector } from "react-redux";
 import SelectToolBarPosition from "./toolBarPosition";
 import SettingHeader from "../settings-header";
 import ToggleIcons from "./toggle-icons";
+import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
 
 function GeneralSettings() {
+  const { linkInNewTab, dock } = useSelector(
+    (state: StateType) => state.layout
+  );
+  const dispatch = useDispatch();
+  const toggle: MenuSwitchProps["items"] = [
+    {
+      onChange: () => dispatch(toggleLink()),
+      title: "Open Link in New Tab",
+      checked: linkInNewTab,
+    },
+    {
+      onChange: () => dispatch(toggleDock()),
+      title: "Dock",
+      checked: dock,
+    },
+  ];
+
   return (
-    <div className="w-full flex flex-col gap-4 ">
-      <div className="full-between">
-        <div className="text-xl">Open Link in New Tab</div>
-        <ToggleLinkInNT />
-      </div>
+    <div className="w-full flex flex-col gap-4">
+      <MenuSwitch plain items={toggle} />
       <div className="full-between">
         <div className="text-xl">Tool Bar Position</div>
         <SelectToolBarPosition />
@@ -20,15 +34,6 @@ function GeneralSettings() {
       <SettingHeader className="pb-0 ">Toolbar Icons</SettingHeader>
       <ToggleIcons />
     </div>
-  );
-}
-
-function ToggleLinkInNT() {
-  const { linkInNewTab } = useSelector((state: StateType) => state.layout);
-  const dispatch = useDispatch();
-
-  return (
-    <Switch checked={linkInNewTab} onChange={() => dispatch(toggleLink())} />
   );
 }
 

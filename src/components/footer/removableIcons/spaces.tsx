@@ -1,6 +1,6 @@
+import FooterPopover from "@/components/footerPopover";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
-import FooterPopover from "../footerPopover";
-import AllSpaces from "./settings/spaces/allSpaces";
+import AllSpaces from "../settings/spaces/allSpaces";
 
 function Spaces() {
   const { space } = useCurrentIcons();
