@@ -67,11 +67,7 @@ function ContainerSidebar({
   };
 
   return (
-    <Box
-      {...mainProps}
-      className={cn("flex h-full", mainProps?.className)}
-      //
-    >
+    <Box {...mainProps} className={cn("flex h-full", mainProps?.className)}>
       <CustomTabs
         orientation="vertical"
         value={value}

@@ -76,8 +76,9 @@ export function CylindricalNavigation() {
     const newRotation = rotation.get() + info.velocity.x * dragFactor;
     const anglePerFace = 360 / faceCount;
     const fullRotations = Math.floor(newRotation / 360);
-    const angle = newRotation % 360;
+    const angle = Math.abs(newRotation % 360);
     const closestFaceAngle = Math.round(angle / anglePerFace) * anglePerFace;
+    console.log(closestFaceAngle + fullRotations * 360);
 
     controls.start({
       rotateY: closestFaceAngle + fullRotations * 360,
@@ -87,6 +88,7 @@ export function CylindricalNavigation() {
     const newIndex = faceCount - Math.round((angle * faceCount) / 360);
     setSelected(IconList[newIndex === faceCount ? 0 : newIndex]);
   };
+
   const transform = useTransform(rotation, (value) => {
     return `rotate3d(0, 1, 0, ${value}deg)`;
   });
@@ -132,8 +134,7 @@ export function CylindricalNavigation() {
                   }}>
                   <div
                     style={{
-                      borderColor: alphaColor(divider, 0.2),
-                      borderWidth: "2px",
+                      border: `2px ${alphaColor(divider, 0.4)} solid`,
                       backgroundColor: alphaColor(
                         primaryContainer.default,
                         isCurrent(item.space) ? 0.9 : 0.8
