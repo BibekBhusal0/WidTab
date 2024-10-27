@@ -10,7 +10,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import { useRef } from "react";
+import { useDeferredValue, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Zoom from "@mui/material/Zoom";
 import {
@@ -19,30 +19,66 @@ import {
   oppositePosition,
 } from "@/types/slice/layout";
 import { StateType } from "@/redux/store";
+import useFullSize from "@/hooks/useFullSize";
+import IconButton from "@mui/material/IconButton";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 export const Dock = () => {
   const items = useGetSpaceAndIcon();
   const mousePosition = useMotionValue(Infinity);
   const { toolBarPosition } = useSelector((state: StateType) => state.layout);
   const h = isToolbarHorizontal(toolBarPosition);
+  const { ref, size } = useFullSize();
+  const width = useDeferredValue(size[h ? "width" : "height"]);
+  const numItemsToShow = Math.floor((width - 150) / 50);
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const totalPages = Math.ceil(items.length / numItemsToShow);
+
+  const currentItems = items.slice(
+    currentPage * numItemsToShow,
+    (currentPage + 1) * numItemsToShow
+  );
 
   return (
-    <motion.div
-      onMouseMove={(e) => mousePosition.set(e[h ? "pageX" : "pageY"])}
-      onMouseLeave={() => mousePosition.set(Infinity)}
-      className={cn(
-        "flex items-end",
-        "rounded-2xl backdrop-blur-sm bg-secondaryContainer-paper",
-        h ? "flex-row mx-auto px-4 h-full" : "flex-col my-auto py-4 pl-0 w-full"
-      )}>
-      {items.map((item, index) => (
-        <DockIcon mouse={mousePosition} key={index} {...item} />
-      ))}
-    </motion.div>
+    <div className="size-full flex-center " ref={ref}>
+      <motion.div
+        onMouseMove={(e) => mousePosition.set(e[h ? "pageX" : "pageY"])}
+        onMouseLeave={() => mousePosition.set(Infinity)}
+        className={cn(
+          "flex justify-start rounded-2xl backdrop-blur-sm bg-secondaryContainer-paper",
+          h
+            ? "flex-row mx-auto px-4 h-full max-w-full overflow-x-visible"
+            : "flex-col my-auto py-4 w-full max-h-full overflow-y-visible"
+        )}>
+        {currentPage !== 0 && (
+          <IconButton
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
+            className={h ? "rotate-0" : "rotate-90"}
+            disabled={currentPage === 0}>
+            <Icon icon="mdi:chevron-left" />
+          </IconButton>
+        )}
+        {currentItems.map((item, index) => (
+          <DockIcon mouse={mousePosition} key={index} {...item} />
+        ))}
+        {currentPage !== totalPages - 1 && (
+          <IconButton
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))
+            }
+            className={h ? "rotate-0" : "rotate-90"}
+            disabled={currentPage === totalPages - 1}>
+            <Icon icon="mdi:chevron-right" />
+          </IconButton>
+        )}
+      </motion.div>
+    </div>
   );
 };
 
 type DuckIconProps = { mouse: MotionValue } & SpaceMapping;
+
 function DockIcon({ mouse, name, icon, space }: DuckIconProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { currentSpace, toolBarPosition } = useSelector(
@@ -64,8 +100,8 @@ function DockIcon({ mouse, name, icon, space }: DuckIconProps) {
   const maxDistance = 150;
   const minScale = 1;
   const maxScale = 1.75;
-  const minMargin = 10;
-  const maxMargin = 20;
+  const minMargin = 7;
+  const maxMargin = 14;
   const springConfig = { mass: 0.1, stiffness: 150, damping: 12 };
 
   const scaleTransform = useTransform(
@@ -99,6 +135,7 @@ function DockIcon({ mouse, name, icon, space }: DuckIconProps) {
       <Tooltip
         TransitionComponent={Zoom}
         title={name}
+        enterDelay={0}
         placement={oppositePosition[toolBarPosition]}>
         <motion.div
           ref={ref}
