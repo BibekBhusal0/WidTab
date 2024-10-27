@@ -50,27 +50,27 @@ export const initialTodoState: todoStateType = {
       sorted: false,
       filtered: false,
       id: 1,
-      title: "All Tasks",
-      icon: "fluent-mdl2:task-list",
+      title: "Gardening",
+      icon: "mdi:plant-outline",
       todos: [
         {
           id: 1,
-          task: "Task 1",
+          task: "Plant seasonal flowers",
           checked: true,
         },
         {
           id: 2,
-          task: "Task 2",
+          task: "Water and fertilize garden",
           checked: true,
         },
         {
           id: 3,
-          task: "Task 4",
+          task: "Design new garden layout",
           checked: false,
         },
         {
           id: 4,
-          task: "Task 5",
+          task: "Compost kitchen scrps for soil enrichment",
           checked: false,
         },
       ],
@@ -82,11 +82,10 @@ export const initialTodoState: todoStateType = {
       title: "Today",
       icon: "tdesign:calendar-2",
       todos: [
-        {
-          id: 3,
-          task: "Task 3",
-          checked: false,
-        },
+        { id: 1, task: "Task 1", checked: true },
+        { id: 2, task: "Task 2", checked: true },
+        { id: 3, task: "Task 3", checked: false },
+        { id: 4, task: "Task 4", checked: false },
       ],
     },
     {
@@ -135,7 +134,7 @@ export const initialLayoutState: LayoutSliceType = {
   linkInNewTab: true,
   toolBarPosition: "bottom",
   dock: true,
-  toolBarIcons: ["lock", "spaces", "todo"],
+  toolBarIcons: ["lock", "theme"],
   n_rows: 8,
   n_cols: 12,
   currentSpace: {
@@ -212,9 +211,9 @@ export const initialLayoutState: LayoutSliceType = {
           gridProps: {
             minW: 3,
             minH: 4,
-            w: 3,
+            w: 4,
             h: 4,
-            x: 7,
+            x: 6,
             y: 3,
             i: "todo-1",
             moved: false,
