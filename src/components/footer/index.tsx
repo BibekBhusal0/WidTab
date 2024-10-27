@@ -20,10 +20,7 @@ function Footer() {
     <Box
       {...footerProps}
       sx={{ ...footerProps?.sx }}
-      className={cn(
-        "full-between bg-secondaryContainer-paper",
-        footerProps?.className
-      )}
+      className={cn("full-between", footerProps?.className)}
       //
     >
       <div className={cn("flex-center gap-1", footerProps?.className)}>

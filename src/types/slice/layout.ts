@@ -20,6 +20,14 @@ export type DynamicSpaceType = {
 };
 
 export type ToolBarPositions = "top" | "left" | "right" | "bottom";
+export const isToolbarHorizontal = (position: ToolBarPositions) =>
+  position === "top" || position === "bottom";
+export const oppositePosition: Record<ToolBarPositions, ToolBarPositions> = {
+  top: "bottom",
+  left: "right",
+  right: "left",
+  bottom: "top",
+};
 
 const RTBI = ["spaces", "todo", "lock", "theme"] as const;
 

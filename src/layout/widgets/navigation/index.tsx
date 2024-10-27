@@ -103,10 +103,11 @@ export function CylindricalNavigation() {
             {IconList.map((item, index) => {
               return (
                 <div
-                  className="absolute flex-center h-full origin-center p-2"
+                  className="absolute flex-center h-full origin-center py-2"
                   key={index}
                   style={{
                     width: `${faceWidth}px`,
+                    paddingLeft: `${faceWidth / 20}px`,
                     transform: `rotateY(${
                       index * (360 / faceCount)
                     }deg) translateZ(${radius}px)`,
@@ -121,7 +122,7 @@ export function CylindricalNavigation() {
                     }}
                     className={cn(
                       "group flex-center size-full rounded-xl",
-                      "mx-auto p-4",
+                      "mx-auto p-3",
                       "transition-transform hover:scale-110"
                     )}>
                     <div className="size-full icon-full transition-transform group-hover:scale-150">
