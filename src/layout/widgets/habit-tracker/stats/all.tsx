@@ -5,8 +5,6 @@ import useFullSize from "@/hooks/useFullSize";
 import Button, { ButtonProps } from "@mui/material/Button";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
-import SimpleWidget from "../../simpleWidget";
-import { controlledWidgetValues } from "@/types/slice/widgets";
 import CommitGraph from "./graphs/commit";
 import ProgressGraph, { allProgressGraphTypes } from "./graphs/progress";
 
@@ -120,11 +118,3 @@ function HabitTrackerStatsAll() {
 }
 
 export default HabitTrackerStatsAll;
-
-export function HabitTrackerStatsAllWidget({ id }: controlledWidgetValues) {
-  return (
-    <SimpleWidget type="habit-tracker-stats-all" id={id}>
-      <HabitTrackerStatsAll />
-    </SimpleWidget>
-  );
-}

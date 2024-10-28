@@ -1,5 +1,4 @@
 import { Icon2RN } from "@/icons";
-import { controlledWidgetValues } from "@/types/slice/widgets";
 import { cn } from "@/utils/cn";
 import {
   type PanInfo,
@@ -8,7 +7,6 @@ import {
   useMotionValue,
   useTransform,
 } from "framer-motion";
-import SimpleWidget from "../simpleWidget";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import Button from "@mui/material/Button";
@@ -143,13 +141,5 @@ export function CylindricalNavigation() {
         Go to {selected?.name || "Space"}
       </Button>
     </div>
-  );
-}
-
-export function NavigationWidget({ id }: controlledWidgetValues) {
-  return (
-    <SimpleWidget id={id} type="navigation">
-      <CylindricalNavigation />
-    </SimpleWidget>
   );
 }

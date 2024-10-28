@@ -1,6 +1,5 @@
 import { ClockWidgetType } from "@/types/slice/widgets";
 import MenuPopover from "@/components/popoverMenu";
-import WidgetControls from "@/components/widgetControl";
 import Divider from "@mui/material/Divider";
 import MenuItem from "@mui/material/MenuItem";
 import ToggleButton from "@mui/material/ToggleButton";
@@ -17,12 +16,19 @@ import TextField from "@mui/material/TextField";
 import IconMenu from "@/components/menuWithIcon";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
 import moment from "moment-timezone";
+import useCurrentLayout from "@/hooks/useCurrentLayout";
 
-function ClockControls({ ...props }: ClockWidgetType) {
-  const { id, TwentyFourHour, clockType, showSeconds, timeZone, showTimeZone } =
-    props;
+function ClockControls({ id }: { id: number }) {
+  const layout = useCurrentLayout();
   const dispatch = useDispatch();
   const { delete_ } = useCurrentIcons();
+  if (!layout) return null;
+  const { widgets } = layout;
+  const widget = widgets.find((w) => w.type === "clock" && w.values.id === id);
+  if (!widget || widget.type !== "clock") return null;
+  const props = widget.values;
+  const { TwentyFourHour, clockType, showSeconds, timeZone, showTimeZone } =
+    props;
 
   const toggleValue = (
     type: "TwentyFourHour" | "showSeconds" | "showTimeZone"
@@ -46,23 +52,17 @@ function ClockControls({ ...props }: ClockWidgetType) {
 
   const switches: MenuSwitchProps["items"] = [
     {
-      onChange() {
-        toggleValue("TwentyFourHour");
-      },
+      onChange: () => toggleValue("TwentyFourHour"),
       title: clockType === "analog" ? "Show Numbers" : "24 Hours",
       checked: TwentyFourHour,
     },
     {
-      onChange() {
-        toggleValue("showSeconds");
-      },
+      onChange: () => toggleValue("showSeconds"),
       title: "Show Seconds",
       checked: showSeconds,
     },
     {
-      onChange() {
-        toggleValue("showTimeZone");
-      },
+      onChange: () => toggleValue("showTimeZone"),
       title: "Show TimeZone",
       checked: showTimeZone,
     },
@@ -90,47 +90,45 @@ function ClockControls({ ...props }: ClockWidgetType) {
   const allTimezones = moment.tz.names();
 
   return (
-    <WidgetControls>
-      <MenuPopover>
-        <MenuItem
-          sx={{ justifyContent: "space-between", flexDirection: "column" }}
-          className="gap-2">
-          <div className="text-2xl">Clock Type</div>
-          <ToggleButtonGroup
-            value={clockType}
-            exclusive
-            onChange={onClockTypeChange}
-            aria-label="text alignment">
-            <ToggleButton value="digital"> Digital</ToggleButton>
-            <ToggleButton value="analog"> Analog</ToggleButton>
-          </ToggleButtonGroup>
-        </MenuItem>
-        <Divider />
-        <MenuItem className="p-2 ">
-          <Autocomplete
-            fullWidth
-            disableClearable
-            value={timeZone}
-            onChange={changeTimezone}
-            options={allTimezones}
-            renderInput={(params) => <TextField {...params} label="Timezone" />}
-          />
-        </MenuItem>
-        <Divider />
-        <MenuSwitch items={switches} />
-        <Divider />
-        <IconMenu
-          menuItems={[
-            {
-              icon: delete_,
-              name: "Delete",
-              onClick: deleteThis,
-              color: "error.main",
-            },
-          ]}
+    <MenuPopover>
+      <MenuItem
+        sx={{ justifyContent: "space-between", flexDirection: "column" }}
+        className="gap-2">
+        <div className="text-2xl">Clock Type</div>
+        <ToggleButtonGroup
+          value={clockType}
+          exclusive
+          onChange={onClockTypeChange}
+          aria-label="text alignment">
+          <ToggleButton value="digital"> Digital</ToggleButton>
+          <ToggleButton value="analog"> Analog</ToggleButton>
+        </ToggleButtonGroup>
+      </MenuItem>
+      <Divider />
+      <MenuItem className="p-2 ">
+        <Autocomplete
+          fullWidth
+          disableClearable
+          value={timeZone}
+          onChange={changeTimezone}
+          options={allTimezones}
+          renderInput={(params) => <TextField {...params} label="Timezone" />}
         />
-      </MenuPopover>
-    </WidgetControls>
+      </MenuItem>
+      <Divider />
+      <MenuSwitch items={switches} />
+      <Divider />
+      <IconMenu
+        menuItems={[
+          {
+            icon: delete_,
+            name: "Delete",
+            onClick: deleteThis,
+            color: "error.main",
+          },
+        ]}
+      />
+    </MenuPopover>
   );
 }
 

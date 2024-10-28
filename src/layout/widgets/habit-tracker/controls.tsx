@@ -1,4 +1,3 @@
-import WidgetControls from "@/components/widgetControl";
 import IconMenu, { IconMenuType } from "@/components/menuWithIcon";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import MenuPopover from "@/components/popoverMenu";
@@ -76,36 +75,34 @@ function HabitTrackerControls({ id }: { id: number }) {
     },
   ];
   return (
-    <WidgetControls>
-      <MenuPopover>
-        {editing ? (
-          <div className="p-4">
-            <HabitTrackerEdit
-              initialState={trackers.find((tracker) => tracker.id === id)}
-              onChange={handleChange}
-            />
-            <div className="w-full flex-center mt-5">
-              <Button onClick={() => setEditing(false)}>Back</Button>
-            </div>
+    <MenuPopover>
+      {editing ? (
+        <div className="p-4">
+          <HabitTrackerEdit
+            initialState={trackers.find((tracker) => tracker.id === id)}
+            onChange={handleChange}
+          />
+          <div className="w-full flex-center mt-5">
+            <Button onClick={() => setEditing(false)}>Back</Button>
           </div>
-        ) : (
-          <div>
-            <IconMenu menuItems={items} />
-            <Popover
-              anchorEl={anchorEl}
-              marginThreshold={30}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              open={statsOpen}
-              onClose={handleStatsClose}>
-              <Stats id={id} />
-            </Popover>
-          </div>
-        )}
-      </MenuPopover>
-    </WidgetControls>
+        </div>
+      ) : (
+        <div>
+          <IconMenu menuItems={items} />
+          <Popover
+            anchorEl={anchorEl}
+            marginThreshold={30}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            open={statsOpen}
+            onClose={handleStatsClose}>
+            <Stats id={id} />
+          </Popover>
+        </div>
+      )}
+    </MenuPopover>
   );
 }
 

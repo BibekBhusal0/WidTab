@@ -6,6 +6,8 @@ import { addTask } from "@/redux/slice/todo";
 import { cn } from "@/utils/cn";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import { TaskType } from "@/types/slice/todo";
+import Controls from "../widgets/controls";
+import { getWidgetControlsProps } from "@/utils/getWidget";
 
 function TodoPage() {
   const { add } = useCurrentIcons();
@@ -25,7 +27,9 @@ function TodoPage() {
             task.id === pinnedTodo ? "secondaryContainer.paper" : undefined,
         }}
         className={commonCls}>
-        <Todo {...task} />
+        <Controls {...getWidgetControlsProps("todo", task.id)} showOn="always">
+          <Todo {...task} />
+        </Controls>
       </Paper>
     ));
 

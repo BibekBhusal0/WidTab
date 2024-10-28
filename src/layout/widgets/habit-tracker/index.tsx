@@ -2,10 +2,8 @@ import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
 import { useDispatch } from "react-redux";
 import { changeValue } from "@/redux/slice/habit-tracker";
 import Button from "@mui/material/Button";
-import HoverControls from "@/components/hoverControls";
 import { Icon } from "@iconify/react";
 import { cn } from "@/utils/cn";
-import HabitTrackerControls from "./controls";
 import dayjs from "dayjs";
 
 function HabitTracker({
@@ -51,9 +49,7 @@ function HabitTracker({
   const streak = calculateStreak() + Number(completedToday);
 
   return (
-    <HoverControls
-      controls={<HabitTrackerControls id={id} />}
-      className="flex-center flex-col gap-4 p-2 w-full">
+    <>
       <div aria-label="icon and title" className="full-between">
         <div className="w-16 bg-primaryContainer-default rounded-full aspect-square p-2">
           <Icon icon={icon} className="size-full" />
@@ -116,7 +112,7 @@ function HabitTracker({
           })}
         </div>
       </div>
-    </HoverControls>
+    </>
   );
 }
 

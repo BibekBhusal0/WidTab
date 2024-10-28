@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import HabitTracker from ".";
 import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
 import HabitTrackerStatsSingle from "./stats/single";
-import SimpleWidget from "../simpleWidget";
 
 type HabitTrackerOrStatsWidgetProps = controlledWidgetValues & {
   type: "tracker" | "stats";
@@ -32,11 +31,7 @@ export function HabitTrackerOrStatsWidget({
     return null;
   }
   if (type === "stats")
-    return (
-      <SimpleWidget id={id} type="habit-tracker-stats-single">
-        <HabitTrackerStatsSingle {...currentHabitTracker} />
-      </SimpleWidget>
-    );
+    return <HabitTrackerStatsSingle {...currentHabitTracker} />;
   return <HabitTracker {...currentHabitTracker} />;
 }
 export function HabitTrackerWidget({ id }: controlledWidgetValues) {

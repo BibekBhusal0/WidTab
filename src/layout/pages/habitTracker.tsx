@@ -12,6 +12,8 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { addItem } from "@/redux/slice/habit-tracker";
 import { cn } from "@/utils/cn";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
+import Controls from "../widgets/controls";
+import { getWidgetControlsProps } from "@/utils/getWidget";
 
 function HabitTrackerPage() {
   const { pinned, trackers } = useSelector(
@@ -30,7 +32,11 @@ function HabitTrackerPage() {
             tracker.id === pinned ? "secondaryContainer.paper" : undefined,
         }}
         className="h-[150px] overflow-hidden">
-        <HabitTracker {...tracker} />
+        <Controls
+          {...getWidgetControlsProps("habit-tracker", tracker.id)}
+          showOn="always">
+          <HabitTracker {...tracker} />
+        </Controls>
       </Paper>
     ));
 

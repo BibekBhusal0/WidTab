@@ -1,50 +1,29 @@
 import useCurrentLayout from "@/hooks/useCurrentLayout";
 import { CustomWidgetType } from "@/types/slice/widgets";
-import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { useDispatch } from "react-redux";
-import {
-  currentSpaceDeleteWidget,
-  currentSpaceEditWidget,
-} from "@/redux/slice/layout";
-import WidgetControls from "@/components/widgetControl";
+import { currentSpaceEditWidget } from "@/redux/slice/layout";
 import { useEffect, useState } from "react";
 import MenuPopover from "@/components/popoverMenu";
 import { urlPattern } from "@/components/footer/addWidget/custom";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 
 function CustomWidget(props: CustomWidgetType) {
+  return <iframe src={props.url} className="size-full rounded-themed" />;
+}
+
+export function URLChange({ id }: { id: number }) {
   const layout = useCurrentLayout();
-  const showControls = !layout?.locked;
-
-  return (
-    <div className="size-full relative overflow-hidden">
-      {showControls && <CustomWidgetControls {...props} />}
-      <iframe src={props.url} className="size-full rounded-themed" />
-    </div>
-  );
+  if (!layout) return null;
+  const { widgets } = layout;
+  const widget = widgets.find((w) => w.type === "custom" && w.values.id === id);
+  if (!widget || widget.type !== "custom") return null;
+  const props = { url: widget.values.url, id: widget.values.id };
+  return <ChangeURL {...props} />;
 }
 
-function CustomWidgetControls(props: CustomWidgetType) {
-  const { delete_ } = useCurrentIcons();
-  const dispatch = useDispatch();
-  return (
-    <WidgetControls className="flex-center gap-3">
-      <ChangeURL {...props} />
-
-      <IconButton
-        color="error"
-        onClick={() =>
-          dispatch(currentSpaceDeleteWidget({ type: "custom", id: props.id }))
-        }>
-        {delete_}
-      </IconButton>
-    </WidgetControls>
-  );
-}
-
-function ChangeURL({ url, id }: CustomWidgetType) {
+export function ChangeURL({ url, id }: CustomWidgetType) {
   const dispatch = useDispatch();
   const { edit } = useCurrentIcons();
   const [text, setText] = useState(url);

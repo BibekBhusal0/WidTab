@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 export type MenuSwitchProps = {
   items: {
     checked?: boolean;
-    onChange: () => {};
+    onChange: () => void;
     title: ReactNode;
   }[];
   plain?: boolean;

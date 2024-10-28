@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import Todo from "@/layout/widgets/todo";
 import { changeCurrentSpace } from "@/redux/slice/layout";
-// import FooterPopover from "../../footerPopover";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import FooterPopover from "@/components/footerPopover";
 
@@ -17,7 +16,7 @@ function TodoButton() {
     <FooterPopover tooltip="To-dos" icon={checklist}>
       <div className="flex h-56 overflow-clip">
         {pinned && (
-          <div className="w-56 border-r-2 hide-widget-controls border-divider">
+          <div className="w-56 border-r-2 border-divider">
             <Todo {...pinned} />
           </div>
         )}

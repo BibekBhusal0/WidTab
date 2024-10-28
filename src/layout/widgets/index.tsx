@@ -14,8 +14,10 @@ import HabitTrackerWidget, {
 import SearchWidget from "./search";
 import { FunctionComponent } from "react";
 import Calendar from "./calendar";
-import { HabitTrackerStatsAllWidget } from "./habit-tracker/stats/all";
-import { NavigationWidget } from "./navigation";
+import HabitTrackerStatsAll from "./habit-tracker/stats/all";
+import { CylindricalNavigation } from "./navigation";
+import Controls from "./controls";
+import { getWidgetControlsProps } from "@/utils/getWidget";
 
 export const done: allWidgetsType[] = [
   "custom",
@@ -40,8 +42,8 @@ export const widgetElementMapping: {
   search: SearchWidget,
   calendar: Calendar,
   "habit-tracker-stats-single": HabitTrackerStatsSingleWidget,
-  "habit-tracker-stats-all": HabitTrackerStatsAllWidget,
-  navigation: NavigationWidget,
+  "habit-tracker-stats-all": HabitTrackerStatsAll,
+  navigation: CylindricalNavigation,
 };
 
 function Widget({ widget }: { widget: WidgetType }) {
@@ -49,7 +51,13 @@ function Widget({ widget }: { widget: WidgetType }) {
   const Element = widgetElementMapping[widget.type] as FunctionComponent<
     AllWidgetPropsMapping<allWidgetsType>
   >;
-  return <Element {...widget.values} />;
+  return (
+    <>
+      <Controls {...getWidgetControlsProps(widget.type, widget.values.id)}>
+        <Element {...widget.values} />
+      </Controls>
+    </>
+  );
 }
 
 export default Widget;

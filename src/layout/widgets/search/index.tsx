@@ -7,7 +7,6 @@ import { SelectChangeEvent } from "@mui/material/Select";
 import { ChangeEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
-import SimpleWidget from "../simpleWidget";
 import SearchEngineSelect, { searchEngineLogoAndLink } from "./select";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 
@@ -47,34 +46,32 @@ function SearchWidget({ id, engine }: SearchWidgetType) {
   };
 
   return (
-    <SimpleWidget id={id} type="search">
-      <OutlinedInput
-        placeholder="Search..."
-        autoFocus
-        className="size-full"
-        sx={{ fontSize: "32px" }}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            handleSearch();
-          }
-        }}
-        startAdornment={
-          <InputAdornment position="start">
-            <IconButton className="icon-2xl" onClick={handleSearch}>
-              {search}
-            </IconButton>
-          </InputAdornment>
+    <OutlinedInput
+      placeholder="Search..."
+      autoFocus
+      className="size-full"
+      sx={{ fontSize: "32px" }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          handleSearch();
         }
-        endAdornment={
-          <InputAdornment position="end">
-            <SearchEngineSelect value={engine} onChange={changeSearchEngine} />
-          </InputAdornment>
-        }
-        size="small"
-        value={text}
-        onChange={handleInputChange}
-      />
-    </SimpleWidget>
+      }}
+      startAdornment={
+        <InputAdornment position="start">
+          <IconButton className="icon-2xl" onClick={handleSearch}>
+            {search}
+          </IconButton>
+        </InputAdornment>
+      }
+      endAdornment={
+        <InputAdornment position="end">
+          <SearchEngineSelect value={engine} onChange={changeSearchEngine} />
+        </InputAdornment>
+      }
+      size="small"
+      value={text}
+      onChange={handleInputChange}
+    />
   );
 }
 export default SearchWidget;

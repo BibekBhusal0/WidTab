@@ -2,9 +2,6 @@ import { TaskType, todoType } from "@/types/slice/todo";
 import { useDispatch } from "react-redux";
 import { AnimatePresence, Reorder } from "framer-motion";
 import SortableCheckbox from "./checkbox";
-import IconButton from "@mui/material/IconButton";
-
-import TodoMenu from "./todo-menu";
 import { useRef } from "react";
 import {
   addTodo,
@@ -15,9 +12,6 @@ import {
 } from "@/redux/slice/todo";
 import { cn } from "@/utils/cn";
 import { SelectIconMenu } from "@/components/select-icon";
-import HoverControls from "@/components/hoverControls";
-import WidgetControls from "@/components/widgetControl";
-import useCurrentIcons from "@/hooks/useCurrentIcons";
 import { ScrollArea } from "@/components/scrollarea";
 
 export const transparentInput =
@@ -25,7 +19,6 @@ export const transparentInput =
 
 function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
   const dispatch = useDispatch();
-  const { add } = useCurrentIcons();
   const taskRefs = useRef<Map<number, HTMLTextAreaElement | null>>(new Map());
   const titleRef = useRef<HTMLInputElement>(null);
   var dynamicTasks = [...todos];
@@ -111,14 +104,7 @@ function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
   };
 
   return (
-    <HoverControls
-      controls={
-        <WidgetControls className="flex">
-          <IconButton onClick={addTodoItem}>{add}</IconButton>
-          <TodoMenu {...{ id, icon, title, todos, filtered, sorted }} />
-        </WidgetControls>
-      }
-      className="size-full">
+    <>
       <div className="flex justify-between items-center gap-2 px-3 h-12 icon-xl">
         <SelectIconMenu
           icon={icon}
@@ -172,7 +158,7 @@ function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
           </AnimatePresence>
         </Reorder.Group>
       </ScrollArea>
-    </HoverControls>
+    </>
   );
 }
 
