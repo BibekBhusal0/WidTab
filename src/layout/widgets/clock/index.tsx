@@ -3,16 +3,15 @@ import { ClockWidgetType } from "@/types/slice/widgets";
 import DigitalClock, { FitText } from "./digital";
 import AnalogClock from "./analog";
 import { cn } from "@/utils/cn";
+import dayjs from "@/dayjsConfig";
 
-export type DigitalClockProps = { time: Date } & ClockWidgetType;
+export type DigitalClockProps = { time: dayjs.Dayjs } & ClockWidgetType;
 
 function ClockWidget({ ...props }: ClockWidgetType) {
-  const [time, setTime] = useState<Date>(new Date());
+  const [time, setTime] = useState<dayjs.Dayjs>(dayjs());
 
   useEffect(() => {
-    const updateTime = () => {
-      setTime(new Date());
-    };
+    const updateTime = () => setTime(dayjs());
     const intervalId = setInterval(updateTime, 1000);
     return () => clearInterval(intervalId);
   }, []);

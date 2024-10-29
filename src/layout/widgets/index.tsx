@@ -18,18 +18,7 @@ import HabitTrackerStatsAll from "./habit-tracker/stats/all";
 import { CylindricalNavigation } from "./navigation";
 import Controls from "./controls";
 import { getWidgetControlsProps } from "@/utils/getWidget";
-
-export const done: allWidgetsType[] = [
-  "custom",
-  "todo",
-  "clock",
-  "calendar",
-  "search",
-  "habit-tracker",
-  "habit-tracker-stats-single",
-  "habit-tracker-stats-all",
-  "navigation",
-];
+import TimerWidget from "./timer";
 
 export const widgetElementMapping: {
   [K in WidgetMappingAll["type"]]: FunctionComponent<AllWidgetPropsMapping<K>>;
@@ -44,10 +33,11 @@ export const widgetElementMapping: {
   "habit-tracker-stats-single": HabitTrackerStatsSingleWidget,
   "habit-tracker-stats-all": HabitTrackerStatsAll,
   navigation: CylindricalNavigation,
+  timer: TimerWidget,
+  "timer-stats": () => null,
 };
 
 function Widget({ widget }: { widget: WidgetType }) {
-  if (!done.includes(widget.type)) return null;
   const Element = widgetElementMapping[widget.type] as FunctionComponent<
     AllWidgetPropsMapping<allWidgetsType>
   >;

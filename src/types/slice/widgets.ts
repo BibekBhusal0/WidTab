@@ -1,6 +1,6 @@
 import { Layout } from "react-grid-layout";
 import { TaskType } from "./todo";
-import { HabitTrackerItemType } from "./habit-tracker";
+import { HabitTrackerHistoryType, HabitTrackerItemType } from "./habit-tracker";
 import { BookmarkWidgetType } from "./bookmark";
 
 const SP = ["todo", "bookmark", "habit-tracker"] as const;
@@ -9,7 +9,15 @@ const CW = [
   "habit-tracker-stats-single",
   "habit-tracker-stats-all",
 ] as const;
-const UW = ["custom", "clock", "search", "calendar", "navigation"] as const;
+const UW = [
+  "custom",
+  "clock",
+  "search",
+  "calendar",
+  "navigation",
+  "timer",
+  "timer-stats",
+] as const;
 const SE = ["Google", "Bing", "YouTube", "Brave", "DuckDuckGo"] as const;
 
 export type StaticPagesType = (typeof SP)[number];
@@ -33,6 +41,12 @@ export type ClockWidgetType = {
   showSeconds?: boolean;
   showTimeZone?: boolean;
 };
+export type TimerWidgetType = {
+  id: number;
+  music?: boolean;
+  time: number;
+  history?: HabitTrackerHistoryType[];
+};
 export type SearchWidgetType = { id: number; engine: AllSearchEngines };
 export type controlledWidgetValues = { id: number };
 export type DeleteWidgetParameters = { type: allWidgetsType; id: number };
@@ -45,7 +59,11 @@ export type WidgetMappingUncontrolled =
   | { type: "custom"; values: CustomWidgetType }
   | { type: "clock"; values: ClockWidgetType }
   | { type: "search"; values: SearchWidgetType }
-  | { type: "calendar" | "navigation"; values: controlledWidgetValues };
+  | {
+      type: "calendar" | "navigation" | "timer-stats";
+      values: controlledWidgetValues;
+    }
+  | { type: "timer"; values: TimerWidgetType };
 
 export type WidgetMappingAll =
   | WidgetMappingControlled

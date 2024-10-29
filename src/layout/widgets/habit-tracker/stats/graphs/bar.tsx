@@ -4,7 +4,6 @@ import { ChartsYAxis } from "@mui/x-charts/ChartsYAxis";
 import { ChartsReferenceLine } from "@mui/x-charts/ChartsReferenceLine";
 import { ResponsiveChartContainer } from "@mui/x-charts/ResponsiveChartContainer";
 import dayjs from "@/dayjsConfig";
-import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
 import { useTheme } from "@mui/material/styles";
 
 export type BarGraphProps = {
@@ -14,7 +13,10 @@ export type BarGraphProps = {
   }[];
   size: { width: number; height: number };
   showTarget?: boolean;
-} & HabitTrackerItemType;
+  unit: string;
+  title: string;
+  target?: number;
+};
 
 function BarGraph({
   unit,
@@ -51,19 +53,22 @@ function BarGraph({
         {
           label: `${unit}`,
           min: 0,
-          max: Math.max(target, ...data.map((d) => d.value)),
-          colorMap: {
-            type: "piecewise",
-            thresholds: [target],
-            colors: [error.main, success.main],
-          },
+          max: Math.max(target || 0, ...data.map((d) => d.value)),
+          colorMap:
+            target && showTarget
+              ? {
+                  type: "piecewise",
+                  thresholds: [target],
+                  colors: [error.main, success.main],
+                }
+              : undefined,
           id: "value",
         },
       ]}
       height={size.height - 20}
       width={size.width - 10}>
       <BarPlot borderRadius={10} />
-      {showTarget && (
+      {showTarget && target && (
         <ChartsReferenceLine
           y={target}
           lineStyle={{ strokeDasharray: "10 5" }}

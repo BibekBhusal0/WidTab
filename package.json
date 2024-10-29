@@ -36,7 +36,8 @@
     "react-window": "^1.8.10",
     "tailwind-merge": "^2.5.2",
     "tailwind-variants": "0.1.20",
-    "tailwindcss": "3.4.3"
+    "tailwindcss": "3.4.3",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@iconify/react": "^5.0.2",

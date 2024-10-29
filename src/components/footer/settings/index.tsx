@@ -1,5 +1,7 @@
 import ThemeSettings from "./theme";
-import ContainerSidebar from "@/components/containerSidebar";
+import ContainerSidebar, {
+  SidebarComponent,
+} from "@/components/containerSidebar";
 import SpaceSettings from "./spaces";
 import GeneralSettings from "./general";
 import FooterPopover from "@/components/footerPopover";
@@ -7,7 +9,7 @@ import useCurrentIcons from "@/hooks/useCurrentIcons";
 
 function Settings() {
   const { settings } = useCurrentIcons();
-  const allSettings = [
+  const allSettings: SidebarComponent[] = [
     { index: 0, name: "General", component: <GeneralSettings /> },
     { index: 1, name: "Theme", component: <ThemeSettings /> },
     { index: 2, name: "Spaces", component: <SpaceSettings /> },

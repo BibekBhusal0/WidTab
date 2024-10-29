@@ -42,7 +42,7 @@ function AddCustomWidget() {
     }
   };
   return (
-    <Box className="size-full relative flex flex-col gap-3">
+    <Box className="size-full relative flex flex-col gap-3 pt-3">
       <TextField
         error={extractedUrl === "" && text.trim() !== ""}
         helperText={
@@ -76,8 +76,7 @@ function AddCustomWidget() {
           Position: ({cols}, {rows})
         </Box>
         <Box sx={{ color: "error.main" }}>
-          {" "}
-          {available_widgets === null ? "No space available" : ""}{" "}
+          {available_widgets === null ? "No space available" : ""}
         </Box>
       </div>
 
