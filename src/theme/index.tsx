@@ -5,11 +5,10 @@ import {
   hexFromArgb,
 } from "@material/material-color-utilities";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
-import CssBaseline from "@mui/material/CssBaseline";
-import { ThemeItemType } from "./types/slice/theme";
-import useCurrentTheme from "./hooks/useCurrentTheme";
 import type {} from "@mui/x-charts/themeAugmentation";
-import alphaColor from "./utils/alpha";
+import { ThemeItemType } from "@/types/slice/theme";
+import alphaColor from "@/utils/alpha";
+import useCurrentTheme from "@/hooks/useCurrentTheme";
 
 export const getTheme = ({
   mode,
@@ -30,7 +29,7 @@ export const getTheme = ({
   for (let i = 1; i <= 9; i++) {
     const opacityValue = i / 10;
     CSSv.setProperty(
-      `--primary-opacity-${i}`,
+      `--primary-${i}`,
       alphaColor(hexFromArgb(crrPrimary.primary), opacityValue)
     );
   }
@@ -112,12 +111,7 @@ export const getTheme = ({
 function CustomThemeProvider({ children }: { children: React.ReactNode }) {
   const th = useCurrentTheme();
   const theme = getTheme(th);
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {children}
-    </ThemeProvider>
-  );
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 }
 
 export default CustomThemeProvider;

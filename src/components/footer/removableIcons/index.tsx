@@ -5,7 +5,7 @@ import TodoButton from "./todoButton";
 import Spaces from "./spaces";
 import { Fragment, ReactNode } from "react";
 import Lock from "./lock";
-import ThemeSwitch from "./theme";
+import ThemeSwitch from "@/theme/switch";
 
 function RemovableButtons() {
   const { toolBarIcons } = useSelector((state: StateType) => state.layout);

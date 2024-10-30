@@ -37,7 +37,7 @@ function DynamicLayout() {
       ref={ref}
       {...mainComponentProps}
       className={cn(
-        "relative w-full overflow-hidden",
+        "relative w-full overflow-hidden widgets",
         mainComponentProps?.className
       )}
       sx={mainComponentProps?.sx}

@@ -3,7 +3,7 @@ import {
   ri_fill,
   SelectedIconPacks,
   transformIcons,
-} from "@/icons";
+} from "@/theme/icons";
 import useCurrentTheme from "./useCurrentTheme";
 
 function useCurrentIcons() {

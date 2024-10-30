@@ -17,7 +17,7 @@ import { getWidgetControlsProps } from "@/utils/getWidget";
 
 function HabitTrackerPage() {
   const { pinned, trackers } = useSelector(
-    (state: StateType) => state["habit-tracker"]
+    (state: StateType) => state.habitTracker
   );
   const [showStats, setShowStats] = useState(false);
   const pinnedTracker = trackers.filter((t) => t.id === pinned);

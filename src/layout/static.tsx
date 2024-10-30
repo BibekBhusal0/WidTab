@@ -7,6 +7,7 @@ import { positionProps } from "@/types/slice/layout";
 import Box from "@mui/material/Box";
 import { cn } from "@/utils/cn";
 import HabitTrackerPage from "./pages/habitTracker";
+import BookmarkManagerPage from "./pages/bookmarks";
 
 interface StaticLayoutProps {
   widgetType: StaticPagesType;
@@ -18,7 +19,7 @@ const StaticLayout: FunctionComponent<StaticLayoutProps> = ({ widgetType }) => {
   const layoutMapping: Record<StaticPagesType, ReactNode> = {
     todo: <TodoPage />,
     "habit-tracker": <HabitTrackerPage />,
-    bookmark: null,
+    bookmark: <BookmarkManagerPage />,
   };
   return (
     <Box

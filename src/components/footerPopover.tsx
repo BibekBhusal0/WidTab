@@ -1,4 +1,4 @@
-import { Icon2RN, iconAsProp } from "@/icons";
+import { Icon2RN, iconAsProp } from "@/theme/icons";
 import { StateType } from "@/redux/store";
 import { oppositePosition } from "@/types/slice/layout";
 import IconButton from "@mui/material/IconButton";

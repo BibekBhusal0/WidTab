@@ -1,5 +1,5 @@
 import { useGetSpaceAndIcon, SpaceMapping } from "@/hooks/useAllSpaceAndIcon";
-import { Icon2RN } from "@/icons";
+import { Icon2RN } from "@/theme/icons";
 import { changeCurrentSpace } from "@/redux/slice/layout";
 import { cn } from "@/utils/cn";
 import Tooltip from "@mui/material/Tooltip";

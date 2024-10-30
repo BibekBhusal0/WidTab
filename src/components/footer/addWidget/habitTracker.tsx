@@ -17,7 +17,7 @@ import SettingHeader from "../settings/settings-header";
 function AddHabitTracer() {
   const dispatch = useDispatch();
   const { trackers, pinned } = useSelector(
-    (state: StateType) => state["habit-tracker"]
+    (state: StateType) => state.habitTracker
   );
   const dimensions = widgetDimensions["habit-tracker"];
   const { minH, minW } = dimensions;

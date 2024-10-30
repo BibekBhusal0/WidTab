@@ -3,10 +3,24 @@ import themeReducer from "./slice/theme";
 import todoReducer from "./slice/todo";
 import layoutReducer from "./slice/layout";
 import habitTrackerReducer from "./slice/habit-tracker";
+import bookmarkReducer from "./slice/bookmark";
+import { persistStore, persistReducer } from "redux-persist";
+import { localStorage } from "redux-persist-webextension-storage";
+import allBookmarksReducer from "./allBookmark";
+
+const localStorageConfig = { key: "storage", storage: localStorage };
 
 export const store = configureStore({
-  reducer: { theme: themeReducer, todo: todoReducer, layout: layoutReducer, 'habit-tracker': habitTrackerReducer },
+  reducer: {
+    allBookmarks: allBookmarksReducer,
+    bookmarkReducer: persistReducer(localStorageConfig, bookmarkReducer),
+    todo: persistReducer(localStorageConfig, todoReducer),
+    layout: persistReducer(localStorageConfig, layoutReducer),
+    theme: persistReducer(localStorageConfig, themeReducer),
+    habitTracker: persistReducer(localStorageConfig, habitTrackerReducer),
+  },
 });
 
 export type StateType = ReturnType<typeof store.getState>;
 export type DispatchType = typeof store.dispatch;
+export const persistor = persistStore(store);

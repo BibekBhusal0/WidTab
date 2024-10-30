@@ -1,4 +1,4 @@
-import { Icon2RN } from "@/icons";
+import { Icon2RN } from "@/theme/icons";
 import { changeCurrentSpace } from "@/redux/slice/layout";
 import { StateType } from "@/redux/store";
 import List from "@mui/material/List";

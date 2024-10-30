@@ -13,9 +13,7 @@ export function HabitTrackerOrStatsWidget({
   id,
   type,
 }: HabitTrackerOrStatsWidgetProps) {
-  const habitTracker = useSelector(
-    (state: StateType) => state["habit-tracker"]
-  );
+  const habitTracker = useSelector((state: StateType) => state.habitTracker);
   const currentHabitTracker = habitTracker.trackers.find(
     (tracker) => tracker.id === id
   );

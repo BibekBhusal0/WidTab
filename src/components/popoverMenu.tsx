@@ -3,7 +3,7 @@ import ListItemButton, {
   ListItemButtonProps,
 } from "@mui/material/ListItemButton";
 import Menu, { MenuProps } from "@mui/material/Menu";
-import { Icon2RN, iconAsProp } from "@/icons";
+import { Icon2RN, iconAsProp } from "@/theme/icons";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 
 export interface MenuPopoverProps {

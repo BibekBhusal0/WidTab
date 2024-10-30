@@ -1,7 +1,7 @@
 import { Icon, listIcons } from "@iconify/react";
 import { CSSProperties, useDeferredValue, useEffect, useState } from "react";
 import type { IconifyInfo, IconifyJSON } from "@iconify/types";
-import { iconPackNames, IconPacks } from "@/icons";
+import { iconPackNames, IconPacks } from "@/theme/icons";
 import Button from "@mui/material/Button";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";

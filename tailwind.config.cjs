@@ -17,29 +17,24 @@ const muiPaletteColors = {
 
 const generateOpacityMapping = (colorName) => {
   const opacityMapping = {};
-
   for (let i = 1; i <= 9; i++) {
-    opacityMapping[`${colorName}-${i}`] = `var(--${colorName}-opacity-${i})`;
+    opacityMapping[`${colorName}-${i}`] = `var(--${colorName}-${i})`;
   }
-
   return opacityMapping;
 };
 
 const generateColorMapping = () => {
   const colorMapping = {};
-
   Object.entries(muiPaletteColors).forEach(([key, subKeys]) => {
     subKeys.forEach((subKey) => {
       colorMapping[`${key}-${subKey}`] = `var(--mui-palette-${key}-${subKey})`;
     });
   });
-
   return colorMapping;
 };
 
-/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,mdx}"],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       colors: {
@@ -51,8 +46,11 @@ module.exports = {
       },
       backdropBlur: { themed: "var(--custom-blur)" },
       borderRadius: { themed: "var(--custom-border-radius)" },
+      animation: {
+        "spin-slow": "spin 20s linear infinite",
+      },
     },
   },
   darkMode: "class",
-  plugins: [require('tailwindcss-animate')]
+  plugins: [require("tailwindcss-animate")],
 };

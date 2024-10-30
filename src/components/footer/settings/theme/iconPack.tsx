@@ -1,6 +1,6 @@
 import useCurrentTheme from "@/hooks/useCurrentTheme";
 import { useDispatch } from "react-redux";
-import { Icon2RN, iconPackNames, SelectedIconPacks } from "@/icons";
+import { Icon2RN, iconPackNames, SelectedIconPacks } from "@/theme/icons";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { compactionType } from "@/types/slice/layout";

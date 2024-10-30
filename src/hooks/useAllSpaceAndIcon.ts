@@ -1,4 +1,4 @@
-import { iconAsProp } from "@/icons";
+import { iconAsProp } from "@/theme/icons";
 import { StaticPagesType } from "@/types/slice/widgets";
 import { staticPagesIcon } from "@/components/footer/settings/spaces/allStaticSpaces";
 import { useSelector } from "react-redux";

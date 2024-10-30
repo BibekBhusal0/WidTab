@@ -9,9 +9,7 @@ import CommitGraph from "./graphs/commit";
 import ProgressGraph, { allProgressGraphTypes } from "./graphs/progress";
 
 function HabitTrackerStatsAll() {
-  const { trackers } = useSelector(
-    (state: StateType) => state["habit-tracker"]
-  );
+  const { trackers } = useSelector((state: StateType) => state.habitTracker);
   const { ref, size } = useFullSize();
   const weekThreshold = 500;
   const monthThreshold = 1200;

@@ -32,7 +32,7 @@ function HabitTrackerControls({ id }: { id: number }) {
 
   const dispatch = useDispatch();
   const { pinned, trackers } = useSelector(
-    (state: StateType) => state["habit-tracker"]
+    (state: StateType) => state.habitTracker
   );
   const { currentSpace } = useSelector((state: StateType) => state.layout);
   const handlePin = () => dispatch(changePinnedHabitTracker(id));
@@ -107,9 +107,7 @@ function HabitTrackerControls({ id }: { id: number }) {
 }
 
 function Stats({ id }: { id: number }) {
-  const { trackers } = useSelector(
-    (state: StateType) => state["habit-tracker"]
-  );
+  const { trackers } = useSelector((state: StateType) => state.habitTracker);
   const currentHabitTracker = trackers.find((tracker) => tracker.id === id);
   if (!currentHabitTracker) return null;
   return (

@@ -1,5 +1,5 @@
 import useCurrentIcons from "@/hooks/useCurrentIcons";
-import { allRequiredIcons } from "@/icons";
+import { allRequiredIcons } from "@/theme/icons";
 import { changeCurrentSpace } from "@/redux/slice/layout";
 import { StateType } from "@/redux/store";
 import { StaticPagesType } from "@/types/slice/widgets";

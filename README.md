@@ -1,55 +1,21 @@
-## Folder Structure
+# Bookmark Manager
 
-```
-src/
-├──  components/
-│   ├──  addItem.tsx
-│   ├──  containerSidebar.tsx
-│   ├──  footer/
-│   │   ├──  addWidget/
-│   │   │   ├──  index.tsx
-│   │   │   ├──  todo.tsx
-│   │   ├──  index.tsx
-│   │   ├──  lock.tsx
-│   │   ├──  settings/
-│   │   │   ├──  index.tsx
-│   │   │   ├──  spaces/
-│   │   │   │   ├──  allSpaces.tsx
-│   │   │   │   ├──  allStaticSpaces.tsx
-│   │   │   │   ├──  changeCompaction.tsx
-│   │   │   │   ├──  currentSpace.tsx
-│   │   │   │   ├──  deleteSpace.tsx
-│   │   │   │   ├──  duplicateSpace.tsx
-│   │   │   ├──  theme/
-│   │   │   │   ├──  addTheme.tsx
-│   │   │   │   ├──  allThemes.tsx
-│   │   │   │   ├──  currentTheme.tsx
-│   │   │   │   ├──  renameTheme.tsx
-├──  layout/
-│   ├──  dynamic.tsx
-│   ├──  index.tsx
-│   ├──  pages/
-│   │   ├──  todo.tsx
-│   ├──  static.tsx
-│   ├──  widgets/
-│   │   ├──  todo/
-│   │   │   ├──  index.tsx
-├──  redux/
-│   ├──  slice/
-│   │   ├──  layout.ts
-│   │   ├──  theme.ts
-│   │   ├──  todo.ts
-├──  types/
-│   ├──  slice/
-│   │   ├──  bookmark.ts
-│   │   ├──  index.ts
-│   │   ├──  theme.ts
-│   │   ├──  todo.ts
-│   │   ├──  widgets.ts
-├──  utils/
-│   ├──  cn.ts
-│   ├──  next_id.ts
-├──  hooks/
-│   ├──  useCurrentLayout.ts
-│   ├──  useCurrentTheme.ts
-```
+Github Repository for Chrome extension.
+
+## Tech Docs
+
+- [Vite](https://vitejs.dev/)
+- [React](https://react.dev/)
+- [Vite Plugin](https://vitejs.dev/guide/api-plugin.html)
+- [Chrome Extension with manifest 3](https://developer.chrome.com/docs/extensions/mv3/)
+- [Rollup](https://rollupjs.org/guide/en/)
+- [@crxjs/vite-plugin](https://crxjs.dev/vite-plugin)
+- [Tailwind CSS](https://tailwindcss.com/docs/configuration)
+- [Redux Toolkit](https://redux-toolkit.js.org/introduction/getting-started)
+- [Material UI](https://mui.com/material-ui/getting-started/)
+
+## License
+
+[MIT](./LICENSE)
+
+### [Credit](./credits.md)
