@@ -2,12 +2,6 @@ import Menu, { MenuProps } from "@mui/material/Menu";
 import Box, { BoxProps } from "@mui/material/Box";
 import { cn } from "@/utils/cn";
 import { ReactNode, useState, MouseEvent } from "react";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import { Icon } from "@iconify/react";
-import { useDispatch, useSelector } from "react-redux";
-import { StateType } from "@/redux/store";
-import { toggleFavorites } from "@/redux/slice/bookmark";
 
 export type contextMenuProps = {
   children?: ReactNode;
@@ -68,58 +62,5 @@ export default function ContextMenu({
       </Menu>
       {children}
     </Box>
-  );
-}
-
-type AddFavProps = { id: string } & contextMenuProps;
-
-export function LinkContextMenu({ id, ...props }: AddFavProps) {
-  const { favorites } = useSelector(
-    (state: StateType) => state.bookmarkReducer
-  );
-  const dispatch = useDispatch();
-  const fav = favorites.includes(id);
-  const toggleFav = () => dispatch(toggleFavorites(id));
-
-  const items = [
-    {
-      name: fav ? "Remove From Favorites" : "Add To Favorites",
-      icon: fav ? "mdi:heart-outline" : "mdi:heart",
-      onClick: toggleFav,
-    },
-    {
-      name: "Delete",
-      icon: "material-symbols:delete",
-      onClick: () => {
-        chrome.bookmarks.remove(id);
-      },
-    },
-  ];
-
-  return (
-    <ContextMenu
-      {...props}
-      menuContent={
-        <>
-          {items.map(({ name, icon, onClick }) => {
-            const color = name === "Delete" ? "error.main" : "inherit";
-            return (
-              <MenuItem
-                sx={{ color }}
-                className="flex-center gap-3"
-                key={name}
-                onClick={onClick}>
-                <ListItemIcon sx={{ color }}>
-                  <Icon icon={icon} className="text-2xl" />
-                </ListItemIcon>
-                <Box sx={{ color }} className="text-xl">
-                  {name}
-                </Box>
-              </MenuItem>
-            );
-          })}
-        </>
-      }
-    />
   );
 }

@@ -5,12 +5,9 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
-import {
-  allFolderSizes,
-  changeFolderSize,
-  folderSizes,
-} from "@/redux/slice/bookmark";
+import { changeFolderSize } from "@/redux/slice/bookmark";
 import { useId } from "react";
+import { allFolderSizes, folderSizes } from "@/types/slice/bookmark";
 
 export default function SelectSize() {
   const dispatch = useDispatch();

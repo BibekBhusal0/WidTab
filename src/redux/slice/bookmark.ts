@@ -1,17 +1,7 @@
+import { bookmarkSliceType, folderSizes } from "@/types/slice/bookmark";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const s = ["small", "medium", "large"] as const;
-export type folderSizes = (typeof s)[number];
-export const allFolderSizes: folderSizes[] = [...s];
-
-export type bookmarkStateType = {
-  favorites: string[];
-  pinned: string;
-  currentFolderID: string;
-  showFavorites: boolean;
-  folderSize: folderSizes;
-};
-const initialState: bookmarkStateType = {
+const initialState: bookmarkSliceType = {
   favorites: [],
   showFavorites: false,
   pinned: "1",
@@ -42,7 +32,6 @@ export const bookmarkSlice = createSlice({
     toggleShowFavorites: (state) => {
       state.showFavorites = !state.showFavorites;
     },
-    //   changePined : (state, action:PayloadAction<string>) =>{
   },
 });
 

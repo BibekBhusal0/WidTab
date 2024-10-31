@@ -6,13 +6,11 @@ import habitTrackerReducer from "./slice/habit-tracker";
 import bookmarkReducer from "./slice/bookmark";
 import { persistStore, persistReducer } from "redux-persist";
 import { localStorage } from "redux-persist-webextension-storage";
-import allBookmarksReducer from "./allBookmark";
 
 const localStorageConfig = { key: "storage", storage: localStorage };
 
 export const store = configureStore({
   reducer: {
-    allBookmarks: allBookmarksReducer,
     bookmarkReducer: persistReducer(localStorageConfig, bookmarkReducer),
     todo: persistReducer(localStorageConfig, todoReducer),
     layout: persistReducer(localStorageConfig, layoutReducer),

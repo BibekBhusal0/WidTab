@@ -16,19 +16,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-      //   "@assets/*": ["src/assets/*"],
-      //   "@reducer/*": ["src/redux/*"],
-      //   "@lib/*": ["src/lib/*"],
-      //   "@theme/*": ["src/theme/*"],
-      //   "@components/*": ["src/components/*"],
-      //   "@bookmarks/*": ["src/bookmarks/*"],
-      //   "@pages/*": ["src/pages/*"],
-      //   "@newtab/*": ["src/pages/newtab/*"],
-      //   "@options/*": ["src/pages/options/*"],
-      //   "@popup/*": ["src/pages/popup/*"]
-    }
+    "paths": { "@/*": ["./src/*"] }
   },
   "include": ["src", "utils", "vite.config.ts"]
 }

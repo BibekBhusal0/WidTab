@@ -9,8 +9,6 @@ import devManifest from "./manifest.dev.json";
 import pkg from "./package.json";
 
 const root = resolve(__dirname, "src");
-const pagesDir = resolve(root, "pages");
-const assetsDir = resolve(root, "assets");
 const outDir = resolve(__dirname, "dist");
 const publicDir = resolve(__dirname, "public");
 
@@ -45,21 +43,7 @@ function stripDevIcons(apply: boolean) {
 }
 
 export default defineConfig({
-  resolve: {
-    alias: {
-      "@": root,
-      //   "@assets": assetsDir,
-      //   "@reducer": resolve(root, "reducer"),
-      //   "@lib": resolve(root, "lib"),
-      //   "@theme": resolve(root, "theme"),
-      //   "@components": resolve(root, "components"),
-      //   "@bookmarks": resolve(root, "bookmarks"),
-      //   "@pages": pagesDir,
-      //   "@newtab": resolve(pagesDir, "newtab"),
-      //   "@popup": resolve(pagesDir, "popup"),
-      //   "@options": resolve(pagesDir, "options"),
-    },
-  },
+  resolve: { alias: { "@": root } },
   plugins: [
     react(),
     crx({

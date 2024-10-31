@@ -1,5 +1,4 @@
-import { LinkContextMenu } from "@/components/contextMenu";
-import Folder from "@/components/folder";
+import Folder from "@/components/bookmarks/folder";
 import { changeCurrentFolder, toggleFavorites } from "@/redux/slice/bookmark";
 import { StateType } from "@/redux/store";
 import { Icon } from "@iconify/react/dist/iconify.js";
@@ -10,10 +9,10 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { faviconURL } from "@/utils/faviconURL";
-import { TakeBookmarksProps } from "@/redux/allBookmark";
+import { BookmarkTree, TakeBookmarksProps } from "@/types/slice/bookmark";
+import { LinkContextMenu } from "./contextMenu";
 
-function BookmarkTree() {
-  const { bookmarks } = useSelector((state: StateType) => state.allBookmarks);
+function BookmarkTree({ bookmarks }: BookmarkTree) {
   return <BookmarkItem bookmarks={bookmarks} />;
 }
 

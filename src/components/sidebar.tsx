@@ -3,7 +3,6 @@ import IconButton from "@mui/material/IconButton";
 import { useState } from "react";
 import { ResizableBox, ResizableBoxProps } from "react-resizable";
 import Box, { BoxProps } from "@mui/material/Box";
-import { useTheme, emphasize } from "@mui/material/styles";
 import { cn } from "@/utils/cn";
 
 export type SidebarProps = {
@@ -25,12 +24,6 @@ export default function Sidebar({
   contentContainerProps,
   containerProps,
 }: SidebarProps) {
-  const {
-    palette: {
-      primary: { main },
-    },
-  } = useTheme();
-
   const [drawerWidth, setDrawerWidth] = useState(600);
   const minW = 150;
   const [open, setOpen] = useState(true);
@@ -48,7 +41,6 @@ export default function Sidebar({
         height={Infinity}
         minConstraints={[0, 0]}
         maxConstraints={[600, Infinity]}
-        style={{ backgroundColor: emphasize(main, 0.7) }}
         axis="x"
         resizeHandles={["e"]}
         onResize={(e: any, { size }) => {
@@ -71,7 +63,7 @@ export default function Sidebar({
         <Box
           {...headerProps}
           className={cn(
-            "flex w-full items-center justify-between gap-4 p-4",
+            "flex w-full items-center justify-between gap-4 p-4 relative",
             headerProps?.className
           )}>
           {showButton && (

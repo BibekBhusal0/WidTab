@@ -7,7 +7,7 @@ import { positionProps } from "@/types/slice/layout";
 import Box from "@mui/material/Box";
 import { cn } from "@/utils/cn";
 import HabitTrackerPage from "./pages/habitTracker";
-import BookmarkManagerPage from "./pages/bookmarks";
+import BookmarkManagerPage from "./pages/bookmark";
 
 interface StaticLayoutProps {
   widgetType: StaticPagesType;
