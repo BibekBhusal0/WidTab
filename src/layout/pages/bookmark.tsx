@@ -15,10 +15,9 @@ import BookmarkBreadcrumb from "@/components/bookmarks/breadcrumb";
 import { findBookmark } from "@/utils/bookmark";
 import BookmarkGrid from "@/components/bookmarks/grid";
 import { changeCurrentFolder } from "@/redux/slice/bookmark";
-import { SelectChangeEvent, SelectProps } from "@mui/material/Select";
+import { SelectChangeEvent } from "@mui/material/Select";
 import { changeFolderSize } from "@/redux/slice/bookmark";
-
-import { allFolderSizes, folderSizes } from "@/types/slice/bookmark";
+import { folderSizes } from "@/types/slice/bookmark";
 
 function BookmarkManager() {
   const [bookmarks, setBookmarks] = useState<
@@ -93,7 +92,7 @@ function MainBookmarks({ bookmarks }: BookmarkTree) {
     (state: StateType) => state.bookmarks
   );
   const dispatch = useDispatch();
-  const onBookmarkChange = (id: string) => dispatch(changeCurrentFolder(id));
+  const onFolderChange = (id: string) => dispatch(changeCurrentFolder(id));
 
   const getBookmarks = () => {
     if (showFavorites) {
@@ -103,7 +102,7 @@ function MainBookmarks({ bookmarks }: BookmarkTree) {
     return findBookmark(bookmarks, currentFolderID)?.children;
   };
   const currentBookmarks = getBookmarks();
-  const props = { currentFolderID, folderSize, bookmarks, onBookmarkChange };
+  const props = { currentFolderID, folderSize, bookmarks, onFolderChange };
 
   return (
     <ScrollArea className="size-full pb-8">

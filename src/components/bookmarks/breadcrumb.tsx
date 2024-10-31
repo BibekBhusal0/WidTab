@@ -4,7 +4,7 @@ import { BookmarkTree, ExtraBookmarkProps } from "@/types/slice/bookmark";
 
 function BookmarkBreadcrumb({
   bookmarks,
-  onBookmarkChange = () => {},
+  onFolderChange = () => {},
   currentFolderID,
 }: BookmarkTree & ExtraBookmarkProps & { currentFolderID: string }) {
   const path = findPath(bookmarks, currentFolderID);
@@ -15,7 +15,7 @@ function BookmarkBreadcrumb({
         <div
           key={index}
           className="hover:underline cursor-pointer text-xl"
-          onClick={() => onBookmarkChange(item.id)}>
+          onClick={() => onFolderChange(item.id)}>
           {item.title}
         </div>
       ))}

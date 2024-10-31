@@ -10,6 +10,7 @@ import useCurrentIcons from "@/hooks/useCurrentIcons";
 import AddHabitTracer from "./habitTracker";
 import AddNavigation from "./navigation";
 import AddTimer from "./timer";
+import AddBookmark from "./bookmark";
 
 function AddWidget() {
   const { widget } = useCurrentIcons();
@@ -21,6 +22,7 @@ function AddWidget() {
     { index: 4, name: "Habit Tracker", component: <AddHabitTracer /> },
     { index: 5, name: "Navigation", component: <AddNavigation /> },
     { index: 6, name: "Timer", component: <AddTimer /> },
+    { index: 7, name: "Bookmark", component: <AddBookmark /> },
   ];
   return (
     <FooterPopover tooltip="Add Widget" icon={widget}>

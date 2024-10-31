@@ -5,7 +5,8 @@ import { BookmarkWidgetType } from "./bookmark";
 
 const SP = ["todo", "bookmark", "habit-tracker"] as const;
 const CW = [
-  ...SP,
+  "todo",
+  "habit-tracker",
   "habit-tracker-stats-single",
   "habit-tracker-stats-all",
 ] as const;
@@ -17,6 +18,7 @@ const UW = [
   "navigation",
   "timer",
   "timer-stats",
+  "bookmark",
 ] as const;
 const SE = ["Google", "Bing", "YouTube", "Brave", "DuckDuckGo"] as const;
 
@@ -63,6 +65,7 @@ export type WidgetMappingUncontrolled =
       type: "calendar" | "navigation" | "timer-stats";
       values: controlledWidgetValues;
     }
+  | { type: "bookmark"; values: BookmarkWidgetType }
   | { type: "timer"; values: TimerWidgetType };
 
 export type WidgetMappingAll =

@@ -43,11 +43,7 @@ function BookmarkGrid(props: ExtraBookmarkProps & BookmarkTree) {
 }
 
 function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps) {
-  const {
-    bookmarks,
-    folderSize = "small",
-    onBookmarkChange = () => {},
-  } = props;
+  const { bookmarks, folderSize = "small", onFolderChange = () => {} } = props;
   const { favorites, linkInNewTab } = useSelector(
     (state: StateType) => state.bookmarks
   );
@@ -64,7 +60,7 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps) {
 
   const content = bookmarks.children ? (
     <div
-      onClick={() => onBookmarkChange(bookmarks.id)}
+      onClick={() => onFolderChange(bookmarks.id)}
       className={cn(cls, "gap-2")}>
       <Icon width={size * 0.7} icon="ic:round-folder" />
       <div className={cn(textCls)}>{bookmarks.title}</div>
