@@ -33,7 +33,7 @@ export function ChangeCompaction({
   );
   if (!showLabel) return selectItem;
   return (
-    <div className="between gap-5 w-full">
+    <div className="full-between">
       <div className="text-xl">Compaction</div>
       {selectItem}
     </div>

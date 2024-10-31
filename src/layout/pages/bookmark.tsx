@@ -10,7 +10,7 @@ import { StateType } from "@/redux/store";
 import { toggleShowFavorites } from "@/redux/slice/bookmark";
 import { ScrollArea } from "@/components/scrollarea";
 import BookmarkSearch from "@/components/bookmarks/search";
-import useBookmarks from "@/hooks/useBookmarks";
+import useBookmarksUpdate from "@/hooks/useBookmarks";
 import BookmarkBreadcrumb from "@/components/bookmarks/breadcrumb";
 import { findBookmark } from "@/utils/bookmark";
 import BookmarkGrid from "@/components/bookmarks/grid";
@@ -30,7 +30,7 @@ function BookmarkManager() {
     });
   };
 
-  useBookmarks(fetchBookmarks);
+  useBookmarksUpdate(fetchBookmarks);
   if (!bookmarks || bookmarks.length === 0) return <ThemeSwitch />;
   return (
     <Sidebar

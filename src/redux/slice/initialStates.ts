@@ -136,6 +136,7 @@ export const initialLayoutState: LayoutSliceType = {
   toolBarIcons: ["lock", "theme"],
   n_rows: 8,
   n_cols: 12,
+  dockContent: { content: "spaces", id: "all" },
   currentSpace: {
     type: "dynamic",
     id: 1,

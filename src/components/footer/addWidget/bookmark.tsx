@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import useBookmarks from "@/hooks/useBookmarks";
+import useBookmarksUpdate, { useAllBookmarks } from "@/hooks/useBookmarks";
 import { ReactNode, useState } from "react";
 import useCurrentLayout from "@/hooks/useCurrentLayout";
 import { widgetDimensions } from "@/utils/getWidget";
@@ -13,17 +13,8 @@ function AddBookmark() {
   const dimensions = widgetDimensions["bookmark"];
   const { minH, minW } = dimensions;
   const availablePosition = useAvailablePosition(minW, minH);
-  const [bookmarks, setBookmarks] = useState<
-    chrome.bookmarks.BookmarkTreeNode[]
-  >([]);
+  const { bookmarks } = useAllBookmarks();
 
-  const fetchBookmarks = () => {
-    chrome.bookmarks.getTree().then((data) => {
-      setBookmarks(data);
-    });
-  };
-
-  useBookmarks(fetchBookmarks);
   const dispatch = useDispatch();
   const addItem = (id: string) => {
     if (availablePosition) {
@@ -43,7 +34,7 @@ function AddBookmark() {
     ({ values: { id } }) => `${id}`
   );
 
-  const getBookmarksFolder = (
+  const getBookmarkFolders = (
     bookmark:
       | chrome.bookmarks.BookmarkTreeNode[]
       | chrome.bookmarks.BookmarkTreeNode
@@ -51,7 +42,7 @@ function AddBookmark() {
     if (Array.isArray(bookmark)) {
       return (
         <List sx={{ pl: "3px" }}>
-          {bookmarks.map((child) => getBookmarksFolder(child))}
+          {bookmarks.map((child) => getBookmarkFolders(child))}
         </List>
       );
     }
@@ -66,13 +57,13 @@ function AddBookmark() {
               {bookmark.title}
             </ListItemButton>
           )}
-          {bookmark.children.map((child) => getBookmarksFolder(child))}
+          {bookmark.children.map((child) => getBookmarkFolders(child))}
         </>
       );
     }
     return null;
   };
-  return <>{getBookmarksFolder(bookmarks)}</>;
+  return <>{getBookmarkFolders(bookmarks)}</>;
 }
 
 export default AddBookmark;

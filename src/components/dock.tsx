@@ -56,7 +56,7 @@ export const Dock = ({ items, position = "bottom" }: dockProps) => {
             ? "flex-row mx-auto px-4 h-full max-w-full overflow-x-visible"
             : "flex-col my-auto py-4 w-full max-h-full overflow-y-visible"
         )}>
-        {currentPage !== 0 && (
+        {currentPage !== 0 && items.length !== 0 && (
           <IconButton
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
             className={h ? "rotate-0" : "rotate-90"}
@@ -72,7 +72,7 @@ export const Dock = ({ items, position = "bottom" }: dockProps) => {
             {...item}
           />
         ))}
-        {currentPage !== totalPages - 1 && (
+        {currentPage !== totalPages - 1 && items.length !== 0 && (
           <IconButton
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))

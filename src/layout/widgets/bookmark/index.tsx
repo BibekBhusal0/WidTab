@@ -1,6 +1,6 @@
 import BookmarkGrid from "@/components/bookmarks/grid";
 import { ScrollArea } from "@/components/scrollarea";
-import useBookmarks from "@/hooks/useBookmarks";
+import useBookmarksUpdate from "@/hooks/useBookmarks";
 import { currentSpaceEditWidget } from "@/redux/slice/layout";
 import { BookmarkWidgetType } from "@/types/slice/bookmark";
 import { useState } from "react";
@@ -27,7 +27,7 @@ function BookmarkWidget(props: BookmarkWidgetType) {
       .catch(() => setBookmark([]));
   };
 
-  useBookmarks(getBookmarks);
+  useBookmarksUpdate(getBookmarks);
   const dispatch = useDispatch();
   const onFolderChange = (id: string) => {
     dispatch(

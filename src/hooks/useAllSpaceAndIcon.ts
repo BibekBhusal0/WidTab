@@ -11,7 +11,7 @@ export type SpaceMapping = {
   icon: iconAsProp;
   space: CurrentSpaceType;
 };
-type which = "all" | "static" | "dynamic";
+export type which = "all" | "static" | "dynamic";
 
 export function useGetSpaceAndIcon(which: which = "all") {
   const themedIcons = useCurrentIcons();
@@ -30,9 +30,11 @@ export function useGetSpaceAndIcon(which: which = "all") {
     return { name, icon, space: { id, type: "dynamic" } };
   });
 
-  const IconList: SpaceMapping[] = [
-    ...(which === "all" || "dynamic" ? dynamicIcons : []),
-    ...(which === "all" || "static" ? staticIcons : []),
-  ];
+  const IconList: SpaceMapping[] =
+    which === "dynamic"
+      ? dynamicIcons
+      : which === "static"
+      ? staticIcons
+      : [...dynamicIcons, ...staticIcons];
   return IconList;
 }

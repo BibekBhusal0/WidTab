@@ -1,3 +1,4 @@
+import { which } from "@/hooks/useAllSpaceAndIcon";
 import { StaticPagesType, WidgetType } from "./widgets";
 import { BoxProps } from "@mui/material/Box";
 
@@ -33,11 +34,15 @@ const RTBI = ["spaces", "todo", "lock", "theme"] as const;
 
 export type RemovableToolbarIcons = (typeof RTBI)[number];
 export const allRemovableToolbarIcons: RemovableToolbarIcons[] = [...RTBI];
+export type dockContentType =
+  | { content: "spaces"; id: which }
+  | { content: "bookmark"; id: string };
 
 export type LayoutSliceType = {
   toolBarPosition: ToolBarPositions;
   toolBarIcons: RemovableToolbarIcons[];
   dock: boolean;
+  dockContent: dockContentType;
   n_rows: number;
   n_cols: number;
 

@@ -4,6 +4,7 @@ import {
   CurrentSpaceType,
   DynamicSpaceType,
   RemovableToolbarIcons,
+  dockContentType,
 } from "@/types/slice/layout";
 import {
   DeleteWidgetParameters,
@@ -16,6 +17,7 @@ import { getNextId } from "@/utils/next_id";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Layout } from "react-grid-layout";
 import { initialLayoutState } from "./initialStates";
+import { which } from "@/hooks/useAllSpaceAndIcon";
 
 const getEmptySpace = (): DynamicSpaceType => {
   return {
@@ -53,10 +55,37 @@ export const layoutSlice = createSlice({
     changeToolBarPosition: (state, action: PayloadAction<ToolBarPositions>) => {
       state.toolBarPosition = action.payload;
     },
+    changeDockContent: (state, action: PayloadAction<dockContentType>) => {
+      state.dockContent = action.payload;
+    },
+    changeDockContentType: (state, action: PayloadAction<string>) => {
+      const dockContentType = action.payload;
+      //   console.log(dockContentType);
+      if (dockContentType === "spaces") {
+        state.dockContent = { content: "spaces", id: "all" };
+      } else if (dockContentType === "bookmark") {
+        state.dockContent = { content: "bookmark", id: "1" };
+      }
+    },
+    changeDockSelected: (state, action: PayloadAction<string>) => {
+      if (state.dockContent.content === "spaces") {
+        if (["all", "dynamic", "static"].includes(action.payload)) {
+          state.dockContent = {
+            content: "spaces",
+            id: action.payload as which,
+          };
+        }
+      } else {
+        state.dockContent = { content: "bookmark", id: action.payload };
+        // state.dockContent.id = action.payload
+        console.log(state.dockContent);
+      }
+    },
 
     toggleDock: (state) => {
       state.dock = !state.dock;
     },
+
     toggleIcon: (state, action: PayloadAction<RemovableToolbarIcons>) => {
       if (state.toolBarIcons.includes(action.payload)) {
         state.toolBarIcons = state.toolBarIcons.filter(
@@ -191,6 +220,9 @@ export const {
   currentSpaceEditWidget,
   currentSpaceChangeIcon,
   toggleDock,
+  changeDockContent,
+  changeDockContentType,
+  changeDockSelected,
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

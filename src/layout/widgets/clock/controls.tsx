@@ -99,7 +99,7 @@ function ClockControls({ id }: { id: number }) {
           value={clockType}
           exclusive
           onChange={onClockTypeChange}
-          aria-label="text alignment">
+          aria-label="clock Type">
           <ToggleButton value="digital"> Digital</ToggleButton>
           <ToggleButton value="analog"> Analog</ToggleButton>
         </ToggleButtonGroup>

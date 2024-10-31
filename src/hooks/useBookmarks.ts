@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-function useBookmarks(callback: Function) {
+function useBookmarksUpdate(callback: Function) {
   useEffect(() => {
     callback();
 
@@ -18,4 +18,23 @@ function useBookmarks(callback: Function) {
   }, []);
 }
 
-export default useBookmarks;
+export function useAllBookmarks() {
+  const [bookmarks, setBookmarks] = useState<
+    chrome.bookmarks.BookmarkTreeNode[]
+  >([]);
+
+  const fetchBookmarks = () => {
+    chrome.bookmarks
+      .getTree()
+      .then((data) => {
+        if (Array.isArray(data)) setBookmarks(data);
+        else setBookmarks([]);
+      })
+      .catch(() => setBookmarks([]));
+  };
+  useBookmarksUpdate(fetchBookmarks);
+
+  return { bookmarks, setBookmarks };
+}
+
+export default useBookmarksUpdate;

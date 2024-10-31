@@ -6,19 +6,12 @@ import SettingHeader from "../settings-header";
 import ToggleIcons from "./toggle-icons";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
 import { toggleLink } from "@/redux/slice/bookmark";
+import DockSettings from "./dock";
 
 function GeneralSettings() {
-  const {
-    layout: { dock },
-    bookmarks: { linkInNewTab },
-  } = useSelector((state: StateType) => state);
+  const { dock } = useSelector((state: StateType) => state.layout);
   const dispatch = useDispatch();
   const toggle: MenuSwitchProps["items"] = [
-    {
-      onChange: () => dispatch(toggleLink()),
-      title: "Open Link in New Tab",
-      checked: linkInNewTab,
-    },
     {
       onChange: () => dispatch(toggleDock()),
       title: "Dock",
@@ -33,8 +26,10 @@ function GeneralSettings() {
         <div className="text-xl">Tool Bar Position</div>
         <SelectToolBarPosition />
       </div>
-      <SettingHeader className="pb-0 ">Toolbar Icons</SettingHeader>
+      <SettingHeader>Toolbar Icons</SettingHeader>
       <ToggleIcons />
+      <SettingHeader>Dock</SettingHeader>
+      <DockSettings />
     </div>
   );
 }
