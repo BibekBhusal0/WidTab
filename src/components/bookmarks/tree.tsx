@@ -1,7 +1,7 @@
 import Folder from "@/components/bookmarks/folder";
 import { changeCurrentFolder, toggleFavorites } from "@/redux/slice/bookmark";
 import { StateType } from "@/redux/store";
-import { Icon } from "@iconify/react/dist/iconify.js";
+import { Icon } from "@iconify/react";
 import IconButton from "@mui/material/IconButton";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";

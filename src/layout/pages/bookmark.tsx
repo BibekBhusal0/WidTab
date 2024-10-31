@@ -4,7 +4,7 @@ import BookmarkTree from "@/components/bookmarks/tree";
 import ThemeSwitch from "@/theme/switch";
 import SelectSize from "@/components/bookmarks/size";
 import Button from "@mui/material/Button";
-import { Icon } from "@iconify/react/dist/iconify.js";
+import { Icon } from "@iconify/react";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import { toggleShowFavorites } from "@/redux/slice/bookmark";
@@ -15,6 +15,10 @@ import BookmarkBreadcrumb from "@/components/bookmarks/breadcrumb";
 import { findBookmark } from "@/utils/bookmark";
 import BookmarkGrid from "@/components/bookmarks/grid";
 import { changeCurrentFolder } from "@/redux/slice/bookmark";
+import { SelectChangeEvent, SelectProps } from "@mui/material/Select";
+import { changeFolderSize } from "@/redux/slice/bookmark";
+
+import { allFolderSizes, folderSizes } from "@/types/slice/bookmark";
 
 function BookmarkManager() {
   const [bookmarks, setBookmarks] = useState<
@@ -45,7 +49,7 @@ function BookmarkManager() {
         <>
           <BookmarkSearch />
           <ThemeSwitch />
-          <SelectSize />
+          <BookmarkSizeSelect />
         </>
       }
       containerProps={{ className: "size-full h-screen" }}
@@ -53,6 +57,18 @@ function BookmarkManager() {
       children={<MainBookmarks bookmarks={bookmarks} />}
     />
   );
+}
+
+function BookmarkSizeSelect() {
+  const { folderSize } = useSelector(
+    (state: StateType) => state.bookmarkReducer
+  );
+  const dispatch = useDispatch();
+
+  const handleChange = (event: SelectChangeEvent<unknown>) => {
+    dispatch(changeFolderSize(event.target.value as folderSizes));
+  };
+  return <SelectSize value={folderSize} onChange={handleChange} />;
 }
 
 function FavButton() {

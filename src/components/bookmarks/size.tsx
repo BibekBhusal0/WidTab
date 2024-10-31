@@ -1,34 +1,22 @@
-import Box from "@mui/material/Box";
+import Box, { BoxProps } from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { useDispatch, useSelector } from "react-redux";
-import { StateType } from "@/redux/store";
-import { changeFolderSize } from "@/redux/slice/bookmark";
+import Select, { SelectProps } from "@mui/material/Select";
 import { useId } from "react";
-import { allFolderSizes, folderSizes } from "@/types/slice/bookmark";
+import { allFolderSizes } from "@/types/slice/bookmark";
 
-export default function SelectSize() {
-  const dispatch = useDispatch();
+export default function SelectSize({
+  boxProps,
+  ...props
+}: { boxProps?: BoxProps } & SelectProps) {
   const id = useId();
-  const { folderSize } = useSelector(
-    (state: StateType) => state.bookmarkReducer
-  );
-
-  const handleChange = (event: SelectChangeEvent) => {
-    dispatch(changeFolderSize(event.target.value as folderSizes));
-  };
 
   return (
-    <Box sx={{ minWidth: 120 }}>
+    <Box {...boxProps} sx={{ minWidth: 120, ...boxProps?.sx }}>
       <FormControl fullWidth>
         <InputLabel id={id}>Size</InputLabel>
-        <Select
-          labelId={id}
-          value={folderSize}
-          label="Size"
-          onChange={handleChange}>
+        <Select labelId={id} label="Size" {...props}>
           {allFolderSizes.map((s) => (
             <MenuItem className="capitalize" key={s} value={s}>
               {s}

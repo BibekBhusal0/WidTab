@@ -2,7 +2,7 @@ import useAvailablePosition from "@/hooks/useAvailablePosition";
 import { currentSpaceAddWidget } from "@/redux/slice/layout";
 import { WidgetMappingAll } from "@/types/slice/widgets";
 import { widgetDimensions } from "@/utils/getWidget";
-import { Icon } from "@iconify/react/dist/iconify.js";
+import { Icon } from "@iconify/react";
 import Button, { ButtonProps } from "@mui/material/Button";
 import { useDispatch } from "react-redux";
 

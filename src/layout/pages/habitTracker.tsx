@@ -8,7 +8,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Button from "@mui/material/Button";
 import HabitTrackerEdit from "../widgets/habit-tracker/edit";
-import { Icon } from "@iconify/react/dist/iconify.js";
+import { Icon } from "@iconify/react";
 import { addItem } from "@/redux/slice/habit-tracker";
 import { cn } from "@/utils/cn";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
