@@ -27,7 +27,7 @@ function BookmarkWidget(props: BookmarkWidgetType) {
       .catch(() => setBookmark([]));
   };
 
-  useBookmarksUpdate(getBookmarks);
+  useBookmarksUpdate(getBookmarks, [folderId]);
   const dispatch = useDispatch();
   const onFolderChange = (id: string) => {
     dispatch(

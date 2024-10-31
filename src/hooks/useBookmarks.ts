@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function useBookmarksUpdate(callback: Function) {
+function useBookmarksUpdate(callback: Function, dependencies: any[] = []) {
   useEffect(() => {
     callback();
 
@@ -15,10 +15,10 @@ function useBookmarksUpdate(callback: Function) {
     return () => {
       listeners.map((event) => event.removeListener(() => callback()));
     };
-  }, []);
+  }, dependencies);
 }
 
-export function useAllBookmarks() {
+export function useAllBookmarks(dependencies: any[] = []) {
   const [bookmarks, setBookmarks] = useState<
     chrome.bookmarks.BookmarkTreeNode[]
   >([]);
@@ -32,7 +32,7 @@ export function useAllBookmarks() {
       })
       .catch(() => setBookmarks([]));
   };
-  useBookmarksUpdate(fetchBookmarks);
+  useBookmarksUpdate(fetchBookmarks, dependencies);
 
   return { bookmarks, setBookmarks };
 }

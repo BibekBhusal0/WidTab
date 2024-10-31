@@ -18,7 +18,7 @@ function DockSettings() {
   const { dock, dockContent } = useSelector((state: StateType) => state.layout);
   console.log(dockContent);
   const dispatch = useDispatch();
-  const { bookmarks } = useAllBookmarks();
+
   const toggle: MenuSwitchProps["items"] = [
     {
       onChange: () => dispatch(toggleDock()),
@@ -34,40 +34,6 @@ function DockSettings() {
     if (typeof dockContentType === "string")
       dispatch(changeDockContentType(dockContentType));
   };
-
-  const handleSelectionChange = (event: SelectChangeEvent<unknown>) => {
-    const val = event.target.value;
-    if (val && typeof val === "string") {
-      console.log(val);
-      dispatch(changeDockSelected(val));
-    }
-  };
-
-  const getBookmarkFolders = (
-    bookmark:
-      | chrome.bookmarks.BookmarkTreeNode[]
-      | chrome.bookmarks.BookmarkTreeNode
-  ): ReactNode => {
-    if (Array.isArray(bookmark)) {
-      return bookmark.map((child) => getBookmarkFolders(child));
-    }
-    if (bookmark.children) {
-      //   console.log(bookmark.id, bookmark.title);
-      return (
-        <>
-          {bookmark.title && bookmark.title.trim() !== "" && (
-            <MenuItem className="text-xl capitalize" value={bookmark.id}>
-              {bookmark.title}
-            </MenuItem>
-          )}
-          {bookmark.children.map((child) => getBookmarkFolders(child))}
-        </>
-      );
-    }
-    return null;
-  };
-
-  const spaceSelection: which[] = ["all", "dynamic", "static"];
 
   return (
     <div className="w-full flex flex-col gap-4">
@@ -88,25 +54,97 @@ function DockSettings() {
 
           <div className="full-between">
             <div className="text-xl capitalize">{dockContent.content}</div>
-            <Select
-              // MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
-              MenuProps={{ sx: { maxHeight: 300 } }}
-              fullWidth
-              value={dockContent.id}
-              className="capitalize"
-              onChange={handleSelectionChange}>
-              {dockContent.content === "spaces"
-                ? spaceSelection.map((id) => (
-                    <MenuItem className="capitalize" key={id} value={id}>
-                      {id}
-                    </MenuItem>
-                  ))
-                : getBookmarkFolders(bookmarks)}
-            </Select>
+            {dockContent.content === "spaces" ? (
+              <DockSpaceSelect />
+            ) : (
+              <DockBookmarkSelect />
+            )}
           </div>
         </>
       )}
     </div>
+  );
+}
+
+function DockBookmarkSelect() {
+  const { dockContent } = useSelector((state: StateType) => state.layout);
+  const dispatch = useDispatch();
+  const { bookmarks } = useAllBookmarks();
+
+  const handleSelectionChange = (event: SelectChangeEvent<unknown>) => {
+    const val = event.target.value;
+    if (val && typeof val === "string") {
+      console.log(val);
+      dispatch(changeDockSelected(val));
+    }
+  };
+  const getBookmarkFolders = (
+    bookmark:
+      | chrome.bookmarks.BookmarkTreeNode[]
+      | chrome.bookmarks.BookmarkTreeNode
+  ): ReactNode[] => {
+    if (Array.isArray(bookmark)) {
+      return bookmark.flatMap((child) => getBookmarkFolders(child));
+    }
+    if (bookmark.children) {
+      const items = [];
+      if (bookmark.title && bookmark.title.trim() !== "") {
+        items.push(
+          <MenuItem
+            key={bookmark.id}
+            className="text-xl capitalize"
+            value={bookmark.id}>
+            {bookmark.title}
+          </MenuItem>
+        );
+      }
+      items.push(
+        ...bookmark.children.flatMap((child) => getBookmarkFolders(child))
+      );
+      return items;
+    }
+    return [];
+  };
+
+  return (
+    <Select
+      MenuProps={{ sx: { maxHeight: 300 } }}
+      fullWidth
+      value={dockContent.id}
+      className="capitalize"
+      onChange={handleSelectionChange}>
+      {getBookmarkFolders(bookmarks)}
+    </Select>
+  );
+}
+
+function DockSpaceSelect() {
+  const { dockContent } = useSelector((state: StateType) => state.layout);
+  const dispatch = useDispatch();
+
+  const handleSelectionChange = (event: SelectChangeEvent<unknown>) => {
+    const val = event.target.value;
+    if (val && typeof val === "string") {
+      console.log(val);
+      dispatch(changeDockSelected(val));
+    }
+  };
+
+  const spaceSelection: which[] = ["all", "dynamic", "static"];
+
+  return (
+    <Select
+      MenuProps={{ sx: { maxHeight: 300 } }}
+      fullWidth
+      value={dockContent.id}
+      className="capitalize"
+      onChange={handleSelectionChange}>
+      {spaceSelection.map((id) => (
+        <MenuItem className="capitalize" key={id} value={id}>
+          {id}
+        </MenuItem>
+      ))}
+    </Select>
   );
 }
 
