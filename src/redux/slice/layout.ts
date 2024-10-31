@@ -53,9 +53,7 @@ export const layoutSlice = createSlice({
     changeToolBarPosition: (state, action: PayloadAction<ToolBarPositions>) => {
       state.toolBarPosition = action.payload;
     },
-    toggleLink: (state) => {
-      state.linkInNewTab = !state.linkInNewTab;
-    },
+
     toggleDock: (state) => {
       state.dock = !state.dock;
     },
@@ -180,7 +178,6 @@ export const {
   changeCurrentSpace,
   changeToolBarPosition,
   addSpace,
-  toggleLink,
   toggleIcon,
   currentSpaceAddWidget,
   currentSpaceDeleteWidget,

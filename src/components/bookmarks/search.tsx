@@ -14,6 +14,7 @@ import { changeCurrentFolder } from "@/redux/slice/bookmark";
 
 function BookmarkSearch() {
   const dispatch = useDispatch();
+  const { linkInNewTab } = useSelector((state: StateType) => state.bookmarks);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchedBookmarks, SetSearchedBookmarks] = useState<
     chrome.bookmarks.BookmarkTreeNode[]
@@ -32,7 +33,7 @@ function BookmarkSearch() {
   ) => {
     if (!bookmark) return;
     if (bookmark.url) {
-      window.open(bookmark.url, "_blank");
+      window.open(bookmark.url, linkInNewTab ? "_blank" : "_self");
     } else {
       dispatch(changeCurrentFolder(bookmark.id));
     }
@@ -67,9 +68,7 @@ interface LinkProps {
 }
 
 const Link: FunctionComponent<LinkProps> = ({ link }) => {
-  const { favorites } = useSelector(
-    (state: StateType) => state.bookmarkReducer
-  );
+  const { favorites } = useSelector((state: StateType) => state.bookmarks);
 
   const { title, url, id } = link;
   const cls = "w-10 aspect-square";

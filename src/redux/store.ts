@@ -11,7 +11,7 @@ const localStorageConfig = { key: "storage", storage: localStorage };
 
 export const store = configureStore({
   reducer: {
-    bookmarkReducer: persistReducer(localStorageConfig, bookmarkReducer),
+    bookmarks: persistReducer(localStorageConfig, bookmarkReducer),
     todo: persistReducer(localStorageConfig, todoReducer),
     layout: persistReducer(localStorageConfig, layoutReducer),
     theme: persistReducer(localStorageConfig, themeReducer),

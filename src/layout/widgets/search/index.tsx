@@ -12,7 +12,7 @@ import useCurrentIcons from "@/hooks/useCurrentIcons";
 
 function SearchWidget({ id, engine }: SearchWidgetType) {
   const [text, setText] = useState("");
-  const { linkInNewTab } = useSelector((state: StateType) => state.layout);
+  const { linkInNewTab } = useSelector((state: StateType) => state.bookmarks);
 
   const { search } = useCurrentIcons();
   const dispatch = useDispatch();

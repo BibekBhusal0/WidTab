@@ -8,9 +8,7 @@ import useCurrentIcons from "@/hooks/useCurrentIcons";
 type AddFavProps = { id: string } & contextMenuProps;
 
 export function LinkContextMenu({ id, ...props }: AddFavProps) {
-  const { favorites } = useSelector(
-    (state: StateType) => state.bookmarkReducer
-  );
+  const { favorites } = useSelector((state: StateType) => state.bookmarks);
   const { delete_ } = useCurrentIcons();
   const dispatch = useDispatch();
   const fav = favorites.includes(id);

@@ -37,7 +37,6 @@ export const allRemovableToolbarIcons: RemovableToolbarIcons[] = [...RTBI];
 export type LayoutSliceType = {
   toolBarPosition: ToolBarPositions;
   toolBarIcons: RemovableToolbarIcons[];
-  linkInNewTab: boolean;
   dock: boolean;
   n_rows: number;
   n_cols: number;

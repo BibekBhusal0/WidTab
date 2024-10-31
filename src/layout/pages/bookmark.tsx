@@ -60,9 +60,7 @@ function BookmarkManager() {
 }
 
 function BookmarkSizeSelect() {
-  const { folderSize } = useSelector(
-    (state: StateType) => state.bookmarkReducer
-  );
+  const { folderSize } = useSelector((state: StateType) => state.bookmarks);
   const dispatch = useDispatch();
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
@@ -73,9 +71,7 @@ function BookmarkSizeSelect() {
 
 function FavButton() {
   const dispatch = useDispatch();
-  const { showFavorites } = useSelector(
-    (state: StateType) => state.bookmarkReducer
-  );
+  const { showFavorites } = useSelector((state: StateType) => state.bookmarks);
   return (
     <div className="flex-center w-full">
       <Button
@@ -94,7 +90,7 @@ function FavButton() {
 
 function MainBookmarks({ bookmarks }: BookmarkTree) {
   const { currentFolderID, folderSize, showFavorites, favorites } = useSelector(
-    (state: StateType) => state.bookmarkReducer
+    (state: StateType) => state.bookmarks
   );
   const dispatch = useDispatch();
   const onBookmarkChange = (id: string) => dispatch(changeCurrentFolder(id));

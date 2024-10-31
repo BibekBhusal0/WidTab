@@ -48,8 +48,8 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps) {
     folderSize = "small",
     onBookmarkChange = () => {},
   } = props;
-  const { favorites } = useSelector(
-    (state: StateType) => state.bookmarkReducer
+  const { favorites, linkInNewTab } = useSelector(
+    (state: StateType) => state.bookmarks
   );
 
   if (Array.isArray(bookmarks)) {
@@ -71,7 +71,10 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps) {
     </div>
   ) : (
     <LinkContextMenu id={bookmarks.id}>
-      <a className={cn(cls)} href={bookmarks.url} target="_blank">
+      <a
+        className={cn(cls)}
+        href={bookmarks.url}
+        target={linkInNewTab ? "_blank" : "_self"}>
         <img
           className="size-1/2 aspect-square"
           src={faviconURL(bookmarks.url || "", size)}

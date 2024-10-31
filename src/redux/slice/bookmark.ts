@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const initialState: bookmarkSliceType = {
   favorites: [],
   showFavorites: false,
-  pinned: "1",
+  linkInNewTab: true,
   currentFolderID: "1",
   folderSize: "medium",
 };
@@ -32,6 +32,9 @@ export const bookmarkSlice = createSlice({
     toggleShowFavorites: (state) => {
       state.showFavorites = !state.showFavorites;
     },
+    toggleLink: (state) => {
+      state.linkInNewTab = !state.linkInNewTab;
+    },
   },
 });
 
@@ -41,6 +44,7 @@ export const {
   changeFolderSize,
   toggleShowFavorites,
   removeFavorite,
+  toggleLink,
 } = bookmarkSlice.actions;
 
 export default bookmarkSlice.reducer;

@@ -30,9 +30,7 @@ function BookmarkTreeLink({
 }: {
   bookmarks: chrome.bookmarks.BookmarkTreeNode;
 }) {
-  const { favorites } = useSelector(
-    (state: StateType) => state.bookmarkReducer
-  );
+  const { favorites } = useSelector((state: StateType) => state.bookmarks);
   const dispatch = useDispatch();
   const fav = favorites.includes(bookmarks.id);
   const toggleItem = () => dispatch(toggleFavorites(bookmarks.id));

@@ -4,8 +4,10 @@ export const allFolderSizes: folderSizes[] = [...s];
 
 export type bookmarkSliceType = {
   favorites: string[];
-  pinned: string;
+
   currentFolderID: string;
+  linkInNewTab: boolean;
+
   showFavorites: boolean;
   folderSize: folderSizes;
 };

@@ -131,7 +131,6 @@ export const initialTodoState: todoStateType = {
 };
 
 export const initialLayoutState: LayoutSliceType = {
-  linkInNewTab: true,
   toolBarPosition: "bottom",
   dock: true,
   toolBarIcons: ["lock", "theme"],
