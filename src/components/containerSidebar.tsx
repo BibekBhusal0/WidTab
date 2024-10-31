@@ -15,10 +15,10 @@ export type SidebarComponent = {
 };
 export type ContainerSidebarProps = {
   items: SidebarComponent[];
-  mainProps?: BoxProps;
-  tabsProps?: TabsProps;
-  panelProps?: ScrollAreaProps;
-  tabProps?: TabProps;
+  mainProps?: Partial<BoxProps>;
+  tabsProps?: Partial<TabsProps>;
+  panelProps?: Partial<ScrollAreaProps>;
+  tabProps?: Partial<TabProps>;
 };
 
 function a11yProps(index: number) {
@@ -70,6 +70,7 @@ function ContainerSidebar({
     <Box {...mainProps} className={cn("flex h-full", mainProps?.className)}>
       <CustomTabs
         orientation="vertical"
+        scrollButtons="auto"
         value={value}
         onChange={handleChange}
         {...tabsProps}

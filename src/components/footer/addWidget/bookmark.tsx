@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import useBookmarks from "@/hooks/useBookmarks";
 import { ReactNode, useState } from "react";
 import useCurrentLayout from "@/hooks/useCurrentLayout";
@@ -26,15 +26,15 @@ function AddBookmark() {
   useBookmarks(fetchBookmarks);
   const dispatch = useDispatch();
   const addItem = (id: string) => {
-    const i = parseInt(id);
-    if (typeof i === "number" && availablePosition)
+    if (availablePosition) {
       dispatch(
         currentSpaceAddWidget({
           type: "bookmark",
-          values: { id: i, iconSize: "small" },
+          values: { id: 0, iconSize: "small", folderId: id },
           gridProps: { ...dimensions, ...availablePosition },
         })
       );
+    }
   };
   if (!layout) return null;
   const { widgets } = layout;
@@ -50,21 +50,24 @@ function AddBookmark() {
   ): ReactNode => {
     if (Array.isArray(bookmark)) {
       return (
-        <List className="pl-2">
+        <List sx={{ pl: "3px" }}>
           {bookmarks.map((child) => getBookmarksFolder(child))}
         </List>
       );
     }
     if (bookmark.children) {
       return (
-        <ListItemButton
-          className="text-xl"
-          disabled={presentBookmarkId.includes(bookmark.id)}
-          onClick={() => {
-            addItem(bookmark.id);
-          }}>
-          {bookmark.title}
-        </ListItemButton>
+        <>
+          {bookmark.title && bookmark.title.trim() !== "" && (
+            <ListItemButton
+              className="text-xl"
+              disabled={presentBookmarkId.includes(bookmark.id)}
+              onClick={() => addItem(bookmark.id)}>
+              {bookmark.title}
+            </ListItemButton>
+          )}
+          {bookmark.children.map((child) => getBookmarksFolder(child))}
+        </>
       );
     }
     return null;

@@ -14,6 +14,7 @@ export type bookmarkSliceType = {
 
 export type BookmarkWidgetType = {
   id: number;
+  folderId: string;
   iconSize: folderSizes;
   showTabs?: boolean;
   showFolders?: boolean;

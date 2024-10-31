@@ -50,7 +50,7 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps) {
 
   if (Array.isArray(bookmarks)) {
     return bookmarks.map((child) => (
-      <Bookmarks key={child.id} bookmarks={child} folderSize={folderSize} />
+      <Bookmarks key={child.id} {...props} bookmarks={child} />
     ));
   }
   const size = folderSizeMapping[folderSize];
@@ -60,7 +60,16 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps) {
 
   const content = bookmarks.children ? (
     <div
-      onClick={() => onFolderChange(bookmarks.id)}
+      onClick={() => {
+        console.log(
+          "changing to folder",
+          bookmarks.id,
+          "folder Id is",
+          bookmarks.id
+        );
+        console.log(onFolderChange);
+        onFolderChange(bookmarks.id);
+      }}
       className={cn(cls, "gap-2")}>
       <Icon width={size * 0.7} icon="ic:round-folder" />
       <div className={cn(textCls)}>{bookmarks.title}</div>

@@ -95,6 +95,7 @@ export const layoutSlice = createSlice({
           (p) => p.values.id === action.payload.values.id
         );
         if (widget) {
+          console.log(action.payload.values);
           widget.values = action.payload.values;
         }
       }

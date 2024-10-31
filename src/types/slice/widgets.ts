@@ -5,8 +5,7 @@ import { BookmarkWidgetType } from "./bookmark";
 
 const SP = ["todo", "bookmark", "habit-tracker"] as const;
 const CW = [
-  "todo",
-  "habit-tracker",
+  ...SP,
   "habit-tracker-stats-single",
   "habit-tracker-stats-all",
 ] as const;

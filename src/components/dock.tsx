@@ -65,7 +65,12 @@ export const Dock = ({ items, position = "bottom" }: dockProps) => {
           </IconButton>
         )}
         {currentItems.map((item, index) => (
-          <DockIcon mouse={mousePosition} key={index} {...item} />
+          <DockIcon
+            mouse={mousePosition}
+            position={position}
+            key={index}
+            {...item}
+          />
         ))}
         {currentPage !== totalPages - 1 && (
           <IconButton
