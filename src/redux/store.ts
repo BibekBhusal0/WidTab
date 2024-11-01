@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, Reducer } from "@reduxjs/toolkit";
 import themeReducer from "./slice/theme";
 import todoReducer from "./slice/todo";
 import layoutReducer from "./slice/layout";
@@ -7,15 +7,18 @@ import bookmarkReducer from "./slice/bookmark";
 import { persistStore, persistReducer } from "redux-persist";
 import { localStorage } from "redux-persist-webextension-storage";
 
-const localStorageConfig = { key: "storage", storage: localStorage };
+const getPersist = <T>(key: string, reducer: Reducer<T>) => {
+  const storageConfig = { key, storage: localStorage };
+  return persistReducer(storageConfig, reducer);
+};
 
 export const store = configureStore({
   reducer: {
-    bookmarks: persistReducer(localStorageConfig, bookmarkReducer),
-    todo: persistReducer(localStorageConfig, todoReducer),
-    layout: persistReducer(localStorageConfig, layoutReducer),
-    theme: persistReducer(localStorageConfig, themeReducer),
-    habitTracker: persistReducer(localStorageConfig, habitTrackerReducer),
+    bookmarks: getPersist("bookmarks", bookmarkReducer),
+    todo: getPersist("todo", todoReducer),
+    layout: getPersist("layout", layoutReducer),
+    theme: getPersist("theme", themeReducer),
+    habitTracker: getPersist("habitTracker", habitTrackerReducer),
   },
 });
 

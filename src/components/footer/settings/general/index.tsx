@@ -1,4 +1,3 @@
-import { toggleDock } from "@/redux/slice/layout";
 import { StateType } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import SelectToolBarPosition from "./toolBarPosition";
@@ -9,13 +8,13 @@ import { toggleLink } from "@/redux/slice/bookmark";
 import DockSettings from "./dock";
 
 function GeneralSettings() {
-  const { dock } = useSelector((state: StateType) => state.layout);
+  const { linkInNewTab } = useSelector((state: StateType) => state.bookmarks);
   const dispatch = useDispatch();
   const toggle: MenuSwitchProps["items"] = [
     {
-      onChange: () => dispatch(toggleDock()),
-      title: "Dock",
-      checked: dock,
+      onChange: () => dispatch(toggleLink()),
+      title: "Open Link in New Tab",
+      checked: linkInNewTab,
     },
   ];
 

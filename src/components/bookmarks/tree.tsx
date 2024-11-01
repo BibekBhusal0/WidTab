@@ -13,7 +13,11 @@ import { BookmarkTree, TakeBookmarksProps } from "@/types/slice/bookmark";
 import { LinkContextMenu } from "./contextMenu";
 
 function BookmarkTree({ bookmarks }: BookmarkTree) {
-  return <BookmarkItem bookmarks={bookmarks} />;
+  return (
+    <div className="px-3">
+      <BookmarkItem bookmarks={bookmarks} />
+    </div>
+  );
 }
 
 function BookmarkItem({ bookmarks }: TakeBookmarksProps) {

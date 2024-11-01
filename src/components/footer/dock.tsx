@@ -13,7 +13,7 @@ export const ToolbarDock = () => {
     (state: StateType) => state.layout.dockContent
   );
 
-  if (content === "spaces") <DockSpace />;
+  if (content === "spaces") return <DockSpace />;
 
   return <DockBookmark />;
 };
@@ -27,11 +27,12 @@ const DockSpace = () => {
   if (dockContent.content !== "spaces") return null;
 
   const items = useGetSpaceAndIcon(dockContent.id);
+
   const dockItems = items.map(({ icon, name, space }) => ({
     icon: (
       <Icon2RN
         icon={icon}
-        className={currentSpace === space ? "text-primary-main" : ""}
+        className={currentSpace.id === space.id ? "text-primary-main" : ""}
       />
     ),
     name,
@@ -42,6 +43,7 @@ const DockSpace = () => {
 };
 
 const DockBookmark = () => {
+  const { linkInNewTab } = useSelector((state: StateType) => state.bookmarks);
   const { toolBarPosition, dockContent } = useSelector(
     (state: StateType) => state.layout
   );
@@ -81,6 +83,9 @@ const DockBookmark = () => {
                 />
               ),
               name: item.title,
+              onClick: () => {
+                window.open(item.url), linkInNewTab ? "_blank" : "_self";
+              },
             };
           })
           .filter((i) => !!i);

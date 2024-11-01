@@ -37,7 +37,7 @@ function BookmarkManager() {
       showButton
       resizableBoxProps={{
         children: (
-          <ScrollArea className="overflow-x-hidden h-screen px-4 bg-primary-1">
+          <ScrollArea className="h-full bg-primary-1">
             <FavButton />
             <BookmarkTree bookmarks={bookmarks} />
           </ScrollArea>
@@ -51,8 +51,8 @@ function BookmarkManager() {
           <BookmarkSizeSelect />
         </>
       }
-      containerProps={{ className: "size-full h-screen" }}
-      contentContainerProps={{ className: "h-screen gap-0 pl-4" }}
+      containerProps={{ className: "size-full h-full" }}
+      contentContainerProps={{ className: "h-full gap-0 pl-4" }}
       children={<MainBookmarks bookmarks={bookmarks} />}
     />
   );
@@ -105,12 +105,15 @@ function MainBookmarks({ bookmarks }: BookmarkTree) {
   const props = { currentFolderID, folderSize, bookmarks, onFolderChange };
 
   return (
-    <ScrollArea className="size-full pb-8">
+    <>
       <div className="p-4">
         {showFavorites ? "Favorites" : <BookmarkBreadcrumb {...props} />}
       </div>
-      <BookmarkGrid {...props} bookmarks={currentBookmarks || []} />
-    </ScrollArea>
+      <ScrollArea>
+        <BookmarkGrid {...props} bookmarks={currentBookmarks || []} />
+        <div className="py-2"></div>
+      </ScrollArea>
+    </>
   );
 }
 

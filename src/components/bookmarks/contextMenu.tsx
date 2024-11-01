@@ -21,8 +21,8 @@ export function LinkContextMenu({ id, ...props }: AddFavProps) {
       onClick: toggleFav,
     },
     {
-      name: delete_,
-      icon: "material-symbols:delete",
+      name: "Delete",
+      icon: delete_,
       onClick: () => chrome.bookmarks.remove(id),
       color: "error.main",
     },

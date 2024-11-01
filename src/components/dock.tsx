@@ -34,8 +34,10 @@ export const Dock = ({ items, position = "bottom" }: dockProps) => {
   const mousePosition = useMotionValue(Infinity);
   const h = isToolbarHorizontal(position);
   const { ref, size } = useFullSize();
-  const width = useDeferredValue(size[h ? "width" : "height"]);
-  const numItemsToShow = Math.floor((width - 150) / 50);
+  const width = useDeferredValue(
+    size[h ? "width" : "height"] - (h ? 200 : 100)
+  );
+  const numItemsToShow = Math.floor(width / 60);
 
   const [currentPage, setCurrentPage] = useState(0);
   const totalPages = Math.ceil(items.length / numItemsToShow);
@@ -46,7 +48,7 @@ export const Dock = ({ items, position = "bottom" }: dockProps) => {
   );
 
   return (
-    <div className="size-full flex-center " ref={ref}>
+    <div className="size-full flex-center" ref={ref}>
       <motion.div
         onMouseMove={(e) => mousePosition.set(e[h ? "pageX" : "pageY"])}
         onMouseLeave={() => mousePosition.set(Infinity)}
@@ -111,7 +113,7 @@ function DockIcon({
   const maxDistance = 150;
   const minScale = 1;
   const maxScale = 1.75;
-  const minMargin = 7;
+  const minMargin = 4;
   const maxMargin = 14;
   const springConfig = { mass: 0.1, stiffness: 150, damping: 12 };
 
