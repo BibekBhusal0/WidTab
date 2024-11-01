@@ -78,7 +78,7 @@ const DockBookmark = () => {
               icon: (
                 <img
                   className="iconify"
-                  src={faviconURL(item.url)}
+                  src={faviconURL(item.url, 64)}
                   alt={item.title}
                 />
               ),

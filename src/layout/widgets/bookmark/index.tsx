@@ -39,7 +39,7 @@ function BookmarkWidget(props: BookmarkWidgetType) {
   };
 
   return (
-    <ScrollArea key={folderId} className="p-2">
+    <ScrollArea key={folderId} className="p-2 size-full">
       <BookmarkGrid
         bookmarks={bookmark}
         folderSize={iconSize}

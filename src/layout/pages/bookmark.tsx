@@ -17,7 +17,7 @@ import BookmarkGrid from "@/components/bookmarks/grid";
 import { changeCurrentFolder } from "@/redux/slice/bookmark";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { changeFolderSize } from "@/redux/slice/bookmark";
-import { folderSizes } from "@/types/slice/bookmark";
+import { allFolderSizes, folderSizes } from "@/types/slice/bookmark";
 
 function BookmarkManager() {
   const [bookmarks, setBookmarks] = useState<
@@ -63,7 +63,10 @@ function BookmarkSizeSelect() {
   const dispatch = useDispatch();
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
-    dispatch(changeFolderSize(event.target.value as folderSizes));
+    const val = event.target.value as folderSizes;
+    if (allFolderSizes.includes(val)) {
+      dispatch(changeFolderSize(val));
+    }
   };
   return <SelectSize value={folderSize} onChange={handleChange} />;
 }

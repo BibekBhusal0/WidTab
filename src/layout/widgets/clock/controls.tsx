@@ -27,8 +27,13 @@ function ClockControls({ id }: { id: number }) {
   const widget = widgets.find((w) => w.type === "clock" && w.values.id === id);
   if (!widget || widget.type !== "clock") return null;
   const props = widget.values;
-  const { TwentyFourHour, clockType, showSeconds, timeZone, showTimeZone } =
-    props;
+  const {
+    TwentyFourHour,
+    clockType = "digital",
+    showSeconds,
+    timeZone,
+    showTimeZone,
+  } = props;
 
   const toggleValue = (
     type: "TwentyFourHour" | "showSeconds" | "showTimeZone"

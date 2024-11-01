@@ -150,14 +150,10 @@ function DockIcon({
         placement={oppositePosition[position]}>
         <motion.div
           ref={ref}
-          style={{
-            scale,
-            transformOrigin: position,
-            width: "40px",
-          }}
+          style={{ scale, transformOrigin: position, width: "40px" }}
           className={cn(
-            "relative flex-center aspect-square rounded-full",
-            "bg-white/20 shadow-lg backdrop-blur-md dark:bg-black/20 icon-full p-[20%]"
+            "relative flex-center aspect-square rounded-full icon-full p-[20%]",
+            "shadow-lg backdrop-blur-md bg-primary-2 shadow-[#00000022] dark:shadow-[#ffffff22]"
           )}>
           <Icon2RN icon={icon} />
         </motion.div>

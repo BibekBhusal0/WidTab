@@ -16,8 +16,8 @@ export type BookmarkWidgetType = {
   id: number;
   folderId: string;
   iconSize: folderSizes;
-  showTabs?: boolean;
-  showFolders?: boolean;
+  tabs?: boolean;
+  breadcrumb?: boolean;
 };
 
 export interface TakeBookmarksProps {
@@ -38,5 +38,5 @@ export type ExtraBookmarkProps = {
 export const folderSizeMapping: Record<folderSizes, number> = {
   small: 80,
   medium: 120,
-  large: 180,
+  large: 150,
 };
