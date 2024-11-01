@@ -15,29 +15,26 @@ export function findBookmark(
   }
 }
 
-const getPathRoot = (
-  bookmarks: chrome.bookmarks.BookmarkTreeNode[],
-  id: string
-) => {
-  const path: chrome.bookmarks.BookmarkTreeNode[] = [];
-  const currentFolder = findBookmark(bookmarks, id);
-  if (!currentFolder) return path;
-  path.push(currentFolder);
-  const parentID = currentFolder.parentId;
-  if (!parentID) return path;
-  const parent = findBookmark(bookmarks, parentID);
-  if (parent) {
-    const parentPath = getPathRoot(bookmarks, parentID);
-    path.push(...parentPath);
-  }
-  return path;
-};
+export const findPath = (id: string) => {
+  return new Promise<chrome.bookmarks.BookmarkTreeNode[]>((resolve) => {
+    const path: chrome.bookmarks.BookmarkTreeNode[] = [];
 
-export const findPath = (
-  bookmarks: chrome.bookmarks.BookmarkTreeNode[],
-  id: string
-) => {
-  const path = getPathRoot(bookmarks, id).reverse();
-  path.shift();
-  return path || [];
+    const getPathRecursive = (nodeId: string) => {
+      chrome.bookmarks.get(nodeId, (nodes) => {
+        if (nodes.length > 0) {
+          const node = nodes[0];
+          path.unshift(node);
+          if (node.parentId) {
+            getPathRecursive(node.parentId);
+          } else {
+            resolve(path);
+          }
+        } else {
+          resolve(path);
+        }
+      });
+    };
+
+    getPathRecursive(id);
+  });
 };

@@ -64,7 +64,7 @@ export const getWidgetControlsProps = (
     },
     bookmark: {
       deleteButton: false,
-      showOn: "hover",
+      showOn: "not_lock",
       controls: <BookmarkControls id={id} />,
       widgetInfo,
     },

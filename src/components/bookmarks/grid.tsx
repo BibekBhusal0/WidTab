@@ -58,18 +58,9 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps) {
   const textCls = "px-2 truncate w-full text-center";
   const fav = favorites.includes(bookmarks.id);
 
-  const content = bookmarks.children ? (
+  const content = !bookmarks.url ? (
     <div
-      onClick={() => {
-        console.log(
-          "changing to folder",
-          bookmarks.id,
-          "folder Id is",
-          bookmarks.id
-        );
-        console.log(onFolderChange);
-        onFolderChange(bookmarks.id);
-      }}
+      onClick={() => onFolderChange(bookmarks.id)}
       className={cn(cls, "gap-2")}>
       <Icon width={size * 0.7} icon="ic:round-folder" />
       <div className={cn(textCls)}>{bookmarks.title}</div>

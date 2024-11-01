@@ -60,7 +60,6 @@ export const layoutSlice = createSlice({
     },
     changeDockContentType: (state, action: PayloadAction<string>) => {
       const dockContentType = action.payload;
-      //   console.log(dockContentType);
       if (dockContentType === "spaces") {
         state.dockContent = { content: "spaces", id: "all" };
       } else if (dockContentType === "bookmark") {
@@ -77,8 +76,6 @@ export const layoutSlice = createSlice({
         }
       } else {
         state.dockContent = { content: "bookmark", id: action.payload };
-        // state.dockContent.id = action.payload
-        console.log(state.dockContent);
       }
     },
 
@@ -124,7 +121,6 @@ export const layoutSlice = createSlice({
           (p) => p.values.id === action.payload.values.id
         );
         if (widget) {
-          console.log(action.payload.values);
           widget.values = action.payload.values;
         }
       }

@@ -43,7 +43,9 @@ const DockSpace = () => {
 };
 
 const DockBookmark = () => {
-  const { linkInNewTab } = useSelector((state: StateType) => state.bookmarks);
+  const { linkInNewTab, favorites } = useSelector(
+    (state: StateType) => state.bookmarks
+  );
   const { toolBarPosition, dockContent } = useSelector(
     (state: StateType) => state.layout
   );
@@ -51,14 +53,29 @@ const DockBookmark = () => {
     []
   );
   const getBookmarks = () => {
+    if (dockContent.id === "favorites") {
+      const bookmarkPromises = favorites.map((id) => chrome.bookmarks.get(id));
+
+      Promise.all(bookmarkPromises).then((results) => {
+        const bookmarks = results
+          .flat()
+          .filter(
+            (bookmark): bookmark is chrome.bookmarks.BookmarkTreeNode =>
+              !!bookmark
+          );
+
+        setBookmark(bookmarks);
+      });
+
+      return;
+    }
+
     chrome.bookmarks
-      .getSubTree(dockContent.id)
+      .getChildren(dockContent.id)
       .then((data) => {
         if (Array.isArray(data)) {
-          if (data[0].children) {
-            setBookmark(data[0].children);
-            return;
-          }
+          setBookmark(data);
+          return;
         }
         setBookmark([]);
       })
@@ -73,7 +90,7 @@ const DockBookmark = () => {
       ? []
       : bookmark
           .map((item) => {
-            if (!item.url) return;
+            if (!item?.url) return;
             return {
               icon: (
                 <img

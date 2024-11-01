@@ -16,7 +16,6 @@ import { which } from "@/hooks/useAllSpaceAndIcon";
 
 function DockSettings() {
   const { dock, dockContent } = useSelector((state: StateType) => state.layout);
-  console.log(dockContent);
   const dispatch = useDispatch();
 
   const toggle: MenuSwitchProps["items"] = [
@@ -74,7 +73,6 @@ function DockBookmarkSelect() {
   const handleSelectionChange = (event: SelectChangeEvent<unknown>) => {
     const val = event.target.value;
     if (val && typeof val === "string") {
-      console.log(val);
       dispatch(changeDockSelected(val));
     }
   };
@@ -113,6 +111,9 @@ function DockBookmarkSelect() {
       value={dockContent.id}
       className="capitalize"
       onChange={handleSelectionChange}>
+      <MenuItem value="favorites" className="text-xl capitalize">
+        favorites
+      </MenuItem>
       {getBookmarkFolders(bookmarks)}
     </Select>
   );
@@ -125,7 +126,6 @@ function DockSpaceSelect() {
   const handleSelectionChange = (event: SelectChangeEvent<unknown>) => {
     const val = event.target.value;
     if (val && typeof val === "string") {
-      console.log(val);
       dispatch(changeDockSelected(val));
     }
   };
