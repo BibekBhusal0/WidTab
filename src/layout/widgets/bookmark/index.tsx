@@ -1,7 +1,7 @@
 import BookmarkBreadcrumb from "@/components/bookmarks/breadcrumb";
 import BookmarkGrid from "@/components/bookmarks/grid";
 import { ScrollArea } from "@/components/scrollarea";
-import useBookmarksUpdate from "@/hooks/useBookmarks";
+import useBookmarksUpdate, { useBookmarkFolder } from "@/hooks/useBookmarks";
 import { currentSpaceEditWidget } from "@/redux/slice/layout";
 import { BookmarkWidgetType } from "@/types/slice/bookmark";
 import { cn } from "@/utils/cn";
@@ -13,24 +13,7 @@ import { useDispatch } from "react-redux";
 
 function BookmarkWidget(props: BookmarkWidgetType) {
   const { folderId, iconSize, breadcrumb, tabs } = props;
-  const [bookmark, setBookmark] = useState<chrome.bookmarks.BookmarkTreeNode[]>(
-    []
-  );
-
-  const getBookmarks = () => {
-    chrome.bookmarks
-      .getChildren(folderId)
-      .then((data) => {
-        if (Array.isArray(data)) {
-          setBookmark(data);
-          return;
-        }
-        setBookmark([]);
-      })
-      .catch(() => setBookmark([]));
-  };
-
-  useBookmarksUpdate(getBookmarks, [folderId]);
+  const bookmark = useBookmarkFolder(folderId);
   const dispatch = useDispatch();
   const onFolderChange = (id: string) => {
     dispatch(

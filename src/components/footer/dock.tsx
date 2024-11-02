@@ -4,11 +4,7 @@ import { StateType } from "@/redux/store";
 import { Dock, dockItemProps } from "../dock";
 import { changeCurrentSpace } from "@/redux/slice/layout";
 import { Icon2RN } from "@/theme/icons";
-import { useState } from "react";
-import useBookmarksUpdate, {
-  useBookmarkFolder,
-  useFavoriteBookmarks,
-} from "@/hooks/useBookmarks";
+import { useBookmarkFolder, useFavoriteBookmarks } from "@/hooks/useBookmarks";
 import { faviconURL } from "@/utils/faviconURL";
 
 export const ToolbarDock = () => {
