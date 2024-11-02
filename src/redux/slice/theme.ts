@@ -11,7 +11,7 @@ export const themeSlice = createSlice({
   reducers: {
     addTheme: (state, action: PayloadAction<ThemeItemType>) => {
       const newID = getNextId(state.allThemes.map(({ id }) => id));
-      state.allThemes.push({ ...action.payload, id: newID });
+      state.allThemes.push({ ...action.payload, id: newID, editAble: true });
       state.currentThemeID = newID;
     },
     deleteTheme: (state, action: PayloadAction<number>) => {
@@ -27,6 +27,22 @@ export const themeSlice = createSlice({
         }
       }
     },
+    duplicateCurrentTheme: (state) => {
+      const theme = state.allThemes.find((p) => p.id === state.currentThemeID);
+      if (theme) {
+        const newID = getNextId(state.allThemes.map(({ id }) => id));
+        state.allThemes.push({ ...theme, id: newID, editAble: true });
+        state.currentThemeID = newID;
+      }
+    },
+    duplicateTheme: (state, action: PayloadAction<number>) => {
+      const theme = state.allThemes.find((p) => p.id === action.payload);
+      if (theme) {
+        const newID = getNextId(state.allThemes.map(({ id }) => id));
+        state.allThemes.push({ ...theme, id: newID, editAble: true });
+        state.currentThemeID = newID;
+      }
+    },
     switchTheme: (state, action: PayloadAction<number>) => {
       if (state.currentThemeID === action.payload) return;
       if (!state.allThemes.find((p) => p.id === action.payload)) return;
@@ -36,13 +52,7 @@ export const themeSlice = createSlice({
       const theme = state.allThemes.find((p) => p.id === action.payload.id);
       if (theme) {
         if (theme.editAble) {
-          theme.blur = action.payload.blur;
-          theme.editAble = action.payload.editAble;
-          theme.opacity = action.payload.opacity;
-          theme.primaryColor = action.payload.primaryColor;
-          theme.roundness = action.payload.roundness;
-          theme.mode = action.payload.mode;
-          theme.name = action.payload.name;
+          Object.assign(theme, action.payload);
         }
       }
     },
@@ -68,5 +78,7 @@ export const {
   changeTheme,
   toggleCurrentMode,
   changeIconPack,
+  duplicateCurrentTheme,
+  duplicateTheme,
 } = themeSlice.actions;
 export default themeSlice.reducer;

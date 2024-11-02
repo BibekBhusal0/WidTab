@@ -93,6 +93,23 @@ export const layoutSlice = createSlice({
       }
     },
 
+    deleteSpace: (state, action: PayloadAction<number>) => {
+      const space = state.allSpaces.find((p) => p.id === action.payload);
+      if (space && space.delete_able) {
+        state.allSpaces = state.allSpaces.filter(
+          (p) => p.id !== action.payload
+        );
+      }
+    },
+    duplicateSpace: (state, action: PayloadAction<number>) => {
+      const space = state.allSpaces.find((p) => p.id === action.payload);
+      if (space) {
+        const newID = getNextId(state.allSpaces.map(({ id }) => id));
+        state.allSpaces.push({ ...space, id: newID, delete_able: true });
+        state.currentSpace = { type: "dynamic", id: newID };
+      }
+    },
+
     currentSpaceAddWidget: (state, action: PayloadAction<WidgetType>) => {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
 
@@ -219,6 +236,8 @@ export const {
   changeDockContent,
   changeDockContentType,
   changeDockSelected,
+  deleteSpace,
+  duplicateSpace,
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

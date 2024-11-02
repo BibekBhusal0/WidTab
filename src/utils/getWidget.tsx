@@ -7,6 +7,7 @@ import TodoControls from "@/layout/widgets/todo/todo-controls";
 import { URLChange } from "@/layout/widgets/custom";
 import TimerCOntrols from "@/layout/widgets/timer/controls";
 import BookmarkControls from "@/layout/widgets/bookmark/controls";
+import FavoriteControls from "@/layout/widgets/favorites/controls";
 
 export const widgetDimensions: Record<allWidgetsType, Partial<Layout>> = {
   "habit-tracker": { minW: 4, minH: 2, maxH: 2, maxW: 8 },
@@ -69,7 +70,12 @@ export const getWidgetControlsProps = (
       controls: <BookmarkControls id={id} />,
       widgetInfo,
     },
-    favorites: { widgetInfo },
+    favorites: {
+      widgetInfo,
+      controls: <FavoriteControls id={id} />,
+      showOn: "hover",
+      deleteButton: false,
+    },
   };
 
   return controlsProps[widgetType];
