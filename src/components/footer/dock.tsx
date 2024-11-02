@@ -5,7 +5,10 @@ import { Dock, dockItemProps } from "../dock";
 import { changeCurrentSpace } from "@/redux/slice/layout";
 import { Icon2RN } from "@/theme/icons";
 import { useState } from "react";
-import useBookmarksUpdate from "@/hooks/useBookmarks";
+import useBookmarksUpdate, {
+  useBookmarkFolder,
+  useFavoriteBookmarks,
+} from "@/hooks/useBookmarks";
 import { faviconURL } from "@/utils/faviconURL";
 
 export const ToolbarDock = () => {
@@ -43,48 +46,16 @@ const DockSpace = () => {
 };
 
 const DockBookmark = () => {
-  const { linkInNewTab, favorites } = useSelector(
-    (state: StateType) => state.bookmarks
-  );
-  const { toolBarPosition, dockContent } = useSelector(
-    (state: StateType) => state.layout
-  );
-  const [bookmark, setBookmark] = useState<chrome.bookmarks.BookmarkTreeNode[]>(
-    []
-  );
-  const getBookmarks = () => {
-    if (dockContent.id === "favorites") {
-      const bookmarkPromises = favorites.map((id) => chrome.bookmarks.get(id));
-
-      Promise.all(bookmarkPromises).then((results) => {
-        const bookmarks = results
-          .flat()
-          .filter(
-            (bookmark): bookmark is chrome.bookmarks.BookmarkTreeNode =>
-              !!bookmark
-          );
-
-        setBookmark(bookmarks);
-      });
-
-      return;
-    }
-
-    chrome.bookmarks
-      .getChildren(dockContent.id)
-      .then((data) => {
-        if (Array.isArray(data)) {
-          setBookmark(data);
-          return;
-        }
-        setBookmark([]);
-      })
-      .catch(() => setBookmark([]));
-  };
-  useBookmarksUpdate(getBookmarks, [dockContent.id]);
-
+  const { dockContent } = useSelector((state: StateType) => state.layout);
   if (dockContent.content !== "bookmark") return null;
+  if (dockContent.id === "favorites") return <DockBookmarkFav />;
+  return <DockBookmarkFolder />;
+};
 
+function getDockContentFromBookmarks(
+  bookmark: chrome.bookmarks.BookmarkTreeNode[],
+  linkInNewTab: boolean = false
+): dockItemProps[] {
   var dockItems: dockItemProps[] =
     bookmark.length === 0
       ? []
@@ -106,6 +77,30 @@ const DockBookmark = () => {
             };
           })
           .filter((i) => !!i);
+
+  return dockItems;
+}
+
+const DockBookmarkFav = () => {
+  const { linkInNewTab } = useSelector((state: StateType) => state.bookmarks);
+  const { toolBarPosition } = useSelector((state: StateType) => state.layout);
+  const favoriteBookmarks = useFavoriteBookmarks();
+  const dockItems = getDockContentFromBookmarks(
+    favoriteBookmarks,
+    linkInNewTab
+  );
+  return <Dock position={toolBarPosition} items={dockItems} />;
+};
+
+const DockBookmarkFolder = () => {
+  const { linkInNewTab } = useSelector((state: StateType) => state.bookmarks);
+  const { toolBarPosition, dockContent } = useSelector(
+    (state: StateType) => state.layout
+  );
+  const bookmark = useBookmarkFolder(dockContent.id);
+  if (dockContent.content !== "bookmark" || dockContent.id === "favorites")
+    return null;
+  const dockItems = getDockContentFromBookmarks(bookmark, linkInNewTab);
 
   return <Dock position={toolBarPosition} items={dockItems} />;
 };

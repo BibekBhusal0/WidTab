@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+import { StateType } from "@/redux/store";
 import { useEffect, useState } from "react";
 
 function useBookmarksUpdate(callback: Function, dependencies: any[] = []) {
@@ -38,3 +40,51 @@ export function useAllBookmarks(dependencies: any[] = []) {
 }
 
 export default useBookmarksUpdate;
+
+export const useFavoriteBookmarks = (dependencies: any[] = []) => {
+  const { favorites } = useSelector((state: StateType) => state.bookmarks);
+
+  const [bookmark, setBookmark] = useState<chrome.bookmarks.BookmarkTreeNode[]>(
+    []
+  );
+  const getBookmarks = () => {
+    const bookmarkPromises = favorites.map((id) => chrome.bookmarks.get(id));
+
+    Promise.all(bookmarkPromises).then((results) => {
+      const bookmarks = results
+        .flat()
+        .filter(
+          (bookmark): bookmark is chrome.bookmarks.BookmarkTreeNode =>
+            !!bookmark
+        );
+
+      setBookmark(bookmarks);
+    });
+  };
+  useBookmarksUpdate(getBookmarks, [favorites, ...dependencies]);
+  return bookmark;
+};
+
+export const useBookmarkFolder = (
+  folderID: string,
+  dependencies: any[] = []
+) => {
+  const [bookmark, setBookmark] = useState<chrome.bookmarks.BookmarkTreeNode[]>(
+    []
+  );
+  const getBookmarks = () => {
+    chrome.bookmarks
+      .getChildren(folderID)
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setBookmark(data);
+          return;
+        }
+        setBookmark([]);
+      })
+      .catch(() => setBookmark([]));
+  };
+  useBookmarksUpdate(getBookmarks, [folderID, ...dependencies]);
+
+  return bookmark;
+};

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Sidebar from "@/components/sidebar";
 import BookmarkTree from "@/components/bookmarks/tree";
 import ThemeSwitch from "@/theme/switch";
@@ -10,9 +9,8 @@ import { StateType } from "@/redux/store";
 import { toggleShowFavorites } from "@/redux/slice/bookmark";
 import { ScrollArea } from "@/components/scrollarea";
 import BookmarkSearch from "@/components/bookmarks/search";
-import useBookmarksUpdate from "@/hooks/useBookmarks";
+import { useBookmarkFolder, useFavoriteBookmarks } from "@/hooks/useBookmarks";
 import BookmarkBreadcrumb from "@/components/bookmarks/breadcrumb";
-import { findBookmark } from "@/utils/bookmark";
 import BookmarkGrid from "@/components/bookmarks/grid";
 import { changeCurrentFolder } from "@/redux/slice/bookmark";
 import { SelectChangeEvent } from "@mui/material/Select";
@@ -20,18 +18,6 @@ import { changeFolderSize } from "@/redux/slice/bookmark";
 import { allFolderSizes, folderSizes } from "@/types/slice/bookmark";
 
 function BookmarkManager() {
-  const [bookmarks, setBookmarks] = useState<
-    chrome.bookmarks.BookmarkTreeNode[]
-  >([]);
-
-  const fetchBookmarks = () => {
-    chrome.bookmarks.getTree().then((data) => {
-      setBookmarks(data);
-    });
-  };
-
-  useBookmarksUpdate(fetchBookmarks);
-  if (!bookmarks || bookmarks.length === 0) return <ThemeSwitch />;
   return (
     <Sidebar
       showButton
@@ -39,7 +25,7 @@ function BookmarkManager() {
         children: (
           <ScrollArea className="h-full bg-primary-1">
             <FavButton />
-            <BookmarkTree bookmarks={bookmarks} />
+            <BookmarkTree />
           </ScrollArea>
         ),
       }}
@@ -53,7 +39,7 @@ function BookmarkManager() {
       }
       containerProps={{ className: "size-full h-full" }}
       contentContainerProps={{ className: "h-full gap-0 pl-4" }}
-      children={<MainBookmarks bookmarks={bookmarks} />}
+      children={<MainBookmarks />}
     />
   );
 }
@@ -90,22 +76,13 @@ function FavButton() {
   );
 }
 
-function MainBookmarks({ bookmarks }: BookmarkTree) {
-  const { currentFolderID, folderSize, showFavorites, favorites } = useSelector(
+function MainBookmarks() {
+  const { currentFolderID, showFavorites } = useSelector(
     (state: StateType) => state.bookmarks
   );
   const dispatch = useDispatch();
   const onFolderChange = (id: string) => dispatch(changeCurrentFolder(id));
-
-  const getBookmarks = () => {
-    if (showFavorites) {
-      const fav = favorites.map((id) => findBookmark(bookmarks, id));
-      return fav.filter((id) => !!id);
-    }
-    return findBookmark(bookmarks, currentFolderID)?.children;
-  };
-  const currentBookmarks = getBookmarks();
-  const props = { currentFolderID, folderSize, bookmarks, onFolderChange };
+  const props = { currentFolderID, onFolderChange };
 
   return (
     <>
@@ -113,11 +90,32 @@ function MainBookmarks({ bookmarks }: BookmarkTree) {
         {showFavorites ? "Favorites" : <BookmarkBreadcrumb {...props} />}
       </div>
       <ScrollArea>
-        <BookmarkGrid {...props} bookmarks={currentBookmarks || []} />
+        {showFavorites ? <BookmarksFavorite /> : <BookmarksFolder />}
         <div className="py-2"></div>
       </ScrollArea>
     </>
   );
+}
+
+function BookmarksFolder() {
+  const { currentFolderID } = useSelector(
+    (state: StateType) => state.bookmarks
+  );
+  const bookmarks = useBookmarkFolder(currentFolderID);
+  return <OnlyBookmarks bookmarks={bookmarks} />;
+}
+function BookmarksFavorite() {
+  const fav = useFavoriteBookmarks();
+  return <OnlyBookmarks bookmarks={fav} />;
+}
+
+function OnlyBookmarks({ bookmarks }: BookmarkTree) {
+  const { folderSize } = useSelector((state: StateType) => state.bookmarks);
+  const dispatch = useDispatch();
+  const onFolderChange = (id: string) => dispatch(changeCurrentFolder(id));
+  const props = { folderSize, bookmarks, onFolderChange };
+
+  return <BookmarkGrid {...props} />;
 }
 
 export default BookmarkManager;

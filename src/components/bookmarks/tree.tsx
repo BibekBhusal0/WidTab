@@ -11,8 +11,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { faviconURL } from "@/utils/faviconURL";
 import { BookmarkTree, TakeBookmarksProps } from "@/types/slice/bookmark";
 import { LinkContextMenu } from "./contextMenu";
+import { useAllBookmarks } from "@/hooks/useBookmarks";
 
-function BookmarkTree({ bookmarks }: BookmarkTree) {
+function BookmarkTree() {
+  const { bookmarks } = useAllBookmarks();
+  if (!bookmarks || bookmarks.length === 0) return null;
   return (
     <div className="px-3">
       <BookmarkItem bookmarks={bookmarks} />
