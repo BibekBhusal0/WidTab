@@ -12,6 +12,11 @@ export type bookmarkSliceType = {
   folderSize: folderSizes;
 };
 
+export type FavoritesWidgetType = {
+  id: number;
+  iconSize?: folderSizes;
+};
+
 export type BookmarkWidgetType = {
   id: number;
   folderId: string;

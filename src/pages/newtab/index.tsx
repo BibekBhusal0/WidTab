@@ -1,6 +1,5 @@
 import { createRoot } from "react-dom/client";
 import Newtab from "@/pages/newtab/Newtab";
-// import "@assets/styles/tailwind.css";
 import EverythingProvider from "@/theme/everythingProvider";
 
 function init() {

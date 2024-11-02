@@ -3,8 +3,13 @@ import AllStaticLayout from "./allStaticSpaces";
 import SettingHeader from "../settings-header";
 import { BoxProps } from "@mui/material/Box";
 import { cn } from "@/utils/cn";
+import { useSelector } from "react-redux";
+import { StateType } from "@/redux/store";
+import Divider from "@mui/material/Divider";
+import AddSpace from "./addSpace";
 
 function AllSpaces({ headerProps = undefined }: { headerProps?: BoxProps }) {
+  const { currentSpace } = useSelector((state: StateType) => state.layout);
   return (
     <>
       <SettingHeader
@@ -20,6 +25,11 @@ function AllSpaces({ headerProps = undefined }: { headerProps?: BoxProps }) {
         Static Spaces
       </SettingHeader>
       <AllStaticLayout />
+      {currentSpace.type === "static" && (
+        <>
+          <Divider /> <AddSpace />
+        </>
+      )}
     </>
   );
 }

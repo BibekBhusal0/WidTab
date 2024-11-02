@@ -1,7 +1,7 @@
 import { Layout } from "react-grid-layout";
 import { TaskType } from "./todo";
 import { HabitTrackerHistoryType, HabitTrackerItemType } from "./habit-tracker";
-import { BookmarkWidgetType } from "./bookmark";
+import { BookmarkWidgetType, FavoritesWidgetType } from "./bookmark";
 
 const SP = ["todo", "bookmark", "habit-tracker"] as const;
 const CW = [
@@ -19,6 +19,7 @@ const UW = [
   "timer",
   "timer-stats",
   "bookmark",
+  "favorites",
 ] as const;
 const SE = ["Google", "Bing", "YouTube", "Brave", "DuckDuckGo"] as const;
 
@@ -66,6 +67,7 @@ export type WidgetMappingUncontrolled =
       values: controlledWidgetValues;
     }
   | { type: "bookmark"; values: BookmarkWidgetType }
+  | { type: "favorites"; values: FavoritesWidgetType }
   | { type: "timer"; values: TimerWidgetType };
 
 export type WidgetMappingAll =

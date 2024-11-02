@@ -6,6 +6,7 @@ import useAvailablePosition from "@/hooks/useAvailablePosition";
 import { currentSpaceAddWidget } from "@/redux/slice/layout";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
+import SimpleAddWidgetButton from "./simpleAddWidget";
 
 function AddBookmark() {
   const dimensions = widgetDimensions["bookmark"];
@@ -32,11 +33,7 @@ function AddBookmark() {
       | chrome.bookmarks.BookmarkTreeNode
   ): ReactNode => {
     if (Array.isArray(bookmark)) {
-      return (
-        <List sx={{ pl: "3px" }}>
-          {bookmarks.map((child) => getBookmarkFolders(child))}
-        </List>
-      );
+      return bookmarks.map((child) => getBookmarkFolders(child));
     }
     if (bookmark.children) {
       return (
@@ -54,7 +51,15 @@ function AddBookmark() {
     }
     return null;
   };
-  return <>{getBookmarkFolders(bookmarks)}</>;
+  return (
+    <>
+      <List>{getBookmarkFolders(bookmarks)}</List>
+      <SimpleAddWidgetButton
+        widget={{ type: "favorites", values: { id: 0 } }}
+        buttonProps={{ children: "Add Favorite Bookmarks Widget" }}
+      />
+    </>
+  );
 }
 
 export default AddBookmark;

@@ -9,7 +9,6 @@ import AddSearch from "./search";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import AddHabitTracer from "./habitTracker";
 import AddNavigation from "./navigation";
-import AddTimer from "./timer";
 import AddBookmark from "./bookmark";
 
 function AddWidget() {
