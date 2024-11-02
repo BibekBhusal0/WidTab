@@ -13,7 +13,9 @@ import {
 import useFullSize from "@/hooks/useFullSize";
 import { LinkContextMenu } from "./contextMenu";
 
-function BookmarkGrid(props: ExtraBookmarkProps & BookmarkTree) {
+type l = { openLinkInNewTab?: boolean };
+
+function BookmarkGrid(props: ExtraBookmarkProps & BookmarkTree & l) {
   const { folderSize = "small", bookmarks } = props;
   const itemWidth = folderSizeMapping[folderSize];
   const gap = 16;
@@ -42,11 +44,16 @@ function BookmarkGrid(props: ExtraBookmarkProps & BookmarkTree) {
   );
 }
 
-function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps) {
-  const { bookmarks, folderSize = "small", onFolderChange = () => {} } = props;
+function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
   const { favorites, linkInNewTab } = useSelector(
     (state: StateType) => state.bookmarks
   );
+  const {
+    bookmarks,
+    folderSize = "small",
+    onFolderChange = () => {},
+    openLinkInNewTab = linkInNewTab,
+  } = props;
 
   if (Array.isArray(bookmarks)) {
     return bookmarks.map((child) => (
@@ -54,7 +61,7 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps) {
     ));
   }
   const size = folderSizeMapping[folderSize];
-  const cls = "flex-center flex-col gap-4 size-full relative p-1";
+  const cls = "flex-center flex-col gap-2 size-full relative p-1";
   const textCls = "px-2 truncate w-full text-center";
   const fav = favorites.includes(bookmarks.id);
 
@@ -70,7 +77,7 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps) {
       <a
         className={cn(cls)}
         href={bookmarks.url}
-        target={linkInNewTab ? "_blank" : "_self"}>
+        target={openLinkInNewTab ? "_blank" : "_self"}>
         <img
           className="size-1/2 aspect-square"
           src={faviconURL(bookmarks.url || "", size)}
@@ -91,7 +98,7 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps) {
       sx={{
         width: size,
         height: size,
-        fontSize: size / 10,
+        fontSize: size / 9,
       }}>
       {content}
     </Paper>
