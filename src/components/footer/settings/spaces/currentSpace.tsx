@@ -27,7 +27,13 @@ function CurrentSpaceSetting() {
     },
   ];
 
-  if (!layout) return null;
+  if (!layout)
+    return (
+      <div className="w-full p-2 border-divider border-t-2">
+        {" "}
+        <AddSpace />{" "}
+      </div>
+    );
 
   return (
     <>
@@ -37,7 +43,6 @@ function CurrentSpaceSetting() {
         className="w-full flex flex-col items-center gap-5">
         <ChangeCompaction />
         <MenuSwitch plain items={toggle} />
-
         <div aria-label="Icons" className="full-between icon-xl">
           <div className="text-xl">Change Icons</div>
           <div className="w-14 flex-center">

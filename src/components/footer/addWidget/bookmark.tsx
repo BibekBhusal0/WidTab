@@ -7,6 +7,8 @@ import { currentSpaceAddWidget } from "@/redux/slice/layout";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import SimpleAddWidgetButton from "./simpleAddWidget";
+import { ScrollArea } from "@/components/scrollarea";
+import { Icon } from "@iconify/react";
 
 function AddBookmark() {
   const dimensions = widgetDimensions["bookmark"];
@@ -52,13 +54,20 @@ function AddBookmark() {
     return null;
   };
   return (
-    <>
-      <List>{getBookmarkFolders(bookmarks)}</List>
-      <SimpleAddWidgetButton
-        widget={{ type: "favorites", values: { id: 0 } }}
-        buttonProps={{ children: "Add Favorite Bookmarks Widget" }}
-      />
-    </>
+    <div className="w-full h-[330px] relative">
+      <ScrollArea className="w-full h-[80%]">
+        <List>{getBookmarkFolders(bookmarks)}</List>
+      </ScrollArea>
+      <div className="p-2 h-[10%] bottom-2 horizontal-center w-full flex-center">
+        <SimpleAddWidgetButton
+          widget={{ type: "favorites", values: { id: 0 } }}
+          buttonProps={{
+            children: "Add Favorites",
+            startIcon: <Icon icon="mdi:heart" />,
+          }}
+        />
+      </div>
+    </div>
   );
 }
 

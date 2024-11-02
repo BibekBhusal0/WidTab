@@ -27,11 +27,7 @@ function AddWidget() {
       <ContainerSidebar
         items={addItems}
         mainProps={{ sx: { width: "550px", height: "350px" } }}
-        tabsProps={{
-          sx: { width: "200px" },
-          scrollButtons: "auto",
-          variant: "scrollable",
-        }}
+        tabsProps={{ sx: { width: "200px" } }}
         tabProps={{ sx: { minHeight: "38px", paddingY: "10px" } }}
       />
     </FooterPopover>

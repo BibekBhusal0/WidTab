@@ -67,10 +67,13 @@ function ContainerSidebar({
   };
 
   return (
-    <Box {...mainProps} className={cn("flex h-full", mainProps?.className)}>
+    <Box
+      {...mainProps}
+      className={cn("flex h-full relative", mainProps?.className)}>
       <CustomTabs
         orientation="vertical"
         scrollButtons="auto"
+        variant="scrollable"
         value={value}
         onChange={handleChange}
         {...tabsProps}
@@ -93,10 +96,7 @@ function ContainerSidebar({
       </CustomTabs>
       <ScrollArea
         {...panelProps}
-        className={cn(
-          "border-l-3 p-4 overflow-y-auto h-full w-full",
-          panelProps?.className
-        )}>
+        className={cn("border-l-3 p-2 size-full", panelProps?.className)}>
         {crrComponent}
       </ScrollArea>
     </Box>

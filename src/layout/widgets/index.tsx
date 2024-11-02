@@ -19,6 +19,7 @@ import { CylindricalNavigation } from "./navigation";
 import Controls from "./controls";
 import { getWidgetControlsProps } from "@/utils/getWidget";
 import TimerWidget from "./timer";
+import Favorites from "./favorites";
 
 export const widgetElementMapping: {
   [K in WidgetMappingAll["type"]]: FunctionComponent<AllWidgetPropsMapping<K>>;
@@ -35,6 +36,7 @@ export const widgetElementMapping: {
   navigation: CylindricalNavigation,
   timer: TimerWidget,
   "timer-stats": () => null,
+  favorites: Favorites,
 };
 
 function Widget({ widget }: { widget: WidgetType }) {

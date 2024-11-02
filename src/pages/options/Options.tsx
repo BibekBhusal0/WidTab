@@ -5,7 +5,7 @@ function Options() {
   return (
     <ContainerSidebar
       items={allSettings}
-      mainProps={{ sx: { width: "100%", height: "100%" } }}
+      mainProps={{ sx: { width: "100vw", height: "100vh" } }}
       tabsProps={{ sx: { width: "200px" } }}
     />
   );
