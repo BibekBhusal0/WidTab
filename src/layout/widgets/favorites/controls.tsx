@@ -13,16 +13,20 @@ import useCurrentLayout from "@/hooks/useCurrentLayout";
 import SelectSize from "@/components/bookmarks/size";
 import { allFolderSizes, folderSizes } from "@/types/slice/bookmark";
 
-function FavoriteControls({ id }: { id: number }) {
+function Controls({
+  id,
+  type,
+}: {
+  id: number;
+  type: "favorites" | "top-sites";
+}) {
   const layout = useCurrentLayout();
   const dispatch = useDispatch();
   const { delete_ } = useCurrentIcons();
   if (!layout) return null;
   const { widgets } = layout;
-  const widget = widgets.find(
-    (w) => w.type === "favorites" && w.values.id === id
-  );
-  if (!widget || widget.type !== "favorites") return null;
+  const widget = widgets.find((w) => w.type === type && w.values.id === id);
+  if (!widget || widget.type !== type) return null;
   const props = widget.values;
   const { iconSize = "small" } = props;
 
@@ -31,15 +35,14 @@ function FavoriteControls({ id }: { id: number }) {
     if (allFolderSizes.includes(val)) {
       dispatch(
         currentSpaceEditWidget({
-          type: "favorites",
+          type,
           values: { ...props, iconSize: val },
         })
       );
     }
   };
 
-  const deleteThis = () =>
-    dispatch(currentSpaceDeleteWidget({ type: "favorites", id }));
+  const deleteThis = () => dispatch(currentSpaceDeleteWidget({ type, id }));
 
   return (
     <MenuPopover>
@@ -68,4 +71,4 @@ function FavoriteControls({ id }: { id: number }) {
   );
 }
 
-export default FavoriteControls;
+export default Controls;

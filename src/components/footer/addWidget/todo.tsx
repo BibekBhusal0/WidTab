@@ -26,9 +26,7 @@ function AddTodo() {
     dispatch(
       currentSpaceAddWidget({
         type: "todo",
-        values: {
-          id,
-        },
+        values: { id },
         gridProps: {
           ...todoDimensions,
           ...availablePosition,

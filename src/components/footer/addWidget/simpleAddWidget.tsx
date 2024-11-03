@@ -1,10 +1,7 @@
-import useAvailablePosition from "@/hooks/useAvailablePosition";
-import { currentSpaceAddWidget } from "@/redux/slice/layout";
+import useAddWidget from "@/hooks/useAddWidget";
 import { WidgetMappingAll } from "@/types/slice/widgets";
-import { widgetDimensions } from "@/utils/getWidget";
 import { Icon } from "@iconify/react";
 import Button, { ButtonProps } from "@mui/material/Button";
-import { useDispatch } from "react-redux";
 
 export type SimpleAddWidgetButtonProps = {
   widget: WidgetMappingAll;
@@ -15,21 +12,7 @@ function SimpleAddWidgetButton({
   widget,
   buttonProps,
 }: SimpleAddWidgetButtonProps) {
-  const dispatch = useDispatch();
-  const dimensions = widgetDimensions[widget.type];
-  const { minH, minW } = dimensions;
-  const availablePosition = useAvailablePosition(minW, minH);
-
-  const add = () => {
-    if (availablePosition) {
-      dispatch(
-        currentSpaceAddWidget({
-          gridProps: { ...dimensions, ...availablePosition },
-          ...widget,
-        })
-      );
-    }
-  };
+  const { add, availablePosition } = useAddWidget(widget);
 
   return (
     <Button

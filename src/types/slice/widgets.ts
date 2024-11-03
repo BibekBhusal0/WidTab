@@ -20,6 +20,7 @@ const UW = [
   "timer-stats",
   "bookmark",
   "favorites",
+  "top-sites",
 ] as const;
 const SE = ["Google", "Bing", "YouTube", "Brave", "DuckDuckGo"] as const;
 
@@ -68,6 +69,7 @@ export type WidgetMappingUncontrolled =
     }
   | { type: "bookmark"; values: BookmarkWidgetType }
   | { type: "favorites"; values: FavoritesWidgetType }
+  | { type: "top-sites"; values: FavoritesWidgetType }
   | { type: "timer"; values: TimerWidgetType };
 
 export type WidgetMappingAll =

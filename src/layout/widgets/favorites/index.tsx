@@ -9,7 +9,9 @@ function Favorites({ iconSize }: FavoritesWidgetType) {
     return <div className="text-center text-xl p-2">No Favorites</div>;
   return (
     <ScrollArea className="size-full">
-      <BookmarkGrid bookmarks={favorites} folderSize={iconSize} />
+      <div className="py-2">
+        <BookmarkGrid bookmarks={favorites} folderSize={iconSize} />
+      </div>
     </ScrollArea>
   );
 }

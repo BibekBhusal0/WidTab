@@ -9,6 +9,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import SimpleAddWidgetButton from "./simpleAddWidget";
 import { ScrollArea } from "@/components/scrollarea";
 import { Icon } from "@iconify/react";
+import useAddWidget from "@/hooks/useAddWidget";
+import { Button } from "@mui/material";
 
 function AddBookmark() {
   const dimensions = widgetDimensions["bookmark"];
@@ -66,9 +68,39 @@ function AddBookmark() {
             startIcon: <Icon icon="mdi:heart" />,
           }}
         />
+        <AddTopSites />
       </div>
     </div>
   );
 }
+
+export const AddTopSites = () => {
+  const { add, availablePosition } = useAddWidget({
+    type: "top-sites",
+    values: { id: 0 },
+  });
+  const addWidget = () => {
+    chrome.permissions.contains({ permissions: ["topSites"] }).then((res) => {
+      if (res) add();
+      else
+        chrome.permissions
+          .request({ permissions: ["topSites"] })
+          .then((res) => {
+            if (res) add();
+          });
+    });
+  };
+
+  return (
+    <Button
+      variant="contained"
+      onClick={addWidget}
+      disabled={!availablePosition}
+      startIcon={<Icon icon="mdi:web-plus" />}>
+      {" "}
+      Add Top Sites{" "}
+    </Button>
+  );
+};
 
 export default AddBookmark;

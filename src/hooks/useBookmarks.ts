@@ -73,16 +73,9 @@ export const useBookmarkFolder = (
     []
   );
   const getBookmarks = () => {
-    chrome.bookmarks
-      .getChildren(folderID)
-      .then((data) => {
-        if (Array.isArray(data)) {
-          setBookmark(data);
-          return;
-        }
-        setBookmark([]);
-      })
-      .catch(() => setBookmark([]));
+    chrome.bookmarks.getChildren(folderID, (data) => {
+      setBookmark(Array.isArray(data) ? data : []);
+    });
   };
   useBookmarksUpdate(getBookmarks, [folderID, ...dependencies]);
 

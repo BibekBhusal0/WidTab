@@ -16,5 +16,6 @@
   "icons": {
     "128": "icon-128.png"
   },
-  "permissions": ["bookmarks", "favicon", "storage", "unlimitedStorage"]
+  "permissions": ["bookmarks", "favicon", "storage", "unlimitedStorage"],
+  "optional_permissions": ["topSites"]
 }

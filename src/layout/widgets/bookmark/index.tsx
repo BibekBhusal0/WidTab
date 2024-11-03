@@ -73,25 +73,17 @@ function BookmarkTabs({
   );
 
   const getBookmarks = () => {
-    chrome.bookmarks
-      .get(folderId)
-      .then((data) => {
-        if (Array.isArray(data)) {
-          if (data[0]?.parentId) {
-            chrome.bookmarks
-              .getChildren(data[0].parentId)
-              .then((data) => {
-                if (Array.isArray(data)) {
-                  setBookmark(data.filter((bookmark) => !bookmark.url));
-                  return;
-                }
-              })
-              .catch();
-          }
-          return;
+    chrome.bookmarks.get(folderId, (data) => {
+      if (Array.isArray(data)) {
+        if (data[0]?.parentId) {
+          chrome.bookmarks.getChildren(data[0].parentId, (data) => {
+            if (Array.isArray(data)) {
+              setBookmark(data.filter((bookmark) => !bookmark.url));
+            }
+          });
         }
-      })
-      .catch();
+      }
+    });
   };
   useBookmarksUpdate(getBookmarks, [folderId]);
 

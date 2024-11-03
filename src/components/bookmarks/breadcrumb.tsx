@@ -10,10 +10,7 @@ function BookmarkBreadcrumb({
   const [path, setPath] = useState<chrome.bookmarks.BookmarkTreeNode[]>([]);
 
   useEffect(() => {
-    findPath(currentFolderID).then((data) => {
-      data.unshift();
-      setPath(data);
-    });
+    findPath(currentFolderID).then((data) => setPath(data));
   }, [currentFolderID]);
 
   return (
