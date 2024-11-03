@@ -13,7 +13,7 @@ import {
 import useFullSize from "@/hooks/useFullSize";
 import { LinkContextMenu } from "./contextMenu";
 
-type l = { openLinkInNewTab?: boolean };
+type l = { openLinkInNewTab?: boolean; contextMenu?: boolean };
 
 function BookmarkGrid(props: ExtraBookmarkProps & BookmarkTree & l) {
   const { folderSize = "small", bookmarks } = props;
@@ -52,6 +52,7 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
     bookmarks,
     folderSize = "small",
     onFolderChange = () => {},
+    contextMenu = true,
     openLinkInNewTab = linkInNewTab,
   } = props;
 
@@ -64,16 +65,8 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
   const cls = "flex-center flex-col gap-2 size-full relative p-1";
   const textCls = "px-2 truncate w-full text-center";
   const fav = favorites.includes(bookmarks.id);
-
-  const content = !bookmarks.url ? (
-    <div
-      onClick={() => onFolderChange(bookmarks.id)}
-      className={cn(cls, "gap-2")}>
-      <Icon width={size * 0.7} icon="ic:round-folder" />
-      <div className={cn(textCls)}>{bookmarks.title}</div>
-    </div>
-  ) : (
-    <LinkContextMenu id={bookmarks.id}>
+  const link = (bookmarks: chrome.bookmarks.BookmarkTreeNode) => {
+    return (
       <a
         className={cn(cls)}
         href={bookmarks.url}
@@ -84,11 +77,24 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
           alt={bookmarks.title}
         />
         <div className="flex items-center justify-between w-full">
-          {fav && <Icon className="text-2xl" icon="mdi:heart" />}
+          {fav && contextMenu && <Icon className="text-2xl" icon="mdi:heart" />}
           <div className={cn(textCls)}>{bookmarks.title}</div>
         </div>
       </a>
-    </LinkContextMenu>
+    );
+  };
+
+  const content = !bookmarks.url ? (
+    <div
+      onClick={() => onFolderChange(bookmarks.id)}
+      className={cn(cls, "gap-2")}>
+      <Icon width={size * 0.7} icon="ic:round-folder" />
+      <div className={cn(textCls)}>{bookmarks.title}</div>
+    </div>
+  ) : contextMenu ? (
+    <LinkContextMenu id={bookmarks.id}>{link(bookmarks)}</LinkContextMenu>
+  ) : (
+    link(bookmarks)
   );
 
   return (

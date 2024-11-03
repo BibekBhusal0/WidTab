@@ -1,7 +1,7 @@
 import BookmarkGrid from "@/components/bookmarks/grid";
 import { ScrollArea } from "@/components/scrollarea";
 import { FavoritesWidgetType } from "@/types/slice/bookmark";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
 
 function TopSites(props: FavoritesWidgetType) {
@@ -29,8 +29,8 @@ function TopSites(props: FavoritesWidgetType) {
     );
 
   return (
-    <ScrollArea className="size-full">
-      <div className="py2-">
+    <ScrollArea className="size-full my-auto">
+      <div className="py-2 my-auto">
         <Sites {...props} />
       </div>
     </ScrollArea>
@@ -50,7 +50,9 @@ function Sites({ iconSize }: FavoritesWidgetType) {
     });
   }, []);
 
-  return <BookmarkGrid bookmarks={sites} folderSize={iconSize} />;
+  return (
+    <BookmarkGrid bookmarks={sites} folderSize={iconSize} contextMenu={false} />
+  );
 }
 
 export default TopSites;

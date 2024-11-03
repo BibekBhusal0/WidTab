@@ -53,24 +53,12 @@ export const initialTodoState: todoStateType = {
       title: "Gardening",
       icon: "mdi:plant-outline",
       todos: [
-        {
-          id: 1,
-          task: "Plant seasonal flowers",
-          checked: true,
-        },
-        {
-          id: 2,
-          task: "Water and fertilize garden",
-          checked: true,
-        },
-        {
-          id: 3,
-          task: "Design new garden layout",
-          checked: false,
-        },
+        { id: 1, task: "Plant seasonal flowers", checked: true },
+        { id: 2, task: "Water and fertilize garden", checked: true },
+        { id: 3, task: "Design new garden layout", checked: false },
         {
           id: 4,
-          task: "Compost kitchen scrps for soil enrichment",
+          task: "Compost kitchen scraps for soil enrichment",
           checked: false,
         },
       ],
@@ -95,36 +83,12 @@ export const initialTodoState: todoStateType = {
       icon: "mdi:brain-freeze",
       title: "Focus on these",
       todos: [
-        {
-          id: 1,
-          task: "focus 1",
-          checked: false,
-        },
-        {
-          id: 2,
-          task: "focus 2",
-          checked: false,
-        },
-        {
-          id: 3,
-          task: "focus 3",
-          checked: true,
-        },
-        {
-          id: 4,
-          task: "focus 4",
-          checked: true,
-        },
-        {
-          id: 5,
-          task: "focus 5",
-          checked: false,
-        },
-        {
-          id: 6,
-          task: "focus 6",
-          checked: false,
-        },
+        { id: 1, task: "focus 1", checked: false },
+        { id: 2, task: "focus 2", checked: false },
+        { id: 3, task: "focus 3", checked: true },
+        { id: 4, task: "focus 4", checked: true },
+        { id: 5, task: "focus 5", checked: false },
+        { id: 6, task: "focus 6", checked: false },
       ],
     },
   ],
@@ -161,10 +125,7 @@ export const initialLayoutState: LayoutSliceType = {
             y: 2,
             i: "search-2",
           },
-          values: {
-            id: 2,
-            engine: "DuckDuckGo",
-          },
+          values: { id: 2, engine: "DuckDuckGo" },
         },
         {
           type: "clock",
@@ -199,15 +160,11 @@ export const initialLayoutState: LayoutSliceType = {
             y: 3,
             i: "calendar-5",
           },
-          values: {
-            id: 5,
-          },
+          values: { id: 5 },
         },
         {
           type: "todo",
-          values: {
-            id: 1,
-          },
+          values: { id: 1 },
           gridProps: {
             minW: 3,
             minH: 4,
@@ -216,7 +173,6 @@ export const initialLayoutState: LayoutSliceType = {
             x: 6,
             y: 3,
             i: "todo-1",
-
             static: false,
           },
         },
@@ -231,13 +187,10 @@ export const initialLayoutState: LayoutSliceType = {
             w: 4,
             h: 2,
             i: "navigation-4",
-
             static: false,
           },
           type: "navigation",
-          values: {
-            id: 4,
-          },
+          values: { id: 4 },
         },
       ],
 
@@ -272,18 +225,8 @@ export const initialLayoutState: LayoutSliceType = {
         },
         {
           type: "todo",
-          values: {
-            id: 3,
-          },
-          gridProps: {
-            minW: 3,
-            minH: 4,
-            w: 3,
-            h: 4,
-            x: 9,
-            y: 0,
-            i: "todo-3",
-          },
+          values: { id: 3 },
+          gridProps: { minW: 3, minH: 4, w: 3, h: 4, x: 9, y: 0, i: "todo-3" },
         },
         {
           gridProps: {
@@ -297,17 +240,11 @@ export const initialLayoutState: LayoutSliceType = {
             i: "timer-2",
           },
           type: "timer",
-          values: {
-            id: 2,
-            time: 90,
-            music: true,
-          },
+          values: { id: 2, time: 90, music: true },
         },
         {
           type: "habit-tracker",
-          values: {
-            id: 1,
-          },
+          values: { id: 1 },
           gridProps: {
             minW: 4,
             minH: 2,
@@ -331,24 +268,12 @@ export const initialLayoutState: LayoutSliceType = {
             i: "search-5",
           },
           type: "search",
-          values: {
-            id: 5,
-            engine: "Google",
-          },
+          values: { id: 5, engine: "Google" },
         },
         {
-          gridProps: {
-            x: 0,
-            y: 1,
-            w: 5,
-            h: 7,
-            i: "custom-4",
-          },
+          gridProps: { x: 0, y: 1, w: 5, h: 7, i: "custom-4" },
           type: "custom",
-          values: {
-            id: 4,
-            url: "https://www.chess.com/emboard?id=12337843",
-          },
+          values: { id: 4, url: "https://www.chess.com/emboard?id=12337843" },
         },
       ],
       delete_able: false,
@@ -361,17 +286,9 @@ export const initialLayoutState: LayoutSliceType = {
       locked: true,
       widgets: [
         {
-          gridProps: {
-            x: 1,
-            y: 0,
-            w: 4,
-            h: 2,
-            i: "habit-tracker-1",
-          },
+          gridProps: { x: 1, y: 0, w: 4, h: 2, i: "habit-tracker-1" },
           type: "habit-tracker",
-          values: {
-            id: 1,
-          },
+          values: { id: 1 },
         },
       ],
       delete_able: true,
@@ -388,7 +305,6 @@ export const initialHabitTrackerState: HabitTrackerSliceType = {
       icon: "ion:water",
       target: 2000,
       increment: 250,
-      value: 1000,
       unit: "ml",
       history: {
         [dayjs().subtract(5, "day").format("YYYY-MM-DD")]: 1500,
@@ -405,7 +321,6 @@ export const initialHabitTrackerState: HabitTrackerSliceType = {
       icon: "mdi:crossfit",
       target: 30,
       increment: 5,
-      value: 15,
       unit: "min",
       history: {
         [dayjs().subtract(5, "day").format("YYYY-MM-DD")]: 19,
@@ -422,7 +337,6 @@ export const initialHabitTrackerState: HabitTrackerSliceType = {
       icon: "mdi:book-open-page-variant",
       target: 15,
       increment: 2,
-      value: 10,
       unit: "pages",
       history: {
         [dayjs().subtract(5, "day").format("YYYY-MM-DD")]: 19,

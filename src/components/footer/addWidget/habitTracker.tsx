@@ -43,9 +43,7 @@ function AddHabitTracer() {
     dispatch(
       currentSpaceAddWidget({
         type: "habit-tracker-stats-single",
-        values: {
-          id,
-        },
+        values: { id },
         gridProps: {
           ...statsDimensions,
           ...availablePositionForStats,
@@ -59,9 +57,7 @@ function AddHabitTracer() {
     dispatch(
       currentSpaceAddWidget({
         type: "habit-tracker",
-        values: {
-          id,
-        },
+        values: { id },
         gridProps: {
           ...dimensions,
           ...availablePosition,

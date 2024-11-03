@@ -10,7 +10,7 @@ import SimpleAddWidgetButton from "./simpleAddWidget";
 import { ScrollArea } from "@/components/scrollarea";
 import { Icon } from "@iconify/react";
 import useAddWidget from "@/hooks/useAddWidget";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 
 function AddBookmark() {
   const dimensions = widgetDimensions["bookmark"];
@@ -60,7 +60,7 @@ function AddBookmark() {
       <ScrollArea className="w-full h-[80%]">
         <List>{getBookmarkFolders(bookmarks)}</List>
       </ScrollArea>
-      <div className="p-2 h-[10%] bottom-2 horizontal-center w-full flex-center">
+      <div className="p-2 h-[10%] bottom-2 horizontal-center w-full flex-center gap-4">
         <SimpleAddWidgetButton
           widget={{ type: "favorites", values: { id: 0 } }}
           buttonProps={{
@@ -97,8 +97,7 @@ export const AddTopSites = () => {
       onClick={addWidget}
       disabled={!availablePosition}
       startIcon={<Icon icon="mdi:web-plus" />}>
-      {" "}
-      Add Top Sites{" "}
+      Add Top Sites
     </Button>
   );
 };

@@ -16,7 +16,7 @@ export const widgetDimensions: Record<allWidgetsType, Partial<Layout>> = {
   "timer-stats": { minW: 4, minH: 3 },
   todo: { minW: 3, minH: 4 },
   bookmark: { minW: 2, minH: 2 },
-  "top-sites": { minW: 2, minH: 2, maxH: 4, maxW: 4 },
+  "top-sites": { minW: 2, minH: 2, maxH: 6, maxW: 6 },
   favorites: { minW: 2, minH: 2 },
   clock: { maxH: 5, maxW: 8, minH: 1, minW: 2 },
   search: { maxH: 1, minW: 4 },

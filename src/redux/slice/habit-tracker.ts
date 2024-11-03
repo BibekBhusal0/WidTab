@@ -25,21 +25,16 @@ const habitTrackerSlice = createSlice({
       }>
     ) => {
       const crr = state.trackers.find(({ id }) => id === action.payload.id);
+      const a = action.payload.action;
       if (crr) {
-        if (action.payload.action === "reset") {
-          crr.value = 0;
-        } else {
-          const valChange =
-            action.payload.action === "increment"
-              ? crr.increment
-              : -crr.increment;
-          const newValue = crr.value + valChange;
-          if (newValue >= 0) crr.value = newValue;
-          else crr.value = 0;
-        }
-        const today = dayjs().format("YYYY-MM-DD");
         if (!crr.history) crr.history = {};
-        crr.history[today] = crr.value;
+        let value = crr.history[dayjs().format("YYYY-MM-DD")] || 0;
+        if (a === "reset") value = 0;
+        else if (a === "increment") value += crr.increment;
+        else value = Math.max(value - crr.increment, 0);
+
+        const today = dayjs().format("YYYY-MM-DD");
+        crr.history[today] = value;
       }
     },
     setItem: (state, action: PayloadAction<HabitTrackerItemType>) => {

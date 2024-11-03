@@ -7,7 +7,6 @@ export type HabitTrackerItemType = {
   icon: string;
   target: number;
   increment: number;
-  value: number;
   unit: string;
   history?: HabitTrackerHistoryType;
 };
