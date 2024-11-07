@@ -35,6 +35,6 @@ export const noteSlice = createSlice({
   },
 });
 
-export const { addNote, addNoteWithTitle, changeNoteContent } =
+export const { addNote, addNoteWithTitle, changeNoteContent, deleteNote } =
   noteSlice.actions;
 export default noteSlice.reducer;

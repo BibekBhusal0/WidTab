@@ -69,7 +69,7 @@ function DynamicLayout() {
             key={w.gridProps.i}
             className="relative overflow-hidden">
             {!locked && (
-              <div className="w-full drag-handle h-[9%] absolute top-0 left-0 z-10 bg-primary-5 rounded-tl-themed rounded-tr-themed" />
+              <div className="w-full drag-handle h-full absolute z-10 bg-primary-1 rounded-themed" />
             )}
             <Widget widget={w} />
           </Paper>

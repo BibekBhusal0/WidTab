@@ -14,7 +14,7 @@ export type ControlsProps = {
   controls?: ReactNode;
   controlsContainerProps?: PaperProps;
   deleteButton?: boolean;
-  showOn?: "not_lock" | "hover" | "always";
+  showOn?: null | "hover" | "always";
 } & BoxProps;
 
 function Controls({
@@ -22,15 +22,13 @@ function Controls({
   widgetInfo,
   controlsContainerProps = {},
   deleteButton = true,
-  showOn = "not_lock",
+  showOn = null,
   ...props
 }: ControlsProps) {
   const [isHovered, setIsHovered] = useState(false);
   const layout = useCurrentLayout();
   const show =
-    showOn === "always" ||
-    (showOn === "hover" && isHovered) ||
-    (showOn === "not_lock" && !layout?.locked);
+    showOn === "always" || (showOn === "hover" && isHovered) || !layout?.locked;
   const handleMouseIn = () => {
     if (showOn === "hover") setIsHovered(true);
   };

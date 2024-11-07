@@ -105,16 +105,16 @@ function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
 
   return (
     <>
-      <div className="flex justify-between items-center gap-2 px-3 h-12 icon-xl">
+      <div className="flex justify-start items-center gap-2 px-3 h-12 icon-xl">
         <SelectIconMenu
           icon={icon}
           setIcon={iconChangeHandler}
-          buttonProps={{ sx: { p: 0.7, m: 0 } }}
+          buttonProps={{ sx: { p: 0.5, m: 0, flexGrow: 0 } }}
         />
         <input
           ref={titleRef}
           onKeyDown={titleKeyDown}
-          className={cn(transparentInput, "text-3xl")}
+          className={cn(transparentInput, "text-3xl w-[calc(100%-100px)]")}
           type="text"
           autoFocus={title.trim() === ""}
           placeholder="Title Here"
@@ -122,7 +122,7 @@ function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
           onChange={titleChangeHandler}
         />
       </div>
-      <ScrollArea className="py-4 px-0.5 space-y-3 h-5/6">
+      <ScrollArea className="py-2 px-0.5 space-y-3 h-[calc(100%-48px)]">
         <Reorder.Group
           className="space-y-2"
           values={dynamicTasks.map((t) => t.id)}

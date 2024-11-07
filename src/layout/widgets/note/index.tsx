@@ -45,7 +45,7 @@ function Note({ id, title, text, icon }: noteType) {
         <SelectIconMenu
           icon={icon}
           setIcon={iconChangeHandler}
-          buttonProps={{ sx: { p: 0.7, m: 0 } }}
+          buttonProps={{ sx: { p: 0.7, m: 0, flexGrow: 0 } }}
         />
         <input
           ref={titleRef}

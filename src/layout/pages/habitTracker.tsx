@@ -14,6 +14,7 @@ import { cn } from "@/utils/cn";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import Controls from "../widgets/controls";
 import { getWidgetControlsProps } from "@/utils/getWidget";
+import { ScrollArea } from "@/components/scrollarea";
 
 function HabitTrackerPage() {
   const { pinned, trackers } = useSelector(
@@ -41,7 +42,7 @@ function HabitTrackerPage() {
     ));
 
   return (
-    <>
+    <ScrollArea className="size-full">
       <AnimatePresence>
         {showStats && (
           <motion.div
@@ -64,12 +65,12 @@ function HabitTrackerPage() {
         </Button>
       </div>
 
-      <div className="grid gap-3 grid-cols-1 m-3 overflow-auto sm:grid-cols-2 md:grid-cols-3">
+      <div className="grid gap-3 grid-cols-1 m-3 sm:grid-cols-2 md:grid-cols-3">
         {renderTrackers(pinnedTracker)}
         {renderTrackers(unPinnedTrackers)}
         <AddNewHabitTracker />
       </div>
-    </>
+    </ScrollArea>
   );
 }
 
