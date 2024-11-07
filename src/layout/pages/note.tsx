@@ -5,6 +5,7 @@ import { cn } from "@/utils/cn";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import Note from "../widgets/note";
 import { addNoteWithTitle } from "@/redux/slice/note";
+import { ScrollArea } from "@/components/scrollarea";
 
 function NotesPage() {
   const { add } = useCurrentIcons();
@@ -14,23 +15,22 @@ function NotesPage() {
   const commonCls = "h-80 overflow-hidden";
 
   return (
-    <div className="grid gap-3 grid-cols-1 p-3 overflow-auto sm:grid-cols-2 md:grid-cols-3">
-      {allNotes.map((p) => (
+    <ScrollArea className="size-full">
+      <div className="grid gap-3 grid-cols-1 p-3 sm:grid-cols-2 md:grid-cols-3">
+        {allNotes.map((p) => (
+          <Paper key={p.id} className={commonCls}>
+            <Note {...p} />
+          </Paper>
+        ))}
         <Paper
-          key={p.id}
-          sx={{ backgroundColor: "secondaryContainer.paper" }}
-          className={commonCls}>
-          <Note {...p} />
+          onClick={() => dispatch(addNoteWithTitle(""))}
+          className={cn(commonCls, "flex-center group cursor-pointer")}>
+          <div className="group-hover:scale-[6] scale-[3] transition-all">
+            {add}
+          </div>
         </Paper>
-      ))}
-      <Paper
-        onClick={() => dispatch(addNoteWithTitle(""))}
-        className={cn(commonCls, "flex-center group cursor-pointer")}>
-        <div className="group-hover:scale-[6] scale-[3] transition-all">
-          {add}
-        </div>
-      </Paper>
-    </div>
+      </div>
+    </ScrollArea>
   );
 }
 

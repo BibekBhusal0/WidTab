@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/utils/cn";
 import { SelectIconMenu } from "@/components/select-icon";
 import { ScrollArea } from "@/components/scrollarea";
@@ -12,6 +12,14 @@ function Note({ id, title, text, icon }: noteType) {
   const titleRef = useRef<HTMLInputElement>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
 
+  const [textareaHeight, setTextareaHeight] = useState(200);
+
+  useEffect(() => {
+    if (textRef.current) {
+      setTextareaHeight(textRef.current.scrollHeight);
+    }
+  }, [text]);
+
   const titleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowDown" || e.key === "Enter") {
       e.preventDefault();
@@ -19,7 +27,6 @@ function Note({ id, title, text, icon }: noteType) {
     }
   };
   const titleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.value) return;
     dispatch(
       changeNoteContent({ content: "title", id, value: e.target.value })
     );
@@ -29,7 +36,6 @@ function Note({ id, title, text, icon }: noteType) {
     dispatch(changeNoteContent({ id, content: "icon", value: icon }));
   };
   const textChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (!e.target.value) return;
     dispatch(changeNoteContent({ content: "text", id, value: e.target.value }));
   };
 
@@ -52,13 +58,18 @@ function Note({ id, title, text, icon }: noteType) {
           onChange={titleChangeHandler}
         />
       </div>
-      <ScrollArea className="py-4 px-0.5 h-5/6">
+      <ScrollArea className="w-full h-5/6">
         <textarea
           ref={textRef}
-          className={cn(transparentInput, "text-xl size-full")}
+          className={cn(
+            transparentInput,
+            "text-xl w-full px-4",
+            !textRef.current && "overflow-hidden"
+          )}
           placeholder="Note Here"
           value={text}
           onChange={textChangeHandler}
+          style={{ height: `${textareaHeight}px` }}
         />
       </ScrollArea>
     </>

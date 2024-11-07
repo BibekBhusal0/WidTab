@@ -1,4 +1,5 @@
 import useCurrentIcons from "@/hooks/useCurrentIcons";
+import { Icon2RN, iconAsProp } from "@/theme/icons";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 
@@ -10,6 +11,7 @@ export type allItemsListProps = {
   items: {
     id: number;
     title: string;
+    icon?: iconAsProp;
   }[];
 };
 
@@ -23,7 +25,7 @@ export function AllItemsList({
   const { pin } = useCurrentIcons();
   return (
     <List>
-      {items.map(({ id, title }) => (
+      {items.map(({ id, title, icon }) => (
         <ListItemButton
           sx={{ justifyContent: "space-between" }}
           disabled={!availablePosition || disabledId.includes(id)}
@@ -31,7 +33,14 @@ export function AllItemsList({
           onClick={() => addWidget(id)}
           //
         >
-          {title}
+          {icon ? (
+            <div className="flex items-center gap-2">
+              <Icon2RN icon={icon} className="h-full" />
+              <div>{title}</div>
+            </div>
+          ) : (
+            title
+          )}
           {id === pinned && pin}
         </ListItemButton>
       ))}
