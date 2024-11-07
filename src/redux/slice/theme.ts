@@ -1,4 +1,4 @@
-import { ThemeItemType } from "@/types/slice/theme";
+import { ThemeItemType, ThemeSliceType } from "@/types/slice/theme";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { getNextId } from "@/utils/next_id";
@@ -7,7 +7,7 @@ import { SelectedIconPacks } from "@/theme/icons";
 
 export const themeSlice = createSlice({
   name: "theme",
-  initialState: initialThemeState,
+  initialState: { ...initialThemeState },
   reducers: {
     addTheme: (state, action: PayloadAction<ThemeItemType>) => {
       const newID = getNextId(state.allThemes.map(({ id }) => id));
@@ -68,6 +68,27 @@ export const themeSlice = createSlice({
         theme.iconPack = action.payload;
       }
     },
+    resetThemeSlice: (state) => {
+      state = { ...initialThemeState };
+    },
+    setState: (state, action: PayloadAction<ThemeSliceType>) => {
+      const val = action.payload;
+      if (!val) return;
+
+      if (val.allThemes) {
+        if (Array.isArray(val.allThemes)) {
+          const allThemes = [...state.allThemes];
+          val.allThemes.forEach((p) => {
+            allThemes.push({
+              ...p,
+              id: getNextId(allThemes.map(({ id }) => id)),
+            });
+          });
+          state.allThemes = allThemes;
+        }
+      }
+      if (val.currentThemeID) state.currentThemeID = val.currentThemeID;
+    },
   },
 });
 
@@ -80,5 +101,6 @@ export const {
   changeIconPack,
   duplicateCurrentTheme,
   duplicateTheme,
+  resetThemeSlice,
 } = themeSlice.actions;
 export default themeSlice.reducer;

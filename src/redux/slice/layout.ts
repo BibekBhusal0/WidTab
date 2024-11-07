@@ -5,6 +5,7 @@ import {
   DynamicSpaceType,
   RemovableToolbarIcons,
   dockContentType,
+  LayoutSliceType,
 } from "@/types/slice/layout";
 import {
   DeleteWidgetParameters,
@@ -33,7 +34,7 @@ const getEmptySpace = (): DynamicSpaceType => {
 
 export const layoutSlice = createSlice({
   name: "layouts",
-  initialState: initialLayoutState,
+  initialState: { ...initialLayoutState },
   reducers: {
     changeCurrentSpace: (state, action: PayloadAction<CurrentSpaceType>) => {
       if (JSON.stringify(state.currentSpace) === JSON.stringify(action.payload))
@@ -214,6 +215,31 @@ export const layoutSlice = createSlice({
         state.currentSpace = { type: "dynamic", id: newID };
       }
     },
+
+    resetLayoutState: (state) => {
+      state = { ...initialLayoutState };
+    },
+    setState: (state, action: PayloadAction<LayoutSliceType>) => {
+      const val = action.payload;
+      if (!val) return;
+      if (val.allSpaces) {
+        if (Array.isArray(val.allSpaces)) {
+          const spaces = [...state.allSpaces];
+          val.allSpaces.forEach((space) => {
+            spaces.push({
+              ...space,
+              id: getNextId(spaces.map(({ id }) => id)),
+            });
+          });
+          state.allSpaces = spaces;
+        }
+      }
+      if (val.currentSpace) state.currentSpace = val.currentSpace;
+      if (val.toolBarPosition) state.toolBarPosition = val.toolBarPosition;
+      if (val.toolBarIcons) state.toolBarIcons = val.toolBarIcons;
+      if (val.dock) state.dock = val.dock;
+      if (val.dockContent) state.dockContent = val.dockContent;
+    },
   },
 });
 
@@ -238,6 +264,7 @@ export const {
   changeDockSelected,
   deleteSpace,
   duplicateSpace,
+  resetLayoutState,
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

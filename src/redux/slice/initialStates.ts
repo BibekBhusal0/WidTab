@@ -4,6 +4,7 @@ import { ThemeSliceType } from "@/types/slice/theme";
 import { todoStateType } from "@/types/slice/todo";
 import dayjs from "@/dayjsConfig";
 import { noteStateType } from "@/types/slice/notes";
+import { bookmarkSliceType } from "@/types/slice/bookmark";
 
 export const initialThemeState: ThemeSliceType = {
   currentThemeID: 2,
@@ -353,4 +354,12 @@ export const initialHabitTrackerState: HabitTrackerSliceType = {
 
 export const initialNoteState: noteStateType = {
   allNotes: [{ id: 1, icon: "a", title: "", text: "" }],
+};
+
+export const initialBookmarkState: bookmarkSliceType = {
+  favorites: [],
+  showFavorites: false,
+  linkInNewTab: true,
+  currentFolderID: "1",
+  folderSize: "medium",
 };

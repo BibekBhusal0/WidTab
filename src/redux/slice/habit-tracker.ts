@@ -1,4 +1,7 @@
-import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
+import {
+  HabitTrackerItemType,
+  HabitTrackerSliceType,
+} from "@/types/slice/habit-tracker";
 import { getNextId } from "@/utils/next_id";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialHabitTrackerState } from "./initialStates";
@@ -6,7 +9,7 @@ import dayjs from "@/dayjsConfig";
 
 const habitTrackerSlice = createSlice({
   name: "habit-tracker",
-  initialState: initialHabitTrackerState,
+  initialState: { ...initialHabitTrackerState },
   reducers: {
     addItem: (state, action: PayloadAction<HabitTrackerItemType>) => {
       state.trackers.push({
@@ -45,6 +48,25 @@ const habitTrackerSlice = createSlice({
       if (state.pinned === action.payload) state.pinned = null;
       else state.pinned = action.payload;
     },
+    setState: (state, action: PayloadAction<HabitTrackerSliceType>) => {
+      const val = action.payload;
+      if (!val) return;
+      if (val.trackers) {
+        const trackers = [...state.trackers];
+
+        val.trackers.forEach((tracker) => {
+          trackers.push({
+            ...tracker,
+            id: getNextId(trackers.map(({ id }) => id)),
+          });
+        });
+        state.trackers = trackers;
+      }
+      if (val.pinned) state.pinned = val.pinned;
+    },
+    resetHabitTrackerState: (state) => {
+      state = { ...initialHabitTrackerState };
+    },
   },
 });
 
@@ -54,5 +76,6 @@ export const {
   deleteItem,
   setItem,
   changePinnedHabitTracker,
+  resetHabitTrackerState,
 } = habitTrackerSlice.actions;
 export default habitTrackerSlice.reducer;

@@ -1,17 +1,14 @@
-import { bookmarkSliceType, folderSizes } from "@/types/slice/bookmark";
+import {
+  allFolderSizes,
+  bookmarkSliceType,
+  folderSizes,
+} from "@/types/slice/bookmark";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-const initialState: bookmarkSliceType = {
-  favorites: [],
-  showFavorites: false,
-  linkInNewTab: true,
-  currentFolderID: "1",
-  folderSize: "medium",
-};
+import { initialBookmarkState } from "./initialStates";
 
 export const bookmarkSlice = createSlice({
   name: "bookmark",
-  initialState,
+  initialState: { ...initialBookmarkState },
   reducers: {
     toggleFavorites: (state, action: PayloadAction<string>) => {
       const fav = state.favorites;
@@ -35,6 +32,27 @@ export const bookmarkSlice = createSlice({
     toggleLink: (state) => {
       state.linkInNewTab = !state.linkInNewTab;
     },
+    setState: (state, action: PayloadAction<bookmarkSliceType>) => {
+      const val = action.payload;
+      if (!val) return;
+      if (val.favorites) {
+        const { favorites } = val;
+        if (Array.isArray(favorites)) {
+          state.favorites = [...state.favorites, ...favorites];
+        }
+      }
+      if (typeof val.currentFolderID === "string")
+        state.currentFolderID = val.currentFolderID;
+      if (allFolderSizes.includes(val.folderSize))
+        state.folderSize = val.folderSize;
+      if (typeof val.showFavorites === "boolean")
+        state.showFavorites = val.showFavorites;
+      if (typeof val.linkInNewTab === "boolean")
+        state.linkInNewTab = val.linkInNewTab;
+    },
+    resetBookmarkState: (state) => {
+      state = { ...initialBookmarkState };
+    },
   },
 });
 
@@ -45,6 +63,7 @@ export const {
   toggleShowFavorites,
   removeFavorite,
   toggleLink,
+  resetBookmarkState,
 } = bookmarkSlice.actions;
 
 export default bookmarkSlice.reducer;
