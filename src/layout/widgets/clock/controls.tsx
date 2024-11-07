@@ -31,7 +31,7 @@ function ClockControls({ id }: { id: number }) {
     TwentyFourHour,
     clockType = "digital",
     showSeconds,
-    timeZone,
+    timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone,
     showTimeZone,
   } = props;
 

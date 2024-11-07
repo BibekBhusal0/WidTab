@@ -16,9 +16,13 @@ function ClockWidget({ ...props }: ClockWidgetType) {
     return () => clearInterval(intervalId);
   }, []);
 
-  const { clockType = "digital", showTimeZone, timeZone } = props;
+  const {
+    clockType = "digital",
+    showTimeZone,
+    timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone,
+  } = props;
   props.clockType = clockType;
-  props.timeZone = timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+  props.timeZone = timeZone;
 
   return (
     <div

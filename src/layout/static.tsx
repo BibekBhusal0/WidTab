@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import { cn } from "@/utils/cn";
 import HabitTrackerPage from "./pages/habitTracker";
 import BookmarkManagerPage from "./pages/bookmark";
+import NotesPage from "./pages/note";
 
 interface StaticLayoutProps {
   widgetType: StaticPagesType;
@@ -20,6 +21,7 @@ const StaticLayout: FunctionComponent<StaticLayoutProps> = ({ widgetType }) => {
     todo: <TodoPage />,
     "habit-tracker": <HabitTrackerPage />,
     bookmark: <BookmarkManagerPage />,
+    note: <NotesPage />,
   };
   return (
     <Box

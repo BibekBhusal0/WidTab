@@ -4,6 +4,7 @@ import todoReducer from "./slice/todo";
 import layoutReducer from "./slice/layout";
 import habitTrackerReducer from "./slice/habit-tracker";
 import bookmarkReducer from "./slice/bookmark";
+import noteReducer from "./slice/note";
 import { persistStore, persistReducer } from "redux-persist";
 import { localStorage } from "redux-persist-webextension-storage";
 
@@ -19,6 +20,7 @@ export const store = configureStore({
     layout: getPersist("layout", layoutReducer),
     theme: getPersist("theme", themeReducer),
     habitTracker: getPersist("habitTracker", habitTrackerReducer),
+    note: getPersist("note", noteReducer),
   },
 });
 

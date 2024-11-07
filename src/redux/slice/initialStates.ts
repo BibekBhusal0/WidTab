@@ -3,6 +3,7 @@ import { LayoutSliceType } from "@/types/slice/layout";
 import { ThemeSliceType } from "@/types/slice/theme";
 import { todoStateType } from "@/types/slice/todo";
 import dayjs from "@/dayjsConfig";
+import { noteStateType } from "@/types/slice/notes";
 
 export const initialThemeState: ThemeSliceType = {
   currentThemeID: 2,
@@ -348,4 +349,8 @@ export const initialHabitTrackerState: HabitTrackerSliceType = {
       },
     },
   ],
+};
+
+export const initialNoteState: noteStateType = {
+  allNotes: [{ id: 1, icon: "a", title: "", text: "" }],
 };

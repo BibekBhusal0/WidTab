@@ -14,6 +14,7 @@ export const staticPagesIcon: Record<StaticPagesType, iconMapping> = {
   todo: { name: "All To-dos", icon: "checklist" },
   "habit-tracker": { name: "All Habit Trackers", icon: "habitTracker" },
   bookmark: { name: "All Bookmarks", icon: "bookmark" },
+  note: { name: "All Notes", icon: "note" },
 };
 
 function AllStaticLayout() {

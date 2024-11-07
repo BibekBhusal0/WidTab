@@ -15,6 +15,7 @@ export const widgetDimensions: Record<allWidgetsType, Partial<Layout>> = {
   "habit-tracker-stats-all": { minW: 4, minH: 3 },
   "timer-stats": { minW: 4, minH: 3 },
   todo: { minW: 3, minH: 4 },
+  note: { minW: 3, minH: 4 },
   bookmark: { minW: 2, minH: 2 },
   "top-sites": { minW: 2, minH: 2, maxH: 6, maxW: 6 },
   favorites: { minW: 2, minH: 2 },
@@ -38,6 +39,7 @@ export const getWidgetControlsProps = (
     calendar: { widgetInfo },
     navigation: { widgetInfo },
     search: { widgetInfo },
+    note: { widgetInfo },
     custom: { deleteButton: true, controls: <URLChange id={id} />, widgetInfo },
     "habit-tracker": {
       deleteButton: false,

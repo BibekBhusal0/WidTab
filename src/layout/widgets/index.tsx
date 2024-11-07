@@ -21,6 +21,7 @@ import { getWidgetControlsProps } from "@/utils/getWidget";
 import TimerWidget from "./timer";
 import Favorites from "./favorites";
 import TopSites from "./top-sites";
+import NoteWidget from "./note/widget";
 
 export const widgetElementMapping: {
   [K in WidgetMappingAll["type"]]: FunctionComponent<AllWidgetPropsMapping<K>>;
@@ -39,6 +40,7 @@ export const widgetElementMapping: {
   "timer-stats": () => null,
   favorites: Favorites,
   "top-sites": TopSites,
+  note: NoteWidget,
 };
 
 function Widget({ widget }: { widget: WidgetType }) {
