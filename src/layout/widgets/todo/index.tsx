@@ -106,15 +106,11 @@ function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
   return (
     <>
       <div className="flex justify-start items-center gap-2 px-3 h-12 icon-xl">
-        <SelectIconMenu
-          icon={icon}
-          setIcon={iconChangeHandler}
-          buttonProps={{ sx: { p: 0.5, m: 0, flexGrow: 0 } }}
-        />
+        <SelectIconMenu icon={icon} setIcon={iconChangeHandler} />
         <input
           ref={titleRef}
           onKeyDown={titleKeyDown}
-          className={cn(transparentInput, "text-3xl w-[calc(100%-100px)]")}
+          className={cn(transparentInput, "text-3xl w-[calc(100%-150px)] ")}
           type="text"
           autoFocus={title.trim() === ""}
           placeholder="Title Here"

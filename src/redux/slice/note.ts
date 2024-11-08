@@ -13,7 +13,12 @@ export const noteSlice = createSlice({
     },
     addNoteWithTitle: (state, action: PayloadAction<string>) => {
       const id = getNextId(state.allNotes.map(({ id }) => id));
-      state.allNotes.push({ title: action.payload, id, text: "", icon: "" });
+      state.allNotes.push({
+        title: action.payload,
+        id,
+        text: "",
+        icon: "mage:note-text",
+      });
     },
     changeNoteContent: (
       state,

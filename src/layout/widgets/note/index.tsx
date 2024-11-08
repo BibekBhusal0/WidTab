@@ -1,8 +1,7 @@
 import { useDispatch } from "react-redux";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { cn } from "@/utils/cn";
 import { SelectIconMenu } from "@/components/select-icon";
-import { ScrollArea } from "@/components/scrollarea";
 import { noteType } from "@/types/slice/notes";
 import { transparentInput } from "../todo";
 import { changeNoteContent } from "@/redux/slice/note";
@@ -11,14 +10,6 @@ function Note({ id, title, text, icon }: noteType) {
   const dispatch = useDispatch();
   const titleRef = useRef<HTMLInputElement>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
-
-  const [textareaHeight, setTextareaHeight] = useState(200);
-
-  useEffect(() => {
-    if (textRef.current) {
-      setTextareaHeight(textRef.current.scrollHeight);
-    }
-  }, [text]);
 
   const titleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowDown" || e.key === "Enter") {
@@ -31,7 +22,6 @@ function Note({ id, title, text, icon }: noteType) {
       changeNoteContent({ content: "title", id, value: e.target.value })
     );
   };
-
   const iconChangeHandler = (icon: string) => {
     dispatch(changeNoteContent({ id, content: "icon", value: icon }));
   };
@@ -41,16 +31,12 @@ function Note({ id, title, text, icon }: noteType) {
 
   return (
     <>
-      <div className="flex justify-between items-center gap-2 px-3 h-12 icon-xl">
-        <SelectIconMenu
-          icon={icon}
-          setIcon={iconChangeHandler}
-          buttonProps={{ sx: { p: 0.7, m: 0, flexGrow: 0 } }}
-        />
+      <div className="flex justify-start items-center gap-2 px-3 h-12 icon-xl">
+        <SelectIconMenu icon={icon} setIcon={iconChangeHandler} />
         <input
           ref={titleRef}
           onKeyDown={titleKeyDown}
-          className={cn(transparentInput, "text-3xl")}
+          className={cn(transparentInput, "text-3xl w-[calc(100%-92px)]")}
           type="text"
           autoFocus={title.trim() === ""}
           placeholder="Title Here"
@@ -58,20 +44,17 @@ function Note({ id, title, text, icon }: noteType) {
           onChange={titleChangeHandler}
         />
       </div>
-      <ScrollArea className="w-full h-5/6">
-        <textarea
-          ref={textRef}
-          className={cn(
-            transparentInput,
-            "text-xl w-full px-4",
-            !textRef.current && "overflow-hidden"
-          )}
-          placeholder="Note Here"
-          value={text}
-          onChange={textChangeHandler}
-          style={{ height: `${textareaHeight}px` }}
-        />
-      </ScrollArea>
+      <textarea
+        ref={textRef}
+        className={cn(
+          transparentInput,
+          "text-xl w-full px-2 h-[calc(100%-48px)]",
+          !textRef.current && "overflow-hidden"
+        )}
+        placeholder="Note Here"
+        value={text}
+        onChange={textChangeHandler}
+      />
     </>
   );
 }
