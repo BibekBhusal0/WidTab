@@ -1,4 +1,3 @@
-import useCurrentLayout from "@/hooks/useCurrentLayout";
 import { DeleteWidgetParameters } from "@/types/slice/widgets";
 import { cn } from "@/utils/cn";
 import Box, { BoxProps } from "@mui/material/Box";

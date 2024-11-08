@@ -5,7 +5,7 @@ import layoutReducer from "./slice/layout";
 import habitTrackerReducer from "./slice/habit-tracker";
 import bookmarkReducer from "./slice/bookmark";
 import noteReducer from "./slice/note";
-import { persistStore, persistReducer } from "redux-persist";
+import { persistStore, persistReducer, PersistConfig } from "redux-persist";
 import { localStorage } from "redux-persist-webextension-storage";
 
 const r = [
@@ -20,8 +20,16 @@ const r = [
 export type reducers = (typeof r)[number];
 export const reducerNames: reducers[] = [...r];
 
-const getPersist = <T>(key: string, reducer: Reducer<T>) => {
-  const storageConfig = { key, storage: localStorage };
+const getPersist = <T>(
+  key: string,
+  reducer: Reducer<T>,
+  others?: Partial<PersistConfig<T>>
+) => {
+  const storageConfig: PersistConfig<T> = {
+    key,
+    storage: localStorage,
+    ...others,
+  };
   return persistReducer(storageConfig, reducer);
 };
 
@@ -29,7 +37,7 @@ export const store = configureStore({
   reducer: {
     bookmarks: getPersist("bookmarks", bookmarkReducer),
     todo: getPersist("todo", todoReducer),
-    layout: getPersist("layout", layoutReducer),
+    layout: getPersist("layout", layoutReducer, { blacklist: ["lock"] }),
     theme: getPersist("theme", themeReducer),
     habitTracker: getPersist("habitTracker", habitTrackerReducer),
     note: getPersist("note", noteReducer),
