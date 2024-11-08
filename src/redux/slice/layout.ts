@@ -217,28 +217,37 @@ export const layoutSlice = createSlice({
     },
 
     resetLayoutState: (state) => {
-      state = { ...initialLayoutState };
+      Object.assign(state, initialLayoutState);
     },
     setState: (state, action: PayloadAction<LayoutSliceType>) => {
+      console.log("setting layout");
       const val = action.payload;
       if (!val) return;
-      if (val.allSpaces) {
-        if (Array.isArray(val.allSpaces)) {
-          const spaces = [...state.allSpaces];
-          val.allSpaces.forEach((space) => {
-            spaces.push({
-              ...space,
-              id: getNextId(spaces.map(({ id }) => id)),
-            });
-          });
-          state.allSpaces = spaces;
-        }
-      }
       if (val.currentSpace) state.currentSpace = val.currentSpace;
       if (val.toolBarPosition) state.toolBarPosition = val.toolBarPosition;
       if (val.toolBarIcons) state.toolBarIcons = val.toolBarIcons;
-      if (val.dock) state.dock = val.dock;
+      if (typeof val.dock === "boolean") state.dock = val.dock;
       if (val.dockContent) state.dockContent = val.dockContent;
+
+      if (!val.allSpaces) return;
+      if (!Array.isArray(val.allSpaces)) return;
+      const allSpaces = [...state.allSpaces];
+
+      for (const space of val.allSpaces) {
+        if (!space.delete_able) {
+          const s = allSpaces.find((p) => p.id === space.id);
+          if (s) {
+            Object.assign(s, space);
+            continue;
+          }
+          const id = getNextId(allSpaces.map(({ id }) => id));
+          if (space.id === val.currentSpace?.id)
+            state.currentSpace = { type: "dynamic", id };
+          allSpaces.push({ ...space, id, delete_able: true });
+        }
+      }
+
+      state.allSpaces = allSpaces;
     },
   },
 });

@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { store } from "@/redux/store";
+import { reducerNames, reducers, store } from "@/redux/store";
 
 export const exportStateToJSON = () => {
   const state = store.getState();
@@ -19,21 +18,13 @@ export const importStateFromJSON = async (file: File) => {
     const text = await file.text();
     const importedState = JSON.parse(text);
 
-    Object.keys(importedState).forEach((key) => {
-      if (
-        ![
-          "bookmarks",
-          "todo",
-          "theme",
-          "layout",
-          "habitTracker",
-          "note",
-        ].includes(key)
-      )
-        return;
-      const action = { type: `${key}/setState`, payload: importedState[key] };
-      store.dispatch(action);
-    });
+    for (const key in importedState) {
+      if (!reducerNames.includes(key as reducers)) continue;
+      console.log("Dispatching setState for:", key);
+      const type = `${key}/setState`;
+      const payload = importedState[key];
+      store.dispatch({ type, payload });
+    }
   } catch (error) {
     console.error("Failed to import state:", error);
   }

@@ -108,24 +108,25 @@ export const todoSlice = createSlice({
       else state.pinnedTodo = action.payload;
     },
     resetTodoSlice: (state) => {
-      state = { ...initialTodoState };
+      console.log("resetting todos");
+      Object.assign(state, initialTodoState);
     },
     setState: (state, action: PayloadAction<todoStateType>) => {
       const val = action.payload;
+      console.log("setting todo");
       if (!val) return;
-      if (val.Tasks) {
-        if (Array.isArray(val.Tasks)) {
-          const tasks = state.Tasks;
-          val.Tasks.forEach((task) => {
-            tasks.push({
-              ...task,
-              id: getNextId(tasks.map(({ id }) => id)),
-            });
-          });
-          state.Tasks = tasks;
-        }
-      }
-      if (val.pinnedTodo) state.pinnedTodo = val.pinnedTodo;
+      if (!val.Tasks) return;
+      if (!Array.isArray(val.Tasks)) return;
+      console.log("all tasks are array");
+
+      const tasks = state.Tasks;
+
+      val.Tasks.forEach((task) => {
+        const id = getNextId(tasks.map(({ id }) => id));
+        if (task.id === val.pinnedTodo) state.pinnedTodo = id;
+        tasks.push({ ...task, id });
+      });
+      state.Tasks = tasks;
     },
   },
 });

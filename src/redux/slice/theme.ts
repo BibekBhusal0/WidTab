@@ -69,25 +69,33 @@ export const themeSlice = createSlice({
       }
     },
     resetThemeSlice: (state) => {
-      state = { ...initialThemeState };
+      Object.assign(state, initialThemeState);
     },
     setState: (state, action: PayloadAction<ThemeSliceType>) => {
       const val = action.payload;
+      console.log("setting theme");
       if (!val) return;
+      if (typeof val.currentThemeID === "number")
+        state.currentThemeID = val.currentThemeID;
+      if (!val.allThemes) return;
+      if (!Array.isArray(val.allThemes)) return;
+      console.log("all themes are array");
 
-      if (val.allThemes) {
-        if (Array.isArray(val.allThemes)) {
-          const allThemes = [...state.allThemes];
-          val.allThemes.forEach((p) => {
-            allThemes.push({
-              ...p,
-              id: getNextId(allThemes.map(({ id }) => id)),
-            });
-          });
-          state.allThemes = allThemes;
+      const allThemes = [...state.allThemes];
+
+      for (const theme of val.allThemes) {
+        if (theme.editAble === false) {
+          const th = allThemes.find((p) => p.id === theme.id);
+          if (th) {
+            Object.assign(th, theme);
+            continue;
+          }
         }
+        const id = getNextId(allThemes.map(({ id }) => id));
+        if (theme.id === val.currentThemeID) state.currentThemeID = id;
+        allThemes.push({ ...theme, editAble: true, id });
       }
-      if (val.currentThemeID) state.currentThemeID = val.currentThemeID;
+      state.allThemes = allThemes;
     },
   },
 });

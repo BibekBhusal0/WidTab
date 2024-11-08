@@ -32,14 +32,16 @@ export const noteSlice = createSlice({
       state.allNotes = state.allNotes.filter((p) => p.id !== action.payload);
     },
     resetNoteState: (state) => {
-      state = { ...initialNoteState };
+      Object.assign(state, initialNoteState);
     },
     setState: (state, action: PayloadAction<noteStateType>) => {
+      console.log("setting note state");
       const val = action.payload;
       if (!val) return;
       if (!val.allNotes) return;
       const { allNotes } = val;
       if (!Array.isArray(allNotes)) return;
+      console.log("note is array");
       const notes = [...state.allNotes];
       allNotes.forEach((note) => {
         notes.push({ ...note, id: getNextId(notes.map(({ id }) => id)) });

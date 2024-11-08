@@ -6,6 +6,7 @@ import { changeCurrentSpace } from "@/redux/slice/layout";
 import { Icon2RN } from "@/theme/icons";
 import { useBookmarkFolder, useFavoriteBookmarks } from "@/hooks/useBookmarks";
 import { faviconURL } from "@/utils/faviconURL";
+import { cn } from "@/utils/cn";
 
 export const ToolbarDock = () => {
   const { content } = useSelector(
@@ -29,10 +30,13 @@ const DockSpace = () => {
 
   const dockItems = items.map(({ icon, name, space }) => ({
     icon: (
-      <Icon2RN
-        icon={icon}
-        className={currentSpace.id === space.id ? "text-primary-main" : ""}
-      />
+      <div
+        className={cn(
+          "size-full",
+          currentSpace.id === space.id && "text-primary-main"
+        )}>
+        <Icon2RN icon={icon} />
+      </div>
     ),
     name,
     onClick: () => dispatch(changeCurrentSpace(space)),

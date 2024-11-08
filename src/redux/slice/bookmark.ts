@@ -33,14 +33,9 @@ export const bookmarkSlice = createSlice({
       state.linkInNewTab = !state.linkInNewTab;
     },
     setState: (state, action: PayloadAction<bookmarkSliceType>) => {
+      console.log("setting bookmarks");
       const val = action.payload;
       if (!val) return;
-      if (val.favorites) {
-        const { favorites } = val;
-        if (Array.isArray(favorites)) {
-          state.favorites = [...state.favorites, ...favorites];
-        }
-      }
       if (typeof val.currentFolderID === "string")
         state.currentFolderID = val.currentFolderID;
       if (allFolderSizes.includes(val.folderSize))
@@ -50,8 +45,9 @@ export const bookmarkSlice = createSlice({
       if (typeof val.linkInNewTab === "boolean")
         state.linkInNewTab = val.linkInNewTab;
     },
+
     resetBookmarkState: (state) => {
-      state = { ...initialBookmarkState };
+      Object.assign(state, initialBookmarkState);
     },
   },
 });

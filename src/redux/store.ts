@@ -8,6 +8,18 @@ import noteReducer from "./slice/note";
 import { persistStore, persistReducer } from "redux-persist";
 import { localStorage } from "redux-persist-webextension-storage";
 
+const r = [
+  "bookmarks",
+  "todo",
+  "layout",
+  "theme",
+  "habitTracker",
+  "note",
+] as const;
+
+export type reducers = (typeof r)[number];
+export const reducerNames: reducers[] = [...r];
+
 const getPersist = <T>(key: string, reducer: Reducer<T>) => {
   const storageConfig = { key, storage: localStorage };
   return persistReducer(storageConfig, reducer);

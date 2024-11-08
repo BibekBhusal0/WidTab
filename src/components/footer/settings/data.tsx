@@ -24,11 +24,10 @@ export const DataSettings = () => {
     if (!file) return;
     if (file.type !== "application/json") return;
     importStateFromJSON(file);
+    setFile(null);
   };
 
-  const handleExportClick = () => {
-    exportStateToJSON();
-  };
+  const handleExportClick = () => exportStateToJSON();
 
   const handelReset = () => {
     dispatch(resetNoteState());

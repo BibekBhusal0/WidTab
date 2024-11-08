@@ -50,22 +50,26 @@ const habitTrackerSlice = createSlice({
     },
     setState: (state, action: PayloadAction<HabitTrackerSliceType>) => {
       const val = action.payload;
+      console.log("setting habit tracker");
       if (!val) return;
-      if (val.trackers) {
-        const trackers = [...state.trackers];
+      if (!val.trackers) return;
+      if (!Array.isArray(val.trackers)) return;
+      console.log("all habit tracker are array");
 
-        val.trackers.forEach((tracker) => {
-          trackers.push({
-            ...tracker,
-            id: getNextId(trackers.map(({ id }) => id)),
-          });
+      const trackers = [...state.trackers];
+      val.trackers.forEach((tracker) => {
+        const id = getNextId(trackers.map(({ id }) => id));
+        if (tracker.id === val.pinned) state.pinned = id;
+        trackers.push({
+          ...tracker,
+          id,
         });
-        state.trackers = trackers;
-      }
-      if (val.pinned) state.pinned = val.pinned;
+      });
+
+      state.trackers = trackers;
     },
     resetHabitTrackerState: (state) => {
-      state = { ...initialHabitTrackerState };
+      Object.assign(state, initialHabitTrackerState);
     },
   },
 });
