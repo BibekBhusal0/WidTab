@@ -98,6 +98,7 @@ export const initialTodoState: todoStateType = {
 
 export const initialLayoutState: LayoutSliceType = {
   toolBarPosition: "bottom",
+  locked: true,
   dock: true,
   toolBarIcons: ["lock", "theme"],
   n_rows: 8,
@@ -112,7 +113,7 @@ export const initialLayoutState: LayoutSliceType = {
       name: "Home",
       compaction: "none",
       id: 1,
-      locked: true,
+
       icon: "jam:home-f",
 
       widgets: [
@@ -203,7 +204,7 @@ export const initialLayoutState: LayoutSliceType = {
       compaction: "none",
       id: 2,
       icon: "mage:dashboard-fill",
-      locked: true,
+
       widgets: [
         {
           type: "clock",
@@ -285,7 +286,7 @@ export const initialLayoutState: LayoutSliceType = {
       compaction: "none",
       id: 3,
       icon: "mage:trophy-fill",
-      locked: true,
+
       widgets: [
         {
           gridProps: { x: 1, y: 0, w: 4, h: 2, i: "habit-tracker-1" },

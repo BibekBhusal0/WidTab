@@ -60,23 +60,20 @@ function getDockContentFromBookmarks(
     bookmark.length === 0
       ? []
       : bookmark
-          .map((item) => {
-            if (!item?.url) return;
-            return {
-              icon: (
-                <img
-                  className="iconify"
-                  src={faviconURL(item.url, 64)}
-                  alt={item.title}
-                />
-              ),
-              name: item.title,
-              onClick: () => {
-                window.open(item.url), linkInNewTab ? "_blank" : "_self";
-              },
-            };
-          })
-          .filter((i) => !!i);
+          .filter((item) => item?.url)
+          .map((item) => ({
+            icon: (
+              <img
+                className="iconify"
+                src={faviconURL(`${item.url}`, 64)}
+                alt={item.title}
+              />
+            ),
+            name: item.title,
+            onClick: () => {
+              window.open(item.url, linkInNewTab ? "_blank" : "_self");
+            },
+          }));
 
   return dockItems;
 }

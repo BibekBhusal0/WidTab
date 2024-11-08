@@ -12,7 +12,7 @@ import { cn } from "@/utils/cn";
 import useFullSize from "@/hooks/useFullSize";
 
 function DynamicLayout() {
-  const { n_cols, n_rows, currentSpace, toolBarPosition } = useSelector(
+  const { n_cols, n_rows, currentSpace, toolBarPosition, locked } = useSelector(
     (state: StateType) => state.layout
   );
   const { mainComponentProps } = positionProps[toolBarPosition];
@@ -25,7 +25,7 @@ function DynamicLayout() {
   } = useFullSize([currentSpace, toolBarPosition]);
   const rowHeight = (height - gap * n_rows) / n_rows;
   if (!space) return null;
-  const { compaction, locked, widgets } = space;
+  const { compaction, widgets } = space;
   const layout = widgets.map((w) => w.gridProps);
 
   const handleChange = (layout: Layout[]) => {

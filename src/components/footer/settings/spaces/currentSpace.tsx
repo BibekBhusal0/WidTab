@@ -5,33 +5,33 @@ import DeleteThisSpace from "./deleteSpace";
 import ChangeCompaction from "./changeCompaction";
 import AddSpace from "./addSpace";
 import RenameItem from "@/components/renameItem";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   currentSpaceChangeIcon,
   currentSpaceRename,
-  currentSpaceToggleLocked,
+  toggleLocked,
 } from "@/redux/slice/layout";
 import { SelectIconMenu } from "@/components/select-icon";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
+import { StateType } from "@/redux/store";
 
 function CurrentSpaceSetting() {
   const layout = useCurrentLayout();
   const dispatch = useDispatch();
-  const space = useCurrentLayout();
+  const { locked } = useSelector((state: StateType) => state.layout);
 
   const toggle: MenuSwitchProps["items"] = [
     {
-      onChange: () => dispatch(currentSpaceToggleLocked()),
+      onChange: () => dispatch(toggleLocked()),
       title: "Lock Widgets",
-      checked: space?.locked,
+      checked: locked,
     },
   ];
 
   if (!layout)
     return (
       <div className="w-full p-2 border-divider border-t-2">
-        {" "}
-        <AddSpace />{" "}
+        <AddSpace />
       </div>
     );
 

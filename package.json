@@ -9,7 +9,9 @@
   },
   "scripts": {
     "build": "vite build",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "type-check": "tsc --noEmit",
+    "type-check-watch": "tsc --noEmit --watch"
   },
   "type": "module",
   "dependencies": {

@@ -3,11 +3,12 @@ import { DeleteWidgetParameters } from "@/types/slice/widgets";
 import { cn } from "@/utils/cn";
 import Box, { BoxProps } from "@mui/material/Box";
 import { ReactNode, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Paper, { PaperProps } from "@mui/material/Paper";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
 import IconButton from "@mui/material/IconButton";
+import { StateType } from "@/redux/store";
 
 export type ControlsProps = {
   widgetInfo?: DeleteWidgetParameters;
@@ -26,9 +27,9 @@ function Controls({
   ...props
 }: ControlsProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const layout = useCurrentLayout();
+  const { locked } = useSelector((state: StateType) => state.layout);
   const show =
-    showOn === "always" || (showOn === "hover" && isHovered) || !layout?.locked;
+    showOn === "always" || (showOn === "hover" && isHovered) || !locked;
   const handleMouseIn = () => {
     if (showOn === "hover") setIsHovered(true);
   };

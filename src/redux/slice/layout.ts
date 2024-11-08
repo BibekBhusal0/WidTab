@@ -25,7 +25,6 @@ const getEmptySpace = (): DynamicSpaceType => {
     name: "name",
     compaction: "none",
     id: 0,
-    locked: true,
     widgets: [],
     delete_able: true,
     icon: "majesticons:planet-rocket-line",
@@ -80,10 +79,12 @@ export const layoutSlice = createSlice({
       }
     },
 
+    toggleLocked: (state) => {
+      state.locked = !state.locked;
+    },
     toggleDock: (state) => {
       state.dock = !state.dock;
     },
-
     toggleIcon: (state, action: PayloadAction<RemovableToolbarIcons>) => {
       if (state.toolBarIcons.includes(action.payload)) {
         state.toolBarIcons = state.toolBarIcons.filter(
@@ -192,12 +193,6 @@ export const layoutSlice = createSlice({
         space.icon = action.payload;
       }
     },
-    currentSpaceToggleLocked: (state) => {
-      const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
-      if (space && state.currentSpace.type === "dynamic") {
-        space.locked = !space.locked;
-      }
-    },
     currentSpaceChangeCompaction: (
       state,
       action: PayloadAction<compactionType>
@@ -261,7 +256,6 @@ export const {
   currentSpaceDeleteWidget,
   currentSpaceSetGridProps,
   currentSpaceDeleteSpace,
-  currentSpaceToggleLocked,
   currentSpaceChangeCompaction,
   currentSpaceDuplicate,
   currentSpaceRename,
@@ -274,6 +268,7 @@ export const {
   deleteSpace,
   duplicateSpace,
   resetLayoutState,
+  toggleLocked,
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

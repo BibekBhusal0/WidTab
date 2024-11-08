@@ -3,10 +3,7 @@ import { StaticPagesType, WidgetType } from "./widgets";
 import { BoxProps } from "@mui/material/Box";
 
 export type CurrentSpaceType =
-  | {
-      type: "dynamic";
-      id: number;
-    }
+  | { type: "dynamic"; id: number }
   | { type: "static"; id: StaticPagesType };
 
 export type compactionType = "none" | "vertical" | "horizontal";
@@ -14,7 +11,6 @@ export type DynamicSpaceType = {
   id: number;
   name: string;
   compaction: compactionType;
-  locked: boolean;
   delete_able?: boolean;
   icon: string;
   widgets: WidgetType[];
@@ -41,6 +37,7 @@ export type dockContentType =
 export type LayoutSliceType = {
   toolBarPosition: ToolBarPositions;
   toolBarIcons: RemovableToolbarIcons[];
+  locked: boolean;
   dock: boolean;
   dockContent: dockContentType;
   n_rows: number;
