@@ -54,7 +54,10 @@ function AddNote() {
 
       <AddItem
         inputProps={{ label: "Note title", placeholder: "Note title" }}
-        addButtonProps={{ children: "Add Note", disabled: !availablePosition }}
+        addButtonProps={{
+          children: "Add New Note",
+          disabled: !availablePosition,
+        }}
         clickEvent={addNote}
         word_limit={undefined}
       />

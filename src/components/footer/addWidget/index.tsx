@@ -11,6 +11,7 @@ import AddHabitTracer from "./habitTracker";
 import AddNavigation from "./navigation";
 import AddBookmark from "./bookmark";
 import AddNote from "./notes";
+import AddGemini from "./gemini";
 
 function AddWidget() {
   const { widget } = useCurrentIcons();
@@ -23,6 +24,7 @@ function AddWidget() {
     { index: 5, name: "Navigation", component: <AddNavigation /> },
     { index: 6, name: "Bookmark", component: <AddBookmark /> },
     { index: 7, name: "Note", component: <AddNote /> },
+    { index: 8, name: "Gemini", component: <AddGemini /> },
   ];
   return (
     <FooterPopover tooltip="Add Widget" icon={widget}>

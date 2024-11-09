@@ -10,7 +10,7 @@ import IconMenu from "@/components/menuWithIcon";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
 import useCurrentLayout from "@/hooks/useCurrentLayout";
 
-function TimerCOntrols({ id }: { id: number }) {
+function TimerControls({ id }: { id: number }) {
   const layout = useCurrentLayout();
   const dispatch = useDispatch();
   const { delete_ } = useCurrentIcons();
@@ -52,4 +52,4 @@ function TimerCOntrols({ id }: { id: number }) {
   );
 }
 
-export default TimerCOntrols;
+export default TimerControls;

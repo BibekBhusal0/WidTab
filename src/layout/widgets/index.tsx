@@ -22,6 +22,7 @@ import TimerWidget from "./timer";
 import Favorites from "./favorites";
 import TopSites from "./top-sites";
 import NoteWidget from "./note/widget";
+import GeminiWidget from "./gemini";
 
 export const widgetElementMapping: {
   [K in WidgetMappingAll["type"]]: FunctionComponent<AllWidgetPropsMapping<K>>;
@@ -38,6 +39,7 @@ export const widgetElementMapping: {
   navigation: CylindricalNavigation,
   timer: TimerWidget,
   "timer-stats": () => null,
+  gemini: GeminiWidget,
   favorites: Favorites,
   "top-sites": TopSites,
   note: NoteWidget,

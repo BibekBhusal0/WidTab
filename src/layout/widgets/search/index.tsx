@@ -1,5 +1,9 @@
 import { currentSpaceEditWidget } from "@/redux/slice/layout";
-import { AllSearchEngines, SearchWidgetType } from "@/types/slice/widgets";
+import {
+  AllSearchEngines,
+  searchEngines,
+  SearchWidgetType,
+} from "@/types/slice/widgets";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -34,15 +38,13 @@ function SearchWidget({ id, engine }: SearchWidgetType) {
       }
     }
   };
+
   const changeSearchEngine = (e: SelectChangeEvent<unknown>) => {
-    if (e.target.value) {
-      dispatch(
-        currentSpaceEditWidget({
-          type: "search",
-          values: { id, engine: e.target.value as AllSearchEngines },
-        })
-      );
-    }
+    const val = e.target.value as AllSearchEngines;
+    if (!searchEngines.includes(val)) return;
+    dispatch(
+      currentSpaceEditWidget({ type: "search", values: { id, engine: val } })
+    );
   };
 
   return (

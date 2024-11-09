@@ -2,6 +2,7 @@ import { Layout } from "react-grid-layout";
 import { TaskType } from "./todo";
 import { HabitTrackerHistoryType, HabitTrackerItemType } from "./habit-tracker";
 import { BookmarkWidgetType, FavoritesWidgetType } from "./bookmark";
+import { Content } from "@google/generative-ai";
 
 const SP = ["todo", "bookmark", "habit-tracker", "note"] as const;
 const CW = [
@@ -22,6 +23,7 @@ const UW = [
   "bookmark",
   "favorites",
   "top-sites",
+  "gemini",
 ] as const;
 const SE = ["Google", "Bing", "YouTube", "Brave", "DuckDuckGo"] as const;
 
@@ -37,6 +39,21 @@ export const controlledWidgets: controlledWidgetsType[] = [...CW];
 export const uncontrolledWidgets: uncontrolledWidgetsType[] = [...UW];
 export const searchEngines: AllSearchEngines[] = [...SE];
 export type CustomWidgetType = { id: number; url: string };
+
+const am = [
+  "gemini-1.5-flash",
+  "gemini-1.5-flash-8b",
+  "gemini-1.5-pro",
+  "gemini-1.0-pro",
+] as const;
+export type aiModel = (typeof am)[number];
+export const AImodels: aiModel[] = [...am];
+
+export type geminiWidgetType = {
+  id: number;
+  model: aiModel;
+  conversation: Content[];
+};
 
 export type ClockWidgetType = {
   id: number;
@@ -71,6 +88,7 @@ export type WidgetMappingUncontrolled =
   | { type: "bookmark"; values: BookmarkWidgetType }
   | { type: "favorites"; values: FavoritesWidgetType }
   | { type: "top-sites"; values: FavoritesWidgetType }
+  | { type: "gemini"; values: geminiWidgetType }
   | { type: "timer"; values: TimerWidgetType };
 
 export type WidgetMappingAll =

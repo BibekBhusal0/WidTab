@@ -5,9 +5,10 @@ import HabitTrackerControls from "@/layout/widgets/habit-tracker/controls";
 import ClockControls from "@/layout/widgets/clock/controls";
 import TodoControls from "@/layout/widgets/todo/todo-controls";
 import { URLChange } from "@/layout/widgets/custom";
-import TimerCOntrols from "@/layout/widgets/timer/controls";
+import TimerControls from "@/layout/widgets/timer/controls";
 import BookmarkControls from "@/layout/widgets/bookmark/controls";
 import SitesControls from "@/layout/widgets/favorites/controls";
+import GeminiControls from "@/layout/widgets/gemini/controls";
 
 export const widgetDimensions: Record<allWidgetsType, Partial<Layout>> = {
   "habit-tracker": { minW: 4, minH: 2, maxH: 2, maxW: 8 },
@@ -25,6 +26,7 @@ export const widgetDimensions: Record<allWidgetsType, Partial<Layout>> = {
   calendar: { minH: 4, minW: 3, isResizable: false },
   navigation: { minH: 2, minW: 4, maxH: 3, maxW: 5 },
   timer: { minW: 4, minH: 3, maxW: 4 },
+  gemini: { minW: 4, minH: 5 },
 };
 
 export const getWidgetControlsProps = (
@@ -32,14 +34,7 @@ export const getWidgetControlsProps = (
   id: number
 ): ControlsProps => {
   const widgetInfo = { id: id, type: widgetType };
-  const controlsProps: Record<allWidgetsType, ControlsProps> = {
-    "habit-tracker-stats-all": { widgetInfo },
-    "habit-tracker-stats-single": { widgetInfo },
-    "timer-stats": { widgetInfo },
-    calendar: { widgetInfo },
-    navigation: { widgetInfo },
-    search: { widgetInfo },
-    note: { widgetInfo },
+  const controlsProps: Partial<Record<allWidgetsType, ControlsProps>> = {
     custom: { deleteButton: true, controls: <URLChange id={id} />, widgetInfo },
     "habit-tracker": {
       deleteButton: false,
@@ -65,7 +60,7 @@ export const getWidgetControlsProps = (
       deleteButton: false,
       showOn: "hover",
       widgetInfo,
-      controls: <TimerCOntrols id={id} />,
+      controls: <TimerControls id={id} />,
     },
     bookmark: {
       deleteButton: false,
@@ -84,7 +79,13 @@ export const getWidgetControlsProps = (
       showOn: "hover",
       deleteButton: false,
     },
+    gemini: {
+      widgetInfo,
+      controls: <GeminiControls id={id} />,
+      deleteButton: !1,
+      showOn: "hover",
+    },
   };
 
-  return controlsProps[widgetType];
+  return controlsProps[widgetType] || { widgetInfo };
 };

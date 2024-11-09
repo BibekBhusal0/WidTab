@@ -1,4 +1,4 @@
-import { AllSearchEngines } from "@/types/slice/widgets";
+import { AllSearchEngines, searchEngines } from "@/types/slice/widgets";
 import type { SelectChangeEvent } from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -10,9 +10,9 @@ function AddSearch() {
   const [engine, setEngine] = useState<AllSearchEngines>("Google");
 
   const changeSearchEngine = (e: SelectChangeEvent<unknown>) => {
-    if (e.target.value) {
-      setEngine(e.target.value as AllSearchEngines);
-    }
+    const val = e.target.value as AllSearchEngines;
+    if (!searchEngines.includes(val)) return;
+    if (e.target.value) setEngine(val);
   };
 
   return (

@@ -23,6 +23,7 @@ export function AllItemsList({
   items,
 }: allItemsListProps) {
   const { pin } = useCurrentIcons();
+  if (!items.length) return null;
   return (
     <List>
       {items.map(({ id, title, icon }) => (

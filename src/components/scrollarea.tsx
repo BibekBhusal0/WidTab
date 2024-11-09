@@ -12,11 +12,10 @@ const ScrollArea = forwardRef<
   ElementRef<typeof Root>,
   ComponentPropsWithoutRef<typeof Root>
 >(({ className, children, ...props }, ref) => (
-  <Root
-    ref={ref}
-    className={cn("relative overflow-hidden", className)}
-    {...props}>
-    <Viewport className="h-full w-full rounded-[inherit]">{children}</Viewport>
+  <Root className={cn("relative overflow-hidden", className)} {...props}>
+    <Viewport ref={ref} className="h-full w-full rounded-[inherit]">
+      {children}
+    </Viewport>
     <ScrollBar />
     <Corner />
   </Root>

@@ -51,7 +51,8 @@ function DynamicLayout() {
         width={width}
         margin={[gap, gap]}
         //
-        className={`size-full ${locked ? "hide-resize" : ""}`}
+        // className={`size-full ${locked ? "hide-resize" : ""}`}
+        className={cn("size-full pb-2", locked && "hide-resize")}
         isDraggable={!locked}
         isResizable={!locked}
         isDroppable={!locked}

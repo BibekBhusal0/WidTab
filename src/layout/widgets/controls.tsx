@@ -46,7 +46,7 @@ function Controls({
         <Paper
           {...controlsContainerProps}
           className={cn(
-            "absolute right-0 top-0 px-2 py-1 z-20 widget-control icon-lg flex-center",
+            "absolute right-0 top-0 px-2 py-1 z-20 widget-control icon-md flex-center",
             controlsContainerProps?.className
           )}
           sx={{
