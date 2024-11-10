@@ -1,11 +1,12 @@
 import useCurrentTheme from "@/hooks/useCurrentTheme";
 import { useDispatch } from "react-redux";
-import { Icon2RN, iconPackNames, SelectedIconPacks } from "@/theme/icons";
+import { Icon2RN, iconPackNames } from "@/theme/icons";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { compactionType } from "@/types/slice/layout";
 import { changeIconPack } from "@/redux/slice/theme";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import { SelectedIconPacks } from "@/theme/selected-icons";
 
 function SelectIconPack({ showLabel = true }: { showLabel?: boolean }) {
   const { iconPack } = useCurrentTheme();

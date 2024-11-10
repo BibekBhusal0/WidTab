@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { getNextId } from "@/utils/next_id";
 import { initialThemeState } from "./initialStates";
-import { SelectedIconPacks } from "@/theme/icons";
+import { SelectedIconPacks } from "@/theme/selected-icons";
 
 export const themeSlice = createSlice({
   name: "theme",
