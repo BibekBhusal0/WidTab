@@ -22,19 +22,3 @@
     @apply horizontal-center vertical-center;
   }
 }
-
-.sidebar .react-resizable-handle-e {
-  position: absolute;
-  background: rgba(161, 123, 123, 0.411);
-
-  top: 0;
-  width: 3px;
-  height: 100%;
-  cursor: col-resize;
-  right: 0;
-}
-.sidebar .react-resizable-handle-e:hover,
-.sidebar .react-resizable-handle-e:focus {
-  background: rgba(161, 123, 123, 0.9);
-  width: 5px;
-}

@@ -77,7 +77,7 @@ function AddHabitTracer() {
 
   return (
     <div className="text-lg mb-6">
-      {!trackers.length && (
+      {trackers.length && (
         <>
           <SettingHeader first>Habit Tracker</SettingHeader>
           <AllItemsList

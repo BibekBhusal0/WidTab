@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactNode } from "react";
+import { ReactNode } from "react";
 import CustomThemeProvider from "./";
 import { Provider } from "react-redux";
 import { persistor, store } from "../redux/store";
@@ -8,13 +8,8 @@ import "@/assets/styles/tailwind.css";
 import "@/assets/styles/icons.css";
 import "@/assets/styles/index.css";
 
-interface EverythingProviderProps {
-  children: ReactNode;
-}
-
-const EverythingProvider: FunctionComponent<EverythingProviderProps> = ({
-  children,
-}: EverythingProviderProps) => {
+type EPprovider = { children: ReactNode };
+const EverythingProvider = ({ children }: EPprovider) => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

@@ -5,7 +5,6 @@ import {
   hexFromArgb,
 } from "@material/material-color-utilities";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
-import type {} from "@mui/x-charts/themeAugmentation";
 import { ThemeItemType } from "@/types/slice/theme";
 import alphaColor from "@/utils/alpha";
 import useCurrentTheme from "@/hooks/useCurrentTheme";
@@ -95,15 +94,6 @@ export const getTheme = ({
       MuiInput: { ...rounded },
       MuiFilledInput: { ...rounded },
       MuiOutlinedInput: { ...rounded },
-      MuiBarChart: {
-        defaultProps: {
-          borderRadius: roundness * 30,
-          colors: [hexFromArgb(crrPrimary.primary)],
-          skipAnimation: false,
-          tooltip: { trigger: "none" },
-          axisHighlight: { x: "none", y: "none" },
-        },
-      },
     },
   });
 };

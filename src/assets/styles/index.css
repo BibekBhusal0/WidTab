@@ -104,3 +104,7 @@
   background: var(--primary-8);
   width: 5px;
 }
+
+.hide-outerSubArc .outerSubArc {
+  display: none;
+}
