@@ -12,6 +12,7 @@ import RenameTheme from "./renameTheme";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import SelectIconPack from "./iconPack";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
+import { HexPicker } from "@/components/color";
 
 function CurrentThemeSettings() {
   const theme = useCurrentTheme();
@@ -33,17 +34,14 @@ function CurrentThemeSettings() {
         <>
           <div className="full-between">
             <div className="text-xl">Primary Color</div>
-            <input
-              type="color"
-              name="primary"
-              id="primary"
-              value={theme.primaryColor}
-              onChange={(e) =>
-                dispatch(
-                  changeTheme({ ...theme, primaryColor: e.target.value })
-                )
-              }
-            />
+            <div className="w-36">
+              <HexPicker
+                color={theme.primaryColor}
+                setColor={(color) =>
+                  dispatch(changeTheme({ ...theme, primaryColor: color }))
+                }
+              />
+            </div>
           </div>
           <SelectIconPack showLabel />
           <div className="flex flex-col items-center gap-4">

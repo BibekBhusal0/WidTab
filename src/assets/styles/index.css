@@ -108,3 +108,8 @@
 .hide-outerSubArc .outerSubArc {
   display: none;
 }
+[data-radix-scroll-area-viewport] > div {
+  width: 100%;
+  height: 100%;
+  display: block !important;
+}

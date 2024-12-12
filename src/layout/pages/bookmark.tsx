@@ -1,13 +1,11 @@
 import Sidebar from "@/components/sidebar";
 import BookmarkTree from "@/components/bookmarks/tree";
-import ThemeSwitch from "@/theme/switch";
 import SelectSize from "@/components/bookmarks/size";
 import Button from "@mui/material/Button";
 import { Icon } from "@iconify/react";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import { toggleShowFavorites } from "@/redux/slice/bookmark";
-import { ScrollArea } from "@/components/scrollarea";
 import BookmarkSearch from "@/components/bookmarks/search";
 import { useBookmarkFolder, useFavoriteBookmarks } from "@/hooks/useBookmarks";
 import BookmarkBreadcrumb from "@/components/bookmarks/breadcrumb";
@@ -16,6 +14,9 @@ import { changeCurrentFolder } from "@/redux/slice/bookmark";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { changeFolderSize } from "@/redux/slice/bookmark";
 import { allFolderSizes, folderSizes } from "@/types/slice/bookmark";
+// import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { Root, Viewport } from "@radix-ui/react-scroll-area";
+import { ScrollBar, ScrollArea } from "@/components/scrollarea";
 
 function BookmarkManager() {
   return (
@@ -33,7 +34,6 @@ function BookmarkManager() {
       header={
         <>
           <BookmarkSearch />
-          <ThemeSwitch />
           <BookmarkSizeSelect />
         </>
       }
