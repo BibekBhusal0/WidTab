@@ -19,7 +19,7 @@ function GeneralSettings() {
   ];
 
   return (
-    <div className="w-full flex flex-col gap-4">
+    <div className="w-full flex flex-col gap-4 pb-4">
       <MenuSwitch plain items={toggle} />
       <div className="full-between">
         <div className="text-xl">Tool Bar Position</div>

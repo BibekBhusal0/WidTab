@@ -150,10 +150,16 @@ export function HexPicker({ color, setColor }: HexPickerProps) {
   const colors = ["#f00", "#0f0", "#0ff", "#00f", "#f0f"];
   let [_color, _setColor] = useState(parseColor(color || "#f00"));
   const c = _color.toString("hex");
+
   useEffect(() => {
     if (!setColor) return;
     setColor(c);
   }, [_color]);
+
+  useEffect(() => {
+    if (!color) return;
+    _setColor(parseColor(color));
+  }, [color]);
 
   return (
     <ColorPicker value={_color} onChange={_setColor}>

@@ -30,7 +30,7 @@ function HabitTrackerPage() {
         key={tracker.id}
         sx={{
           backgroundColor:
-            tracker.id === pinned ? "secondaryContainer.paper" : undefined,
+            tracker.id === pinned ? "primaryContainer.paper" : undefined,
         }}
         className="h-[150px] overflow-hidden">
         <Controls

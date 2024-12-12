@@ -1,6 +1,5 @@
 import { StateType } from "@/redux/store";
 import { useSelector } from "react-redux";
-import Paper from "@mui/material/Paper";
 import { Icon } from "@iconify/react";
 import { faviconURL } from "@/utils/faviconURL";
 import { cn } from "@/utils/cn";
@@ -12,6 +11,8 @@ import {
 } from "@/types/slice/bookmark";
 import useFullSize from "@/hooks/useFullSize";
 import { LinkContextMenu } from "./contextMenu";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
 
 type l = { openLinkInNewTab?: boolean; contextMenu?: boolean };
 
@@ -98,16 +99,18 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
   );
 
   return (
-    <Paper
-      className="cursor-pointer"
+    <Card
       variant="outlined"
       sx={{
+        backgroundColor: "secondaryContainer.paper",
         width: size,
         height: size,
         fontSize: size / 9,
       }}>
-      {content}
-    </Paper>
+      <CardActionArea sx={{ width: "100%", height: "100%" }}>
+        {content}
+      </CardActionArea>
+    </Card>
   );
 }
 

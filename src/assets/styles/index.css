@@ -113,3 +113,6 @@
   height: 100%;
   display: block !important;
 }
+.popup-page .h-screen {
+  height: auto;
+}

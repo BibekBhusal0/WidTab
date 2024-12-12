@@ -13,6 +13,7 @@ import useCurrentIcons from "@/hooks/useCurrentIcons";
 import SelectIconPack from "./iconPack";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
 import { HexPicker } from "@/components/color";
+import SelectBackgroundImage from "./selectBackgroundImage";
 
 function CurrentThemeSettings() {
   const theme = useCurrentTheme();
@@ -57,7 +58,7 @@ function CurrentThemeSettings() {
             ))}
           </div>
           <RenameTheme />
-
+          <SelectBackgroundImage />
           <Button
             variant="outlined"
             onClick={() => dispatch(deleteTheme(theme.id))}

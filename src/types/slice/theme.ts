@@ -11,6 +11,7 @@ export type ThemeItemType = {
   opacity: number;
   iconPack: string;
   editAble?: boolean;
+  image?: string;
 };
 
 export type ThemeSliceType = {

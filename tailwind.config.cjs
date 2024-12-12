@@ -44,7 +44,14 @@ module.exports = {
         "text-secondary": "var(--mui-palette-text-secondary)",
         divider: "var(--mui-palette-divider)",
       },
-      backdropBlur: { themed: "var(--custom-blur)" },
+      backdropBlur: {
+        themed: "var(--custom-blur)",
+        half: "calc(var(--custom-blur) / 2)",
+      },
+      blur: {
+        themed: "var(--custom-blur)",
+        half: "calc(var(--custom-blur) / 2)",
+      },
       borderRadius: { themed: "var(--custom-border-radius)" },
       animation: {
         "spin-slow": "spin 20s linear infinite",

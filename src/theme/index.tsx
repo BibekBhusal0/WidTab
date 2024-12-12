@@ -8,14 +8,36 @@ import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import { ThemeItemType } from "@/types/slice/theme";
 import alphaColor from "@/utils/alpha";
 import useCurrentTheme from "@/hooks/useCurrentTheme";
+import { ReactNode } from "react";
+import { cn } from "@/utils/cn";
 
-export const getTheme = ({
-  mode,
-  primaryColor,
-  blur,
-  roundness,
+type themeBackgroundProps = { children: ReactNode } & ThemeItemType;
+function ThemeBackground({
+  image,
   opacity,
-}: ThemeItemType) => {
+  mode,
+  children,
+}: themeBackgroundProps) {
+  const color =
+    mode === "dark"
+      ? `rgba(0,0,0,${opacity / 3})`
+      : `rgba(255,255,255,${opacity / 3})`;
+  const full = "size-full h-screen";
+  return (
+    <div
+      className={cn(full, image && "bg-cover bg-center bg-no-repeat")}
+      style={image ? { backgroundImage: `url(${image})` } : {}}>
+      <div
+        className={cn(full, image && "backdrop-blur-half")}
+        style={image ? { backgroundColor: color } : {}}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+export const getTheme = (theme: ThemeItemType) => {
+  const { mode, primaryColor, blur, roundness, opacity } = theme;
   const primary = themeFromSourceColor(argbFromHex(primaryColor));
   const crrPrimary = primary.schemes[mode];
 
@@ -41,7 +63,6 @@ export const getTheme = ({
       },
     },
   };
-
   return createTheme({
     cssVariables: true,
     palette: {
@@ -101,7 +122,15 @@ export const getTheme = ({
 function CustomThemeProvider({ children }: { children: React.ReactNode }) {
   const th = useCurrentTheme();
   const theme = getTheme(th);
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+  //   setThemeBackground(th);
+  return (
+    <ThemeProvider theme={theme}>
+      <ThemeBackground {...th} children={children} />
+
+      {/* {children}
+    </ThemeBackground> */}
+    </ThemeProvider>
+  );
 }
 
 export default CustomThemeProvider;

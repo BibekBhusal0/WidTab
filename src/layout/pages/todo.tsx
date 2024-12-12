@@ -25,7 +25,7 @@ function TodoPage() {
         key={task.id}
         sx={{
           backgroundColor:
-            task.id === pinnedTodo ? "secondaryContainer.paper" : undefined,
+            task.id === pinnedTodo ? "primaryContainer.paper" : undefined,
         }}
         className={commonCls}>
         <Controls {...getWidgetControlsProps("todo", task.id)} showOn="always">
