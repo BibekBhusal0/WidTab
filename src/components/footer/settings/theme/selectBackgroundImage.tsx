@@ -7,7 +7,6 @@ import { useDispatch } from "react-redux";
 import { setBackgroundImage } from "@/redux/slice/theme";
 import Button from "@mui/material/Button";
 import { useState } from "react";
-import { ScrollArea } from "@/components/scrollarea";
 
 function SelectBackgroundImage() {
   const { image } = useCurrentTheme();
