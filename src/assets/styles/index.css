@@ -116,3 +116,7 @@
 .popup-page .h-screen {
   height: auto;
 }
+.react-colorful__pointer {
+  width: 20px !important;
+  height: 20px !important;
+}
