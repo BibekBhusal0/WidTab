@@ -9,8 +9,8 @@ import TextField from "@mui/material/TextField";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import { Icon } from "@iconify/react";
-import { faviconURL } from "@/utils/faviconURL";
 import { changeCurrentFolder } from "@/redux/slice/bookmark";
+import Favicon from "@/utils/faviconURL";
 
 function BookmarkSearch() {
   const dispatch = useDispatch();
@@ -73,7 +73,7 @@ const Link: FunctionComponent<LinkProps> = ({ link }) => {
   const { title, url, id } = link;
   const cls = "w-10 aspect-square";
   const icon = url ? (
-    <img className={cls} src={faviconURL(url)} />
+    <Favicon src={url} className={cls} />
   ) : (
     <Icon className={cls} icon="ic:round-folder" />
   );

@@ -5,8 +5,8 @@ import { Dock, dockItemProps } from "../dock";
 import { changeCurrentSpace } from "@/redux/slice/layout";
 import { Icon2RN } from "@/theme/icons";
 import { useBookmarkFolder, useFavoriteBookmarks } from "@/hooks/useBookmarks";
-import { faviconURL } from "@/utils/faviconURL";
 import { cn } from "@/utils/cn";
+import Favicon from "@/utils/faviconURL";
 
 export const ToolbarDock = () => {
   const { content } = useSelector(
@@ -62,13 +62,7 @@ function getDockContentFromBookmarks(
       : bookmark
           .filter((item) => item?.url)
           .map((item) => ({
-            icon: (
-              <img
-                className="iconify"
-                src={faviconURL(`${item.url}`, 64)}
-                alt={item.title}
-              />
-            ),
+            icon: <Favicon src={item.url} className="iconify" />,
             name: item.title,
             onClick: () => {
               window.open(item.url, linkInNewTab ? "_blank" : "_self");

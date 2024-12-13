@@ -16,6 +16,27 @@
   scrollbar-width: none;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--mui-palette-divider);
+  border-radius: var(--custom-border-radius);
+}
+::-webkit-scrollbar-thumb :hover {
+  border-radius: var(--mui-palette-primary-main);
+}
+::-webkit-scrollbar-track {
+  background: var(--color-divider-transparent);
+  border-radius: var(--custom-border-radius);
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--mui-palette-divider) var(--color-divider-transparent);
+}
+
 .react-resizable-handle {
   width: 4px;
   height: 4px;

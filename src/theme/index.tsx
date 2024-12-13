@@ -47,6 +47,10 @@ export const getTheme = (theme: ThemeItemType) => {
   const CSSv = document.documentElement.style;
   CSSv.setProperty("--custom-border-radius", borderRadius);
   CSSv.setProperty("--custom-blur", b);
+  CSSv.setProperty(
+    "--color-divider-transparent",
+    alphaColor(hexFromArgb(crrPrimary.outline), 0.5)
+  );
   for (let i = 1; i <= 9; i++) {
     const opacityValue = i / 10;
     CSSv.setProperty(
@@ -122,13 +126,9 @@ export const getTheme = (theme: ThemeItemType) => {
 function CustomThemeProvider({ children }: { children: React.ReactNode }) {
   const th = useCurrentTheme();
   const theme = getTheme(th);
-  //   setThemeBackground(th);
   return (
     <ThemeProvider theme={theme}>
       <ThemeBackground {...th} children={children} />
-
-      {/* {children}
-    </ThemeBackground> */}
     </ThemeProvider>
   );
 }

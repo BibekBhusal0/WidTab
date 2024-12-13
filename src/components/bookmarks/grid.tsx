@@ -1,7 +1,6 @@
 import { StateType } from "@/redux/store";
 import { useSelector } from "react-redux";
 import { Icon } from "@iconify/react";
-import { faviconURL } from "@/utils/faviconURL";
 import { cn } from "@/utils/cn";
 import {
   BookmarkTree,
@@ -13,6 +12,7 @@ import useFullSize from "@/hooks/useFullSize";
 import { LinkContextMenu } from "./contextMenu";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
+import Favicon from "@/utils/faviconURL";
 
 type l = { openLinkInNewTab?: boolean; contextMenu?: boolean };
 
@@ -72,11 +72,8 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
         className={cn(cls)}
         href={bookmarks.url}
         target={openLinkInNewTab ? "_blank" : "_self"}>
-        <img
-          className="size-1/2 aspect-square"
-          src={faviconURL(bookmarks.url || "", size)}
-          alt={bookmarks.title}
-        />
+        <Favicon src={bookmarks.url} className="size-1/2 aspect-square" />
+
         <div className="flex items-center justify-between w-full">
           {fav && contextMenu && <Icon className="text-2xl" icon="mdi:heart" />}
           <div className={cn(textCls)}>{bookmarks.title}</div>
