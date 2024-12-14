@@ -30,10 +30,12 @@ function CurrentThemeSettings() {
 
   return (
     <div className="flex flex-col gap-4 px-3">
+      {/* Dark mode toggle */}
       <MenuSwitch plain items={toggle} />
+
       {theme.editAble ? (
         <>
-          <div className="full-between">
+          <div aria-label="primary color" className="full-between">
             <div className="text-xl">Primary Color</div>
             <div className="w-36">
               <HexPicker
@@ -44,8 +46,9 @@ function CurrentThemeSettings() {
               />
             </div>
           </div>
-          <SelectIconPack showLabel />
-          <div className="flex flex-col items-center gap-4">
+          <div
+            aria-label="opacity/blur/roundness"
+            className="flex flex-col items-center gap-4">
             {numValues.map((val) => (
               <ChangeSlider
                 valueLabelDisplay="auto"
@@ -57,8 +60,10 @@ function CurrentThemeSettings() {
               />
             ))}
           </div>
-          <RenameTheme />
+
+          <SelectIconPack showLabel />
           <SelectBackgroundImage />
+          <RenameTheme />
           <Button
             variant="outlined"
             onClick={() => dispatch(deleteTheme(theme.id))}

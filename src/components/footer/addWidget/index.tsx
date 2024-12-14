@@ -16,15 +16,15 @@ import AddGemini from "./gemini";
 function AddWidget() {
   const { widget } = useCurrentIcons();
   const addItems: SidebarComponent[] = [
-    { index: 0, name: "Custom", component: <AddCustomWidget /> },
-    { index: 1, name: "Todo", component: <AddTodo /> },
-    { index: 2, name: "Time", component: <DateTime /> },
-    { index: 3, name: "Search", component: <AddSearch /> },
-    { index: 4, name: "Habit Tracker", component: <AddHabitTracer /> },
-    { index: 5, name: "Navigation", component: <AddNavigation /> },
-    { index: 6, name: "Bookmark", component: <AddBookmark /> },
-    { index: 7, name: "Note", component: <AddNote /> },
-    { index: 8, name: "Gemini", component: <AddGemini /> },
+    { name: "Search", component: <AddSearch />, index: 0 },
+    { name: "Time", component: <DateTime />, index: 1 },
+    { name: "Bookmark", component: <AddBookmark />, index: 2 },
+    { name: "Note", component: <AddNote />, index: 3 },
+    { name: "Todo", component: <AddTodo />, index: 4 },
+    { name: "Habit Tracker", component: <AddHabitTracer />, index: 5 },
+    { name: "Gemini", component: <AddGemini />, index: 6 },
+    { name: "Custom", component: <AddCustomWidget />, index: 7 },
+    { name: "Navigation", component: <AddNavigation />, index: 8 },
   ];
   return (
     <FooterPopover tooltip="Add Widget" icon={widget}>

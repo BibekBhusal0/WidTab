@@ -1,8 +1,6 @@
 import { Icon2RN } from "@/theme/icons";
 import {
   changeCurrentSpace,
-  currentSpaceDeleteSpace,
-  currentSpaceDuplicate,
   deleteSpace,
   duplicateSpace,
 } from "@/redux/slice/layout";

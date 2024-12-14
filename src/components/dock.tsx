@@ -114,7 +114,7 @@ function DockIcon({
   const minScale = 1;
   const maxScale = 1.75;
   const minMargin = 4;
-  const maxMargin = 14;
+  const maxMargin = 20;
   const springConfig = { mass: 0.1, stiffness: 150, damping: 12 };
 
   const scaleTransform = useTransform(

@@ -40,7 +40,7 @@ function DynamicLayout() {
         "relative w-full overflow-hidden widgets",
         mainComponentProps?.className
       )}
-      sx={mainComponentProps?.sx}
+      sx={{ ...mainComponentProps?.sx, marginBottom: `${gap}px` }}
       //
     >
       <GridLayout
@@ -51,15 +51,15 @@ function DynamicLayout() {
         width={width}
         margin={[gap, gap]}
         //
-        // className={`size-full ${locked ? "hide-resize" : ""}`}
-        className={cn("size-full pb-2", locked && "hide-resize")}
+        className={cn("size-full", locked && "hide-resize")}
         isDraggable={!locked}
         isResizable={!locked}
         isDroppable={!locked}
         //
         onLayoutChange={handleChange}
         draggableHandle=".drag-handle"
-        preventCollision
+        compactType={null}
+        // preventCollision
         resizeHandles={["e", "n", "s", "w"]}
         //
       >

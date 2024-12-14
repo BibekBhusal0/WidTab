@@ -20,15 +20,17 @@ function GeneralSettings() {
 
   return (
     <div className="w-full flex flex-col gap-4 pb-4">
+      {/* Link in new tab */}
       <MenuSwitch plain items={toggle} />
+
       <div className="full-between">
         <div className="text-xl">Tool Bar Position</div>
         <SelectToolBarPosition />
       </div>
-      <SettingHeader>Toolbar Icons</SettingHeader>
-      <ToggleIcons />
       <SettingHeader>Dock</SettingHeader>
       <DockSettings />
+      <SettingHeader>Toolbar Icons</SettingHeader>
+      <ToggleIcons />
     </div>
   );
 }

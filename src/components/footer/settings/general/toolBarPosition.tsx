@@ -14,6 +14,7 @@ function SelectToolBarPosition() {
     <Select
       className="w-full capitalize"
       value={toolBarPosition}
+      size="small"
       onChange={(e) =>
         dispatch(changeToolBarPosition(e.target.value as ToolBarPositions))
       }>

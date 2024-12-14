@@ -6,8 +6,9 @@ import { resetNoteState } from "@/redux/slice/note";
 import { resetThemeSlice } from "@/redux/slice/theme";
 import { resetTodoSlice } from "@/redux/slice/todo";
 import { Icon2RN } from "@/theme/icons";
+import { cn } from "@/utils/cn";
 import { exportStateToJSON, importStateFromJSON } from "@/utils/redux";
-import Button from "@mui/material/Button";
+import Button, { ButtonProps } from "@mui/material/Button";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -23,14 +24,14 @@ export const DataSettings = () => {
     }
   };
 
-  const handleImportClick = () => {
+  const handleRestore = () => {
     if (!file) return;
     if (file.type !== "application/json") return;
     importStateFromJSON(file);
     setFile(null);
   };
 
-  const handleExportClick = () => exportStateToJSON();
+  const handleBackup = () => exportStateToJSON();
 
   const handelReset = () => {
     dispatch(resetNoteState());
@@ -41,33 +42,41 @@ export const DataSettings = () => {
     dispatch(resetTodoSlice());
   };
 
+  const commonProps: ButtonProps = {
+    size: "large",
+    variant: "contained",
+    className: "text-xl",
+  };
+  const Buttons: ButtonProps[] = [
+    {
+      startIcon: <Icon2RN icon="ic:baseline-restore" />,
+      onClick: handleRestore,
+      children: "Restore",
+    },
+    {
+      startIcon: <Icon2RN icon="mdi:backup-outline" />,
+      onClick: handleBackup,
+      children: "Backup",
+    },
+    {
+      startIcon: <Icon2RN icon={reset} />,
+      onClick: handelReset,
+      children: "Reset",
+      variant: "text",
+      color: "error",
+    },
+  ];
   return (
     <div className="size-full flex-center flex-col gap-5 icon-xl">
       <input type="file" onChange={handleFileChange} />
-      <Button
-        size="large"
-        variant="contained"
-        className="text-xl"
-        startIcon={<Icon2RN icon="stash:file-import-solid" />}
-        onClick={handleImportClick}>
-        Import
-      </Button>
-      <Button
-        size="large"
-        variant="contained"
-        className="text-xl"
-        startIcon={<Icon2RN icon="oui:export" />}
-        onClick={handleExportClick}>
-        Export
-      </Button>
-      <Button
-        size="large"
-        variant="contained"
-        className="text-xl"
-        startIcon={<Icon2RN icon={reset} />}
-        onClick={handelReset}>
-        Reset
-      </Button>
+      {Buttons.map((props, index) => (
+        <Button
+          key={index}
+          {...commonProps}
+          {...props}
+          className={cn(commonProps.className, props.className)}
+        />
+      ))}
     </div>
   );
 };

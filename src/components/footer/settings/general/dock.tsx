@@ -39,15 +39,19 @@ function DockSettings() {
       <MenuSwitch plain items={toggle} />
       {dock && (
         <>
-          <div className="flex-center flex-col gap-2">
+          <div className="full-between gap-2">
             <div className="text-xl">Dock Content</div>
             <ToggleButtonGroup
+              aria-label="Dock Content Type"
               value={dockContent.content}
               exclusive
-              onChange={onDockTypeChange}
-              aria-label="Dock Content Type">
-              <ToggleButton value="spaces"> Spaces </ToggleButton>
-              <ToggleButton value="bookmark"> Bookmark</ToggleButton>
+              onChange={onDockTypeChange}>
+              <ToggleButton size="small" value="spaces">
+                Spaces
+              </ToggleButton>
+              <ToggleButton size="small" value="bookmark">
+                Bookmark
+              </ToggleButton>
             </ToggleButtonGroup>
           </div>
 
@@ -107,6 +111,7 @@ function DockBookmarkSelect() {
   return (
     <Select
       MenuProps={{ sx: { maxHeight: 300 } }}
+      size="small"
       fullWidth
       value={dockContent.id}
       className="capitalize"
@@ -136,6 +141,7 @@ function DockSpaceSelect() {
     <Select
       MenuProps={{ sx: { maxHeight: 300 } }}
       fullWidth
+      size="small"
       value={dockContent.id}
       className="capitalize"
       onChange={handleSelectionChange}>

@@ -171,14 +171,6 @@ export const layoutSlice = createSlice({
         });
       }
     },
-    currentSpaceDeleteSpace: (state) => {
-      const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
-      if (space && state.currentSpace.type === "dynamic") {
-        if (space.delete_able) {
-          state.allSpaces = state.allSpaces.filter((p) => p.id !== space.id);
-        }
-      }
-    },
     currentSpaceRename: (state, action: PayloadAction<string>) => {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
       if (space && state.currentSpace.type === "dynamic") {
@@ -189,15 +181,6 @@ export const layoutSlice = createSlice({
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
       if (space && state.currentSpace.type === "dynamic") {
         space.icon = action.payload;
-      }
-    },
-
-    currentSpaceDuplicate: (state) => {
-      const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
-      if (space && state.currentSpace.type === "dynamic") {
-        const newID = getNextId(state.allSpaces.map(({ id }) => id));
-        state.allSpaces.push({ ...space, id: newID, delete_able: true });
-        state.currentSpace = { type: "dynamic", id: newID };
       }
     },
 
@@ -245,8 +228,6 @@ export const {
   currentSpaceAddWidget,
   currentSpaceDeleteWidget,
   currentSpaceSetGridProps,
-  currentSpaceDeleteSpace,
-  currentSpaceDuplicate,
   currentSpaceRename,
   currentSpaceEditWidget,
   currentSpaceChangeIcon,

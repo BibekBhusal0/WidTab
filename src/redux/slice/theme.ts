@@ -4,7 +4,6 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { getNextId } from "@/utils/next_id";
 import { initialThemeState } from "./initialStates";
 import { SelectedIconPacks } from "@/theme/selected-icons";
-import { Payload } from "recharts/types/component/DefaultLegendContent";
 
 export const themeSlice = createSlice({
   name: "theme",
@@ -26,14 +25,6 @@ export const themeSlice = createSlice({
         if (state.currentThemeID === action.payload) {
           state.currentThemeID = state.allThemes[0].id;
         }
-      }
-    },
-    duplicateCurrentTheme: (state) => {
-      const theme = state.allThemes.find((p) => p.id === state.currentThemeID);
-      if (theme) {
-        const newID = getNextId(state.allThemes.map(({ id }) => id));
-        state.allThemes.push({ ...theme, id: newID, editAble: true });
-        state.currentThemeID = newID;
       }
     },
     duplicateTheme: (state, action: PayloadAction<number>) => {
@@ -112,7 +103,6 @@ export const {
   changeTheme,
   toggleCurrentMode,
   changeIconPack,
-  duplicateCurrentTheme,
   duplicateTheme,
   resetThemeSlice,
   setBackgroundImage,

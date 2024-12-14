@@ -22,6 +22,7 @@ function SelectIconPack({ showLabel = true }: { showLabel?: boolean }) {
     <Select
       className="w-full capitalize icon-xl"
       MenuProps={{ style: { maxHeight: 350 } }}
+      size="small"
       renderValue={(selected) => (
         <div className="flex-center gap-4">
           {getSampleIcon(selected)}

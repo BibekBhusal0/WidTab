@@ -1,13 +1,7 @@
-import {
-  deleteTheme,
-  duplicateCurrentTheme,
-  duplicateTheme,
-  switchTheme,
-} from "@/redux/slice/theme";
+import { deleteTheme, duplicateTheme, switchTheme } from "@/redux/slice/theme";
 import { StateType } from "@/redux/store";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
-
 import { useDispatch, useSelector } from "react-redux";
 import AddTheme from "./addTheme";
 import ContextMenu from "@/components/contextMenu";
@@ -35,6 +29,7 @@ function AllThemes() {
             menuItems.push({
               name: "Delete Theme",
               icon: delete_,
+              color: "error.main",
               onClick: () => dispatch(deleteTheme(theme.id)),
             });
           }

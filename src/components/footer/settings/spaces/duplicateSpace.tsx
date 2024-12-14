@@ -1,7 +1,7 @@
 import useCurrentLayout from "@/hooks/useCurrentLayout";
 import Button, { ButtonProps } from "@mui/material/Button";
 import { useDispatch } from "react-redux";
-import { currentSpaceDuplicate } from "@/redux/slice/layout";
+import { duplicateSpace } from "@/redux/slice/layout";
 
 export function DuplicateThisSpace(props: ButtonProps) {
   const layout = useCurrentLayout();
@@ -12,7 +12,7 @@ export function DuplicateThisSpace(props: ButtonProps) {
       variant="contained"
       children="Duplicate This Space"
       {...props}
-      onClick={() => dispatch(currentSpaceDuplicate())}
+      onClick={() => dispatch(duplicateSpace(layout.id))}
     />
   );
 }

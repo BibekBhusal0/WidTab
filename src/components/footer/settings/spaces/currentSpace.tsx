@@ -40,17 +40,8 @@ function CurrentSpaceSetting() {
       <div
         aria-label="Current Space Settings"
         className="w-full flex flex-col items-center gap-5 pb-4">
+        {/* Lock */}
         <MenuSwitch plain items={toggle} />
-        <div aria-label="Icons" className="full-between icon-xl">
-          <div className="text-xl">Change Icons</div>
-          <div className="w-14 flex-center">
-            <SelectIconMenu
-              icon={layout.icon}
-              setIcon={(icon: string) => dispatch(currentSpaceChangeIcon(icon))}
-            />
-          </div>
-        </div>
-
         <div aria-label="rename" className="full-between">
           <div className="text-xl">Rename Space</div>
           <RenameItem
@@ -61,6 +52,16 @@ function CurrentSpaceSetting() {
             inputProps={{ placeholder: "Rename Space" }}
             wordLimit={20}
           />
+        </div>
+
+        <div aria-label="Icons" className="full-between icon-xl">
+          <div className="text-xl">Change Icon</div>
+          <div className="w-14 flex-center">
+            <SelectIconMenu
+              icon={layout.icon}
+              setIcon={(icon: string) => dispatch(currentSpaceChangeIcon(icon))}
+            />
+          </div>
         </div>
 
         <DuplicateThisSpace />
