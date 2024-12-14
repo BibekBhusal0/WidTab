@@ -14,9 +14,7 @@ import { changeCurrentFolder } from "@/redux/slice/bookmark";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { changeFolderSize } from "@/redux/slice/bookmark";
 import { allFolderSizes, folderSizes } from "@/types/slice/bookmark";
-// import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { Root, Viewport } from "@radix-ui/react-scroll-area";
-import { ScrollBar, ScrollArea } from "@/components/scrollarea";
+import { ScrollArea } from "@/components/scrollarea";
 
 function BookmarkManager() {
   return (

@@ -3,10 +3,7 @@ import { cn } from "@/utils/cn";
 const Folder = ({ open = false }: { open?: boolean }) => {
   const commonCls = "transition transform overflow-visible origin-bottom-left";
   return (
-    <div
-      className={cn(commonCls, "group relative")}
-      //
-    >
+    <div className={cn(commonCls, "group relative")}>
       <svg
         width="36"
         height="30"
@@ -32,6 +29,54 @@ const Folder = ({ open = false }: { open?: boolean }) => {
           rx="1.8"
         />
       </svg>
+    </div>
+  );
+};
+
+export const HoverFolder = ({ empty = false }: { empty?: boolean }) => {
+  const paper =
+    "absolute inset-1 rounded-2xl transition-all ease duration-300 origin-bottom";
+  return (
+    <div className="file relative size-full cursor-pointer origin-bottom [perspective:1500px] z-50">
+      <div
+        className={cn(
+          "bg-primary-dark size-full origin-top rounded-2xl rounded-tl-none",
+          "group-hover:shadow-[0_20px_40px_rgba(0,0,0,.2)]",
+          "transition-all ease duration-300 relative",
+          "after:absolute after:content-[''] after:bottom-[99%] after:left-0 after:w-[33.33%] after:h-[10%] after:bg-primary-dark after:rounded-t-2xl"
+        )}
+      />
+      {!empty && (
+        <>
+          <div
+            className={cn(
+              paper,
+              "select-none group-hover:[transform:rotateX(-25deg)] bg-zinc-400"
+            )}
+          />
+          <div
+            className={cn(
+              paper,
+              "group-hover:[transform:rotateX(-35deg)] bg-zinc-300"
+            )}
+          />
+          <div
+            className={cn(
+              paper,
+              "group-hover:[transform:rotateX(-42deg)] bg-zinc-200"
+            )}
+          />
+        </>
+      )}
+      <div
+        className={cn(
+          "absolute bottom-0 rounded-2xl rounded-tr-none w-full h-[94%]",
+          "bg-gradient-to-t from-primary-main to-primary-light",
+          "after:absolute after:content-[''] after:bottom-[99%] after:right-0 after:w-[48.67%] after:h-[10%] after:bg-primary-light after:rounded-t-2xl ",
+          "transition-all ease duration-300 group-hover:[transform:rotateX(-48deg)_translateY(1px)]",
+          "origin-bottom flex items-end"
+        )}
+      />
     </div>
   );
 };

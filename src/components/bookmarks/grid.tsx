@@ -13,6 +13,7 @@ import { LinkContextMenu } from "./contextMenu";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import Favicon from "@/utils/faviconURL";
+import { HoverFolder } from "./folder";
 
 type l = { openLinkInNewTab?: boolean; contextMenu?: boolean };
 
@@ -86,7 +87,11 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
     <div
       onClick={() => onFolderChange(bookmarks.id)}
       className={cn(cls, "gap-2")}>
-      <Icon width={size * 0.7} icon="ic:round-folder" />
+      <div className="w-[70%] h-[50%] relative">
+        <HoverFolder
+          empty={!bookmarks.children || bookmarks.children.length === 0}
+        />
+      </div>
       <div className={cn(textCls)}>{bookmarks.title}</div>
     </div>
   ) : contextMenu ? (
@@ -98,15 +103,28 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
   return (
     <Card
       variant="outlined"
+      className="group"
       sx={{
         backgroundColor: "secondaryContainer.paper",
         width: size,
         height: size,
         fontSize: size / 9,
+        "& .rounded-2xl.rounded-tl-none": {
+          borderRadius: size / 40,
+          borderTopLeftRadius: 0,
+        },
+        "& .rounded-2xl.rounded-tr-none": {
+          borderRadius: size / 40,
+          borderTopRightRadius: 0,
+        },
+        "& .after:rounded-t-2xl": {
+          ":after": {
+            borderTopLeftRadius: size / 40,
+            borderTopRightRadius: size / 40,
+          },
+        },
       }}>
-      <CardActionArea sx={{ width: "100%", height: "100%" }}>
-        {content}
-      </CardActionArea>
+      <CardActionArea className="size-full">{content}</CardActionArea>
     </Card>
   );
 }
