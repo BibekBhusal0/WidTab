@@ -25,7 +25,7 @@ function DynamicLayout() {
   } = useFullSize([currentSpace, toolBarPosition]);
   const rowHeight = (height - gap * n_rows) / n_rows;
   if (!space) return null;
-  const { compaction, widgets } = space;
+  const { widgets } = space;
   const layout = widgets.map((w) => w.gridProps);
 
   const handleChange = (layout: Layout[]) => {
@@ -57,7 +57,6 @@ function DynamicLayout() {
         isResizable={!locked}
         isDroppable={!locked}
         //
-        compactType={compaction === "none" ? null : compaction}
         onLayoutChange={handleChange}
         draggableHandle=".drag-handle"
         preventCollision

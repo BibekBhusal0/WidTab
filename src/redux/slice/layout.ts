@@ -1,5 +1,4 @@
 import {
-  compactionType,
   ToolBarPositions,
   CurrentSpaceType,
   DynamicSpaceType,
@@ -23,7 +22,6 @@ import { which } from "@/hooks/useAllSpaceAndIcon";
 const getEmptySpace = (): DynamicSpaceType => {
   return {
     name: "name",
-    compaction: "none",
     id: 0,
     widgets: [],
     delete_able: true,
@@ -193,15 +191,7 @@ export const layoutSlice = createSlice({
         space.icon = action.payload;
       }
     },
-    currentSpaceChangeCompaction: (
-      state,
-      action: PayloadAction<compactionType>
-    ) => {
-      const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
-      if (space && state.currentSpace.type === "dynamic") {
-        space.compaction = action.payload;
-      }
-    },
+
     currentSpaceDuplicate: (state) => {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
       if (space && state.currentSpace.type === "dynamic") {
@@ -256,7 +246,6 @@ export const {
   currentSpaceDeleteWidget,
   currentSpaceSetGridProps,
   currentSpaceDeleteSpace,
-  currentSpaceChangeCompaction,
   currentSpaceDuplicate,
   currentSpaceRename,
   currentSpaceEditWidget,

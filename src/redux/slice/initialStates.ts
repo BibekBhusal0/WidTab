@@ -78,7 +78,6 @@ export const initialLayoutState: LayoutSliceType = {
   allSpaces: [
     {
       name: "Home",
-      compaction: "none",
       id: 1,
       icon: "jam:home-f",
       widgets: [

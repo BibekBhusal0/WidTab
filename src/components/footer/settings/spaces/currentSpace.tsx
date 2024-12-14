@@ -2,7 +2,6 @@ import useCurrentLayout from "@/hooks/useCurrentLayout";
 import SettingHeader from "../settings-header";
 import DuplicateThisSpace from "./duplicateSpace";
 import DeleteThisSpace from "./deleteSpace";
-import ChangeCompaction from "./changeCompaction";
 import AddSpace from "./addSpace";
 import RenameItem from "@/components/renameItem";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,7 +40,6 @@ function CurrentSpaceSetting() {
       <div
         aria-label="Current Space Settings"
         className="w-full flex flex-col items-center gap-5 pb-4">
-        <ChangeCompaction />
         <MenuSwitch plain items={toggle} />
         <div aria-label="Icons" className="full-between icon-xl">
           <div className="text-xl">Change Icons</div>

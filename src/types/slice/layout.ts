@@ -6,11 +6,9 @@ export type CurrentSpaceType =
   | { type: "dynamic"; id: number }
   | { type: "static"; id: StaticPagesType };
 
-export type compactionType = "none" | "vertical" | "horizontal";
 export type DynamicSpaceType = {
   id: number;
   name: string;
-  compaction: compactionType;
   delete_able?: boolean;
   icon: string;
   widgets: WidgetType[];
