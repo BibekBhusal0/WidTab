@@ -75,7 +75,7 @@ function HabitTrackerControls({ id }: { id: number }) {
     },
   ];
   return (
-    <MenuPopover>
+    <>
       {editing ? (
         <div className="p-4">
           <HabitTrackerEdit
@@ -102,7 +102,7 @@ function HabitTrackerControls({ id }: { id: number }) {
           </Popover>
         </div>
       )}
-    </MenuPopover>
+    </>
   );
 }
 

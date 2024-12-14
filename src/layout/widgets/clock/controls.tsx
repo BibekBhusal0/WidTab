@@ -95,7 +95,7 @@ function ClockControls({ id }: { id: number }) {
   const allTimezones = moment.tz.names();
 
   return (
-    <MenuPopover>
+    <>
       <MenuItem
         sx={{ justifyContent: "space-between", flexDirection: "column" }}
         className="gap-2">
@@ -133,7 +133,7 @@ function ClockControls({ id }: { id: number }) {
           },
         ]}
       />
-    </MenuPopover>
+    </>
   );
 }
 

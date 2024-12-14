@@ -59,7 +59,7 @@ function DynamicLayout() {
         onLayoutChange={handleChange}
         draggableHandle=".drag-handle"
         compactType={null}
-        // preventCollision
+        preventCollision
         resizeHandles={["e", "n", "s", "w"]}
         //
       >

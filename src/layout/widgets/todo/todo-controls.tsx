@@ -12,7 +12,7 @@ import { StateType } from "@/redux/store";
 import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
 import IconButton from "@mui/material/IconButton";
 
-function TodoControls({ id }: { id: number }) {
+export const TodoMenu: React.FC<{ id: number }> = ({ id }) => {
   const dispatch = useDispatch();
   const { pinnedTodo, Tasks } = useSelector((state: StateType) => state.todo);
   const crr = Tasks.find((t) => t.id === id);
@@ -34,9 +34,6 @@ function TodoControls({ id }: { id: number }) {
     } else {
       dispatch(deleteTask(id));
     }
-  };
-  const handleAdd = () => {
-    dispatch(addTodo({ task_id: id, task: "" }));
   };
 
   const items: IconMenuType[] = [
@@ -66,11 +63,21 @@ function TodoControls({ id }: { id: number }) {
     },
   ];
 
+  return <IconMenu menuItems={items} />;
+};
+
+function TodoControls({ id }: { id: number }) {
+  const dispatch = useDispatch();
+  const { add } = useCurrentIcons();
+  const handleAdd = () => {
+    dispatch(addTodo({ task_id: id, task: "" }));
+  };
+
   return (
     <>
       <IconButton onClick={handleAdd}>{add}</IconButton>
       <MenuPopover>
-        <IconMenu menuItems={items} />
+        <TodoMenu id={id} />
       </MenuPopover>
     </>
   );

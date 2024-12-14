@@ -61,7 +61,7 @@ function BookmarkControls({ id }: { id: number }) {
     dispatch(currentSpaceDeleteWidget({ type: "bookmark", id }));
 
   return (
-    <MenuPopover>
+    <>
       <MenuItem sx={{ justifyContent: "space-between" }} className="gap-2">
         <div className="text-2xl">Size</div>
         <SelectSize
@@ -85,7 +85,7 @@ function BookmarkControls({ id }: { id: number }) {
           },
         ]}
       />
-    </MenuPopover>
+    </>
   );
 }
 

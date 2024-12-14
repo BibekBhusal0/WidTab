@@ -45,7 +45,7 @@ function Controls({
   const deleteThis = () => dispatch(currentSpaceDeleteWidget({ type, id }));
 
   return (
-    <MenuPopover>
+    <>
       <MenuItem sx={{ justifyContent: "space-between" }} className="gap-2">
         <div className="text-2xl">Size</div>
         <SelectSize
@@ -67,7 +67,7 @@ function Controls({
           },
         ]}
       />
-    </MenuPopover>
+    </>
   );
 }
 

@@ -51,6 +51,7 @@ function BookmarkWidget(props: BookmarkWidgetType) {
         className="px-2 size-full">
         <div className="py-2">
           <BookmarkGrid
+            contextMenu={false}
             bookmarks={bookmark}
             folderSize={iconSize}
             onFolderChange={onFolderChange}

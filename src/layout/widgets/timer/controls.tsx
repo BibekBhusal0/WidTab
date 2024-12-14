@@ -44,11 +44,11 @@ function TimerControls({ id }: { id: number }) {
   ];
 
   return (
-    <MenuPopover>
+    <>
       <MenuSwitch items={switches} />
       <Divider />
       <IconMenu menuItems={menuItems} />
-    </MenuPopover>
+    </>
   );
 }
 

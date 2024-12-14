@@ -70,13 +70,13 @@ function GeminiControls({ id }: { id: number }) {
   ];
 
   return (
-    <MenuPopover>
+    <>
       <div className="w-full p-2">
         <SelectModel value={model} onChange={HandleModelChange} />
       </div>
       <Divider />
       <IconMenu menuItems={menuItems} />
-    </MenuPopover>
+    </>
   );
 }
 

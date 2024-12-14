@@ -3,7 +3,7 @@ import { Layout } from "react-grid-layout";
 import { ControlsProps } from "@/layout/widgets/controls";
 import HabitTrackerControls from "@/layout/widgets/habit-tracker/controls";
 import ClockControls from "@/layout/widgets/clock/controls";
-import TodoControls from "@/layout/widgets/todo/todo-controls";
+import TodoControls, { TodoMenu } from "@/layout/widgets/todo/todo-controls";
 import { URLChange } from "@/layout/widgets/custom";
 import TimerControls from "@/layout/widgets/timer/controls";
 import BookmarkControls from "@/layout/widgets/bookmark/controls";
@@ -53,8 +53,10 @@ export const getWidgetControlsProps = (
       deleteButton: false,
       showOn: "hover",
       controls: <TodoControls id={id} />,
+      includePopover: false,
       controlsContainerProps: {},
       widgetInfo,
+      contextMenu: <TodoMenu id={id} />,
     },
     timer: {
       deleteButton: false,
