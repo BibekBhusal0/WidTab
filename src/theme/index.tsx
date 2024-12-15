@@ -8,8 +8,9 @@ import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import { ThemeItemType } from "@/types/slice/theme";
 import alphaColor from "@/utils/alpha";
 import useCurrentTheme from "@/hooks/useCurrentTheme";
-import { ReactNode } from "react";
+import { useEffect, useState , ReactNode } from "react";
 import { cn } from "@/utils/cn";
+import { getImageById } from "@/utils/image";
 
 type themeBackgroundProps = { children: ReactNode } & ThemeItemType;
 function ThemeBackground({
@@ -23,10 +24,45 @@ function ThemeBackground({
       ? `rgba(0,0,0,${opacity / 3})`
       : `rgba(255,255,255,${opacity / 3})`;
   const full = "size-full h-screen";
+  const [backgroundImage, setBackgroundImage] = useState<string | undefined>(
+    image
+  );
+
+  useEffect(() => {
+    var newUrl: string | undefined;
+    const fetchImageData = async () => {
+
+    if (image && image.startsWith("storageId/")) {
+      const imageId = image.replace("storageId/", "");
+      const imageData = await getImageById(imageId);
+
+      if (!imageData) return;
+      try {
+        newUrl = URL.createObjectURL(new Blob([imageData]));
+          return () => {
+            if (typeof newUrl === "string") URL.revokeObjectURL(newUrl);
+          };
+        } catch (error) {
+          console.log("Cant set background image from blob", error);
+        }
+        if (newUrl) setBackgroundImage(newUrl);
+      } else {
+        setBackgroundImage(image)
+      }
+
+    };
+    fetchImageData()
+    return () => {
+      if (typeof newUrl === "string") URL.revokeObjectURL(newUrl);
+    };
+  }, [image]);
+
   return (
     <div
       className={cn(full, image && "bg-cover bg-center bg-no-repeat")}
-      style={image ? { backgroundImage: `url(${image})` } : {}}>
+      style={
+        backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {}
+      }>
       <div
         className={cn(full, image && "backdrop-blur-half")}
         style={image ? { backgroundColor: color } : {}}>
