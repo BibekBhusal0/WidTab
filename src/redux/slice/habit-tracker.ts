@@ -51,6 +51,7 @@ const habitTrackerSlice = createSlice({
     setTrackerState: (state, action: PayloadAction<HabitTrackerSliceType>) => {
       const val = action.payload;
       if (!val) return;
+      if (val.timerHistory) state.timerHistory = val.timerHistory;
       if (!val.trackers) return;
       if (!Array.isArray(val.trackers)) return;
 
@@ -73,6 +74,12 @@ const habitTrackerSlice = createSlice({
     },
     resetHabitTrackerState: (state) =>
       Object.assign(state, initialHabitTrackerState),
+    updateTimerHistory: (state, action: PayloadAction<number>) => {
+      const today = dayjs().format("YYYY-MM-DD");
+      if (!state.timerHistory) state.timerHistory = {};
+      if (!state.timerHistory[today]) state.timerHistory[today] = 0;
+      state.timerHistory[today] += action.payload;
+    },
   },
 });
 
@@ -83,6 +90,7 @@ export const {
   setItem,
   changePinnedHabitTracker,
   resetHabitTrackerState,
+  updateTimerHistory,
   setTrackerState,
 } = habitTrackerSlice.actions;
 export default habitTrackerSlice.reducer;

@@ -25,7 +25,7 @@ export const widgetDimensions: Record<allWidgetsType, Partial<Layout>> = {
   custom: { minW: 1, minH: 1 },
   calendar: { minH: 4, minW: 3, isResizable: false },
   navigation: { minH: 2, minW: 4, maxH: 3, maxW: 5 },
-  timer: { minW: 4, minH: 3, maxW: 9 },
+  timer: { minW: 3, minH: 3, maxW: 6 },
   gemini: { minW: 4, minH: 5 },
 };
 

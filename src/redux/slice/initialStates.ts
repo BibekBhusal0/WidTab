@@ -100,6 +100,7 @@ export const initialLayoutState: LayoutSliceType = {
 export const initialHabitTrackerState: HabitTrackerSliceType = {
   pinned: null,
   trackers: [],
+  timerHistory: {},
 };
 
 export const initialNoteState: noteStateType = {

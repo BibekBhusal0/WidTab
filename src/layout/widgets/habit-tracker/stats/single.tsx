@@ -1,5 +1,5 @@
 import dayjs from "@/dayjsConfig";
-import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
+import { HabitTrackerStatsSingleProps } from "@/types/slice/habit-tracker";
 import useFullSize from "@/hooks/useFullSize";
 import Button, { ButtonProps } from "@mui/material/Button";
 import { useState } from "react";
@@ -7,7 +7,7 @@ import { Icon } from "@iconify/react";
 import BarGraph from "./graphs/bar";
 import { generateCompleteData } from "@/utils/getCompleteData";
 
-function HabitTrackerStatsSingle({ ...props }: HabitTrackerItemType) {
+function HabitTrackerStatsSingle({ ...props }: HabitTrackerStatsSingleProps) {
   const { ref, size } = useFullSize();
   const weekly = size.width < 800;
 
@@ -64,7 +64,12 @@ function HabitTrackerStatsSingle({ ...props }: HabitTrackerItemType) {
             Next
           </Button>
         </div>
-        <BarGraph data={completeData} size={size} {...props} />
+        <BarGraph
+          data={completeData}
+          size={size}
+          {...props}
+          showTarget={!!props.target}
+        />
       </div>
     </div>
   );

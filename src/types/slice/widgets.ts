@@ -64,10 +64,10 @@ export type ClockWidgetType = {
   showTimeZone?: boolean;
 };
 export type TimerWidgetType = {
+  time: number;
   id: number;
   music?: boolean;
-  time: number;
-  history?: HabitTrackerHistoryType[];
+  running?: boolean;
 };
 export type SearchWidgetType = { id: number; engine: AllSearchEngines };
 export type controlledWidgetValues = { id: number };
