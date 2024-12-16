@@ -107,24 +107,22 @@ export const todoSlice = createSlice({
       if (state.pinnedTodo === action.payload) state.pinnedTodo = null;
       else state.pinnedTodo = action.payload;
     },
-    resetTodoSlice: (state) => {
-      console.log("resetting todos");
-      Object.assign(state, initialTodoState);
-    },
-    setState: (state, action: PayloadAction<todoStateType>) => {
+    resetTodoSlice: (state) => Object.assign(state, initialTodoState),
+    setTodoState: (state, action: PayloadAction<todoStateType>) => {
       const val = action.payload;
-      console.log("setting todo");
       if (!val) return;
       if (!val.Tasks) return;
       if (!Array.isArray(val.Tasks)) return;
-      console.log("all tasks are array");
-
       const tasks = state.Tasks;
 
       val.Tasks.forEach((task) => {
-        const id = getNextId(tasks.map(({ id }) => id));
-        if (task.id === val.pinnedTodo) state.pinnedTodo = id;
-        tasks.push({ ...task, id });
+        const t = tasks.find((p) => p.id === task.id && p.title === task.title);
+        if (t) Object.assign(t, task);
+        else {
+          const id = getNextId(tasks.map(({ id }) => id));
+          if (task.id === val.pinnedTodo) state.pinnedTodo = id;
+          tasks.push({ ...task, id });
+        }
       });
       state.Tasks = tasks;
     },
@@ -143,5 +141,6 @@ export const {
   setTasks,
   changePinnedTodo,
   resetTodoSlice,
+  setTodoState,
 } = todoSlice.actions;
 export default todoSlice.reducer;

@@ -7,30 +7,25 @@ import { resetThemeSlice } from "@/redux/slice/theme";
 import { resetTodoSlice } from "@/redux/slice/todo";
 import { Icon2RN } from "@/theme/icons";
 import { cn } from "@/utils/cn";
+import { removeAllImagesFromStorage } from "@/utils/image";
 import { exportStateToJSON, importStateFromJSON } from "@/utils/redux";
 import Button, { ButtonProps } from "@mui/material/Button";
-import { useState } from "react";
+import { useRef } from "react";
 import { useDispatch } from "react-redux";
 
 export const DataSettings = () => {
   const { reset } = useCurrentIcons();
-  const [file, setFile] = useState<File | null>(null);
+  const fileRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useDispatch();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
-    if (file) {
-      setFile(file);
-    }
-  };
-
-  const handleRestore = () => {
     if (!file) return;
     if (file.type !== "application/json") return;
     importStateFromJSON(file);
-    setFile(null);
   };
 
+  const handleRestore = () => fileRef.current?.click();
   const handleBackup = () => exportStateToJSON();
 
   const handelReset = () => {
@@ -40,6 +35,7 @@ export const DataSettings = () => {
     dispatch(resetLayoutState());
     dispatch(resetThemeSlice());
     dispatch(resetTodoSlice());
+    removeAllImagesFromStorage();
   };
 
   const commonProps: ButtonProps = {
@@ -68,7 +64,7 @@ export const DataSettings = () => {
   ];
   return (
     <div className="size-full flex-center flex-col gap-5 icon-xl">
-      <input type="file" onChange={handleFileChange} />
+      <input type="file" onChange={handleFileChange} hidden ref={fileRef} />
       {Buttons.map((props, index) => (
         <Button
           key={index}

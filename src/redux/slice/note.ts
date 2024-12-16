@@ -36,20 +36,19 @@ export const noteSlice = createSlice({
     deleteNote: (state, action: PayloadAction<number>) => {
       state.allNotes = state.allNotes.filter((p) => p.id !== action.payload);
     },
-    resetNoteState: (state) => {
-      Object.assign(state, initialNoteState);
-    },
-    setState: (state, action: PayloadAction<noteStateType>) => {
-      console.log("setting note state");
+    resetNoteState: (state) => Object.assign(state, initialNoteState),
+    setNoteState: (state, action: PayloadAction<noteStateType>) => {
       const val = action.payload;
       if (!val) return;
       if (!val.allNotes) return;
       const { allNotes } = val;
       if (!Array.isArray(allNotes)) return;
-      console.log("note is array");
       const notes = [...state.allNotes];
+
       allNotes.forEach((note) => {
-        notes.push({ ...note, id: getNextId(notes.map(({ id }) => id)) });
+        const crr = notes.find(({ id }) => id === note.id);
+        if (crr && crr.title === note.title) Object.assign(crr, note);
+        else notes.push({ ...note, id: getNextId(notes.map(({ id }) => id)) });
       });
 
       state.allNotes = notes;
@@ -63,5 +62,6 @@ export const {
   changeNoteContent,
   deleteNote,
   resetNoteState,
+  setNoteState,
 } = noteSlice.actions;
 export default noteSlice.reducer;

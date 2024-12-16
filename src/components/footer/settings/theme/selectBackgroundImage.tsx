@@ -1,4 +1,3 @@
-import useCurrentTheme from "@/hooks/useCurrentTheme";
 import { cn } from "@/utils/cn";
 import MenuPopover from "@/components/popoverMenu";
 import field from "@/assets/img/field.jpg";
@@ -7,11 +6,14 @@ import { useDispatch } from "react-redux";
 import { setBackgroundImage } from "@/redux/slice/theme";
 import Button from "@mui/material/Button";
 import { useEffect, useRef, useState } from "react";
-import { getImagesFromStorage, saveImageToStorage } from "@/utils/image";
+import useBackgroundImage, {
+  getImagesFromStorage,
+  saveImageToStorage,
+} from "@/utils/image";
 import { v4 as uuidv4 } from "uuid";
 
 function SelectBackgroundImage() {
-  const { image } = useCurrentTheme();
+  const image = useBackgroundImage();
   const img = <img src={image} className="size-20 object-cover" />;
   return (
     <div className={cn("flex flex-center gap-3", image && "flex-col")}>
@@ -57,10 +59,7 @@ function PopoverContent() {
     loadImages();
   }, []);
 
-  const triggerInput = () => {
-    console.log("upload file please don't look on console");
-    inpRef.current?.click();
-  };
+  const triggerInput = () => inpRef.current?.click();
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
@@ -79,8 +78,9 @@ function PopoverContent() {
     }
   };
   const handleClick = (id: string) => {
-    const img = images.find((p) => p.id === id);
+    const img = defaultImages.find((p) => p.id === id);
     const imageURL = img ? img.data : `storageId/${id}`;
+    console.log(imageURL);
     dispatch(setBackgroundImage(imageURL));
   };
 

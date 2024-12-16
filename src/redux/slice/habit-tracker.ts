@@ -48,29 +48,31 @@ const habitTrackerSlice = createSlice({
       if (state.pinned === action.payload) state.pinned = null;
       else state.pinned = action.payload;
     },
-    setState: (state, action: PayloadAction<HabitTrackerSliceType>) => {
+    setTrackerState: (state, action: PayloadAction<HabitTrackerSliceType>) => {
       const val = action.payload;
-      console.log("setting habit tracker");
       if (!val) return;
       if (!val.trackers) return;
       if (!Array.isArray(val.trackers)) return;
-      console.log("all habit tracker are array");
 
       const trackers = [...state.trackers];
       val.trackers.forEach((tracker) => {
-        const id = getNextId(trackers.map(({ id }) => id));
-        if (tracker.id === val.pinned) state.pinned = id;
-        trackers.push({
-          ...tracker,
-          id,
-        });
+        const crr = trackers.find(
+          ({ title, id }) => title === tracker.title && id === tracker.id
+        );
+        if (crr) Object.assign(crr, tracker);
+        else {
+          const id = getNextId(trackers.map(({ id }) => id));
+          if (tracker.id === val.pinned) state.pinned = id;
+          trackers.push({
+            ...tracker,
+            id,
+          });
+        }
       });
-
       state.trackers = trackers;
     },
-    resetHabitTrackerState: (state) => {
-      Object.assign(state, initialHabitTrackerState);
-    },
+    resetHabitTrackerState: (state) =>
+      Object.assign(state, initialHabitTrackerState),
   },
 });
 
@@ -81,5 +83,6 @@ export const {
   setItem,
   changePinnedHabitTracker,
   resetHabitTrackerState,
+  setTrackerState,
 } = habitTrackerSlice.actions;
 export default habitTrackerSlice.reducer;

@@ -60,32 +60,27 @@ export const themeSlice = createSlice({
         theme.iconPack = action.payload;
       }
     },
-    resetThemeSlice: (state) => {
-      Object.assign(state, initialThemeState);
-    },
-    setState: (state, action: PayloadAction<ThemeSliceType>) => {
+    resetThemeSlice: (state) => Object.assign(state, initialThemeState),
+    setThemeState: (state, action: PayloadAction<ThemeSliceType>) => {
       const val = action.payload;
-      console.log("setting theme");
       if (!val) return;
       if (typeof val.currentThemeID === "number")
         state.currentThemeID = val.currentThemeID;
       if (!val.allThemes) return;
       if (!Array.isArray(val.allThemes)) return;
-      console.log("all themes are array");
-
       const allThemes = [...state.allThemes];
 
       for (const theme of val.allThemes) {
-        if (theme.editAble === false) {
-          const th = allThemes.find((p) => p.id === theme.id);
-          if (th) {
-            Object.assign(th, theme);
-            continue;
-          }
+        const th = allThemes.find((p) => p.id === theme.id);
+        if (theme.image && theme.image.startsWith("storageId/"))
+          theme.image = undefined;
+        if (th && (theme.editAble === false || th.name === theme.name)) {
+          Object.assign(th, theme);
+        } else {
+          const id = getNextId(allThemes.map(({ id }) => id));
+          if (theme.id === val.currentThemeID) state.currentThemeID = id;
+          allThemes.push({ ...theme, editAble: true, id });
         }
-        const id = getNextId(allThemes.map(({ id }) => id));
-        if (theme.id === val.currentThemeID) state.currentThemeID = id;
-        allThemes.push({ ...theme, editAble: true, id });
       }
       state.allThemes = allThemes;
     },
@@ -106,5 +101,6 @@ export const {
   duplicateTheme,
   resetThemeSlice,
   setBackgroundImage,
+  setThemeState,
 } = themeSlice.actions;
 export default themeSlice.reducer;

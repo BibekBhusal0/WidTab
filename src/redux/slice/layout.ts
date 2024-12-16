@@ -184,30 +184,27 @@ export const layoutSlice = createSlice({
       }
     },
 
-    resetLayoutState: (state) => {
-      Object.assign(state, initialLayoutState);
-    },
-    setState: (state, action: PayloadAction<LayoutSliceType>) => {
-      console.log("setting layout");
+    resetLayoutState: (state) => Object.assign(state, initialLayoutState),
+    setLayoutState: (state, action: PayloadAction<LayoutSliceType>) => {
       const val = action.payload;
       if (!val) return;
-      if (val.currentSpace) state.currentSpace = val.currentSpace;
       if (val.toolBarPosition) state.toolBarPosition = val.toolBarPosition;
       if (val.toolBarIcons) state.toolBarIcons = val.toolBarIcons;
       if (typeof val.dock === "boolean") state.dock = val.dock;
-      if (val.dockContent) state.dockContent = val.dockContent;
+      if (val.currentSpace) state.currentSpace = val.currentSpace;
+      if (val.dockContent && val.dockContent.content === "bookmark")
+        state.dockContent = { content: "bookmark", id: "0" };
+      else state.dockContent = val.dockContent;
 
       if (!val.allSpaces) return;
       if (!Array.isArray(val.allSpaces)) return;
       const allSpaces = [...state.allSpaces];
 
       for (const space of val.allSpaces) {
-        if (!space.delete_able) {
-          const s = allSpaces.find((p) => p.id === space.id);
-          if (s) {
-            Object.assign(s, space);
-            continue;
-          }
+        const s = allSpaces.find((p) => p.id === space.id);
+        if (s && (!space.delete_able || space.name === s.name))
+          Object.assign(s, space);
+        else {
           const id = getNextId(allSpaces.map(({ id }) => id));
           if (space.id === val.currentSpace?.id)
             state.currentSpace = { type: "dynamic", id };
@@ -239,6 +236,7 @@ export const {
   duplicateSpace,
   resetLayoutState,
   toggleLocked,
+  setLayoutState,
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;
