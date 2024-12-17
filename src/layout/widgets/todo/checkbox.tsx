@@ -29,10 +29,20 @@ function SortableCheckbox({
   }, [ref_, ref]);
 
   useEffect(() => {
-    if (ref.current) {
-      ref.current.style.height = "auto";
-      ref.current.style.height = `${ref.current.scrollHeight}px`;
-    }
+    const fixHeight = () => {
+      if (ref.current) {
+        ref.current.style.height = "auto";
+        ref.current.style.height = `${ref.current.scrollHeight}px`;
+      }
+    };
+
+    const observer = new ResizeObserver(fixHeight);
+    if (ref.current) observer.observe(ref.current);
+    fixHeight();
+
+    return () => {
+      if (ref.current) observer.unobserve(ref.current);
+    };
   }, [task]);
 
   return (
