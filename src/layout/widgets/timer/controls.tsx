@@ -5,7 +5,7 @@ import {
   currentSpaceEditWidget,
 } from "@/redux/slice/layout";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
-import IconMenu from "@/components/menuWithIcon";
+import IconMenu, { IconMenuType } from "@/components/menuWithIcon";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
 import useCurrentLayout from "@/hooks/useCurrentLayout";
 import { useState } from "react";
@@ -13,8 +13,12 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import Popover from "@mui/material/Popover";
 import TimerStats from "./stats";
+import { ControlPropsDifferentForContextMenu } from "../controls";
 
-function TimerCOntrols({ id }: { id: number }) {
+function TimerCOntrols({
+  id,
+  contextMenu = false,
+}: ControlPropsDifferentForContextMenu) {
   const layout = useCurrentLayout();
   const dispatch = useDispatch();
   const { delete_ } = useCurrentIcons();
@@ -59,20 +63,23 @@ function TimerCOntrols({ id }: { id: number }) {
 
   const deleteThis = () =>
     dispatch(currentSpaceDeleteWidget({ type: "timer", id }));
-  const menuItems = [
-    {
-      name: "Stats",
-      icon: "proicons:graph",
-      onClick: handleStatsOpen,
-      color: statsOpen ? "primary.main" : "action.main",
-    },
-    {
-      name: running ? "Stop" : "Start",
-      icon: `mingcute:${running ? "pause" : "play"}-fill`,
-      onClick: togglePlay,
-      color: running ? "error.main" : "action.main",
-    },
-  ];
+
+  const stats = {
+    name: "Stats",
+    icon: "proicons:graph",
+    onClick: handleStatsOpen,
+    color: statsOpen ? "primary.main" : "action.main",
+  };
+
+  const pausePlay = {
+    name: running ? "Stop" : "Start",
+    icon: `mingcute:${running ? "pause" : "play"}-fill`,
+    onClick: togglePlay,
+    color: running ? "error.main" : "action.main",
+  };
+  const menuItems: IconMenuType[] = [];
+  if (!contextMenu && !running) menuItems.push(stats);
+  menuItems.push(pausePlay);
   const deleteButton = [
     {
       icon: delete_,
@@ -86,7 +93,7 @@ function TimerCOntrols({ id }: { id: number }) {
     <>
       <IconMenu menuItems={menuItems} />
       <MenuSwitch items={switches} />
-      {!running && (
+      {!running && !contextMenu && (
         <div className="full-between p-3">
           <div className="text-xl">Time</div>
           <OutlinedInput

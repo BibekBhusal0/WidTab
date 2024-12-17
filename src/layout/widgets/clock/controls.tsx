@@ -1,5 +1,4 @@
 import { ClockWidgetType } from "@/types/slice/widgets";
-import MenuPopover from "@/components/popoverMenu";
 import Divider from "@mui/material/Divider";
 import MenuItem from "@mui/material/MenuItem";
 import ToggleButton from "@mui/material/ToggleButton";
@@ -11,14 +10,17 @@ import {
 } from "@/redux/slice/layout";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import Autocomplete from "@mui/material/Autocomplete";
-
 import TextField from "@mui/material/TextField";
 import IconMenu from "@/components/menuWithIcon";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
 import moment from "moment-timezone";
 import useCurrentLayout from "@/hooks/useCurrentLayout";
+import { ControlPropsDifferentForContextMenu } from "../controls";
 
-function ClockControls({ id }: { id: number }) {
+function ClockControls({
+  id,
+  contextMenu = false,
+}: ControlPropsDifferentForContextMenu) {
   const layout = useCurrentLayout();
   const dispatch = useDispatch();
   const { delete_ } = useCurrentIcons();
@@ -96,11 +98,10 @@ function ClockControls({ id }: { id: number }) {
 
   return (
     <>
-      <MenuItem
-        sx={{ justifyContent: "space-between", flexDirection: "column" }}
-        className="gap-2">
-        <div className="text-2xl">Clock Type</div>
+      <MenuItem sx={{ justifyContent: "space-between" }} className="gap-2">
+        <div className="text-xl">Clock Type</div>
         <ToggleButtonGroup
+          size="small"
           value={clockType}
           exclusive
           onChange={onClockTypeChange}
@@ -110,17 +111,24 @@ function ClockControls({ id }: { id: number }) {
         </ToggleButtonGroup>
       </MenuItem>
       <Divider />
-      <MenuItem className="p-2 ">
-        <Autocomplete
-          fullWidth
-          disableClearable
-          value={timeZone}
-          onChange={changeTimezone}
-          options={allTimezones}
-          renderInput={(params) => <TextField {...params} label="Timezone" />}
-        />
-      </MenuItem>
-      <Divider />
+      {!contextMenu && (
+        <>
+          {" "}
+          <MenuItem className="p-2 ">
+            <Autocomplete
+              fullWidth
+              disableClearable
+              value={timeZone}
+              onChange={changeTimezone}
+              options={allTimezones}
+              renderInput={(params) => (
+                <TextField {...params} label="Timezone" />
+              )}
+            />
+          </MenuItem>
+          <Divider />{" "}
+        </>
+      )}
       <MenuSwitch items={switches} />
       <Divider />
       <IconMenu

@@ -12,6 +12,10 @@ import ContextMenu from "@/components/contextMenu";
 import MenuPopover from "@/components/popoverMenu";
 import IconMenu from "@/components/menuWithIcon";
 
+export type ControlPropsDifferentForContextMenu = {
+  id: number;
+  contextMenu?: boolean;
+};
 export type ControlsProps = {
   widgetInfo?: DeleteWidgetParameters;
   controls?: ReactNode;

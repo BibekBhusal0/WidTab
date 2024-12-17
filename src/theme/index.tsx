@@ -8,9 +8,9 @@ import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import { ThemeItemType } from "@/types/slice/theme";
 import alphaColor from "@/utils/alpha";
 import useCurrentTheme from "@/hooks/useCurrentTheme";
-import { useEffect, useState, ReactNode } from "react";
+import { useEffect, ReactNode } from "react";
 import { cn } from "@/utils/cn";
-import useBackgroundImage, { getImageBlob, getImageById } from "@/utils/image";
+import useBackgroundImage from "@/utils/image";
 
 type themeBackgroundProps = { children: ReactNode } & ThemeItemType;
 function ThemeBackground({
@@ -25,6 +25,16 @@ function ThemeBackground({
       : `rgba(255,255,255,${opacity / 3})`;
   const full = "size-full h-screen";
   const backgroundImage = useBackgroundImage();
+  useEffect(() => {
+    const handleContextMenu = (event: MouseEvent) => {
+      event.preventDefault();
+    };
+
+    document.addEventListener("contextmenu", handleContextMenu);
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, []);
 
   return (
     <div

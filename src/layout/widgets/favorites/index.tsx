@@ -10,7 +10,11 @@ function Favorites({ iconSize }: FavoritesWidgetType) {
   return (
     <ScrollArea className="size-full">
       <div className="py-2">
-        <BookmarkGrid bookmarks={favorites} folderSize={iconSize} />
+        <BookmarkGrid
+          bookmarks={favorites}
+          folderSize={iconSize}
+          contextMenu={false}
+        />
       </div>
     </ScrollArea>
   );

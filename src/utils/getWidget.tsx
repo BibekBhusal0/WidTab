@@ -58,11 +58,18 @@ export const getWidgetControlsProps = (
 ): ControlsProps => {
   const widgetInfo = { id: id, type: widgetType };
   const controlsProps: Partial<Record<allWidgetsType, ControlsProps>> = {
-    custom: { deleteButton: true, controls: <URLChange id={id} />, widgetInfo },
+    custom: {
+      deleteButton: true,
+      controls: <URLChange id={id} />,
+      widgetInfo,
+      showContextMenu: false,
+      includePopover: false,
+    },
     "habit-tracker": {
       deleteButton: false,
       showOn: "hover",
       controls: <HabitTrackerControls id={id} />,
+      contextMenu: <HabitTrackerControls id={id} contextMenu />,
       className: "flex-center flex-col gap-4 p-2 ",
       widgetInfo,
     },
@@ -70,6 +77,7 @@ export const getWidgetControlsProps = (
       deleteButton: false,
       showOn: "hover",
       controls: <ClockControls id={id} />,
+      contextMenu: <ClockControls id={id} contextMenu />,
       widgetInfo,
     },
     todo: {
@@ -86,6 +94,7 @@ export const getWidgetControlsProps = (
       showOn: "hover",
       widgetInfo,
       controls: <TimerControls id={id} />,
+      contextMenu: <TimerControls id={id} contextMenu />,
     },
     bookmark: {
       deleteButton: false,

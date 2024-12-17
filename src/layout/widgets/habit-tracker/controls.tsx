@@ -1,6 +1,5 @@
 import IconMenu, { IconMenuType } from "@/components/menuWithIcon";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
-import MenuPopover from "@/components/popoverMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import {
@@ -16,8 +15,12 @@ import HabitTrackerEdit from "./edit";
 import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
 import Popover from "@mui/material/Popover";
 import HabitTrackerStatsSingle from "./stats/single";
+import { ControlPropsDifferentForContextMenu } from "../controls";
 
-function HabitTrackerControls({ id }: { id: number }) {
+function HabitTrackerControls({
+  id,
+  contextMenu = false,
+}: ControlPropsDifferentForContextMenu) {
   const [editing, setEditing] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const statsOpen = !!anchorEl;
@@ -51,13 +54,15 @@ function HabitTrackerControls({ id }: { id: number }) {
     setEditing(false);
   };
 
-  const items: IconMenuType[] = [
+  const Pinned: IconMenuType[] = [
     {
       name: pinned === id ? "Unpin" : "Pin",
       icon: pin,
       onClick: handlePin,
       color: pinned === id ? "primary.main" : "action.main",
     },
+  ];
+  const StatsEdit: IconMenuType[] = [
     {
       name: "Stats",
       icon: "proicons:graph",
@@ -66,6 +71,8 @@ function HabitTrackerControls({ id }: { id: number }) {
     },
 
     { name: "Edit", icon: edit, onClick: () => setEditing(true) },
+  ];
+  const resetDelete: IconMenuType[] = [
     { name: "Reset", icon: reset, onClick: handleReset },
     {
       name: "Delete",
@@ -74,9 +81,13 @@ function HabitTrackerControls({ id }: { id: number }) {
       color: "error.main",
     },
   ];
+  const items: IconMenuType[] = [...Pinned];
+  if (!contextMenu) items.push(...StatsEdit);
+  items.push(...resetDelete);
+
   return (
     <>
-      {editing ? (
+      {editing && !contextMenu ? (
         <div className="p-4">
           <HabitTrackerEdit
             initialState={trackers.find((tracker) => tracker.id === id)}
@@ -89,17 +100,19 @@ function HabitTrackerControls({ id }: { id: number }) {
       ) : (
         <div>
           <IconMenu menuItems={items} />
-          <Popover
-            anchorEl={anchorEl}
-            marginThreshold={30}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
-            }}
-            open={statsOpen}
-            onClose={handleStatsClose}>
-            <Stats id={id} />
-          </Popover>
+          {!contextMenu && (
+            <Popover
+              anchorEl={anchorEl}
+              marginThreshold={30}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              open={statsOpen}
+              onClose={handleStatsClose}>
+              <Stats id={id} />
+            </Popover>
+          )}
         </div>
       )}
     </>
