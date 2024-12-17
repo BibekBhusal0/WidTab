@@ -18,6 +18,7 @@ const UW = [
   "search",
   "calendar",
   "navigation",
+  "cylindrical-navigation",
   "timer",
   "timer-stats",
   "bookmark",
@@ -82,7 +83,11 @@ export type WidgetMappingUncontrolled =
   | { type: "clock"; values: ClockWidgetType }
   | { type: "search"; values: SearchWidgetType }
   | {
-      type: "calendar" | "navigation" | "timer-stats";
+      type:
+        | "calendar"
+        | "navigation"
+        | "timer-stats"
+        | "cylindrical-navigation";
       values: controlledWidgetValues;
     }
   | { type: "bookmark"; values: BookmarkWidgetType }
