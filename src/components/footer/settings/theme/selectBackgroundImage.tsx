@@ -1,16 +1,40 @@
 import { cn } from "@/utils/cn";
 import MenuPopover from "@/components/popoverMenu";
-import field from "@/assets/img/field.jpg";
-import night from "@/assets/img/night.jpg";
 import { useDispatch } from "react-redux";
 import { setBackgroundImage } from "@/redux/slice/theme";
 import Button from "@mui/material/Button";
 import { useEffect, useRef, useState } from "react";
 import useBackgroundImage, {
-  getImagesFromStorage,
-  saveImageToStorage,
+    getImagesFromStorage,
+    saveImageToStorage,
 } from "@/utils/image";
 import { v4 as uuidv4 } from "uuid";
+
+import abstract from "@/assets/img/abstract.jpg";
+import autumn from "@/assets/img/autumn.jpg";
+import bananas from "@/assets/img/bananas.jpg";
+import clouds from "@/assets/img/clouds.jpg";
+import colors from "@/assets/img/colors.jpg";
+import flowers from "@/assets/img/flowers.jpg";
+import mountains from "@/assets/img/mountains.jpg";
+import ocean from "@/assets/img/ocean.jpg";
+import rose from "@/assets/img/rose.jpg";
+import space from "@/assets/img/space.jpg";
+import wood from "@/assets/img/wood.jpg";
+
+const defaultImages = [
+    { id: "abstract", data: abstract },
+    { id: "autumn", data: autumn },
+    { id: "bananas", data: bananas },
+    { id: "clouds", data: clouds },
+    { id: "colors", data: colors },
+    { id: "flowers", data: flowers },
+    { id: "mountains", data: mountains },
+    { id: "ocean", data: ocean },
+    { id: "rose", data: rose },
+    { id: "space", data: space },
+    { id: "wood", data: wood },
+];
 
 function SelectBackgroundImage() {
   const image = useBackgroundImage();
@@ -36,10 +60,6 @@ function SelectBackgroundImage() {
   );
 }
 
-const defaultImages = [
-  { id: "field", data: field },
-  { id: "night", data: night },
-];
 function PopoverContent() {
   const [images, setImages] = useState<{ id: string; data: string }[]>([
     ...defaultImages,
