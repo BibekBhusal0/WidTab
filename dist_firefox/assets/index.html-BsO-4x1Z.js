@@ -1,0 +1,2 @@
+import{j as t,b5 as r,b6 as n}from"./everythingProvider-BpvOg5YQ.js";import{C as e,l as i}from"./index-BJYGcbVP.js";function s(){return t.jsx(e,{items:i,mainProps:{sx:{width:"100vw",height:"100vh"}},tabsProps:{sx:{width:"200px"}}})}function a(){const o=document.querySelector("#__root");if(!o)throw new Error("Can't find Options root element");r.createRoot(o).render(t.jsx(n,{children:t.jsx(s,{})}))}a();
+//# sourceMappingURL=index.html-BsO-4x1Z.js.map

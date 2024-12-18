@@ -18,5 +18,11 @@
     "baseUrl": ".",
     "paths": { "@/*": ["./src/*"] }
   },
-  "include": ["src", "utils", "vite.config.ts"]
+  "include": [
+    "src",
+    "utils",
+    "vite.config.base.ts",
+    "vite.config.chrome.ts",
+    "vite.config.firefox.ts"
+  ],
 }

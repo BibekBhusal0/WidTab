@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Productivity App",
+  "description": "Productivity App for Chrome, Manage Todo-list, Habit tracker and Bookmark .",
+  "options_page": "src/pages/options/index.html",
+  "action": {
+    "default_icon": "public/dev-icon-32.png",
+    "default_popup": "src/pages/popup/index.html"
+  },
+  "chrome_url_overrides": {
+    "newtab": "src/pages/newtab/index.html"
+  },
+  "icons": {
+    "128": "public/dev-icon-128.png"
+  },
+  "permissions": [
+    "bookmarks",
+    "favicon",
+    "storage",
+    "unlimitedStorage"
+  ],
+  "optional_permissions": [
+    "topSites"
+  ],
+  "version": "0.0.0"
+}
