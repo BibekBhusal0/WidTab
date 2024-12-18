@@ -18,7 +18,7 @@
   "type": "module",
   "dependencies": {
     "@ataverascrespo/react18-ts-textfit": "^1.0.0",
-    "@emotion/react": "^11.13.3",
+    "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.13.0",
     "@google/generative-ai": "^0.21.0",
     "@material/material-color-utilities": "^0.3.0",
