@@ -15,6 +15,7 @@ import { currentSpaceEditWidget } from "@/redux/slice/layout";
 import { ScrollArea } from "@/components/scrollarea";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import useCurrentTheme from "@/hooks/useCurrentTheme";
+import browser from "webextension-polyfill";
 
 function GeminiWidget(props: geminiWidgetType) {
   const [input, setInput] = useState("");
@@ -31,9 +32,9 @@ function GeminiWidget(props: geminiWidgetType) {
       }
     };
     getAPIKey("gemini").then((key) => setKey(key));
-    chrome.storage.onChanged.addListener(onStorageChange);
+    browser.storage.onChanged.addListener(onStorageChange);
     return () => {
-      chrome.storage.onChanged.removeListener(onStorageChange);
+      browser.storage.onChanged.removeListener(onStorageChange);
     };
   }, []);
   const handleClick = async () => {

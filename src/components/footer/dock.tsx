@@ -4,6 +4,7 @@ import { StateType } from "@/redux/store";
 import { Dock, dockItemProps } from "../dock";
 import { changeCurrentSpace } from "@/redux/slice/layout";
 import { Icon2RN } from "@/theme/icons";
+import { treeNodeArray } from "@/types/slice/bookmark";
 import { useBookmarkFolder, useFavoriteBookmarks } from "@/hooks/useBookmarks";
 import { cn } from "@/utils/cn";
 import Favicon from "@/utils/faviconURL";
@@ -53,7 +54,7 @@ const DockBookmark = () => {
 };
 
 function getDockContentFromBookmarks(
-  bookmark: chrome.bookmarks.BookmarkTreeNode[],
+  bookmark: treeNodeArray,
   linkInNewTab: boolean = false
 ): dockItemProps[] {
   var dockItems: dockItemProps[] =

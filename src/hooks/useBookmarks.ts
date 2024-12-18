@@ -1,15 +1,17 @@
 import { useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import { useEffect, useState } from "react";
+import { treeNode, treeNodeArray } from "@/types/slice/bookmark";
+import browser from "webextension-polyfill";
 
 function useBookmarksUpdate(callback: Function, dependencies: any[] = []) {
   useEffect(() => {
     callback();
 
     const listeners = [
-      chrome.bookmarks.onCreated,
-      chrome.bookmarks.onChanged,
-      chrome.bookmarks.onRemoved,
+      browser.bookmarks.onCreated,
+      browser.bookmarks.onChanged,
+      browser.bookmarks.onRemoved,
     ];
 
     listeners.map((event) => event.addListener(() => callback()));
@@ -21,12 +23,10 @@ function useBookmarksUpdate(callback: Function, dependencies: any[] = []) {
 }
 
 export function useAllBookmarks(dependencies: any[] = []) {
-  const [bookmarks, setBookmarks] = useState<
-    chrome.bookmarks.BookmarkTreeNode[]
-  >([]);
+  const [bookmarks, setBookmarks] = useState<treeNodeArray>([]);
 
   const fetchBookmarks = () => {
-    chrome.bookmarks
+    browser.bookmarks
       .getTree()
       .then((data) => {
         if (Array.isArray(data)) setBookmarks(data);
@@ -44,19 +44,14 @@ export default useBookmarksUpdate;
 export const useFavoriteBookmarks = (dependencies: any[] = []) => {
   const { favorites } = useSelector((state: StateType) => state.bookmarks);
 
-  const [bookmark, setBookmark] = useState<chrome.bookmarks.BookmarkTreeNode[]>(
-    []
-  );
+  const [bookmark, setBookmark] = useState<treeNodeArray>([]);
   const getBookmarks = () => {
-    const bookmarkPromises = favorites.map((id) => chrome.bookmarks.get(id));
+    const bookmarkPromises = favorites.map((id) => browser.bookmarks.get(id));
 
     Promise.all(bookmarkPromises).then((results) => {
       const bookmarks = results
         .flat()
-        .filter(
-          (bookmark): bookmark is chrome.bookmarks.BookmarkTreeNode =>
-            !!bookmark
-        );
+        .filter((bookmark): bookmark is treeNode => !!bookmark);
 
       setBookmark(bookmarks);
     });
@@ -69,11 +64,9 @@ export const useBookmarkFolder = (
   folderID: string,
   dependencies: any[] = []
 ) => {
-  const [bookmark, setBookmark] = useState<chrome.bookmarks.BookmarkTreeNode[]>(
-    []
-  );
+  const [bookmark, setBookmark] = useState<treeNodeArray>([]);
   const getBookmarks = () => {
-    chrome.bookmarks.getSubTree(folderID, (data) => {
+    browser.bookmarks.getSubTree(folderID).then((data) => {
       setBookmark(
         Array.isArray(data)
           ? data[0] && data[0].children

@@ -2,12 +2,13 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { findPath } from "@/utils/bookmark";
 import { ExtraBookmarkProps } from "@/types/slice/bookmark";
 import { useEffect, useState } from "react";
+import { treeNodeArray } from "@/types/slice/bookmark";
 
 function BookmarkBreadcrumb({
   onFolderChange = () => {},
   currentFolderID,
 }: ExtraBookmarkProps & { currentFolderID: string }) {
-  const [path, setPath] = useState<chrome.bookmarks.BookmarkTreeNode[]>([]);
+  const [path, setPath] = useState<treeNodeArray>([]);
 
   useEffect(() => {
     findPath(currentFolderID).then((data) => setPath(data));

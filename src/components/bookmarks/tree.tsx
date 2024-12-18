@@ -8,8 +8,9 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BookmarkTree, TakeBookmarksProps } from "@/types/slice/bookmark";
+import { TakeBookmarksProps } from "@/types/slice/bookmark";
 import { LinkContextMenu } from "./contextMenu";
+import { bookmarkTreeNode } from "@/types/slice/bookmark";
 import { useAllBookmarks } from "@/hooks/useBookmarks";
 import Favicon from "@/utils/faviconURL";
 
@@ -32,11 +33,7 @@ function BookmarkItem({ bookmarks }: TakeBookmarksProps) {
   return <BookmarkTreeLink bookmarks={bookmarks} />;
 }
 
-function BookmarkTreeLink({
-  bookmarks,
-}: {
-  bookmarks: chrome.bookmarks.BookmarkTreeNode;
-}) {
+function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
   const { favorites } = useSelector((state: StateType) => state.bookmarks);
   const dispatch = useDispatch();
   const fav = favorites.includes(bookmarks.id);
@@ -66,11 +63,7 @@ function BookmarkTreeLink({
   );
 }
 
-function BookmarkFolder({
-  bookmarks,
-}: {
-  bookmarks: chrome.bookmarks.BookmarkTreeNode;
-}) {
+function BookmarkFolder({ bookmarks }: bookmarkTreeNode) {
   const [open, setOpen] = useState(
     bookmarks.id === "1" || bookmarks.id === "0"
   );

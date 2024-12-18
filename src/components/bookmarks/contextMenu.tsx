@@ -3,6 +3,7 @@ import { StateType } from "@/redux/store";
 import { toggleFavorites } from "@/redux/slice/bookmark";
 import ContextMenu, { contextMenuProps } from "@/components/contextMenu";
 import IconMenu from "@/components/menuWithIcon";
+import browser from "webextension-polyfill";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 
 type AddFavProps = { id: string } & contextMenuProps;
@@ -23,7 +24,7 @@ export function LinkContextMenu({ id, ...props }: AddFavProps) {
     {
       name: "Delete",
       icon: delete_,
-      onClick: () => chrome.bookmarks.remove(id),
+      onClick: () => browser.bookmarks.remove(id),
       color: "error.main",
     },
   ];

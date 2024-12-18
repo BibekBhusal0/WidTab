@@ -1,19 +1,21 @@
 import BookmarkGrid from "@/components/bookmarks/grid";
 import { ScrollArea } from "@/components/scrollarea";
+import { treeNodeArray } from "@/types/slice/bookmark";
 import { FavoritesWidgetType } from "@/types/slice/bookmark";
 import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
+import browser from "webextension-polyfill";
 
 function TopSites(props: FavoritesWidgetType) {
   const [hasPermissions, setHasPermissions] = useState(false);
   const askPermission = () => {
-    chrome.permissions.request({ permissions: ["topSites"] }).then((res) => {
+    browser.permissions.request({ permissions: ["topSites"] }).then((res) => {
       setHasPermissions(res);
     });
   };
 
   useEffect(() => {
-    chrome.permissions.contains({ permissions: ["topSites"] }).then((res) => {
+    browser.permissions.contains({ permissions: ["topSites"] }).then((res) => {
       if (res === hasPermissions) return;
       setHasPermissions(res);
     });
@@ -38,14 +40,17 @@ function TopSites(props: FavoritesWidgetType) {
 }
 
 function Sites({ iconSize }: FavoritesWidgetType) {
-  const [sites, setSites] = useState<chrome.bookmarks.BookmarkTreeNode[]>([]);
+  const [sites, setSites] = useState<treeNodeArray>([]);
 
   useEffect(() => {
-    chrome.topSites.get((sites) => {
+    browser.topSites.get().then((sites) => {
+      console.log(sites);
       setSites(
-        sites.map((s, index) => {
-          return { ...s, id: `${index}` };
-        })
+        sites.map((s, index) => ({
+          id: `${index}`,
+          title: s.title || "",
+          url: s.url || "",
+        }))
       );
     });
   }, []);

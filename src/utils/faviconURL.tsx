@@ -1,4 +1,5 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, JSX } from "react";
+import browser from "webextension-polyfill";
 
 const size = 64;
 const googleFaviconAPI = (url: string) => {
@@ -6,7 +7,7 @@ const googleFaviconAPI = (url: string) => {
   return `https://s2.googleusercontent.com/s2/favicons?domain_url=https://${hostName}&sz=${size}`;
 };
 const chromeFaviconApi = (url: string) => {
-  const faviconUrl = new URL(chrome.runtime.getURL("/_favicon/"));
+  const faviconUrl = new URL(browser.runtime.getURL("/_favicon/"));
   faviconUrl.searchParams.set("pageUrl", url);
   faviconUrl.searchParams.set("size", `${size}`);
   return faviconUrl.toString();

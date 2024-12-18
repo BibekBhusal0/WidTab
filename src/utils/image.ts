@@ -1,12 +1,15 @@
 import useCurrentTheme from "@/hooks/useCurrentTheme";
+import browser from "webextension-polyfill";
 import { useState, useEffect } from "react";
+
+export type storageDataType = { [key: string]: string };
 
 export const saveImageToStorage = (imageId: string, imageData: string) => {
   return new Promise<void>((resolve, reject) => {
-    chrome.storage.local.get(["userImages"], (result) => {
-      const existingImages = result.userImages || {};
+    browser.storage.local.get(["userImages"]).then((result) => {
+      const existingImages = (result.userImages as storageDataType) || {};
       existingImages[imageId] = imageData;
-      chrome.storage.local.set({ userImages: existingImages }, () => {
+      browser.storage.local.set({ userImages: existingImages }).then(() => {
         resolve();
       });
     });
@@ -15,15 +18,15 @@ export const saveImageToStorage = (imageId: string, imageData: string) => {
 
 export const getImagesFromStorage = () => {
   return new Promise<{ [key: string]: string }>((resolve, reject) => {
-    chrome.storage.local.get(["userImages"], (result) => {
-      resolve(result.userImages || {});
+    browser.storage.local.get(["userImages"]).then((result) => {
+      resolve((result.userImages as storageDataType) || {});
     });
   });
 };
 
 export const removeAllImagesFromStorage = () => {
   return new Promise<void>((resolve, reject) => {
-    chrome.storage.local.remove(["userImages"], () => {
+    browser.storage.local.remove(["userImages"]).then(() => {
       resolve();
     });
   });
@@ -33,8 +36,8 @@ export const getImageById = async (
   imageId: string
 ): Promise<string | undefined> => {
   return new Promise((resolve, reject) => {
-    chrome.storage.local.get(["userImages"], (result) => {
-      const storedImages = result.userImages || {};
+    browser.storage.local.get(["userImages"]).then((result) => {
+      const storedImages = (result.userImages as storageDataType) || {};
       resolve(storedImages[imageId]);
     });
   });
@@ -42,12 +45,13 @@ export const getImageById = async (
 
 export const getImageBlob = async (imageId: string): Promise<Blob | null> => {
   return new Promise<Blob | null>((resolve, reject) => {
-    chrome.storage.local.get(["userImages"], (result) => {
-      if (chrome.runtime.lastError) {
-        return reject(chrome.runtime.lastError);
+    browser.storage.local.get(["userImages"]).then((result) => {
+      if (browser.runtime.lastError) {
+        return reject(browser.runtime.lastError);
       }
 
-      const storedImages = result.userImages || {};
+      const storedImages =
+        (result.userImages as { [key: string]: string }) || {};
       const imageData = storedImages[imageId];
       if (!imageData) return resolve(null);
 

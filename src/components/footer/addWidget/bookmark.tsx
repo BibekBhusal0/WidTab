@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux";
+import { treeNodeOrArray } from "@/types/slice/bookmark";
 import { useAllBookmarks } from "@/hooks/useBookmarks";
 import { ReactNode } from "react";
 import { widgetDimensions } from "@/utils/getWidget";
@@ -11,6 +12,7 @@ import { ScrollArea } from "@/components/scrollarea";
 import { Icon } from "@iconify/react";
 import useAddWidget from "@/hooks/useAddWidget";
 import Button from "@mui/material/Button";
+import browser from "webextension-polyfill";
 
 function AddBookmark() {
   const dimensions = widgetDimensions["bookmark"];
@@ -31,11 +33,7 @@ function AddBookmark() {
     }
   };
 
-  const getBookmarkFolders = (
-    bookmark:
-      | chrome.bookmarks.BookmarkTreeNode[]
-      | chrome.bookmarks.BookmarkTreeNode
-  ): ReactNode => {
+  const getBookmarkFolders = (bookmark: treeNodeOrArray): ReactNode => {
     if (Array.isArray(bookmark)) {
       return bookmarks.map((child) => getBookmarkFolders(child));
     }
@@ -49,7 +47,9 @@ function AddBookmark() {
               {bookmark.title}
             </ListItemButton>
           )}
-          {bookmark.children.map((child) => getBookmarkFolders(child))}
+          {bookmark.children.map((child: treeNodeOrArray) =>
+            getBookmarkFolders(child)
+          )}
         </>
       );
     }
@@ -80,14 +80,21 @@ export const AddTopSites = () => {
     values: { id: 0 },
   });
   const addWidget = () => {
-    chrome.permissions.contains({ permissions: ["topSites"] }).then((res) => {
-      if (res) add();
-      else
-        chrome.permissions
+    console.log("you clicked me");
+    browser.permissions.contains({ permissions: ["topSites"] }).then((res) => {
+      console.log(res);
+      if (res) {
+        console.log("got Permission");
+        add();
+      } else {
+        console.log("no permission for top sites");
+        browser.permissions
           .request({ permissions: ["topSites"] })
           .then((res) => {
+            console.log("finally got permission");
             if (res) add();
           });
+      }
     });
   };
 

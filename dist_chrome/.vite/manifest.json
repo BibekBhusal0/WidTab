@@ -1,6 +1,6 @@
 {
   "../../../@crx/manifest": {
-    "file": "assets/crx-manifest.js-C028NWcA.js",
+    "file": "assets/crx-manifest.js-fSn6TrSl.js",
     "name": "crx-manifest.js",
     "src": "../../../@crx/manifest",
     "isEntry": true
@@ -9,29 +9,29 @@
     "file": "assets/everythingProvider-CEDFEcXB.css",
     "src": "_everythingProvider-!~{004}~.js"
   },
-  "_everythingProvider-BpvOg5YQ.js": {
-    "file": "assets/everythingProvider-BpvOg5YQ.js",
+  "_everythingProvider-DtuB0fkJ.js": {
+    "file": "assets/everythingProvider-DtuB0fkJ.js",
     "name": "everythingProvider",
     "css": [
       "assets/everythingProvider-CEDFEcXB.css"
     ]
   },
-  "_index-BJYGcbVP.js": {
-    "file": "assets/index-BJYGcbVP.js",
+  "_index-BYHsfLYr.js": {
+    "file": "assets/index-BYHsfLYr.js",
     "name": "index",
     "imports": [
-      "_everythingProvider-BpvOg5YQ.js"
+      "_everythingProvider-DtuB0fkJ.js"
     ],
     "assets": [
       "assets/field-sQ6pPN3Q.jpg",
       "assets/night-BBngYR7z.jpg"
     ]
   },
-  "_index-DcKuu00T.js": {
-    "file": "assets/index-DcKuu00T.js",
+  "_index-Cv037TZ_.js": {
+    "file": "assets/index-Cv037TZ_.js",
     "name": "index",
     "imports": [
-      "_everythingProvider-BpvOg5YQ.js"
+      "_everythingProvider-DtuB0fkJ.js"
     ]
   },
   "src/assets/img/field.jpg": {
@@ -63,14 +63,14 @@
     "src": "src/assets/music/relaxing-piano-music-248868.mp3"
   },
   "src/pages/newtab/index.html": {
-    "file": "assets/index.html-tf-Rkkqo.js",
+    "file": "assets/index.html-D1DQb7Pp.js",
     "name": "index.html",
     "src": "src/pages/newtab/index.html",
     "isEntry": true,
     "imports": [
-      "_everythingProvider-BpvOg5YQ.js",
-      "_index-BJYGcbVP.js",
-      "_index-DcKuu00T.js"
+      "_everythingProvider-DtuB0fkJ.js",
+      "_index-BYHsfLYr.js",
+      "_index-Cv037TZ_.js"
     ],
     "css": [
       "assets/index-D7_G05nC.css"
@@ -84,23 +84,23 @@
     ]
   },
   "src/pages/options/index.html": {
-    "file": "assets/index.html-BsO-4x1Z.js",
+    "file": "assets/index.html-3qQQJNT7.js",
     "name": "index.html",
     "src": "src/pages/options/index.html",
     "isEntry": true,
     "imports": [
-      "_everythingProvider-BpvOg5YQ.js",
-      "_index-BJYGcbVP.js"
+      "_everythingProvider-DtuB0fkJ.js",
+      "_index-BYHsfLYr.js"
     ]
   },
   "src/pages/popup/index.html": {
-    "file": "assets/index.html-Bh0fPCOs.js",
+    "file": "assets/index.html-CaRx9tKj.js",
     "name": "index.html",
     "src": "src/pages/popup/index.html",
     "isEntry": true,
     "imports": [
-      "_everythingProvider-BpvOg5YQ.js",
-      "_index-DcKuu00T.js"
+      "_everythingProvider-DtuB0fkJ.js",
+      "_index-Cv037TZ_.js"
     ]
   }
 }

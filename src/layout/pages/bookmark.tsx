@@ -13,7 +13,11 @@ import BookmarkGrid from "@/components/bookmarks/grid";
 import { changeCurrentFolder } from "@/redux/slice/bookmark";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { changeFolderSize } from "@/redux/slice/bookmark";
-import { allFolderSizes, folderSizes } from "@/types/slice/bookmark";
+import {
+  allFolderSizes,
+  bookmarkTreeNodeArray,
+  folderSizes,
+} from "@/types/slice/bookmark";
 import { ScrollArea } from "@/components/scrollarea";
 
 function BookmarkManager() {
@@ -107,7 +111,7 @@ function BookmarksFavorite() {
   return <OnlyBookmarks bookmarks={fav} />;
 }
 
-function OnlyBookmarks({ bookmarks }: BookmarkTree) {
+function OnlyBookmarks({ bookmarks }: bookmarkTreeNodeArray) {
   const { folderSize } = useSelector((state: StateType) => state.bookmarks);
   const dispatch = useDispatch();
   const onFolderChange = (id: string) => dispatch(changeCurrentFolder(id));

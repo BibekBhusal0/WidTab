@@ -1,3 +1,4 @@
+import browser from "webextension-polyfill";
 const s = ["small", "medium", "large"] as const;
 export type folderSizes = (typeof s)[number];
 export const allFolderSizes: folderSizes[] = [...s];
@@ -25,14 +26,14 @@ export type BookmarkWidgetType = {
   breadcrumb?: boolean;
 };
 
-export interface TakeBookmarksProps {
-  bookmarks:
-    | chrome.bookmarks.BookmarkTreeNode[]
-    | chrome.bookmarks.BookmarkTreeNode;
-}
+export type treeNode = browser.Bookmarks.BookmarkTreeNode;
+export type bookmarkTreeNode = { bookmarks: treeNode };
+export type treeNodeArray = treeNode[];
+export type bookmarkTreeNodeArray = { bookmarks: treeNode[] };
+export type treeNodeOrArray = treeNode | treeNodeArray;
 
-export interface BookmarkTree {
-  bookmarks: chrome.bookmarks.BookmarkTreeNode[];
+export interface TakeBookmarksProps {
+  bookmarks: treeNodeOrArray;
 }
 
 export type ExtraBookmarkProps = {

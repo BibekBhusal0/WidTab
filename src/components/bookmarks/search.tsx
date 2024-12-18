@@ -11,25 +11,25 @@ import { StateType } from "@/redux/store";
 import { Icon } from "@iconify/react";
 import { changeCurrentFolder } from "@/redux/slice/bookmark";
 import Favicon from "@/utils/faviconURL";
+import { treeNode, treeNodeArray } from "@/types/slice/bookmark";
+import browser from "webextension-polyfill";
 
 function BookmarkSearch() {
   const dispatch = useDispatch();
   const { linkInNewTab } = useSelector((state: StateType) => state.bookmarks);
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchedBookmarks, SetSearchedBookmarks] = useState<
-    chrome.bookmarks.BookmarkTreeNode[]
-  >([]);
+  const [searchedBookmarks, SetSearchedBookmarks] = useState<treeNodeArray>([]);
   const deferredSearchTerm = useDeferredValue(searchTerm);
 
   useEffect(() => {
-    chrome.bookmarks.search(deferredSearchTerm, (bookmarks) => {
+    browser.bookmarks.search(deferredSearchTerm).then((bookmarks) => {
       SetSearchedBookmarks(bookmarks);
     });
   }, [deferredSearchTerm]);
 
   const handleChange = (
     _: React.SyntheticEvent<Element, Event>,
-    bookmark: chrome.bookmarks.BookmarkTreeNode | null
+    bookmark: treeNode | null
   ) => {
     if (!bookmark) return;
     if (bookmark.url) {
@@ -64,7 +64,7 @@ function BookmarkSearch() {
 }
 
 interface LinkProps {
-  link: chrome.bookmarks.BookmarkTreeNode;
+  link: treeNode;
 }
 
 const Link: FunctionComponent<LinkProps> = ({ link }) => {

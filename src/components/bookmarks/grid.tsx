@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { Icon } from "@iconify/react";
 import { cn } from "@/utils/cn";
 import {
-  BookmarkTree,
   ExtraBookmarkProps,
   folderSizeMapping,
   TakeBookmarksProps,
@@ -14,10 +13,11 @@ import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import Favicon from "@/utils/faviconURL";
 import { HoverFolder } from "./folder";
+import { bookmarkTreeNodeArray, treeNode } from "@/types/slice/bookmark";
 
 type l = { openLinkInNewTab?: boolean; contextMenu?: boolean };
 
-function BookmarkGrid(props: ExtraBookmarkProps & BookmarkTree & l) {
+function BookmarkGrid(props: ExtraBookmarkProps & bookmarkTreeNodeArray & l) {
   const { folderSize = "small", bookmarks } = props;
   const itemWidth = folderSizeMapping[folderSize];
   const gap = 16;
@@ -67,7 +67,7 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
   const cls = "flex-center flex-col gap-2 size-full relative p-1";
   const textCls = "px-2 truncate w-full text-center";
   const fav = favorites.includes(bookmarks.id);
-  const link = (bookmarks: chrome.bookmarks.BookmarkTreeNode) => {
+  const link = (bookmarks: treeNode) => {
     return (
       <a
         className={cn(cls)}

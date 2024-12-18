@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import { treeNodeOrArray } from "@/types/slice/bookmark";
 import { useAllBookmarks } from "@/hooks/useBookmarks";
 import { ReactNode } from "react";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
@@ -80,11 +81,7 @@ function DockBookmarkSelect() {
       dispatch(changeDockSelected(val));
     }
   };
-  const getBookmarkFolders = (
-    bookmark:
-      | chrome.bookmarks.BookmarkTreeNode[]
-      | chrome.bookmarks.BookmarkTreeNode
-  ): ReactNode[] => {
+  const getBookmarkFolders = (bookmark: treeNodeOrArray): ReactNode[] => {
     if (Array.isArray(bookmark)) {
       return bookmark.flatMap((child) => getBookmarkFolders(child));
     }
