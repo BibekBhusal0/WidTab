@@ -1,31 +1,19 @@
 import Autocomplete from "@mui/material/Autocomplete";
-import {
-  FunctionComponent,
-  useDeferredValue,
-  useEffect,
-  useState,
-} from "react";
+import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import { Icon } from "@iconify/react";
 import { changeCurrentFolder } from "@/redux/slice/bookmark";
 import Favicon from "@/utils/faviconURL";
-import { treeNode, treeNodeArray } from "@/types/slice/bookmark";
-import browser from "webextension-polyfill";
+import { treeNode } from "@/types/slice/bookmark";
+import { useBookmarkSearch } from "@/hooks/useBookmarks";
 
 function BookmarkSearch() {
   const dispatch = useDispatch();
   const { linkInNewTab } = useSelector((state: StateType) => state.bookmarks);
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchedBookmarks, SetSearchedBookmarks] = useState<treeNodeArray>([]);
-  const deferredSearchTerm = useDeferredValue(searchTerm);
-
-  useEffect(() => {
-    browser.bookmarks.search(deferredSearchTerm).then((bookmarks) => {
-      SetSearchedBookmarks(bookmarks);
-    });
-  }, [deferredSearchTerm]);
+  const searchedBookmarks = useBookmarkSearch(searchTerm);
 
   const handleChange = (
     _: React.SyntheticEvent<Element, Event>,
@@ -67,7 +55,7 @@ interface LinkProps {
   link: treeNode;
 }
 
-const Link: FunctionComponent<LinkProps> = ({ link }) => {
+const Link = ({ link }: LinkProps) => {
   const { favorites } = useSelector((state: StateType) => state.bookmarks);
 
   const { title, url, id } = link;

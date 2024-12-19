@@ -1,17 +1,14 @@
 import BookmarkBreadcrumb from "@/components/bookmarks/breadcrumb";
 import BookmarkGrid from "@/components/bookmarks/grid";
 import { ScrollArea } from "@/components/scrollarea";
-import useBookmarksUpdate, { useBookmarkFolder } from "@/hooks/useBookmarks";
-import { treeNodeArray } from "@/types/slice/bookmark";
+import { useBookmarkFolder, useBookmarkSiblings } from "@/hooks/useBookmarks";
 import { currentSpaceEditWidget } from "@/redux/slice/layout";
 import { BookmarkWidgetType } from "@/types/slice/bookmark";
 import { cn } from "@/utils/cn";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
-import browser from "webextension-polyfill";
 
 function BookmarkWidget(props: BookmarkWidgetType) {
   const { folderId, iconSize, breadcrumb, tabs } = props;
@@ -71,22 +68,7 @@ function BookmarkTabs({
   folderId: string;
   onFolderChange: (id: string) => any;
 }) {
-  const [bookmark, setBookmark] = useState<treeNodeArray>([]);
-
-  const getBookmarks = () => {
-    browser.bookmarks.get(folderId).then((data) => {
-      if (Array.isArray(data)) {
-        if (data[0]?.parentId) {
-          browser.bookmarks.getChildren(data[0].parentId).then((data) => {
-            if (Array.isArray(data)) {
-              setBookmark(data.filter((bookmark) => !bookmark.url));
-            }
-          });
-        }
-      }
-    });
-  };
-  useBookmarksUpdate(getBookmarks, [folderId]);
+  const bookmark = useBookmarkSiblings(folderId);
 
   const tabIndex = bookmark.findIndex((b) => b.id === folderId);
   const handleChange = (_: any, newValue: number) => {

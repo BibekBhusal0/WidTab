@@ -24,3 +24,5 @@ export const findPath = (id: string) => {
     getPathRecursive(id);
   });
 };
+
+export const deleteBookmark = (id: string) => browser.bookmarks.remove(id);

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
-import { useEffect, useState } from "react";
+import { useDeferredValue, useEffect, useState } from "react";
 import { treeNode, treeNodeArray } from "@/types/slice/bookmark";
 import browser from "webextension-polyfill";
 
@@ -80,3 +80,37 @@ export const useBookmarkFolder = (
 
   return bookmark;
 };
+
+export function useBookmarkSearch(searchTerm: string) {
+  const [searchedBookmarks, SetSearchedBookmarks] = useState<treeNodeArray>([]);
+  const deferredSearchTerm = useDeferredValue(searchTerm);
+
+  useEffect(() => {
+    browser.bookmarks.search(deferredSearchTerm).then((bookmarks) => {
+      SetSearchedBookmarks(bookmarks);
+    });
+  }, [deferredSearchTerm]);
+
+  return searchedBookmarks;
+}
+
+export function useBookmarkSiblings(folderId: string) {
+  const [bookmark, setBookmark] = useState<treeNodeArray>([]);
+
+  const getBookmarks = () => {
+    browser.bookmarks.get(folderId).then((data) => {
+      if (Array.isArray(data)) {
+        if (data[0]?.parentId) {
+          browser.bookmarks.getChildren(data[0].parentId).then((data) => {
+            if (Array.isArray(data)) {
+              setBookmark(data.filter((bookmark) => !bookmark.url));
+            }
+          });
+        }
+      }
+    });
+  };
+  useBookmarksUpdate(getBookmarks, [folderId]);
+
+  return bookmark;
+}
