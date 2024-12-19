@@ -1,5 +1,5 @@
 import useCurrentIcons from "@/hooks/useCurrentIcons";
-import { allRequiredIcons } from "@/icons";
+import { allRequiredIcons } from "@/theme/icons";
 import { changeCurrentSpace } from "@/redux/slice/layout";
 import { StateType } from "@/redux/store";
 import { StaticPagesType } from "@/types/slice/widgets";
@@ -14,6 +14,7 @@ export const staticPagesIcon: Record<StaticPagesType, iconMapping> = {
   todo: { name: "All To-dos", icon: "checklist" },
   "habit-tracker": { name: "All Habit Trackers", icon: "habitTracker" },
   bookmark: { name: "All Bookmarks", icon: "bookmark" },
+  note: { name: "All Notes", icon: "note" },
 };
 
 function AllStaticLayout() {

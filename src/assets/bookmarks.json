@@ -1,0 +1,945 @@
+[
+  {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "dateAdded": 1728472165000,
+                "id": "26",
+                "index": 0,
+                "parentId": "23",
+                "title": "Claude",
+                "url": "https://claude.ai/"
+              },
+              {
+                "dateAdded": 1728376716000,
+                "id": "27",
+                "index": 1,
+                "parentId": "23",
+                "title": "Podwise",
+                "url": "https://podwise.ai/dashboard/trending"
+              },
+              {
+                "dateAdded": 1727775864000,
+                "id": "29",
+                "index": 2,
+                "parentId": "23",
+                "title": "Bing Image generator",
+                "url": "https://www.bing.com/images/create"
+              },
+              {
+                "dateAdded": 1727758842000,
+                "id": "30",
+                "index": 3,
+                "parentId": "23",
+                "title": "NotebookLM",
+                "url": "https://notebooklm.google.com/"
+              },
+              {
+                "dateAdded": 1727758174000,
+                "id": "31",
+                "index": 4,
+                "parentId": "23",
+                "title": "AI Test Kitchen",
+                "url": "https://aitestkitchen.withgoogle.com/"
+              },
+              {
+                "dateAdded": 1727728973000,
+                "id": "32",
+                "index": 5,
+                "parentId": "23",
+                "title": "Leonardo.Ai",
+                "url": "https://app.leonardo.ai/"
+              },
+              {
+                "dateAdded": 1727723655000,
+                "id": "35",
+                "index": 6,
+                "parentId": "23",
+                "title": "Screen Shot to Code",
+                "url": "https://chatgpt.com/g/g-0fiJrSSdG-screen-shot-to-code"
+              },
+              {
+                "dateAdded": 1727721985000,
+                "id": "36",
+                "index": 7,
+                "parentId": "23",
+                "title": "Perplexity",
+                "url": "https://www.perplexity.ai/"
+              },
+              {
+                "dateAdded": 1727721743000,
+                "id": "37",
+                "index": 8,
+                "parentId": "23",
+                "title": "Microsoft Copilot:",
+                "url": "https://copilot.microsoft.com/"
+              },
+              {
+                "dateAdded": 1727721732000,
+                "id": "38",
+                "index": 9,
+                "parentId": "23",
+                "title": "Gemini",
+                "url": "https://gemini.google.com/"
+              },
+              {
+                "dateAdded": 1723285300000,
+                "id": "39",
+                "index": 10,
+                "parentId": "23",
+                "title": "ChatGPT",
+                "url": "https://chatgpt.com/"
+              },
+              {
+                "children": [
+                  {
+                    "dateAdded": 1729103479000,
+                    "id": "41",
+                    "index": 0,
+                    "parentId": "40",
+                    "title": "Latitude",
+                    "url": "https://latitude.so/?ref=producthunt"
+                  },
+                  {
+                    "dateAdded": 1727726637000,
+                    "id": "42",
+                    "index": 1,
+                    "parentId": "40",
+                    "title": "Ultimate ChatGPT Marketing Prompts",
+                    "url": "https://sintralabs.notion.site/Marketing-2099-Ultimate-ChatGPT-Marketing-Prompts-To-Copy-Paste-200-tasks-fc22c9142d6a4a4286a3fe755be932e6"
+                  },
+                  {
+                    "dateAdded": 1727726423000,
+                    "id": "43",
+                    "index": 2,
+                    "parentId": "40",
+                    "title": "ChatGPT Cheat Sheet & Quick Reference",
+                    "url": "https://quickref.me/chatgpt"
+                  },
+                  {
+                    "dateAdded": 1727726364000,
+                    "id": "44",
+                    "index": 3,
+                    "parentId": "40",
+                    "title": "Awesome ChatGPT Prompts",
+                    "url": "https://www.awesomegptprompts.com/"
+                  },
+                  {
+                    "dateAdded": 1727726157000,
+                    "id": "45",
+                    "index": 4,
+                    "parentId": "40",
+                    "title": "awesome-chatgpt-prompts",
+                    "url": "https://github.com/f/awesome-chatgpt-prompts?tab=readme-ov-file#prompts"
+                  }
+                ],
+                "dateAdded": 1730983174439,
+                "id": "40",
+                "index": 11,
+                "parentId": "23",
+                "title": "Prompts"
+              }
+            ],
+            "dateAdded": 1730983174438,
+            "id": "23",
+            "index": 0,
+            "parentId": "1",
+            "title": "AI"
+          },
+          {
+            "children": [
+              {
+                "dateAdded": 1729144010000,
+                "id": "47",
+                "index": 0,
+                "parentId": "46",
+                "title": "Manim Community",
+                "url": "https://docs.manim.community/en/stable/"
+              },
+              {
+                "dateAdded": 1728231341000,
+                "id": "48",
+                "index": 1,
+                "parentId": "46",
+                "title": "Vs Code",
+                "url": "https://vscode.dev/"
+              },
+              {
+                "dateAdded": 1727775554000,
+                "id": "49",
+                "index": 2,
+                "parentId": "46",
+                "title": "Free code camp",
+                "url": "https://www.freecodecamp.org/learn/"
+              },
+              {
+                "dateAdded": 1727713393000,
+                "id": "50",
+                "index": 3,
+                "parentId": "46",
+                "title": "Github",
+                "url": "https://github.com/"
+              },
+              {
+                "dateAdded": 1723290948000,
+                "id": "51",
+                "index": 4,
+                "parentId": "46",
+                "title": "Daily Dev",
+                "url": "https://app.daily.dev/"
+              },
+              {
+                "children": [
+                  {
+                    "dateAdded": 1729776894000,
+                    "id": "57",
+                    "index": 0,
+                    "parentId": "55",
+                    "title": "Zen UI",
+                    "url": "https://zenui.net/components/all-components"
+                  },
+                  {
+                    "dateAdded": 1727713393000,
+                    "id": "58",
+                    "index": 1,
+                    "parentId": "55",
+                    "title": "NextUI",
+                    "url": "https://nextui.org/docs/guide/installation"
+                  },
+                  {
+                    "dateAdded": 1726772186000,
+                    "id": "60",
+                    "index": 2,
+                    "parentId": "55",
+                    "title": "Material UI",
+                    "url": "https://mui.com/material-ui/all-components"
+                  },
+                  {
+                    "dateAdded": 1723538793000,
+                    "id": "61",
+                    "index": 3,
+                    "parentId": "55",
+                    "title": "Framer Motion",
+                    "url": "https://www.framer.com/motion"
+                  },
+                  {
+                    "dateAdded": 1723538935000,
+                    "id": "62",
+                    "index": 4,
+                    "parentId": "55",
+                    "title": "AutoAnimate",
+                    "url": "https://auto-animate.formkit.com/#usage-react"
+                  },
+                  {
+                    "dateAdded": 1723539420000,
+                    "id": "63",
+                    "index": 5,
+                    "parentId": "55",
+                    "title": "Animata",
+                    "url": "https://animata.design/docs/setup"
+                  },
+                  {
+                    "dateAdded": 1723539141000,
+                    "id": "64",
+                    "index": 6,
+                    "parentId": "55",
+                    "title": "Tailwind CSS",
+                    "url": "https://tailwindcss.com/docs/guides/create-react-app"
+                  },
+                  {
+                    "dateAdded": 1723539533000,
+                    "id": "65",
+                    "index": 7,
+                    "parentId": "55",
+                    "title": "Aceternity UI",
+                    "url": "https://ui.aceternity.com/components"
+                  },
+                  {
+                    "dateAdded": 1723636897000,
+                    "id": "66",
+                    "index": 8,
+                    "parentId": "55",
+                    "title": "CuiCui",
+                    "url": "https://cuicui.day/"
+                  },
+                  {
+                    "dateAdded": 1723913214000,
+                    "id": "67",
+                    "index": 9,
+                    "parentId": "55",
+                    "title": "Eldora UI",
+                    "url": "https://eldoraui.site/components"
+                  },
+                  {
+                    "dateAdded": 1723539650000,
+                    "id": "68",
+                    "index": 10,
+                    "parentId": "55",
+                    "title": "Shadcn ui",
+                    "url": "https://ui.shadcn.com/docs"
+                  },
+                  {
+                    "dateAdded": 1723539314000,
+                    "id": "69",
+                    "index": 11,
+                    "parentId": "55",
+                    "title": "daisyUI",
+                    "url": "https://daisyui.com/"
+                  }
+                ],
+                "dateAdded": 1730983174439,
+                "id": "55",
+                "index": 5,
+                "parentId": "46",
+                "title": "JS Libraries"
+              },
+              {
+                "children": [
+                  {
+                    "dateAdded": 1727713393000,
+                    "id": "80",
+                    "index": 0,
+                    "parentId": "79",
+                    "title": "Google Colab",
+                    "url": "https://colab.research.google.com/"
+                  },
+                  {
+                    "dateAdded": 1727713393000,
+                    "id": "81",
+                    "index": 1,
+                    "parentId": "79",
+                    "title": "Deeplearning",
+                    "url": "https://learn.deeplearning.ai/"
+                  },
+                  {
+                    "dateAdded": 1727713393000,
+                    "id": "82",
+                    "index": 2,
+                    "parentId": "79",
+                    "title": "Kaggle",
+                    "url": "https://www.kaggle.com/"
+                  },
+                  {
+                    "dateAdded": 1726809935000,
+                    "id": "83",
+                    "index": 3,
+                    "parentId": "79",
+                    "title": "Hugging Face",
+                    "url": "http://huggingface.co/"
+                  },
+                  {
+                    "dateAdded": 1726809910000,
+                    "id": "84",
+                    "index": 4,
+                    "parentId": "79",
+                    "title": "Pytorch",
+                    "url": "https://pytorch.org/docs/stable/index.html"
+                  }
+                ],
+                "dateAdded": 1730983174440,
+                "id": "79",
+                "index": 6,
+                "parentId": "46",
+                "title": "ML"
+              }
+            ],
+            "dateAdded": 1730983174439,
+            "dateGroupModified": 1734615599544,
+            "id": "46",
+            "index": 1,
+            "parentId": "1",
+            "title": "Coading"
+          },
+          {
+            "children": [
+              {
+                "dateAdded": 1729190770000,
+                "id": "86",
+                "index": 0,
+                "parentId": "85",
+                "title": "Raindrop",
+                "url": "https://app.raindrop.io/"
+              },
+              {
+                "dateAdded": 1727722621000,
+                "id": "90",
+                "index": 1,
+                "parentId": "85",
+                "title": "readme.so",
+                "url": "https://readme.so/editor"
+              },
+              {
+                "children": [
+                  {
+                    "dateAdded": 1728975532000,
+                    "id": "99",
+                    "index": 0,
+                    "parentId": "97",
+                    "title": "Ghostery",
+                    "url": "https://www.ghostery.com/ghostery-ad-blocker-chrome"
+                  },
+                  {
+                    "dateAdded": 1728014018000,
+                    "id": "101",
+                    "index": 1,
+                    "parentId": "97",
+                    "title": "JSON Formatter",
+                    "url": "https://chromewebstore.google.com/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa"
+                  },
+                  {
+                    "dateAdded": 1727756233000,
+                    "id": "105",
+                    "index": 2,
+                    "parentId": "97",
+                    "title": "Prompt Storm",
+                    "url": "https://promptstorm.app/"
+                  },
+                  {
+                    "dateAdded": 1727756135000,
+                    "id": "106",
+                    "index": 3,
+                    "parentId": "97",
+                    "title": "React Developer Tools",
+                    "url": "https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi"
+                  },
+                  {
+                    "dateAdded": 1727756113000,
+                    "id": "107",
+                    "index": 4,
+                    "parentId": "97",
+                    "title": "Codeium",
+                    "url": "https://codeium.com/"
+                  },
+                  {
+                    "dateAdded": 1727756071000,
+                    "id": "108",
+                    "index": 5,
+                    "parentId": "97",
+                    "title": "redux-devtools",
+                    "url": "https://github.com/reduxjs/redux-devtools"
+                  },
+                  {
+                    "dateAdded": 1727755758000,
+                    "id": "111",
+                    "index": 6,
+                    "parentId": "97",
+                    "title": "ColorZilla",
+                    "url": "https://chromewebstore.google.com/detail/colorzilla/bhlhnicpbhignbdhedgjhgdocnmhomnp"
+                  },
+                  {
+                    "dateAdded": 1727754166000,
+                    "id": "113",
+                    "index": 7,
+                    "parentId": "97",
+                    "title": "Wikiwand",
+                    "url": "https://www.wikiwand.com/"
+                  },
+                  {
+                    "dateAdded": 1727755616000,
+                    "id": "115",
+                    "index": 8,
+                    "parentId": "97",
+                    "title": "PopUpOFF",
+                    "url": "https://popupoff.org/"
+                  },
+                  {
+                    "dateAdded": 1727755560000,
+                    "id": "116",
+                    "index": 9,
+                    "parentId": "97",
+                    "title": "Raindrop",
+                    "url": "https://chromewebstore.google.com/detail/raindropio/ldgfbffkinooeloadekpmfoklnobpien"
+                  },
+                  {
+                    "dateAdded": 1734615599544,
+                    "id": "206",
+                    "index": 10,
+                    "parentId": "97",
+                    "title": "Material New Tab",
+                    "url": "https://github.com/XengShi/materialYouNewTab"
+                  }
+                ],
+                "dateAdded": 1730983174470,
+                "dateGroupModified": 1734615662661,
+                "id": "97",
+                "index": 2,
+                "parentId": "85",
+                "title": "Extensions"
+              },
+              {
+                "children": [
+                  {
+                    "dateAdded": 1727721507000,
+                    "id": "118",
+                    "index": 0,
+                    "parentId": "117",
+                    "title": "Brilliant",
+                    "url": "https://brilliant.org/home/"
+                  },
+                  {
+                    "dateAdded": 1727713393000,
+                    "id": "119",
+                    "index": 1,
+                    "parentId": "117",
+                    "title": "Coursera",
+                    "url": "https://www.coursera.org/"
+                  },
+                  {
+                    "dateAdded": 1726587448000,
+                    "id": "120",
+                    "index": 2,
+                    "parentId": "117",
+                    "title": "Duolingo",
+                    "url": "https://www.duolingo.com/learn"
+                  },
+                  {
+                    "dateAdded": 1727713393000,
+                    "id": "121",
+                    "index": 3,
+                    "parentId": "117",
+                    "title": "Typelit",
+                    "url": "https://www.typelit.io/chapters/The_Jungle_Book"
+                  }
+                ],
+                "dateAdded": 1730983174471,
+                "id": "117",
+                "index": 3,
+                "parentId": "85",
+                "title": "Learning"
+              }
+            ],
+            "dateAdded": 1730983174440,
+            "id": "85",
+            "index": 2,
+            "parentId": "1",
+            "title": "Other"
+          },
+          {
+            "children": [
+              {
+                "dateAdded": 1729837169000,
+                "id": "125",
+                "index": 0,
+                "parentId": "122",
+                "title": "Landing Pages Explained",
+                "url": "https://www.landingpagesexplained.com/"
+              },
+              {
+                "dateAdded": 1729187794000,
+                "id": "126",
+                "index": 1,
+                "parentId": "122",
+                "title": "Toools.design",
+                "url": "https://www.toools.design/"
+              },
+              {
+                "dateAdded": 1727725991000,
+                "id": "127",
+                "index": 2,
+                "parentId": "122",
+                "title": "Microsoft Designer",
+                "url": "https://designer.microsoft.com/"
+              },
+              {
+                "dateAdded": 1727724499000,
+                "id": "128",
+                "index": 3,
+                "parentId": "122",
+                "title": "Adobe Color",
+                "url": "https://color.adobe.com/create/color-wheel"
+              },
+              {
+                "dateAdded": 1727724463000,
+                "id": "129",
+                "index": 4,
+                "parentId": "122",
+                "title": "Material Palette",
+                "url": "https://www.materialpalette.com/"
+              },
+              {
+                "dateAdded": 1727724425000,
+                "id": "130",
+                "index": 5,
+                "parentId": "122",
+                "title": "Color",
+                "url": "https://m2.material.io/inline-tools/color/"
+              },
+              {
+                "dateAdded": 1727724252000,
+                "id": "131",
+                "index": 6,
+                "parentId": "122",
+                "title": "ColorMagic",
+                "url": "https://colormagic.app/"
+              },
+              {
+                "dateAdded": 1727722461000,
+                "id": "132",
+                "index": 7,
+                "parentId": "122",
+                "title": "draw.io",
+                "url": "https://app.diagrams.net/"
+              },
+              {
+                "dateAdded": 1727722415000,
+                "id": "133",
+                "index": 8,
+                "parentId": "122",
+                "title": "Excalidraw",
+                "url": "https://excalidraw.com/"
+              },
+              {
+                "dateAdded": 1727722304000,
+                "id": "134",
+                "index": 9,
+                "parentId": "122",
+                "title": "Witeboard",
+                "url": "https://witeboard.com/"
+              },
+              {
+                "dateAdded": 1727722166000,
+                "id": "135",
+                "index": 10,
+                "parentId": "122",
+                "title": "Microsoft Whiteboard",
+                "url": "https://app.whiteboard.microsoft.com/"
+              },
+              {
+                "dateAdded": 1727720179000,
+                "id": "136",
+                "index": 11,
+                "parentId": "122",
+                "title": "Canva",
+                "url": "https://www.canva.com/"
+              },
+              {
+                "dateAdded": 1724950683000,
+                "id": "137",
+                "index": 12,
+                "parentId": "122",
+                "title": "Material Design",
+                "url": "https://m3.material.io/foundations"
+              },
+              {
+                "dateAdded": 1723290744000,
+                "id": "138",
+                "index": 13,
+                "parentId": "122",
+                "title": "FIGMA",
+                "url": "http://figma.com/"
+              },
+              {
+                "dateAdded": 1723538987000,
+                "id": "139",
+                "index": 14,
+                "parentId": "122",
+                "title": "Snappify",
+                "url": "https://snappify.com/"
+              }
+            ],
+            "dateAdded": 1730983174471,
+            "id": "122",
+            "index": 3,
+            "parentId": "1",
+            "title": "Design"
+          },
+          {
+            "children": [
+              {
+                "dateAdded": 1723285127000,
+                "id": "147",
+                "index": 0,
+                "parentId": "146",
+                "title": "YouTube",
+                "url": "https://www.youtube.com/feed/playlists"
+              },
+              {
+                "children": [
+                  {
+                    "dateAdded": 1723285295000,
+                    "id": "149",
+                    "index": 0,
+                    "parentId": "148",
+                    "title": "Spotify",
+                    "url": "https://open.spotify.com/"
+                  },
+                  {
+                    "dateAdded": 1727713393000,
+                    "id": "150",
+                    "index": 1,
+                    "parentId": "148",
+                    "title": "Genius",
+                    "url": "https://genius.com/"
+                  },
+                  {
+                    "dateAdded": 1723977196000,
+                    "id": "151",
+                    "index": 2,
+                    "parentId": "148",
+                    "title": "Youtube Music",
+                    "url": "http://music.youtube.com/"
+                  },
+                  {
+                    "dateAdded": 1734615662661,
+                    "id": "207",
+                    "index": 3,
+                    "parentId": "148",
+                    "title": "‎Apple Music",
+                    "url": "https://music.apple.com/us/new"
+                  },
+                  {
+                    "dateAdded": 1734615678758,
+                    "id": "208",
+                    "index": 4,
+                    "parentId": "148",
+                    "title": "Sound Cloud",
+                    "url": "https://soundcloud.com/"
+                  }
+                ],
+                "dateAdded": 1730983174471,
+                "dateGroupModified": 1734615744594,
+                "id": "148",
+                "index": 1,
+                "parentId": "146",
+                "title": "Music"
+              },
+              {
+                "children": [
+                  {
+                    "dateAdded": 1734615744594,
+                    "id": "209",
+                    "index": 0,
+                    "parentId": "152",
+                    "title": "Netflix",
+                    "url": "https://www.netflix.com/"
+                  },
+                  {
+                    "dateAdded": 1734615799220,
+                    "id": "210",
+                    "index": 1,
+                    "parentId": "152",
+                    "title": "Amazon Prime",
+                    "url": "https://www.amazon.com/amazonprime"
+                  },
+                  {
+                    "dateAdded": 1734615816719,
+                    "id": "211",
+                    "index": 2,
+                    "parentId": "152",
+                    "title": "MyAnimeList",
+                    "url": "https://myanimelist.net/"
+                  },
+                  {
+                    "dateAdded": 1734615823685,
+                    "id": "212",
+                    "index": 3,
+                    "parentId": "152",
+                    "title": "Crunchyroll",
+                    "url": "https://www.crunchyroll.com/"
+                  },
+                  {
+                    "dateAdded": 1734615892127,
+                    "id": "213",
+                    "index": 4,
+                    "parentId": "152",
+                    "title": "Top 30 Most Popular Movies",
+                    "url": "https://editorial.rottentomatoes.com/guide/popular-movies/"
+                  },
+                  {
+                    "dateAdded": 1734615922484,
+                    "id": "214",
+                    "index": 5,
+                    "parentId": "152",
+                    "title": "IMDB",
+                    "url": "https://www.imdb.com/"
+                  }
+                ],
+                "dateAdded": 1730983174471,
+                "dateGroupModified": 1734616059101,
+                "id": "152",
+                "index": 2,
+                "parentId": "146",
+                "title": "Movie, series, anime"
+              },
+              {
+                "children": [
+                  {
+                    "dateAdded": 1727713393000,
+                    "id": "160",
+                    "index": 0,
+                    "parentId": "159",
+                    "title": "Messanger",
+                    "url": "https://www.messenger.com/"
+                  },
+                  {
+                    "dateAdded": 1727713393000,
+                    "id": "161",
+                    "index": 1,
+                    "parentId": "159",
+                    "title": "Whatsapp",
+                    "url": "https://web.whatsapp.com/"
+                  },
+                  {
+                    "dateAdded": 1727713393000,
+                    "id": "162",
+                    "index": 2,
+                    "parentId": "159",
+                    "title": "Dsicord",
+                    "url": "https://discord.com/channels/@me"
+                  },
+                  {
+                    "dateAdded": 1723285353000,
+                    "id": "163",
+                    "index": 3,
+                    "parentId": "159",
+                    "title": "Gmail",
+                    "url": "https://mail.google.com/"
+                  },
+                  {
+                    "dateAdded": 1723290876000,
+                    "id": "164",
+                    "index": 4,
+                    "parentId": "159",
+                    "title": "Reddit",
+                    "url": "http://reddit.com/"
+                  },
+                  {
+                    "dateAdded": 1723290910000,
+                    "id": "165",
+                    "index": 5,
+                    "parentId": "159",
+                    "title": "FaceBook",
+                    "url": "http://facebook.com/"
+                  }
+                ],
+                "dateAdded": 1730983174471,
+                "id": "159",
+                "index": 3,
+                "parentId": "146",
+                "title": "Social Media"
+              }
+            ],
+            "dateAdded": 1730983174471,
+            "id": "146",
+            "index": 4,
+            "parentId": "1",
+            "title": "Media and Entertainment"
+          },
+          {
+            "children": [
+              {
+                "dateAdded": 1727720516000,
+                "id": "167",
+                "index": 0,
+                "parentId": "166",
+                "title": "Notion",
+                "url": "https://www.notion.so/"
+              },
+              {
+                "dateAdded": 1727720461000,
+                "id": "168",
+                "index": 1,
+                "parentId": "166",
+                "title": "xTiles",
+                "url": "https://xtiles.app/"
+              },
+              {
+                "dateAdded": 1723290935000,
+                "id": "169",
+                "index": 2,
+                "parentId": "166",
+                "title": "Amie Calander",
+                "url": "https://calendar.amie.so/"
+              },
+              {
+                "dateAdded": 1727713393000,
+                "id": "170",
+                "index": 3,
+                "parentId": "166",
+                "title": "Google Calander",
+                "url": "https://calendar.google.com/calendar/u/0/r?pli=1"
+              },
+              {
+                "dateAdded": 1734615984933,
+                "id": "215",
+                "index": 4,
+                "parentId": "166",
+                "title": "Todoist",
+                "url": "https://todoist.com/"
+              },
+              {
+                "dateAdded": 1734615993528,
+                "id": "216",
+                "index": 5,
+                "parentId": "166",
+                "title": "Reclaim AI",
+                "url": "https://reclaim.ai/"
+              },
+              {
+                "dateAdded": 1734616059101,
+                "dateLastUsed": 1734616085524,
+                "id": "217",
+                "index": 6,
+                "parentId": "166",
+                "title": "Pomodor",
+                "url": "https://pomodor.app/timer"
+              },
+              {
+                "dateAdded": 1734616106519,
+                "id": "218",
+                "index": 7,
+                "parentId": "166",
+                "title": "Pocket",
+                "url": "https://getpocket.com/home"
+              },
+              {
+                "dateAdded": 1734616110807,
+                "id": "219",
+                "index": 8,
+                "parentId": "166",
+                "title": "Habitica",
+                "url": "https://habitica.com/static/home"
+              }
+            ],
+            "dateAdded": 1730983174472,
+            "dateGroupModified": 1734616110807,
+            "id": "166",
+            "index": 5,
+            "parentId": "1",
+            "title": "Productivity"
+          },
+          {
+            "children": [],
+            "dateAdded": 1734176334362,
+            "dateGroupModified": 1734176334362,
+            "id": "202",
+            "index": 6,
+            "parentId": "1",
+            "title": "empty folder"
+          }
+        ],
+        "dateAdded": 1730983137145,
+        "dateGroupModified": 1734207107599,
+        "id": "1",
+        "index": 0,
+        "parentId": "0",
+        "title": "Bookmarks"
+      },
+      {
+        "children": [],
+        "dateAdded": 1730983137145,
+        "dateGroupModified": 1734095471456,
+        "id": "2",
+        "index": 1,
+        "parentId": "0",
+        "title": "Other bookmarks"
+      }
+    ],
+    "dateAdded": 1734610115547,
+    "id": "0",
+    "title": ""
+  }
+]

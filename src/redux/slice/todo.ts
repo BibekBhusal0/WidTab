@@ -1,11 +1,16 @@
-import { changeTaskType, TaskTodoID, TaskType } from "@/types/slice/todo";
+import {
+  changeTaskType,
+  TaskTodoID,
+  TaskType,
+  todoStateType,
+} from "@/types/slice/todo";
 import { getNextId } from "@/utils/next_id";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialTodoState } from "./initialStates";
 
 export const todoSlice = createSlice({
   name: "todo",
-  initialState: initialTodoState,
+  initialState: { ...initialTodoState },
   reducers: {
     addTask: (state, action: PayloadAction<string>) => {
       state.Tasks.push({
@@ -102,6 +107,25 @@ export const todoSlice = createSlice({
       if (state.pinnedTodo === action.payload) state.pinnedTodo = null;
       else state.pinnedTodo = action.payload;
     },
+    resetTodoSlice: (state) => Object.assign(state, initialTodoState),
+    setTodoState: (state, action: PayloadAction<todoStateType>) => {
+      const val = action.payload;
+      if (!val) return;
+      if (!val.Tasks) return;
+      if (!Array.isArray(val.Tasks)) return;
+      const tasks = state.Tasks;
+
+      val.Tasks.forEach((task) => {
+        const t = tasks.find((p) => p.id === task.id && p.title === task.title);
+        if (t) Object.assign(t, task);
+        else {
+          const id = getNextId(tasks.map(({ id }) => id));
+          if (task.id === val.pinnedTodo) state.pinnedTodo = id;
+          tasks.push({ ...task, id });
+        }
+      });
+      state.Tasks = tasks;
+    },
   },
 });
 
@@ -116,5 +140,7 @@ export const {
   toggleSortedFiltered,
   setTasks,
   changePinnedTodo,
+  resetTodoSlice,
+  setTodoState,
 } = todoSlice.actions;
 export default todoSlice.reducer;

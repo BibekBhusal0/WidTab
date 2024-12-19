@@ -1,11 +1,11 @@
 import useCurrentTheme from "@/hooks/useCurrentTheme";
 import { useDispatch } from "react-redux";
-import { Icon2RN, iconPackNames, SelectedIconPacks } from "@/icons";
+import { Icon2RN, iconPackNames } from "@/theme/icons";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { compactionType } from "@/types/slice/layout";
 import { changeIconPack } from "@/redux/slice/theme";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import { SelectedIconPacks } from "@/theme/selected-icons";
 
 function SelectIconPack({ showLabel = true }: { showLabel?: boolean }) {
   const { iconPack } = useCurrentTheme();
@@ -22,6 +22,7 @@ function SelectIconPack({ showLabel = true }: { showLabel?: boolean }) {
     <Select
       className="w-full capitalize icon-xl"
       MenuProps={{ style: { maxHeight: 350 } }}
+      size="small"
       renderValue={(selected) => (
         <div className="flex-center gap-4">
           {getSampleIcon(selected)}
@@ -29,9 +30,7 @@ function SelectIconPack({ showLabel = true }: { showLabel?: boolean }) {
         </div>
       )}
       value={iconPack}
-      onChange={(e) =>
-        dispatch(changeIconPack(e.target.value as compactionType))
-      }>
+      onChange={(e) => dispatch(changeIconPack(e.target.value))}>
       {Object.keys(SelectedIconPacks).map((c) => (
         <MenuItem
           className="capitalize icon-xl flex-center gap-3"

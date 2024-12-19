@@ -1,21 +1,20 @@
 import useCurrentIcons from "@/hooks/useCurrentIcons";
-import useCurrentLayout from "@/hooks/useCurrentLayout";
-import { currentSpaceToggleLocked } from "@/redux/slice/layout";
+import { toggleLocked } from "@/redux/slice/layout";
+import { StateType } from "@/redux/store";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function Lock() {
   const dispatch = useDispatch();
   const { lock, unlock } = useCurrentIcons();
-  const space = useCurrentLayout();
-  if (!space) return null;
+  const { locked } = useSelector((state: StateType) => state.layout);
 
-  const toggle = () => dispatch(currentSpaceToggleLocked());
+  const toggle = () => dispatch(toggleLocked());
 
   return (
-    <Tooltip title={space.locked ? "Unlock" : "Lock"}>
-      <IconButton onClick={toggle}>{space.locked ? unlock : lock}</IconButton>
+    <Tooltip title={locked ? "Unlock" : "Lock"}>
+      <IconButton onClick={toggle}>{locked ? unlock : lock}</IconButton>
     </Tooltip>
   );
 }

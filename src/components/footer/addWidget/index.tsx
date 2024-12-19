@@ -9,25 +9,28 @@ import AddSearch from "./search";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import AddHabitTracer from "./habitTracker";
 import AddNavigation from "./navigation";
-import AddTimer from "./timer";
+import AddBookmark from "./bookmark";
+import AddNote from "./notes";
 
 function AddWidget() {
   const { widget } = useCurrentIcons();
   const addItems: SidebarComponent[] = [
-    { index: 0, name: "Custom", component: <AddCustomWidget /> },
-    { index: 1, name: "Todo", component: <AddTodo /> },
-    { index: 2, name: "DateTime", component: <DateTime /> },
-    { index: 3, name: "Search", component: <AddSearch /> },
-    { index: 4, name: "Habit Tracker", component: <AddHabitTracer /> },
-    { index: 5, name: "Navigation", component: <AddNavigation /> },
-    { index: 6, name: "Timer", component: <AddTimer /> },
+    { name: "Search", component: <AddSearch />, index: 0 },
+    { name: "Time", component: <DateTime />, index: 1 },
+    { name: "Bookmark", component: <AddBookmark />, index: 2 },
+    { name: "Note", component: <AddNote />, index: 3 },
+    { name: "Todo", component: <AddTodo />, index: 4 },
+    { name: "Habit Tracker", component: <AddHabitTracer />, index: 5 },
+    { name: "Custom", component: <AddCustomWidget />, index: 7 },
+    { name: "Navigation", component: <AddNavigation />, index: 8 },
   ];
   return (
     <FooterPopover tooltip="Add Widget" icon={widget}>
       <ContainerSidebar
         items={addItems}
-        mainProps={{ sx: { width: "500px", height: "350px" } }}
-        tabsProps={{ sx: { width: "150px" } }}
+        mainProps={{ sx: { width: "550px", height: "350px" } }}
+        tabsProps={{ sx: { width: "200px" } }}
+        tabProps={{ sx: { minHeight: "38px", paddingY: "10px" } }}
       />
     </FooterPopover>
   );

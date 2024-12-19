@@ -3,7 +3,7 @@ import ListItemButton, {
   ListItemButtonProps,
 } from "@mui/material/ListItemButton";
 import Menu, { MenuProps } from "@mui/material/Menu";
-import { Icon2RN, iconAsProp } from "@/icons";
+import { Icon2RN, iconAsProp } from "@/theme/icons";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 
 export interface MenuPopoverProps {
@@ -31,7 +31,10 @@ function MenuPopover({
 
   return (
     <>
-      <ListItemButton {...buttonProps} onClick={handleClick}>
+      <ListItemButton
+        {...buttonProps}
+        sx={{ px: "8px", py: "4px", ...buttonProps?.sx }}
+        onClick={handleClick}>
         <Icon2RN icon={icon || menu} />
       </ListItemButton>
       <Menu

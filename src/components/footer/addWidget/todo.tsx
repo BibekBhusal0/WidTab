@@ -26,9 +26,7 @@ function AddTodo() {
     dispatch(
       currentSpaceAddWidget({
         type: "todo",
-        values: {
-          id,
-        },
+        values: { id },
         gridProps: {
           ...todoDimensions,
           ...availablePosition,
@@ -57,7 +55,10 @@ function AddTodo() {
 
       <AddItem
         inputProps={{ label: "Todo title", placeholder: "Todo title" }}
-        addButtonProps={{ children: "Add Todo", disabled: !availablePosition }}
+        addButtonProps={{
+          children: "Add New Todo",
+          disabled: !availablePosition,
+        }}
         clickEvent={addTodo}
         word_limit={undefined}
       />

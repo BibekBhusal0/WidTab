@@ -8,16 +8,17 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Button from "@mui/material/Button";
 import HabitTrackerEdit from "../widgets/habit-tracker/edit";
-import { Icon } from "@iconify/react/dist/iconify.js";
+import { Icon } from "@iconify/react";
 import { addItem } from "@/redux/slice/habit-tracker";
 import { cn } from "@/utils/cn";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import Controls from "../widgets/controls";
 import { getWidgetControlsProps } from "@/utils/getWidget";
+import { ScrollArea } from "@/components/scrollarea";
 
 function HabitTrackerPage() {
   const { pinned, trackers } = useSelector(
-    (state: StateType) => state["habit-tracker"]
+    (state: StateType) => state.habitTracker
   );
   const [showStats, setShowStats] = useState(false);
   const pinnedTracker = trackers.filter((t) => t.id === pinned);
@@ -29,7 +30,7 @@ function HabitTrackerPage() {
         key={tracker.id}
         sx={{
           backgroundColor:
-            tracker.id === pinned ? "secondaryContainer.paper" : undefined,
+            tracker.id === pinned ? "primaryContainer.paper" : undefined,
         }}
         className="h-[150px] overflow-hidden">
         <Controls
@@ -41,7 +42,7 @@ function HabitTrackerPage() {
     ));
 
   return (
-    <>
+    <ScrollArea className="size-full">
       <AnimatePresence>
         {showStats && (
           <motion.div
@@ -64,12 +65,12 @@ function HabitTrackerPage() {
         </Button>
       </div>
 
-      <div className="grid gap-3 grid-cols-1 m-3 overflow-auto sm:grid-cols-2 md:grid-cols-3">
+      <div className="grid gap-3 grid-cols-1 m-3 sm:grid-cols-2 md:grid-cols-3">
         {renderTrackers(pinnedTracker)}
         {renderTrackers(unPinnedTrackers)}
         <AddNewHabitTracker />
       </div>
-    </>
+    </ScrollArea>
   );
 }
 

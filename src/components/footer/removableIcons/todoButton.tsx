@@ -14,9 +14,9 @@ function TodoButton() {
 
   return (
     <FooterPopover tooltip="To-dos" icon={checklist}>
-      <div className="flex h-56 overflow-clip">
+      <div className="flex h-80 overflow-clip">
         {pinned && (
-          <div className="w-56 border-r-2 border-divider">
+          <div className="w-96 border-r-2 border-divider">
             <Todo {...pinned} />
           </div>
         )}

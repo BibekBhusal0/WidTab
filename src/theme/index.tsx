@@ -5,19 +5,54 @@ import {
   hexFromArgb,
 } from "@material/material-color-utilities";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
-import CssBaseline from "@mui/material/CssBaseline";
-import { ThemeItemType } from "./types/slice/theme";
-import useCurrentTheme from "./hooks/useCurrentTheme";
-import type {} from "@mui/x-charts/themeAugmentation";
-import alphaColor from "./utils/alpha";
+import { ThemeItemType } from "@/types/slice/theme";
+import alphaColor from "@/utils/alpha";
+import useCurrentTheme from "@/hooks/useCurrentTheme";
+import { useEffect, ReactNode } from "react";
+import { cn } from "@/utils/cn";
+import useBackgroundImage from "@/utils/image";
 
-export const getTheme = ({
-  mode,
-  primaryColor,
-  blur,
-  roundness,
+type themeBackgroundProps = { children: ReactNode } & ThemeItemType;
+function ThemeBackground({
+  image,
   opacity,
-}: ThemeItemType) => {
+  mode,
+  children,
+}: themeBackgroundProps) {
+  const color =
+    mode === "dark"
+      ? `rgba(0,0,0,${opacity / 3})`
+      : `rgba(255,255,255,${opacity / 3})`;
+  const full = "size-full h-screen";
+  const backgroundImage = useBackgroundImage();
+  useEffect(() => {
+    const handleContextMenu = (event: MouseEvent) => {
+      event.preventDefault();
+    };
+
+    document.addEventListener("contextmenu", handleContextMenu);
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, []);
+
+  return (
+    <div
+      className={cn(full, image && "bg-cover bg-center bg-no-repeat")}
+      style={
+        backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {}
+      }>
+      <div
+        className={cn(full, image && "backdrop-blur-half")}
+        style={image ? { backgroundColor: color } : {}}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+export const getTheme = (theme: ThemeItemType) => {
+  const { mode, primaryColor, blur, roundness, opacity } = theme;
   const primary = themeFromSourceColor(argbFromHex(primaryColor));
   const crrPrimary = primary.schemes[mode];
 
@@ -27,10 +62,14 @@ export const getTheme = ({
   const CSSv = document.documentElement.style;
   CSSv.setProperty("--custom-border-radius", borderRadius);
   CSSv.setProperty("--custom-blur", b);
+  CSSv.setProperty(
+    "--color-divider-transparent",
+    alphaColor(hexFromArgb(crrPrimary.outline), 0.5)
+  );
   for (let i = 1; i <= 9; i++) {
     const opacityValue = i / 10;
     CSSv.setProperty(
-      `--primary-opacity-${i}`,
+      `--primary-${i}`,
       alphaColor(hexFromArgb(crrPrimary.primary), opacityValue)
     );
   }
@@ -43,7 +82,6 @@ export const getTheme = ({
       },
     },
   };
-
   return createTheme({
     cssVariables: true,
     palette: {
@@ -96,15 +134,6 @@ export const getTheme = ({
       MuiInput: { ...rounded },
       MuiFilledInput: { ...rounded },
       MuiOutlinedInput: { ...rounded },
-      MuiBarChart: {
-        defaultProps: {
-          borderRadius: roundness * 30,
-          colors: [hexFromArgb(crrPrimary.primary)],
-          skipAnimation: false,
-          tooltip: { trigger: "none" },
-          axisHighlight: { x: "none", y: "none" },
-        },
-      },
     },
   });
 };
@@ -114,8 +143,7 @@ function CustomThemeProvider({ children }: { children: React.ReactNode }) {
   const theme = getTheme(th);
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {children}
+      <ThemeBackground {...th} children={children} />
     </ThemeProvider>
   );
 }

@@ -1,15 +1,14 @@
 import { useSelector } from "react-redux";
-import Footer from "./components/footer";
-import CustomThemeProvider from "./theme";
-import { StateType } from "./redux/store";
-import useCurrentLayout from "./hooks/useCurrentLayout";
-import { StaticPagesType } from "./types/slice/widgets";
-import DynamicLayout from "./layout/dynamic";
-import StaticLayout from "./layout/static";
+import Footer from "@/components/footer";
+import { StateType } from "@/redux/store";
+import useCurrentLayout from "@/hooks/useCurrentLayout";
+import { StaticPagesType } from "@/types/slice/widgets";
+import DynamicLayout from "@/layout/dynamic";
+import StaticLayout from "@/layout/static";
 import Box from "@mui/material/Box";
-import { positionProps } from "./types/slice/layout";
-import { cn } from "./utils/cn";
-import useCurrentTheme from "./hooks/useCurrentTheme";
+import { positionProps } from "@/types/slice/layout";
+import { cn } from "@/utils/cn";
+import useCurrentTheme from "@/hooks/useCurrentTheme";
 
 function App() {
   const { currentSpace, toolBarPosition } = useSelector(
@@ -25,18 +24,16 @@ function App() {
     crrLayout = <StaticLayout widgetType={l} />;
   }
   return (
-    <CustomThemeProvider>
-      <Box
-        {...appProps}
-        className={cn(
-          "size-full h-screen relative flex",
-          appProps?.className,
-          mode
-        )}>
-        {crrLayout}
-        <Footer />
-      </Box>
-    </CustomThemeProvider>
+    <Box
+      {...appProps}
+      className={cn(
+        "size-full h-screen relative flex",
+        appProps?.className,
+        mode
+      )}>
+      {crrLayout}
+      <Footer />
+    </Box>
   );
 }
 

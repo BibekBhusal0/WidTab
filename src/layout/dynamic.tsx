@@ -12,7 +12,7 @@ import { cn } from "@/utils/cn";
 import useFullSize from "@/hooks/useFullSize";
 
 function DynamicLayout() {
-  const { n_cols, n_rows, currentSpace, toolBarPosition } = useSelector(
+  const { n_cols, n_rows, currentSpace, toolBarPosition, locked } = useSelector(
     (state: StateType) => state.layout
   );
   const { mainComponentProps } = positionProps[toolBarPosition];
@@ -25,7 +25,7 @@ function DynamicLayout() {
   } = useFullSize([currentSpace, toolBarPosition]);
   const rowHeight = (height - gap * n_rows) / n_rows;
   if (!space) return null;
-  const { compaction, locked, widgets } = space;
+  const { widgets } = space;
   const layout = widgets.map((w) => w.gridProps);
 
   const handleChange = (layout: Layout[]) => {
@@ -37,10 +37,10 @@ function DynamicLayout() {
       ref={ref}
       {...mainComponentProps}
       className={cn(
-        "relative w-full overflow-hidden",
+        "relative w-full overflow-hidden widgets",
         mainComponentProps?.className
       )}
-      sx={mainComponentProps?.sx}
+      sx={{ ...mainComponentProps?.sx, marginBottom: `${gap}px` }}
       //
     >
       <GridLayout
@@ -51,14 +51,14 @@ function DynamicLayout() {
         width={width}
         margin={[gap, gap]}
         //
-        className={`size-full ${locked ? "hide-resize" : ""}`}
+        className={cn("size-full", locked && "hide-resize")}
         isDraggable={!locked}
         isResizable={!locked}
         isDroppable={!locked}
         //
-        compactType={compaction === "none" ? null : compaction}
         onLayoutChange={handleChange}
         draggableHandle=".drag-handle"
+        compactType={null}
         preventCollision
         resizeHandles={["e", "n", "s", "w"]}
         //
@@ -69,7 +69,7 @@ function DynamicLayout() {
             key={w.gridProps.i}
             className="relative overflow-hidden">
             {!locked && (
-              <div className="w-full drag-handle h-[9%] absolute top-0 left-0 z-10 bg-primary-5 rounded-tl-themed rounded-tr-themed" />
+              <div className="w-full drag-handle h-full absolute z-10 bg-primary-1 rounded-themed" />
             )}
             <Widget widget={w} />
           </Paper>

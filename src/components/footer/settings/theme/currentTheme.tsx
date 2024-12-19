@@ -12,6 +12,8 @@ import RenameTheme from "./renameTheme";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import SelectIconPack from "./iconPack";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
+import { HexPicker } from "@/components/color";
+import SelectBackgroundImage from "./selectBackgroundImage";
 
 function CurrentThemeSettings() {
   const theme = useCurrentTheme();
@@ -28,25 +30,25 @@ function CurrentThemeSettings() {
 
   return (
     <div className="flex flex-col gap-4 px-3">
+      {/* Dark mode toggle */}
       <MenuSwitch plain items={toggle} />
+
       {theme.editAble ? (
         <>
-          <div className="full-between">
+          <div aria-label="primary color" className="full-between">
             <div className="text-xl">Primary Color</div>
-            <input
-              type="color"
-              name="primary"
-              id="primary"
-              value={theme.primaryColor}
-              onChange={(e) =>
-                dispatch(
-                  changeTheme({ ...theme, primaryColor: e.target.value })
-                )
-              }
-            />
+            <div className="w-36">
+              <HexPicker
+                color={theme.primaryColor}
+                setColor={(color) =>
+                  dispatch(changeTheme({ ...theme, primaryColor: color }))
+                }
+              />
+            </div>
           </div>
-          <SelectIconPack showLabel />
-          <div className="flex flex-col items-center gap-4">
+          <div
+            aria-label="opacity/blur/roundness"
+            className="flex flex-col items-center gap-4">
             {numValues.map((val) => (
               <ChangeSlider
                 valueLabelDisplay="auto"
@@ -58,8 +60,10 @@ function CurrentThemeSettings() {
               />
             ))}
           </div>
-          <RenameTheme />
 
+          <SelectIconPack showLabel />
+          <SelectBackgroundImage />
+          <RenameTheme />
           <Button
             variant="outlined"
             onClick={() => dispatch(deleteTheme(theme.id))}

@@ -1,10 +1,6 @@
-import {
-  iconPackNames,
-  ri_fill,
-  SelectedIconPacks,
-  transformIcons,
-} from "@/icons";
+import { iconPackNames, transformIcons } from "@/theme/icons";
 import useCurrentTheme from "./useCurrentTheme";
+import { ri_fill, SelectedIconPacks } from "@/theme/selected-icons";
 
 function useCurrentIcons() {
   const { iconPack } = useCurrentTheme();

@@ -1,19 +1,14 @@
+import { which } from "@/hooks/useAllSpaceAndIcon";
 import { StaticPagesType, WidgetType } from "./widgets";
 import { BoxProps } from "@mui/material/Box";
 
 export type CurrentSpaceType =
-  | {
-      type: "dynamic";
-      id: number;
-    }
+  | { type: "dynamic"; id: number }
   | { type: "static"; id: StaticPagesType };
 
-export type compactionType = "none" | "vertical" | "horizontal";
 export type DynamicSpaceType = {
   id: number;
   name: string;
-  compaction: compactionType;
-  locked: boolean;
   delete_able?: boolean;
   icon: string;
   widgets: WidgetType[];
@@ -33,12 +28,16 @@ const RTBI = ["spaces", "todo", "lock", "theme"] as const;
 
 export type RemovableToolbarIcons = (typeof RTBI)[number];
 export const allRemovableToolbarIcons: RemovableToolbarIcons[] = [...RTBI];
+export type dockContentType =
+  | { content: "spaces"; id: which }
+  | { content: "bookmark"; id: string };
 
 export type LayoutSliceType = {
   toolBarPosition: ToolBarPositions;
   toolBarIcons: RemovableToolbarIcons[];
-  linkInNewTab: boolean;
+  locked: boolean;
   dock: boolean;
+  dockContent: dockContentType;
   n_rows: number;
   n_cols: number;
 

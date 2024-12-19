@@ -1,9 +1,10 @@
 import {
-  compactionType,
   ToolBarPositions,
   CurrentSpaceType,
   DynamicSpaceType,
   RemovableToolbarIcons,
+  dockContentType,
+  LayoutSliceType,
 } from "@/types/slice/layout";
 import {
   DeleteWidgetParameters,
@@ -16,13 +17,12 @@ import { getNextId } from "@/utils/next_id";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Layout } from "react-grid-layout";
 import { initialLayoutState } from "./initialStates";
+import { which } from "@/hooks/useAllSpaceAndIcon";
 
 const getEmptySpace = (): DynamicSpaceType => {
   return {
     name: "name",
-    compaction: "none",
     id: 0,
-    locked: true,
     widgets: [],
     delete_able: true,
     icon: "majesticons:planet-rocket-line",
@@ -31,7 +31,7 @@ const getEmptySpace = (): DynamicSpaceType => {
 
 export const layoutSlice = createSlice({
   name: "layouts",
-  initialState: initialLayoutState,
+  initialState: { ...initialLayoutState },
   reducers: {
     changeCurrentSpace: (state, action: PayloadAction<CurrentSpaceType>) => {
       if (JSON.stringify(state.currentSpace) === JSON.stringify(action.payload))
@@ -53,8 +53,32 @@ export const layoutSlice = createSlice({
     changeToolBarPosition: (state, action: PayloadAction<ToolBarPositions>) => {
       state.toolBarPosition = action.payload;
     },
-    toggleLink: (state) => {
-      state.linkInNewTab = !state.linkInNewTab;
+    changeDockContent: (state, action: PayloadAction<dockContentType>) => {
+      state.dockContent = action.payload;
+    },
+    changeDockContentType: (state, action: PayloadAction<string>) => {
+      const dockContentType = action.payload;
+      if (dockContentType === "spaces") {
+        state.dockContent = { content: "spaces", id: "all" };
+      } else if (dockContentType === "bookmark") {
+        state.dockContent = { content: "bookmark", id: "1" };
+      }
+    },
+    changeDockSelected: (state, action: PayloadAction<string>) => {
+      if (state.dockContent.content === "spaces") {
+        if (["all", "dynamic", "static"].includes(action.payload)) {
+          state.dockContent = {
+            content: "spaces",
+            id: action.payload as which,
+          };
+        }
+      } else {
+        state.dockContent = { content: "bookmark", id: action.payload };
+      }
+    },
+
+    toggleLocked: (state) => {
+      state.locked = !state.locked;
     },
     toggleDock: (state) => {
       state.dock = !state.dock;
@@ -66,6 +90,23 @@ export const layoutSlice = createSlice({
         );
       } else {
         state.toolBarIcons.push(action.payload);
+      }
+    },
+
+    deleteSpace: (state, action: PayloadAction<number>) => {
+      const space = state.allSpaces.find((p) => p.id === action.payload);
+      if (space && space.delete_able) {
+        state.allSpaces = state.allSpaces.filter(
+          (p) => p.id !== action.payload
+        );
+      }
+    },
+    duplicateSpace: (state, action: PayloadAction<number>) => {
+      const space = state.allSpaces.find((p) => p.id === action.payload);
+      if (space) {
+        const newID = getNextId(state.allSpaces.map(({ id }) => id));
+        state.allSpaces.push({ ...space, id: newID, delete_able: true });
+        state.currentSpace = { type: "dynamic", id: newID };
       }
     },
 
@@ -130,14 +171,6 @@ export const layoutSlice = createSlice({
         });
       }
     },
-    currentSpaceDeleteSpace: (state) => {
-      const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
-      if (space && state.currentSpace.type === "dynamic") {
-        if (space.delete_able) {
-          state.allSpaces = state.allSpaces.filter((p) => p.id !== space.id);
-        }
-      }
-    },
     currentSpaceRename: (state, action: PayloadAction<string>) => {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
       if (space && state.currentSpace.type === "dynamic") {
@@ -150,28 +183,36 @@ export const layoutSlice = createSlice({
         space.icon = action.payload;
       }
     },
-    currentSpaceToggleLocked: (state) => {
-      const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
-      if (space && state.currentSpace.type === "dynamic") {
-        space.locked = !space.locked;
+
+    resetLayoutState: (state) => Object.assign(state, initialLayoutState),
+    setLayoutState: (state, action: PayloadAction<LayoutSliceType>) => {
+      const val = action.payload;
+      if (!val) return;
+      if (val.toolBarPosition) state.toolBarPosition = val.toolBarPosition;
+      if (val.toolBarIcons) state.toolBarIcons = val.toolBarIcons;
+      if (typeof val.dock === "boolean") state.dock = val.dock;
+      if (val.currentSpace) state.currentSpace = val.currentSpace;
+      if (val.dockContent && val.dockContent.content === "bookmark")
+        state.dockContent = { content: "bookmark", id: "0" };
+      else state.dockContent = val.dockContent;
+
+      if (!val.allSpaces) return;
+      if (!Array.isArray(val.allSpaces)) return;
+      const allSpaces = [...state.allSpaces];
+
+      for (const space of val.allSpaces) {
+        const s = allSpaces.find((p) => p.id === space.id);
+        if (s && (!space.delete_able || space.name === s.name))
+          Object.assign(s, space);
+        else {
+          const id = getNextId(allSpaces.map(({ id }) => id));
+          if (space.id === val.currentSpace?.id)
+            state.currentSpace = { type: "dynamic", id };
+          allSpaces.push({ ...space, id, delete_able: true });
+        }
       }
-    },
-    currentSpaceChangeCompaction: (
-      state,
-      action: PayloadAction<compactionType>
-    ) => {
-      const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
-      if (space && state.currentSpace.type === "dynamic") {
-        space.compaction = action.payload;
-      }
-    },
-    currentSpaceDuplicate: (state) => {
-      const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
-      if (space && state.currentSpace.type === "dynamic") {
-        const newID = getNextId(state.allSpaces.map(({ id }) => id));
-        state.allSpaces.push({ ...space, id: newID, delete_able: true });
-        state.currentSpace = { type: "dynamic", id: newID };
-      }
+
+      state.allSpaces = allSpaces;
     },
   },
 });
@@ -180,19 +221,22 @@ export const {
   changeCurrentSpace,
   changeToolBarPosition,
   addSpace,
-  toggleLink,
   toggleIcon,
   currentSpaceAddWidget,
   currentSpaceDeleteWidget,
   currentSpaceSetGridProps,
-  currentSpaceDeleteSpace,
-  currentSpaceToggleLocked,
-  currentSpaceChangeCompaction,
-  currentSpaceDuplicate,
   currentSpaceRename,
   currentSpaceEditWidget,
   currentSpaceChangeIcon,
   toggleDock,
+  changeDockContent,
+  changeDockContentType,
+  changeDockSelected,
+  deleteSpace,
+  duplicateSpace,
+  resetLayoutState,
+  toggleLocked,
+  setLayoutState,
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

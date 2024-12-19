@@ -1,16 +1,17 @@
-import { BarPlot } from "@mui/x-charts/BarChart";
-import { ChartsXAxis } from "@mui/x-charts/ChartsXAxis";
-import { ChartsYAxis } from "@mui/x-charts/ChartsYAxis";
-import { ChartsReferenceLine } from "@mui/x-charts/ChartsReferenceLine";
-import { ResponsiveChartContainer } from "@mui/x-charts/ResponsiveChartContainer";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  ReferenceLine,
+  Cell,
+} from "recharts";
 import dayjs from "@/dayjsConfig";
 import { useTheme } from "@mui/material/styles";
 
 export type BarGraphProps = {
-  data: {
-    date: string;
-    value: number;
-  }[];
+  data: { date: string; value: number }[];
   size: { width: number; height: number };
   showTarget?: boolean;
   unit: string;
@@ -20,66 +21,69 @@ export type BarGraphProps = {
 
 function BarGraph({
   unit,
-  title,
   target,
   data,
   size,
   showTarget = true,
 }: BarGraphProps) {
   const {
-    palette: { error, success },
+    palette: { error, success, text },
   } = useTheme();
 
   const weekly = data.length === 7;
+  const formattedData = data.map((d) => ({
+    ...d,
+    formattedDate: weekly
+      ? dayjs(d.date).format("ddd")
+      : `${dayjs(d.date).format("MMM")}\n${dayjs(d.date).format("DD")}`,
+  }));
 
   return (
-    <ResponsiveChartContainer
-      title={title}
-      dataset={data}
-      series={[{ type: "bar", dataKey: "value" }]}
-      xAxis={[
-        {
-          dataKey: "date",
-          valueFormatter(value: string) {
-            return weekly
-              ? dayjs(value).format("ddd")
-              : `${dayjs(value).format("MMM")}\n ${dayjs(value).format("DD")}`;
-          },
-          scaleType: "band",
-          id: "date",
-        },
-      ]}
-      yAxis={[
-        {
-          label: `${unit}`,
-          min: 0,
-          max: Math.max(target || 0, ...data.map((d) => d.value)),
-          colorMap:
-            target && showTarget
-              ? {
-                  type: "piecewise",
-                  thresholds: [target],
-                  colors: [error.main, success.main],
-                }
-              : undefined,
-          id: "value",
-        },
-      ]}
-      height={size.height - 20}
-      width={size.width - 10}>
-      <BarPlot borderRadius={10} />
-      {showTarget && target && (
-        <ChartsReferenceLine
-          y={target}
-          lineStyle={{ strokeDasharray: "10 5" }}
-          labelStyle={{ fontSize: "10" }}
-          label={`target`}
-          labelAlign="end"
-        />
-      )}
-      <ChartsXAxis axisId="date" position="bottom" />
-      <ChartsYAxis axisId="value" position="left" />
-    </ResponsiveChartContainer>
+    <div style={{ height: size.height - 40, width: size.width }}>
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={formattedData}>
+          <XAxis
+            dataKey="formattedDate"
+            interval={0}
+            angle={-45}
+            textAnchor="end"
+            tick={{ fill: text.primary, fontSize: 10 }}
+            tickCount={10}
+            axisLine={{ stroke: text.primary }}></XAxis>
+          <YAxis
+            label={{
+              value: unit,
+              angle: -90,
+              position: "insideLeft",
+              fill: text.primary,
+            }}
+            tick={{ fill: text.primary }}
+            axisLine={{ stroke: text.primary }}
+            domain={[
+              0,
+              Math.max(target || 0, ...data.map((d) => d.value)),
+            ]}></YAxis>
+
+          <Bar dataKey="value" radius={[10, 10, 0, 0]} fill={success.main}>
+            {data.map((entry, index) => (
+              <Cell
+                key={index}
+                fill={entry.value >= (target || 0) ? success.main : error.main}
+              />
+            ))}
+          </Bar>
+
+          {showTarget && target && (
+            <ReferenceLine
+              y={target}
+              label="Target"
+              stroke={error.main}
+              strokeDasharray="5 5"
+            />
+          )}
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
 

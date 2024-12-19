@@ -1,4 +1,4 @@
-import { Icon2RN } from "@/icons";
+import { Icon2RN } from "@/theme/icons";
 import { cn } from "@/utils/cn";
 import {
   type PanInfo,

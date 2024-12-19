@@ -10,7 +10,7 @@ function AddSpace() {
   return (
     <AddItem
       word_limit={20}
-      addButtonProps={{ children: "Add Space" }}
+      addButtonProps={{ children: "Add Space", variant: "contained" }}
       inputProps={{ label: "Space Name" }}
       clickEvent={handleClick}
     />

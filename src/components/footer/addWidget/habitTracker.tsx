@@ -13,11 +13,12 @@ import { useState } from "react";
 import { Icon } from "@iconify/react";
 import AllItemsList from "./allItemsList";
 import SettingHeader from "../settings/settings-header";
+import SimpleAddWidgetButton from "./simpleAddWidget";
 
 function AddHabitTracer() {
   const dispatch = useDispatch();
   const { trackers, pinned } = useSelector(
-    (state: StateType) => state["habit-tracker"]
+    (state: StateType) => state.habitTracker
   );
   const dimensions = widgetDimensions["habit-tracker"];
   const { minH, minW } = dimensions;
@@ -43,9 +44,7 @@ function AddHabitTracer() {
     dispatch(
       currentSpaceAddWidget({
         type: "habit-tracker-stats-single",
-        values: {
-          id,
-        },
+        values: { id },
         gridProps: {
           ...statsDimensions,
           ...availablePositionForStats,
@@ -59,9 +58,7 @@ function AddHabitTracer() {
     dispatch(
       currentSpaceAddWidget({
         type: "habit-tracker",
-        values: {
-          id,
-        },
+        values: { id },
         gridProps: {
           ...dimensions,
           ...availablePosition,
@@ -80,31 +77,35 @@ function AddHabitTracer() {
 
   return (
     <div className="text-lg mb-6">
-      <SettingHeader first>Habit Tracker</SettingHeader>
-      <AllItemsList
-        addWidget={addTrackerWidget}
-        items={trackers}
-        availablePosition={!!availablePosition}
-        disabledId={presentTrackersId}
-        pinned={pinned}
-      />
-      {!availablePosition && (
-        <div className="text-lg text-error-main pt-3">
-          Not Enough Space For Habit Tacker
-        </div>
-      )}
-      <SettingHeader>Habit Tracker Stats </SettingHeader>
-      <AllItemsList
-        addWidget={addStatsWidget}
-        items={trackers}
-        availablePosition={!!availablePositionForStats}
-        disabledId={presentStatsId}
-        pinned={pinned}
-      />
-      {!availablePositionForStats && (
-        <div className="text-lg text-error-main pt-3">
-          Not Enough Space For Habit Tacker Stats
-        </div>
+      {!!trackers.length && (
+        <>
+          <SettingHeader first>Habit Tracker</SettingHeader>
+          <AllItemsList
+            addWidget={addTrackerWidget}
+            items={trackers}
+            availablePosition={!!availablePosition}
+            disabledId={presentTrackersId}
+            pinned={pinned}
+          />
+          {!availablePosition && (
+            <div className="text-lg text-error-main pt-3">
+              Not Enough Space For Habit Tacker
+            </div>
+          )}
+          <SettingHeader>Habit Tracker Stats </SettingHeader>
+          <AllItemsList
+            addWidget={addStatsWidget}
+            items={trackers}
+            availablePosition={!!availablePositionForStats}
+            disabledId={presentStatsId}
+            pinned={pinned}
+          />
+          {!availablePositionForStats && (
+            <div className="text-lg text-error-main pt-3">
+              Not Enough Space For Habit Tacker Stats
+            </div>
+          )}
+        </>
       )}
       <AddHabitTracerStatsAll />
       <AddNewHabitTracker
@@ -116,43 +117,12 @@ function AddHabitTracer() {
 }
 
 function AddHabitTracerStatsAll() {
-  const dispatch = useDispatch();
-  const dimensions = widgetDimensions["habit-tracker-stats-all"];
-  const { minH, minW } = dimensions;
-  const availablePosition = useAvailablePosition(minW, minH);
-  const layout = useCurrentLayout();
-
-  if (!layout) return null;
-  const { widgets } = layout;
-  const present = widgets.find((w) => w.type === "habit-tracker-stats-all");
-  const disabled = !availablePosition || !!present;
-
-  const addStatsWidget = () => {
-    const id = 0;
-    if (disabled) return;
-    dispatch(
-      currentSpaceAddWidget({
-        type: "habit-tracker-stats-all",
-        values: { id },
-        gridProps: {
-          ...dimensions,
-          ...availablePosition,
-          i: `habit-tracker-stats-all-${id}`,
-        },
-      })
-    );
-  };
-
   return (
     <div className="flex-center w-full my-5">
-      <Button
-        onClick={addStatsWidget}
-        variant="outlined"
-        color="primary"
-        startIcon={<Icon icon="material-symbols:add" />}
-        children="Add All Habit Stats"
-        disabled={disabled}
-      />
+      {" "}
+      <SimpleAddWidgetButton
+        widget={{ type: "habit-tracker-stats-all", values: { id: 0 } }}
+      />{" "}
     </div>
   );
 }

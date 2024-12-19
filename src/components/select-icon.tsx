@@ -1,7 +1,7 @@
 import { Icon, listIcons } from "@iconify/react";
 import { CSSProperties, useDeferredValue, useEffect, useState } from "react";
 import type { IconifyInfo, IconifyJSON } from "@iconify/types";
-import { iconPackNames, IconPacks } from "@/icons";
+import { iconPackNames, IconPacks } from "@/theme/icons";
 import Button from "@mui/material/Button";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -125,6 +125,7 @@ export const SelectIconMenu = ({
   icon,
   setIcon,
   children,
+  buttonProps,
   ...props
 }: SelectIconMenuProps) => {
   return (
@@ -132,6 +133,10 @@ export const SelectIconMenu = ({
       key={icon}
       icon={icon}
       {...props}
+      buttonProps={{
+        ...buttonProps,
+        sx: { p: 0.5, m: 0, flexGrow: 0, ...buttonProps?.sx },
+      }}
       menuProps={{
         anchorOrigin: { vertical: "bottom", horizontal: "right" },
         transformOrigin: { vertical: "bottom", horizontal: "left" },

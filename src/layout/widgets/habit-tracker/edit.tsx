@@ -10,7 +10,6 @@ import { SelectIconMenu } from "@/components/select-icon";
 
 const HabitTrackerEdit: FunctionComponent<HabitTrackerEditProps> = ({
   initialState = {
-    value: 0,
     id: 0,
     icon: "majesticons:skull",
     increment: 10,

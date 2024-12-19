@@ -1,17 +1,17 @@
-import { ThemeItemType } from "@/types/slice/theme";
+import { ThemeItemType, ThemeSliceType } from "@/types/slice/theme";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { getNextId } from "@/utils/next_id";
 import { initialThemeState } from "./initialStates";
-import { SelectedIconPacks } from "@/icons";
+import { SelectedIconPacks } from "@/theme/selected-icons";
 
 export const themeSlice = createSlice({
   name: "theme",
-  initialState: initialThemeState,
+  initialState: { ...initialThemeState },
   reducers: {
     addTheme: (state, action: PayloadAction<ThemeItemType>) => {
       const newID = getNextId(state.allThemes.map(({ id }) => id));
-      state.allThemes.push({ ...action.payload, id: newID });
+      state.allThemes.push({ ...action.payload, id: newID, editAble: true });
       state.currentThemeID = newID;
     },
     deleteTheme: (state, action: PayloadAction<number>) => {
@@ -27,6 +27,14 @@ export const themeSlice = createSlice({
         }
       }
     },
+    duplicateTheme: (state, action: PayloadAction<number>) => {
+      const theme = state.allThemes.find((p) => p.id === action.payload);
+      if (theme) {
+        const newID = getNextId(state.allThemes.map(({ id }) => id));
+        state.allThemes.push({ ...theme, id: newID, editAble: true });
+        state.currentThemeID = newID;
+      }
+    },
     switchTheme: (state, action: PayloadAction<number>) => {
       if (state.currentThemeID === action.payload) return;
       if (!state.allThemes.find((p) => p.id === action.payload)) return;
@@ -36,13 +44,7 @@ export const themeSlice = createSlice({
       const theme = state.allThemes.find((p) => p.id === action.payload.id);
       if (theme) {
         if (theme.editAble) {
-          theme.blur = action.payload.blur;
-          theme.editAble = action.payload.editAble;
-          theme.opacity = action.payload.opacity;
-          theme.primaryColor = action.payload.primaryColor;
-          theme.roundness = action.payload.roundness;
-          theme.mode = action.payload.mode;
-          theme.name = action.payload.name;
+          Object.assign(theme, action.payload);
         }
       }
     },
@@ -58,6 +60,34 @@ export const themeSlice = createSlice({
         theme.iconPack = action.payload;
       }
     },
+    resetThemeSlice: (state) => Object.assign(state, initialThemeState),
+    setThemeState: (state, action: PayloadAction<ThemeSliceType>) => {
+      const val = action.payload;
+      if (!val) return;
+      if (typeof val.currentThemeID === "number")
+        state.currentThemeID = val.currentThemeID;
+      if (!val.allThemes) return;
+      if (!Array.isArray(val.allThemes)) return;
+      const allThemes = [...state.allThemes];
+
+      for (const theme of val.allThemes) {
+        const th = allThemes.find((p) => p.id === theme.id);
+        if (theme.image && theme.image.startsWith("storageId/"))
+          theme.image = undefined;
+        if (th && (theme.editAble === false || th.name === theme.name)) {
+          Object.assign(th, theme);
+        } else {
+          const id = getNextId(allThemes.map(({ id }) => id));
+          if (theme.id === val.currentThemeID) state.currentThemeID = id;
+          allThemes.push({ ...theme, editAble: true, id });
+        }
+      }
+      state.allThemes = allThemes;
+    },
+    setBackgroundImage: (state, action: PayloadAction<string | undefined>) => {
+      const theme = state.allThemes.find((p) => p.id === state.currentThemeID);
+      if (theme && theme.editAble === true) theme.image = action.payload;
+    },
   },
 });
 
@@ -68,5 +98,9 @@ export const {
   changeTheme,
   toggleCurrentMode,
   changeIconPack,
+  duplicateTheme,
+  resetThemeSlice,
+  setBackgroundImage,
+  setThemeState,
 } = themeSlice.actions;
 export default themeSlice.reducer;

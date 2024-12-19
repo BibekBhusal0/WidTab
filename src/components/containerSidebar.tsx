@@ -5,8 +5,8 @@ import Tab, { TabProps } from "@mui/material/Tab";
 import Tabs, { TabsProps } from "@mui/material/Tabs";
 import { styled } from "@mui/material/styles";
 import alphaColor from "@/utils/alpha";
-import { ScrollArea } from "./scrollarea";
-import { ScrollAreaProps } from "@radix-ui/react-scroll-area";
+import { ScrollBar } from "./scrollarea";
+import { Root, Viewport } from "@radix-ui/react-scroll-area";
 
 export type SidebarComponent = {
   index: number;
@@ -15,13 +15,13 @@ export type SidebarComponent = {
 };
 export type ContainerSidebarProps = {
   items: SidebarComponent[];
-  mainProps?: BoxProps;
-  tabsProps?: TabsProps;
-  panelProps?: ScrollAreaProps;
-  tabProps?: TabProps;
+  mainProps?: Partial<BoxProps>;
+  tabsProps?: Partial<TabsProps>;
+  panelProps?: JSX.IntrinsicElements["div"];
+  tabProps?: Partial<TabProps>;
 };
 
-function a11yProps(index: number) {
+export function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
@@ -67,9 +67,13 @@ function ContainerSidebar({
   };
 
   return (
-    <Box {...mainProps} className={cn("flex h-full", mainProps?.className)}>
+    <Box
+      {...mainProps}
+      className={cn("flex h-full relative", mainProps?.className)}>
       <CustomTabs
         orientation="vertical"
+        scrollButtons="auto"
+        variant="scrollable"
         value={value}
         onChange={handleChange}
         {...tabsProps}
@@ -90,14 +94,17 @@ function ContainerSidebar({
           />
         ))}
       </CustomTabs>
-      <ScrollArea
-        {...panelProps}
-        className={cn(
-          "border-l-3 p-4 overflow-y-auto h-full w-full",
-          panelProps?.className
-        )}>
-        {crrComponent}
-      </ScrollArea>
+      <Root className="overflow-hidden size-full">
+        <Viewport
+          {...panelProps}
+          className={cn(
+            "border-l-3 p-4 size-full relative",
+            panelProps?.className
+          )}>
+          {crrComponent}
+        </Viewport>
+        <ScrollBar />
+      </Root>
     </Box>
   );
 }

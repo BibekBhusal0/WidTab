@@ -1,4 +1,7 @@
-import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
+import {
+  HabitTrackerItemType,
+  HabitTrackerSliceType,
+} from "@/types/slice/habit-tracker";
 import { getNextId } from "@/utils/next_id";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialHabitTrackerState } from "./initialStates";
@@ -6,7 +9,7 @@ import dayjs from "@/dayjsConfig";
 
 const habitTrackerSlice = createSlice({
   name: "habit-tracker",
-  initialState: initialHabitTrackerState,
+  initialState: { ...initialHabitTrackerState },
   reducers: {
     addItem: (state, action: PayloadAction<HabitTrackerItemType>) => {
       state.trackers.push({
@@ -25,21 +28,16 @@ const habitTrackerSlice = createSlice({
       }>
     ) => {
       const crr = state.trackers.find(({ id }) => id === action.payload.id);
+      const a = action.payload.action;
       if (crr) {
-        if (action.payload.action === "reset") {
-          crr.value = 0;
-        } else {
-          const valChange =
-            action.payload.action === "increment"
-              ? crr.increment
-              : -crr.increment;
-          const newValue = crr.value + valChange;
-          if (newValue >= 0) crr.value = newValue;
-          else crr.value = 0;
-        }
-        const today = dayjs().format("YYYY-MM-DD");
         if (!crr.history) crr.history = {};
-        crr.history[today] = crr.value;
+        let value = crr.history[dayjs().format("YYYY-MM-DD")] || 0;
+        if (a === "reset") value = 0;
+        else if (a === "increment") value += crr.increment;
+        else value = Math.max(value - crr.increment, 0);
+
+        const today = dayjs().format("YYYY-MM-DD");
+        crr.history[today] = value;
       }
     },
     setItem: (state, action: PayloadAction<HabitTrackerItemType>) => {
@@ -50,6 +48,38 @@ const habitTrackerSlice = createSlice({
       if (state.pinned === action.payload) state.pinned = null;
       else state.pinned = action.payload;
     },
+    setTrackerState: (state, action: PayloadAction<HabitTrackerSliceType>) => {
+      const val = action.payload;
+      if (!val) return;
+      if (val.timerHistory) state.timerHistory = val.timerHistory;
+      if (!val.trackers) return;
+      if (!Array.isArray(val.trackers)) return;
+
+      const trackers = [...state.trackers];
+      val.trackers.forEach((tracker) => {
+        const crr = trackers.find(
+          ({ title, id }) => title === tracker.title && id === tracker.id
+        );
+        if (crr) Object.assign(crr, tracker);
+        else {
+          const id = getNextId(trackers.map(({ id }) => id));
+          if (tracker.id === val.pinned) state.pinned = id;
+          trackers.push({
+            ...tracker,
+            id,
+          });
+        }
+      });
+      state.trackers = trackers;
+    },
+    resetHabitTrackerState: (state) =>
+      Object.assign(state, initialHabitTrackerState),
+    updateTimerHistory: (state, action: PayloadAction<number>) => {
+      const today = dayjs().format("YYYY-MM-DD");
+      if (!state.timerHistory) state.timerHistory = {};
+      if (!state.timerHistory[today]) state.timerHistory[today] = 0;
+      state.timerHistory[today] += action.payload;
+    },
   },
 });
 
@@ -59,5 +89,8 @@ export const {
   deleteItem,
   setItem,
   changePinnedHabitTracker,
+  resetHabitTrackerState,
+  updateTimerHistory,
+  setTrackerState,
 } = habitTrackerSlice.actions;
 export default habitTrackerSlice.reducer;

@@ -7,7 +7,7 @@ import { StateType } from "@/redux/store";
 import { positionProps } from "@/types/slice/layout";
 import { cn } from "@/utils/cn";
 import RemovableButtons from "./removableIcons";
-import { Dock } from "./dock";
+import { ToolbarDock } from "./dock";
 
 function Footer() {
   const l = useCurrentLayout();
@@ -27,7 +27,7 @@ function Footer() {
         <Settings />
         {l && <AddWidget />}
       </div>
-      {dock && <Dock />}
+      {dock && <ToolbarDock />}
       <div className={cn("flex-center gap-1", footerProps?.className)}>
         <RemovableButtons />
       </div>

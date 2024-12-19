@@ -10,11 +10,11 @@ function HabitTracker({
   id,
   target,
   title,
-  value,
   icon,
   unit,
   history = {},
 }: HabitTrackerItemType) {
+  const value = history[dayjs().format("YYYY-MM-DD")] || 0;
   const dispatch = useDispatch();
 
   const handleIncrement = () => {

@@ -2,7 +2,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { ReactNode } from "react";
-import { Icon2RN, iconAsProp } from "@/icons";
+import { Icon2RN, iconAsProp } from "@/theme/icons";
 
 export type IconMenuType = {
   name: ReactNode;

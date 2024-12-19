@@ -7,10 +7,14 @@ export type HabitTrackerItemType = {
   icon: string;
   target: number;
   increment: number;
-  value: number;
   unit: string;
   history?: HabitTrackerHistoryType;
 };
+
+export type HabitTrackerStatsSingleProps = Omit<
+  HabitTrackerItemType,
+  "icon" | "increment" | "id"
+>;
 
 export interface HabitTrackerEditProps {
   initialState?: HabitTrackerItemType;
@@ -21,4 +25,5 @@ export interface HabitTrackerEditProps {
 export type HabitTrackerSliceType = {
   trackers: HabitTrackerItemType[];
   pinned: number | null;
+  timerHistory?: HabitTrackerHistoryType;
 };
