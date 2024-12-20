@@ -5,6 +5,12 @@ import { todoStateType } from "@/types/slice/todo";
 import { noteStateType } from "@/types/slice/notes";
 import { bookmarkSliceType } from "@/types/slice/bookmark";
 
+import autumn from "@/assets/img/autumn.jpg";
+import bananas from "@/assets/img/bananas.jpg";
+import ocean from "@/assets/img/ocean.jpg";
+import rose from "@/assets/img/rose.jpg";
+import space from "@/assets/img/space.jpg";
+
 export const initialThemeState: ThemeSliceType = {
   currentThemeID: 5,
   allThemes: [
@@ -18,7 +24,7 @@ export const initialThemeState: ThemeSliceType = {
       roundness: 0.87,
       opacity: 0.6,
       iconPack: "Remix Icon Filled",
-      image: "/chrome-extension/src/assets/img/ocean.jpg",
+      image: ocean,
     },
     {
       name: "Autumn",
@@ -30,7 +36,7 @@ export const initialThemeState: ThemeSliceType = {
       roundness: 0.03,
       opacity: 0.6,
       iconPack: "Teeny Icons Solid",
-      image: "/chrome-extension/src/assets/img/autumn.jpg",
+      image: autumn,
     },
     {
       name: "Monkey",
@@ -42,7 +48,7 @@ export const initialThemeState: ThemeSliceType = {
       roundness: 0.65,
       opacity: 0.65,
       iconPack: "line-md",
-      image: "/chrome-extension/src/assets/img/bananas.jpg",
+      image: bananas,
     },
     {
       name: "Depp Space",
@@ -54,7 +60,7 @@ export const initialThemeState: ThemeSliceType = {
       roundness: 0.36,
       opacity: 0.55,
       iconPack: "Solar Bold Duotone",
-      image: "/chrome-extension/src/assets/img/space.jpg",
+      image: space,
     },
     {
       name: "Rose",
@@ -66,7 +72,7 @@ export const initialThemeState: ThemeSliceType = {
       roundness: 0.24,
       opacity: 0.75,
       iconPack: "MingCute Fill",
-      image: "/chrome-extension/src/assets/img/rose.jpg",
+      image: rose,
     },
     {
       name: "Simple",

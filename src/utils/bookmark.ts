@@ -1,10 +1,7 @@
 import { treeNode, treeNodeArray } from "@/types/slice/bookmark";
+import bookmark from "@/assets/bookmarks.json";
 
-export const loadBookmarksFromJson = async () => {
-  const response = await fetch("/chrome-extension/src/assets/bookmarks.json");
-  if (!response.ok) return [];
-  return (await response.json()) as treeNodeArray;
-};
+export const loadBookmarksFromJson = () => bookmark as treeNodeArray;
 
 export const findBookmarkById = (
   bookmarks: treeNodeArray,
