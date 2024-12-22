@@ -24,10 +24,10 @@ jobs:
         run: yarn
 
       - name: Build Firefox
-        run: yarn build:chrome
+        run: yarn build:firefox
 
       - name: Upload Firefox extension artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: vite-web-extension-chrome
-          path: dist_chrome
+          name: vite-web-extension-firefox
+          path: dist_firefox
