@@ -42,7 +42,7 @@ function ThemeBackground({ image, opacity, children }: themeBackgroundProps) {
       <div
         className={cn(full, image && "backdrop-blur-half")}
         style={{
-          backgroundColor: alphaColor(main, opacity / 3),
+          backgroundColor: alphaColor(main, opacity / 5),
         }}>
         {children}
       </div>
