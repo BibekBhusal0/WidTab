@@ -65,7 +65,7 @@ function DynamicLayout() {
       >
         {widgets.map((w) => (
           <Paper
-            sx={{ backgroundColor: "secondaryContainer.paper" }}
+            sx={{ backgroundColor: "primaryContainer.paper" }}
             key={w.gridProps.i}
             className="relative overflow-hidden">
             {!locked && (

@@ -1,17 +1,14 @@
 import useCurrentTheme from "@/hooks/useCurrentTheme";
-
 import { useState, useEffect } from "react";
 
 const DB_NAME = "ImageStorageDB";
 const STORE_NAME = "userImages";
 
-// Define the type for the image data
 export type ImageDataType = {
   id: string;
   data: string;
 };
 
-// Open IndexedDB
 const openDB = (): Promise<IDBDatabase> => {
   return new Promise<IDBDatabase>((resolve, reject) => {
     const request = indexedDB.open(DB_NAME, 1);
@@ -31,7 +28,6 @@ const openDB = (): Promise<IDBDatabase> => {
   });
 };
 
-// Save image to IndexedDB
 export const saveImageToStorage = async (
   imageId: string,
   imageData: string
@@ -43,7 +39,6 @@ export const saveImageToStorage = async (
   await store.put(image, imageId);
 };
 
-// Get all images from IndexedDB
 export const getImagesFromStorage = async (): Promise<{
   [key: string]: string;
 }> => {
@@ -63,7 +58,6 @@ export const getImagesFromStorage = async (): Promise<{
   }, {} as { [key: string]: string });
 };
 
-// Remove all images from IndexedDB
 export const removeAllImagesFromStorage = async (): Promise<void> => {
   const db = await openDB();
   const transaction = db.transaction(STORE_NAME, "readwrite");
@@ -71,7 +65,6 @@ export const removeAllImagesFromStorage = async (): Promise<void> => {
   await store.clear();
 };
 
-// Get image by ID from IndexedDB
 export const getImageById = async (
   imageId: string
 ): Promise<string | undefined> => {
@@ -87,7 +80,6 @@ export const getImageById = async (
   });
 };
 
-// Get image Blob from IndexedDB
 export const getImageBlob = async (imageId: string): Promise<Blob | null> => {
   const imageData = await getImageById(imageId);
   if (!imageData) return null;
@@ -121,9 +113,7 @@ function useBackgroundImage(dependencyArray: any[] = []): string | undefined {
           newUrl = URL.createObjectURL(imageData);
           setBackgroundImage(newUrl);
         }
-      } else {
-        setBackgroundImage(image);
-      }
+      } else setBackgroundImage(image);
     };
     fetchImageData();
     return () => {

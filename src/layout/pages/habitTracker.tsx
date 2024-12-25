@@ -30,7 +30,9 @@ function HabitTrackerPage() {
         key={tracker.id}
         sx={{
           backgroundColor:
-            tracker.id === pinned ? "primaryContainer.paper" : undefined,
+            tracker.id === pinned
+              ? "primaryContainer.paper"
+              : "secondaryContainer.paper",
         }}
         className="h-[150px] overflow-hidden">
         <Controls
@@ -83,6 +85,7 @@ function AddNewHabitTracker() {
       onClick={() => {
         if (!edit) setEdit(true);
       }}
+      sx={{ backgroundColor: "secondaryContainer.paper" }}
       className={cn("flex-center flex-col gap-4 w-full group", {
         "h-[150px]": !edit,
         "py-2 px-10": edit,
