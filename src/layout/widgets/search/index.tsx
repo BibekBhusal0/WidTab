@@ -58,15 +58,15 @@ function SearchWidget({ id, engine }: SearchWidgetType) {
           handleSearch();
         }
       }}
-      startAdornment={
-        <InputAdornment position="start">
+      endAdornment={
+        <InputAdornment position="end">
           <IconButton className="icon-2xl" onClick={handleSearch}>
             {search}
           </IconButton>
         </InputAdornment>
       }
-      endAdornment={
-        <InputAdornment position="end">
+      startAdornment={
+        <InputAdornment position="start">
           <SearchEngineSelect value={engine} onChange={changeSearchEngine} />
         </InputAdornment>
       }

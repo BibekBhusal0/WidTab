@@ -75,12 +75,7 @@ export const getTheme = (theme: ThemeItemType) => {
   }
 
   const rounded = {
-    styleOverrides: {
-      root: {
-        borderRadius,
-        backdropFilter,
-      },
-    },
+    styleOverrides: { root: { borderRadius, backdropFilter } },
   };
   return createTheme({
     cssVariables: true,
