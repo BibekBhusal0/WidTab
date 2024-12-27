@@ -5,8 +5,8 @@ import { setBackgroundImage } from "@/redux/slice/theme";
 import Button from "@mui/material/Button";
 import { useEffect, useRef, useState } from "react";
 import useBackgroundImage, {
-    getImagesFromStorage,
-    saveImageToStorage,
+  getImagesFromStorage,
+  saveImageToStorage,
 } from "@/utils/image";
 import { v4 as uuidv4 } from "uuid";
 
@@ -23,17 +23,17 @@ import space from "@/assets/img/space.jpg";
 import wood from "@/assets/img/wood.jpg";
 
 const defaultImages = [
-    { id: "abstract", data: abstract },
-    { id: "autumn", data: autumn },
-    { id: "bananas", data: bananas },
-    { id: "clouds", data: clouds },
-    { id: "colors", data: colors },
-    { id: "flowers", data: flowers },
-    { id: "mountains", data: mountains },
-    { id: "ocean", data: ocean },
-    { id: "rose", data: rose },
-    { id: "space", data: space },
-    { id: "wood", data: wood },
+  { id: "abstract", data: abstract },
+  { id: "autumn", data: autumn },
+  { id: "bananas", data: bananas },
+  { id: "clouds", data: clouds },
+  { id: "colors", data: colors },
+  { id: "flowers", data: flowers },
+  { id: "mountains", data: mountains },
+  { id: "ocean", data: ocean },
+  { id: "rose", data: rose },
+  { id: "space", data: space },
+  { id: "wood", data: wood },
 ];
 
 function SelectBackgroundImage() {
@@ -100,7 +100,6 @@ function PopoverContent() {
   const handleClick = (id: string) => {
     const img = defaultImages.find((p) => p.id === id);
     const imageURL = img ? img.data : `storageId/${id}`;
-    console.log(imageURL);
     dispatch(setBackgroundImage(imageURL));
   };
 

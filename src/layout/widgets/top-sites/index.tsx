@@ -44,7 +44,6 @@ function Sites({ iconSize }: FavoritesWidgetType) {
 
   useEffect(() => {
     browser.topSites.get().then((sites) => {
-      console.log(sites);
       setSites(
         sites.map((s, index) => ({
           id: `${index}`,

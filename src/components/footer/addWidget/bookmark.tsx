@@ -79,23 +79,17 @@ export const AddTopSites = () => {
     type: "top-sites",
     values: { id: 0 },
   });
-  const addWidget = () => {
-    console.log("you clicked me");
-    browser.permissions.contains({ permissions: ["topSites"] }).then((res) => {
-      console.log(res);
-      if (res) {
-        console.log("got Permission");
-        add();
-      } else {
-        console.log("no permission for top sites");
-        browser.permissions
-          .request({ permissions: ["topSites"] })
-          .then((res) => {
-            console.log("finally got permission");
-            if (res) add();
-          });
-      }
+  const addWidget = async () => {
+    const hasPermission = await browser.permissions.contains({
+      permissions: ["topSites"],
     });
+    if (hasPermission) add();
+    else {
+      const res = await browser.permissions.request({
+        permissions: ["topSites"],
+      });
+      if (res) add();
+    }
   };
 
   return (

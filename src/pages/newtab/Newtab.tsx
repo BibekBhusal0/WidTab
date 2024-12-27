@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import { positionProps } from "@/types/slice/layout";
 import { cn } from "@/utils/cn";
 import useCurrentTheme from "@/hooks/useCurrentTheme";
+import { useFavicon } from "@/utils/faviconURL";
 
 function App() {
   const { currentSpace, toolBarPosition } = useSelector(
@@ -18,6 +19,7 @@ function App() {
   const { appProps } = positionProps[toolBarPosition];
   const layout = useCurrentLayout();
   var crrLayout = <DynamicLayout />;
+  useFavicon();
   if (!layout) {
     const l: StaticPagesType =
       typeof currentSpace.id === "number" ? "todo" : currentSpace.id;
