@@ -71,14 +71,15 @@ function ProgressGraph({ type = "daily", trackers }: ProgressGraphProps) {
         <Pie
           data={data}
           dataKey={"value"}
-          fill="var(--mui-palette-success-main)"
+          fill="var(--mui-palette-primary-main)"
+          isAnimationActive={false}
           {...pieProps}>
           {data.map((entry, index) => (
             <Cell
               key={`cell-${index}`}
               fill={
                 index === 0
-                  ? "var(--mui-palette-success-main)"
+                  ? "var(--mui-palette-primary-main)"
                   : "var(--mui-palette-divider)"
               }
               stroke="none"

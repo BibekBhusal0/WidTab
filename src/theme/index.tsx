@@ -11,20 +11,17 @@ import useCurrentTheme from "@/hooks/useCurrentTheme";
 import { useEffect, ReactNode } from "react";
 import { cn } from "@/utils/cn";
 import useBackgroundImage from "@/utils/image";
+import { useTheme } from "@mui/material/styles";
 
 type themeBackgroundProps = { children: ReactNode } & ThemeItemType;
-function ThemeBackground({
-  image,
-  opacity,
-  mode,
-  children,
-}: themeBackgroundProps) {
-  const color =
-    mode === "dark"
-      ? `rgba(0,0,0,${opacity / 3})`
-      : `rgba(255,255,255,${opacity / 3})`;
+function ThemeBackground({ image, opacity, children }: themeBackgroundProps) {
   const full = "size-full h-screen";
   const backgroundImage = useBackgroundImage();
+  const {
+    palette: {
+      primary: { main },
+    },
+  } = useTheme();
   useEffect(() => {
     const handleContextMenu = (event: MouseEvent) => {
       event.preventDefault();
@@ -44,7 +41,9 @@ function ThemeBackground({
       }>
       <div
         className={cn(full, image && "backdrop-blur-half")}
-        style={image ? { backgroundColor: color } : {}}>
+        style={{
+          backgroundColor: alphaColor(main, opacity / 5),
+        }}>
         {children}
       </div>
     </div>
@@ -75,12 +74,7 @@ export const getTheme = (theme: ThemeItemType) => {
   }
 
   const rounded = {
-    styleOverrides: {
-      root: {
-        borderRadius,
-        backdropFilter,
-      },
-    },
+    styleOverrides: { root: { borderRadius, backdropFilter } },
   };
   return createTheme({
     cssVariables: true,
@@ -103,7 +97,6 @@ export const getTheme = (theme: ThemeItemType) => {
         primary: hexFromArgb(crrPrimary.onBackground),
         secondary: hexFromArgb(crrPrimary.onSurface),
       },
-      error: { main: hexFromArgb(crrPrimary.error) },
 
       transparentPrimary: {
         main: alphaColor(hexFromArgb(crrPrimary.primary), opacity),

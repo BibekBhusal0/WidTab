@@ -25,7 +25,9 @@ function TodoPage() {
         key={task.id}
         sx={{
           backgroundColor:
-            task.id === pinnedTodo ? "primaryContainer.paper" : undefined,
+            task.id === pinnedTodo
+              ? "primaryContainer.paper"
+              : "secondaryContainer.paper",
         }}
         className={commonCls}>
         <Controls {...getWidgetControlsProps("todo", task.id)} showOn="always">
@@ -40,6 +42,9 @@ function TodoPage() {
         {renderTasks(pinnedTask)}
         {renderTasks(unPinnedTasks)}
         <Paper
+          sx={{
+            backgroundColor: "secondaryContainer.paper",
+          }}
           onClick={() => dispatch(addTask(""))}
           className={cn(commonCls, "flex-center group cursor-pointer")}>
           <div className="group-hover:scale-[6] scale-[3] transition-all">

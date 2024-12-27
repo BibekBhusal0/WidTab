@@ -43,9 +43,7 @@ function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
     if (previousIndex >= 0) {
       const previousTaskId = dynamicTasks[previousIndex].id;
       focusOn = taskRefs.current.get(previousTaskId);
-    } else {
-      focusOn = titleRef.current;
-    }
+    } else focusOn = titleRef.current;
     focusOn?.focus();
   };
   const focusNext = (currentTodoId: number) => {
@@ -110,7 +108,7 @@ function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
         <input
           ref={titleRef}
           onKeyDown={titleKeyDown}
-          className={cn(transparentInput, "text-3xl w-[calc(100%-150px)] ")}
+          className={cn(transparentInput, "text-3xl w-[calc(100%-90px)] ")}
           type="text"
           autoFocus={title.trim() === ""}
           placeholder="Title Here"
