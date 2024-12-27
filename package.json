@@ -1,11 +1,11 @@
 {
-  "name": "productivity-app",
-  "version": "0.0.0",
-  "description": "Productivity App for Chrome, Manage Todo-list, Habit tracker and Bookmark",
+  "name": "widtab",
+  "version": "1",
+  "description": "Add ",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bibekbhusal0/chrome-extension"
+    "url": "https://github.com/bibekbhusal0/WidTab"
   },
   "scripts": {
     "build": "vite build --config vite.config.chrome.ts",
