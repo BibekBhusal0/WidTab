@@ -1,7 +1,7 @@
 {
-  "name": "chrome-extension",
+  "name": "widtab",
   "private": true,
-  "homepage": "https://bibekbhusal0.github.io/chrome-extension",
+  "homepage": "https://bibekbhusal0.github.io/WidTab",
   "version": "0.0.0",
   "type": "module",
   "sideEffect": false,
