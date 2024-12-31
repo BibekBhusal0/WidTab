@@ -115,6 +115,8 @@ export function AIChat({
 
   const handelModelResponse = async () => {
     if (input.trim() === "" || loading) return;
+    setFocus(false);
+    setInput("");
     setLoading(true);
     try {
       const genAI = new GoogleGenerativeAI(APIkey);
@@ -122,7 +124,6 @@ export function AIChat({
       const chatSession = genAI
         .getGenerativeModel({ model })
         .startChat({ history });
-      setInput("");
       await chatSession.sendMessage(input.trim());
       setContent(history);
     } catch (error) {
