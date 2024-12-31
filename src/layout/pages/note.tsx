@@ -27,7 +27,7 @@ function NotesPage() {
             <Paper
               key={p.id}
               className={commonCls}
-              sx={{ backgroundColor: "secondary.paper" }}>
+              sx={{ backgroundColor: "secondaryContainer.paper" }}>
               <Controls
                 deleteButton={false}
                 includePopover={false}
@@ -57,7 +57,7 @@ function NotesPage() {
           );
         })}
         <Paper
-          sx={{ backgroundColor: "secondary.paper" }}
+          sx={{ backgroundColor: "secondaryContainer.paper" }}
           onClick={() => dispatch(addNoteWithTitle(""))}
           className={cn(commonCls, "flex-center group cursor-pointer")}>
           <div className="group-hover:scale-[6] scale-[3] transition-all">
