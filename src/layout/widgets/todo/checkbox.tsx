@@ -75,15 +75,18 @@ function SortableCheckbox({
         autoFocus={task.trim() === ""}
         onChange={(e) => handleChange(e.target.value)}
         onKeyDown={(e) => {
-          if (e.key === "Backspace" && task.trim() === "") {
+          if (
+            (e.key === "Backspace" || e.key === "Delete") &&
+            task.trim() === ""
+          ) {
             e.preventDefault();
             handleDelete();
             setTimeout(() => {
               focusPrevious();
             }, 100);
-          } else if (["ArrowUp", "Enter", "ArrowDown"].includes(e.key)) {
+          } else if (["ArrowUp", "Enter", "ArrowDown", "Tab"].includes(e.key)) {
             e.preventDefault();
-            if (e.key === "Enter") {
+            if (e.key === "Enter" || e.key === "Tab") {
               addTodo();
             } else if (e.key === "ArrowUp") {
               focusPrevious();
