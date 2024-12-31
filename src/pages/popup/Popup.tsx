@@ -48,10 +48,14 @@ function Favorites() {
   return (
     <Paper
       className="h-full w-[350px] relative"
-      sx={{ backgroundColor: "secondaryContainer.paper" }}>
+      sx={{ backgroundColor: "primaryContainer.paper" }}>
       <ScrollArea className="size-full">
         <div className="py-4 px-1">
-          <BookmarkGrid bookmarks={favorites} openLinkInNewTab={true} />
+          <BookmarkGrid
+            bookmarks={favorites}
+            openLinkInNewTab={true}
+            contextMenu={false}
+          />
         </div>
       </ScrollArea>
     </Paper>
@@ -66,7 +70,7 @@ function PinnedTodo() {
 
   return (
     <Paper
-      sx={{ backgroundColor: "secondaryContainer.paper" }}
+      sx={{ backgroundColor: "primaryContainer.paper" }}
       className="w-[380px] h-[350px]">
       <Todo {...p} />
     </Paper>
@@ -82,7 +86,7 @@ function PinnedHabitTracker() {
   if (!t) return null;
   return (
     <Paper
-      sx={{ backgroundColor: "secondaryContainer.paper" }}
+      sx={{ backgroundColor: "primaryContainer.paper" }}
       className="w-[380px] h-[150px] p-2">
       <HabitTracker {...t} />
     </Paper>
