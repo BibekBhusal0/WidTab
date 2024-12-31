@@ -1,6 +1,6 @@
 import { Layout } from "react-grid-layout";
 import { TaskType } from "./todo";
-import { HabitTrackerHistoryType, HabitTrackerItemType } from "./habit-tracker";
+import { HabitTrackerItemType } from "./habit-tracker";
 import { BookmarkWidgetType, FavoritesWidgetType } from "./bookmark";
 import { Content } from "@google/generative-ai";
 
@@ -26,7 +26,14 @@ const UW = [
   "top-sites",
   "gemini",
 ] as const;
-const SE = ["Google", "Bing", "YouTube", "Brave", "DuckDuckGo"] as const;
+const SE = [
+  "Google",
+  "Bing",
+  "YouTube",
+  "Brave",
+  "DuckDuckGo",
+  "Perplexity",
+] as const;
 
 export type StaticPagesType = (typeof SP)[number];
 export type controlledWidgetsType = (typeof CW)[number];
