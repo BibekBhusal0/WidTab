@@ -20,38 +20,32 @@ const chromeFaviconApi = (url: string) => {
 const Favicon = ({ src, ...props }: JSX.IntrinsicElements["img"]) => {
   const googleFavicon = googleFaviconAPI(src || "");
   const chromeFavicon = chromeFaviconApi(src || "");
-  const [logoSrc, setLogoSrc] = useState<string>(googleFavicon);
+  const [logoSrc, setLogoSrc] = useState<string>(chromeFavicon);
+  const [googleFaviconLoaded, setGoogleFaviconLoaded] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
-  const isGoogleFavicon = logoSrc === googleFavicon;
 
   useEffect(() => {
-    if (src) setLogoSrc(googleFavicon);
+    if (src) {
+      setLogoSrc(chromeFavicon);
+      setGoogleFaviconLoaded(false);
+    }
   }, [src]);
 
-  if (!src) return null;
+  useEffect(() => {
+    const img = new Image();
+    img.src = googleFavicon;
+    img.onload = () => {
+      if (img.naturalWidth !== 16 || img.naturalHeight !== 16) {
+        setGoogleFaviconLoaded(true);
+      }
+    };
+  }, [googleFavicon]);
 
-  const handleImageError = () => {
-    if (isGoogleFavicon) setLogoSrc(chromeFavicon);
-  };
+  useEffect(() => {
+    if (googleFaviconLoaded) setLogoSrc(googleFavicon);
+  }, [googleFaviconLoaded]);
 
-  const handleImageLoad = () => {
-    if (!imgRef.current) return;
-    const { naturalWidth, naturalHeight } = imgRef.current;
-    if (naturalWidth === 16 && naturalHeight === 16 && isGoogleFavicon) {
-      setLogoSrc(chromeFavicon);
-    }
-  };
-
-  return (
-    <img
-      ref={imgRef}
-      src={logoSrc}
-      alt="Favicon"
-      onError={handleImageError}
-      onLoad={handleImageLoad}
-      {...props}
-    />
-  );
+  return <img ref={imgRef} src={logoSrc} alt="Favicon" {...props} />;
 };
 
 export { Favicon, chromeFaviconApi, googleFaviconAPI };

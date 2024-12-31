@@ -33,12 +33,10 @@ export const openLink = (
   newTab = false,
   event?: React.MouseEvent<HTMLElement, MouseEvent>
 ) => {
-  if (event) event.preventDefault();
-  const linkInNewTab =
-    newTab || event?.ctrlKey || event?.metaKey || event?.shiftKey;
-  if (event?.shiftKey) {
-    browser.windows.create({ url, type: "popup" });
-    return;
-  }
-  browser.tabs.create({ url, active: !linkInNewTab });
+  event?.preventDefault();
+  if (event?.shiftKey) browser.windows.create({ url, type: "normal" });
+  else if (event?.metaKey || event?.ctrlKey)
+    browser.tabs.create({ url, active: false });
+  else if (newTab) browser.tabs.create({ url, active: true });
+  else browser.tabs.update({ url });
 };

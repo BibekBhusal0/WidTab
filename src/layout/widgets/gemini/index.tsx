@@ -94,7 +94,6 @@ export function AIChat({
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
   const textAreaParentRef = useRef<HTMLDivElement>(null);
-  const textEmpty = input.trim() === "";
   const [height, setHeight] = useState(60);
 
   useEffect(() => {
@@ -127,8 +126,9 @@ export function AIChat({
       await chatSession.sendMessage(input.trim());
       setContent(history);
     } catch (error) {
-      console.error("Error during API call:", error);
+      console.log("Error during API call:", error);
     } finally {
+      setFocus(false);
       setLoading(false);
     }
   };
@@ -149,9 +149,9 @@ export function AIChat({
       <div
         ref={textAreaParentRef}
         className={cn(
-          "p-1 bottom-1 horizontal-center w-80 flex-center rounded-themed",
-          "ring-1 ring-divider transition-all hover:ring-text-primary",
-          (focus || !textEmpty) &&
+          "p-1 bottom-1 horizontal-center flex-center rounded-themed",
+          "ring-1 ring-divider transition-all hover:ring-text-primary w-80",
+          (focus || input !== "") &&
             "ring-2 ring-primary-main hover:ring-primary-main w-[80%]"
         )}
         onClick={() => textAreaRef.current?.focus()}>
