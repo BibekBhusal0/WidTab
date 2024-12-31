@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import SearchEngineSelect, { searchEngineLogoAndLink } from "./select";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
+import { openLink } from "@/utils/bookmark";
 
 function SearchWidget({ id, engine }: SearchWidgetType) {
   const [text, setText] = useState("");
@@ -30,12 +31,7 @@ function SearchWidget({ id, engine }: SearchWidgetType) {
         "%s",
         encodeURIComponent(text)
       );
-
-      if (linkInNewTab) {
-        window.open(searchUrl, "_blank");
-      } else {
-        window.location.href = searchUrl;
-      }
+      openLink(searchUrl, linkInNewTab);
     }
   };
 

@@ -53,7 +53,7 @@ function Favorites() {
         <div className="py-4 px-1">
           <BookmarkGrid
             bookmarks={favorites}
-            openLinkInNewTab={true}
+            // openLinkInNewTab={true}
             contextMenu={false}
           />
         </div>

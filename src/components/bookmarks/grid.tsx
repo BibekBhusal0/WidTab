@@ -14,6 +14,7 @@ import CardActionArea from "@mui/material/CardActionArea";
 import Favicon from "@/utils/faviconURL";
 import { HoverFolder } from "./folder";
 import { bookmarkTreeNodeArray, treeNode } from "@/types/slice/bookmark";
+import { openLink } from "@/utils/bookmark";
 
 type l = { openLinkInNewTab?: boolean; contextMenu?: boolean };
 
@@ -72,7 +73,10 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
       <a
         className={cn(cls)}
         href={bookmarks.url}
-        target={openLinkInNewTab ? "_blank" : "_self"}>
+        onClick={(e) => {
+            openLink(bookmarks.url || '', openLinkInNewTab, e);
+        }}
+        >
         <Favicon src={bookmarks.url} className="size-1/2 aspect-square" />
 
         <div className="flex items-center justify-between w-full">
