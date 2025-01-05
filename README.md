@@ -30,7 +30,7 @@
   <a href="#-license">License</a>
 </p>
 
-## Important Links
+## 🔗 Important Links
 
 #### **Github**: https://github.com/bibekbhusal0/chrome-extension
 
@@ -38,6 +38,19 @@
 
 <!-- #### **Firefox Addon Store**: releasing soon -->
 <!-- #### **Chrome extension**: releasing soon -->
+
+
+## 💻 Tech Docs
+
+- [Vite](https://vitejs.dev/)
+- [React](https://react.dev/)
+- [Vite Plugin](https://vitejs.dev/guide/api-plugin.html)
+- [Chrome Extension with manifest 3](https://developer.chrome.com/docs/extensions/mv3/)
+- [Rollup](https://rollupjs.org/guide/en/)
+- [@crxjs/vite-plugin](https://crxjs.dev/vite-plugin)
+- [Tailwind CSS](https://tailwindcss.com/docs/configuration)
+- [Redux Toolkit](https://redux-toolkit.js.org/introduction/getting-started)
+- [Material UI](https://mui.com/material-ui/getting-started/)
 
 ## ✨ Features
 
@@ -168,17 +181,6 @@ If you encounter any bugs or issues, please [submit an issue](https://github.com
 
 <!-- ## 🔒 Privacy Policy -->
 
-## Tech Docs
-
-- [Vite](https://vitejs.dev/)
-- [React](https://react.dev/)
-- [Vite Plugin](https://vitejs.dev/guide/api-plugin.html)
-- [Chrome Extension with manifest 3](https://developer.chrome.com/docs/extensions/mv3/)
-- [Rollup](https://rollupjs.org/guide/en/)
-- [@crxjs/vite-plugin](https://crxjs.dev/vite-plugin)
-- [Tailwind CSS](https://tailwindcss.com/docs/configuration)
-- [Redux Toolkit](https://redux-toolkit.js.org/introduction/getting-started)
-- [Material UI](https://mui.com/material-ui/getting-started/)
 
 ## 📜 License
 
