@@ -39,7 +39,6 @@
 <!-- #### **Firefox Addon Store**: releasing soon -->
 <!-- #### **Chrome extension**: releasing soon -->
 
-
 ## 💻 Tech Docs
 
 - [Vite](https://vitejs.dev/)
@@ -164,7 +163,7 @@ Download Latest build for you browser (chrome or firefox) from [Build Page](http
      - Go to `about:debugging#/runtime/this-firefox`, select **"This Firefox"**, then click **Load Temporary Add-on**.
      - Browse and select the updated `manifest.json`.
 
-## 🤝 Contributing
+<!-- ## 🤝 Contributing
 
 Contributions are welcome! If you'd like to contribute:
 
@@ -179,8 +178,7 @@ Contributions are welcome! If you'd like to contribute:
 
 If you encounter any bugs or issues, please [submit an issue](https://github.com/bibekbhusal0/chrome-extension/issues) on the GitHub repository.
 
-<!-- ## 🔒 Privacy Policy -->
-
+## 🔒 Privacy Policy -->
 
 ## 📜 License
 
