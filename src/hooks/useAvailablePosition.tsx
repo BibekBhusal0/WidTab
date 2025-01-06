@@ -1,21 +1,18 @@
 import useCurrentLayout from "@/hooks/useCurrentLayout";
-import { StateType } from "@/redux/store";
+import { useLayout } from "@/storage";
 import { findNextAvailablePosition } from "@/utils/findWidgetPosition";
-import { useSelector } from "react-redux";
 
 function useAvailablePosition(minW: number = 1, minH: number = 1) {
   const crrLayout = useCurrentLayout();
-  const { n_cols, n_rows } = useSelector((state: StateType) => state.layout);
+  const { n_cols, n_rows } = useLayout();
   if (!crrLayout) return null;
-  const availablePosition = findNextAvailablePosition(
+  return findNextAvailablePosition(
     crrLayout.widgets,
     n_cols,
     n_rows,
     minW,
     minH
   );
-
-  return availablePosition;
 }
 
 export default useAvailablePosition;

@@ -1,5 +1,3 @@
-import { StateType } from "@/redux/store";
-import { useDispatch, useSelector } from "react-redux";
 import Paper from "@mui/material/Paper";
 import HabitTracker from "../widgets/habit-tracker";
 import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
@@ -9,17 +7,16 @@ import { AnimatePresence, motion } from "framer-motion";
 import Button from "@mui/material/Button";
 import HabitTrackerEdit from "../widgets/habit-tracker/edit";
 import { Icon } from "@iconify/react";
-import { addItem } from "@/redux/slice/habit-tracker";
 import { cn } from "@/utils/cn";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import Controls from "../widgets/controls";
 import { getWidgetControlsProps } from "@/utils/getWidget";
 import { ScrollArea } from "@/components/scrollarea";
+import { useHabitTracker } from "@/storage";
+import { addTracker } from "@/storage/habit-tracker";
 
 function HabitTrackerPage() {
-  const { pinned, trackers } = useSelector(
-    (state: StateType) => state.habitTracker
-  );
+  const { pinned, trackers } = useHabitTracker();
   const [showStats, setShowStats] = useState(false);
   const pinnedTracker = trackers.filter((t) => t.id === pinned);
   const unPinnedTrackers = trackers.filter((t) => t.id !== pinned);
@@ -78,7 +75,6 @@ function HabitTrackerPage() {
 
 function AddNewHabitTracker() {
   const [edit, setEdit] = useState(false);
-  const dispatch = useDispatch();
   const { add } = useCurrentIcons();
   return (
     <Paper
@@ -94,7 +90,7 @@ function AddNewHabitTracker() {
         <>
           <HabitTrackerEdit
             onChange={(tracker) => {
-              dispatch(addItem(tracker));
+              addTracker(tracker);
               setEdit(false);
             }}
             buttonProps={{

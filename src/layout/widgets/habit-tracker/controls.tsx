@@ -1,14 +1,5 @@
 import IconMenu, { IconMenuType } from "@/components/menuWithIcon";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
-import { useDispatch, useSelector } from "react-redux";
-import { StateType } from "@/redux/store";
-import {
-  changePinnedHabitTracker,
-  changeValue,
-  deleteItem,
-  setItem,
-} from "@/redux/slice/habit-tracker";
-import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
 import { useState } from "react";
 import Button from "@mui/material/Button";
 import HabitTrackerEdit from "./edit";
@@ -16,6 +7,14 @@ import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
 import Popover from "@mui/material/Popover";
 import HabitTrackerStatsSingle from "./stats/single";
 import { ControlPropsDifferentForContextMenu } from "../controls";
+import { useHabitTracker, useLayout } from "@/storage";
+import {
+  changePinnedHabitTracker,
+  changeValue,
+  deleteTracker,
+  setTrackerItem,
+} from "@/storage/habit-tracker";
+import { currentSpaceDeleteWidget } from "@/storage/layout";
 
 function HabitTrackerControls({
   id,
@@ -33,24 +32,21 @@ function HabitTrackerControls({
   };
   const { delete_, reset, pin, edit } = useCurrentIcons();
 
-  const dispatch = useDispatch();
-  const { pinned, trackers } = useSelector(
-    (state: StateType) => state.habitTracker
-  );
-  const { currentSpace } = useSelector((state: StateType) => state.layout);
-  const handlePin = () => dispatch(changePinnedHabitTracker(id));
+  const { pinned, trackers } = useHabitTracker();
+  const { currentSpace } = useLayout();
+  const handlePin = () => changePinnedHabitTracker(id);
 
   const handleDelete = () => {
     if (currentSpace.type === "dynamic") {
-      dispatch(currentSpaceDeleteWidget({ id, type: "habit-tracker" }));
+      currentSpaceDeleteWidget({ id, type: "habit-tracker" });
     } else {
-      dispatch(deleteItem(id));
+      deleteTracker(id);
     }
   };
-  const handleReset = () => dispatch(changeValue({ id, action: "reset" }));
+  const handleReset = () => changeValue(id, "reset");
 
   const handleChange = (tracker: HabitTrackerItemType) => {
-    dispatch(setItem(tracker));
+    setTrackerItem(tracker);
     setEditing(false);
   };
 
@@ -120,7 +116,7 @@ function HabitTrackerControls({
 }
 
 function Stats({ id }: { id: number }) {
-  const { trackers } = useSelector((state: StateType) => state.habitTracker);
+  const { trackers } = useHabitTracker();
   const currentHabitTracker = trackers.find((tracker) => tracker.id === id);
   if (!currentHabitTracker) return null;
   return (

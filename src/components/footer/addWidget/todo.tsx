@@ -1,17 +1,15 @@
 import AddItem from "@/components/addItem";
 import useAvailablePosition from "@/hooks/useAvailablePosition";
 import useCurrentLayout from "@/hooks/useCurrentLayout";
-import { currentSpaceAddWidget } from "@/redux/slice/layout";
-import { addTask } from "@/redux/slice/todo";
-import { StateType } from "@/redux/store";
 import { widgetDimensions } from "@/utils/getWidget";
 import { getNextId } from "@/utils/next_id";
-import { useDispatch, useSelector } from "react-redux";
 import AllItemsList from "./allItemsList";
+import { currentSpaceAddWidget } from "@/storage/layout";
+import { addTask } from "@/storage/todo";
+import { useTodo } from "@/storage";
 
 function AddTodo() {
-  const dispatch = useDispatch();
-  const { Tasks, pinnedTodo } = useSelector((state: StateType) => state.todo);
+  const { Tasks, pinnedTodo } = useTodo();
   const layout = useCurrentLayout();
   const todoDimensions = widgetDimensions["todo"];
   const { minH, minW } = todoDimensions;
@@ -23,23 +21,21 @@ function AddTodo() {
 
   const addWidget = (id: number) => {
     if (!availablePosition || presentTodosId.includes(id)) return;
-    dispatch(
-      currentSpaceAddWidget({
-        type: "todo",
-        values: { id },
-        gridProps: {
-          ...todoDimensions,
-          ...availablePosition,
-          i: `todo-${id}`,
-        },
-      })
-    );
+    currentSpaceAddWidget({
+      type: "todo",
+      values: { id },
+      gridProps: {
+        ...todoDimensions,
+        ...availablePosition,
+        i: `todo-${id}`,
+      },
+    });
   };
 
   const addTodo = (title: string) => {
     if (!availablePosition) return;
     const newId = getNextId(Tasks.map(({ id }) => id));
-    dispatch(addTask(title));
+    addTask(title);
     addWidget(newId);
   };
 

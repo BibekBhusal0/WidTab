@@ -1,17 +1,15 @@
 import AddItem from "@/components/addItem";
 import useAvailablePosition from "@/hooks/useAvailablePosition";
 import useCurrentLayout from "@/hooks/useCurrentLayout";
-import { currentSpaceAddWidget } from "@/redux/slice/layout";
-import { StateType } from "@/redux/store";
 import { widgetDimensions } from "@/utils/getWidget";
 import { getNextId } from "@/utils/next_id";
-import { useDispatch, useSelector } from "react-redux";
 import AllItemsList from "./allItemsList";
-import { addNoteWithTitle } from "@/redux/slice/note";
+import { useNote } from "@/storage";
+import { currentSpaceAddWidget } from "@/storage/layout";
+import { addNoteWithTitle } from "@/storage/note";
 
 function AddNote() {
-  const dispatch = useDispatch();
-  const { allNotes } = useSelector((state: StateType) => state.note);
+  const { allNotes } = useNote();
   const layout = useCurrentLayout();
   const noteDimensions = widgetDimensions["note"];
   const { minH, minW } = noteDimensions;
@@ -23,23 +21,21 @@ function AddNote() {
 
   const addWidget = (id: number) => {
     if (!availablePosition || presentNoteId.includes(id)) return;
-    dispatch(
-      currentSpaceAddWidget({
-        type: "note",
-        values: { id },
-        gridProps: {
-          ...noteDimensions,
-          ...availablePosition,
-          i: `note-${id}`,
-        },
-      })
-    );
+    currentSpaceAddWidget({
+      type: "note",
+      values: { id },
+      gridProps: {
+        ...noteDimensions,
+        ...availablePosition,
+        i: `note-${id}`,
+      },
+    });
   };
 
   const addNote = (title: string) => {
     if (!availablePosition) return;
     const newId = getNextId(allNotes.map(({ id }) => id));
-    dispatch(addNoteWithTitle(title));
+    addNoteWithTitle(title);
     addWidget(newId);
   };
 

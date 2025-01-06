@@ -1,10 +1,7 @@
-import { StateType } from "@/redux/store";
-import { useSelector } from "react-redux";
+import { useThemeState } from "@/storage";
 
 function useCurrentTheme() {
-  const { allThemes, currentThemeID } = useSelector(
-    (state: StateType) => state.theme
-  );
+  const { allThemes, currentThemeID } = useThemeState();
   if (allThemes.length === 0) {
     throw new Error("no theme");
   }

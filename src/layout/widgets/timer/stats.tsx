@@ -1,11 +1,8 @@
-import { useSelector } from "react-redux";
+import { useHabitTracker } from "@/storage";
 import HabitTrackerStatsSingle from "../habit-tracker/stats/single";
-import { StateType } from "@/redux/store";
 
 function TimerStats() {
-  const { timerHistory } = useSelector(
-    (state: StateType) => state.habitTracker
-  );
+  const { timerHistory } = useHabitTracker();
   return (
     <HabitTrackerStatsSingle
       unit="min"

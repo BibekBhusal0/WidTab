@@ -1,11 +1,9 @@
 import AddItem from "@/components/addItem";
-import { addSpace } from "@/redux/slice/layout";
-import { useDispatch } from "react-redux";
+import { addSpace } from "@/storage/layout";
 
 function AddSpace() {
-  const dispatch = useDispatch();
   const handleClick = (e: string) => {
-    dispatch(addSpace(e));
+    addSpace(e);
   };
   return (
     <AddItem

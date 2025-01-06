@@ -7,16 +7,15 @@ import {
   useMotionValue,
   useTransform,
 } from "framer-motion";
-import { useDispatch, useSelector } from "react-redux";
-import { StateType } from "@/redux/store";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import useFullSize from "@/hooks/useFullSize";
 import { CurrentSpaceType } from "@/types/slice/layout";
-import { changeCurrentSpace } from "@/redux/slice/layout";
 import { useTheme } from "@mui/material/styles";
 import alphaColor from "@/utils/alpha";
 import { useGetSpaceAndIcon } from "@/hooks/useAllSpaceAndIcon";
+import { useLayout } from "@/storage";
+import { changeCurrentSpace } from "@/storage/layout";
 
 export function CylindricalNavigation() {
   const {
@@ -26,8 +25,7 @@ export function CylindricalNavigation() {
   const {
     palette: { primaryContainer, divider },
   } = useTheme();
-  const { currentSpace } = useSelector((state: StateType) => state.layout);
-  const dispatch = useDispatch();
+  const { currentSpace } = useLayout();
   const IconList = useGetSpaceAndIcon();
   const cylinderWidth = width * 2.7;
   const faceCount = IconList.length;
@@ -44,7 +42,7 @@ export function CylindricalNavigation() {
   };
   const changeSpace = () => {
     if (isCurrent(selected?.space) || !selected) return;
-    dispatch(changeCurrentSpace(selected.space));
+    changeCurrentSpace(selected.space);
   };
 
   const handleDrag = (_: unknown, info: PanInfo) => {

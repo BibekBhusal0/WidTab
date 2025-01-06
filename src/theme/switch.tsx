@@ -1,14 +1,12 @@
 import { Icon } from "@iconify/react";
 import { useRef, useEffect } from "react";
 import useCurrentTheme from "@/hooks/useCurrentTheme";
-import { useDispatch } from "react-redux";
-import { toggleCurrentMode } from "@/redux/slice/theme";
 import IconButton from "@mui/material/IconButton";
+import { toggleCurrentMode } from "@/storage/theme";
 
 function ThemeSwitch() {
   const firstRender = useRef(true);
   const { mode } = useCurrentTheme();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     setTimeout(() => {
@@ -24,7 +22,7 @@ function ThemeSwitch() {
       ? "line-md:moon-filled-to-sunny-filled-loop-transition"
       : "line-md:sunny-filled-loop-to-moon-filled-loop-transition";
 
-  const handleClick = () => dispatch(toggleCurrentMode());
+  const handleClick = () => toggleCurrentMode();
 
   return (
     <IconButton onClick={handleClick}>

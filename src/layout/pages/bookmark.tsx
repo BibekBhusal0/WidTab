@@ -3,22 +3,23 @@ import BookmarkTree from "@/components/bookmarks/tree";
 import SelectSize from "@/components/bookmarks/size";
 import Button from "@mui/material/Button";
 import { Icon } from "@iconify/react";
-import { useDispatch, useSelector } from "react-redux";
-import { StateType } from "@/redux/store";
-import { toggleShowFavorites } from "@/redux/slice/bookmark";
 import BookmarkSearch from "@/components/bookmarks/search";
 import { useBookmarkFolder, useFavoriteBookmarks } from "@/hooks/useBookmarks";
 import BookmarkBreadcrumb from "@/components/bookmarks/breadcrumb";
 import BookmarkGrid from "@/components/bookmarks/grid";
-import { changeCurrentFolder } from "@/redux/slice/bookmark";
 import { SelectChangeEvent } from "@mui/material/Select";
-import { changeFolderSize } from "@/redux/slice/bookmark";
 import {
   allFolderSizes,
   bookmarkTreeNodeArray,
   folderSizes,
 } from "@/types/slice/bookmark";
 import { ScrollArea } from "@/components/scrollarea";
+import { useBookmarkState } from "@/storage";
+import {
+  changeCurrentFolder,
+  changeFolderSize,
+  toggleShowFavorites,
+} from "@/storage/bookmark";
 
 function BookmarkManager() {
   return (
@@ -47,28 +48,26 @@ function BookmarkManager() {
 }
 
 function BookmarkSizeSelect() {
-  const { folderSize } = useSelector((state: StateType) => state.bookmarks);
-  const dispatch = useDispatch();
+  const { folderSize } = useBookmarkState();
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
     const val = event.target.value as folderSizes;
     if (allFolderSizes.includes(val)) {
-      dispatch(changeFolderSize(val));
+      changeFolderSize(val);
     }
   };
   return <SelectSize value={folderSize} onChange={handleChange} />;
 }
 
 function FavButton() {
-  const dispatch = useDispatch();
-  const { showFavorites } = useSelector((state: StateType) => state.bookmarks);
+  const { showFavorites } = useBookmarkState();
   return (
     <div className="flex-center w-full">
       <Button
         sx={{ marginX: "auto", marginY: "1rem" }}
         className="transition-all"
         variant={showFavorites ? "outlined" : "contained"}
-        onClick={() => dispatch(toggleShowFavorites())}>
+        onClick={() => toggleShowFavorites()}>
         <div className="text-xl flex-center gap-2">
           <Icon icon="mdi:heart-outline" />
           <div>{showFavorites ? "Hide " : "Show "} All Favorites</div>
@@ -79,11 +78,8 @@ function FavButton() {
 }
 
 function MainBookmarks() {
-  const { currentFolderID, showFavorites } = useSelector(
-    (state: StateType) => state.bookmarks
-  );
-  const dispatch = useDispatch();
-  const onFolderChange = (id: string) => dispatch(changeCurrentFolder(id));
+  const { currentFolderID, showFavorites } = useBookmarkState();
+  const onFolderChange = (id: string) => changeCurrentFolder(id);
   const props = { currentFolderID, onFolderChange };
 
   return (
@@ -100,9 +96,7 @@ function MainBookmarks() {
 }
 
 function BookmarksFolder() {
-  const { currentFolderID } = useSelector(
-    (state: StateType) => state.bookmarks
-  );
+  const { currentFolderID } = useBookmarkState();
   const bookmarks = useBookmarkFolder(currentFolderID);
   return <OnlyBookmarks bookmarks={bookmarks} />;
 }
@@ -112,9 +106,8 @@ function BookmarksFavorite() {
 }
 
 function OnlyBookmarks({ bookmarks }: bookmarkTreeNodeArray) {
-  const { folderSize } = useSelector((state: StateType) => state.bookmarks);
-  const dispatch = useDispatch();
-  const onFolderChange = (id: string) => dispatch(changeCurrentFolder(id));
+  const { folderSize } = useBookmarkState();
+  const onFolderChange = (id: string) => changeCurrentFolder(id);
   const props = { folderSize, bookmarks, onFolderChange };
 
   return <BookmarkGrid {...props} />;

@@ -10,8 +10,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import { cn } from "@/utils/cn";
-import { useDispatch } from "react-redux";
-import { currentSpaceEditWidget } from "@/redux/slice/layout";
+import { currentSpaceEditWidget } from "@/storage/layout";
 import { ScrollArea } from "@/components/scrollarea";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import useCurrentTheme from "@/hooks/useCurrentTheme";
@@ -79,15 +78,12 @@ export function AIChat({
 }: { APIkey: string } & geminiWidgetType) {
   const { conversation, model } = props;
   const [input, setInput] = useState("");
-  const dispatch = useDispatch();
   const { mode } = useCurrentTheme();
   const setContent = (conversation: Content[]) =>
-    dispatch(
-      currentSpaceEditWidget({
-        type: "gemini",
-        values: { ...props, conversation },
-      })
-    );
+    currentSpaceEditWidget({
+      type: "gemini",
+      values: { ...props, conversation },
+    });
 
   const [focus, setFocus] = useState(false);
   const [loading, setLoading] = useState(false);

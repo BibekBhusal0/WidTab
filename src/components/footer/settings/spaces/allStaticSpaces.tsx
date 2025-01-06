@@ -1,12 +1,11 @@
 import useCurrentIcons from "@/hooks/useCurrentIcons";
+import { useLayout } from "@/storage";
+import { changeCurrentSpace } from "@/storage/layout";
 import { allRequiredIcons } from "@/theme/icons";
-import { changeCurrentSpace } from "@/redux/slice/layout";
-import { StateType } from "@/redux/store";
 import { StaticPagesType } from "@/types/slice/widgets";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import { useDispatch, useSelector } from "react-redux";
 
 type iconMapping = { name: string; icon: allRequiredIcons };
 
@@ -18,9 +17,8 @@ export const staticPagesIcon: Record<StaticPagesType, iconMapping> = {
 };
 
 function AllStaticLayout() {
-  const { currentSpace } = useSelector((state: StateType) => state.layout);
+  const { currentSpace } = useLayout();
   const themeIcons = useCurrentIcons();
-  const dispatch = useDispatch();
 
   return (
     <List>
@@ -29,12 +27,10 @@ function AllStaticLayout() {
           key={type}
           selected={currentSpace.type === "static" && currentSpace.id === type}
           onClick={() =>
-            dispatch(
-              changeCurrentSpace({
-                type: "static",
-                id: type as StaticPagesType,
-              })
-            )
+            changeCurrentSpace({
+              type: "static",
+              id: type as StaticPagesType,
+            })
           }>
           <ListItemIcon className="icon-lg">{themeIcons[icon]}</ListItemIcon>
           {name}

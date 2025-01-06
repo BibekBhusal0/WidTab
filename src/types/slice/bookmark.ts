@@ -3,7 +3,7 @@ const s = ["small", "medium", "large"] as const;
 export type folderSizes = (typeof s)[number];
 export const allFolderSizes: folderSizes[] = [...s];
 
-export type bookmarkSliceType = {
+export type bookmarkStateType = {
   favorites: string[];
 
   currentFolderID: string;

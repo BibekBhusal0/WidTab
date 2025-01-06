@@ -1,13 +1,11 @@
-import { changeToolBarPosition } from "@/redux/slice/layout";
-import { StateType } from "@/redux/store";
 import { ToolBarPositions } from "@/types/slice/layout";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { useDispatch, useSelector } from "react-redux";
+import { useLayout } from "@/storage";
+import { changeToolBarPosition } from "@/storage/layout";
 
 function SelectToolBarPosition() {
-  const { toolBarPosition } = useSelector((state: StateType) => state.layout);
-  const dispatch = useDispatch();
+  const { toolBarPosition } = useLayout();
   const sides: ToolBarPositions[] = ["top", "left", "bottom", "right"];
 
   return (
@@ -16,7 +14,7 @@ function SelectToolBarPosition() {
       value={toolBarPosition}
       size="small"
       onChange={(e) =>
-        dispatch(changeToolBarPosition(e.target.value as ToolBarPositions))
+        changeToolBarPosition(e.target.value as ToolBarPositions)
       }>
       {sides.map((c) => (
         <MenuItem className="capitalize" key={c} value={c}>

@@ -1,4 +1,3 @@
-import { currentSpaceEditWidget } from "@/redux/slice/layout";
 import {
   AllSearchEngines,
   searchEngines,
@@ -9,18 +8,17 @@ import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { ChangeEvent, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { StateType } from "@/redux/store";
 import SearchEngineSelect, { searchEngineLogoAndLink } from "./select";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import { openLink } from "@/utils/bookmark";
+import { useBookmarkState } from "@/storage";
+import { currentSpaceEditWidget } from "@/storage/layout";
 
 function SearchWidget({ id, engine }: SearchWidgetType) {
   const [text, setText] = useState("");
-  const { linkInNewTab } = useSelector((state: StateType) => state.bookmarks);
+  const { linkInNewTab } = useBookmarkState();
 
   const { search } = useCurrentIcons();
-  const dispatch = useDispatch();
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
@@ -38,9 +36,7 @@ function SearchWidget({ id, engine }: SearchWidgetType) {
   const changeSearchEngine = (e: SelectChangeEvent<unknown>) => {
     const val = e.target.value as AllSearchEngines;
     if (!searchEngines.includes(val)) return;
-    dispatch(
-      currentSpaceEditWidget({ type: "search", values: { id, engine: val } })
-    );
+    currentSpaceEditWidget({ type: "search", values: { id, engine: val } });
   };
 
   return (

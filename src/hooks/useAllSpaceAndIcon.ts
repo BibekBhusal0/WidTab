@@ -1,10 +1,9 @@
 import { iconAsProp } from "@/theme/icons";
 import { StaticPagesType } from "@/types/slice/widgets";
 import { staticPagesIcon } from "@/components/footer/settings/spaces/allStaticSpaces";
-import { useSelector } from "react-redux";
-import { StateType } from "@/redux/store";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import { CurrentSpaceType } from "@/types/slice/layout";
+import { useLayout } from "@/storage";
 
 export type SpaceMapping = {
   name: string;
@@ -24,11 +23,11 @@ export function useGetSpaceAndIcon(which: which = "all") {
       };
     }
   );
-  const dynamicIcons: SpaceMapping[] = useSelector(
-    (state: StateType) => state.layout
-  ).allSpaces.map(({ name, icon, id }) => {
-    return { name, icon, space: { id, type: "dynamic" } };
-  });
+  const dynamicIcons: SpaceMapping[] = useLayout().allSpaces.map(
+    ({ name, icon, id }) => {
+      return { name, icon, space: { id, type: "dynamic" } };
+    }
+  );
 
   const IconList: SpaceMapping[] =
     which === "dynamic"

@@ -14,7 +14,7 @@ export type ThemeItemType = {
   image?: string;
 };
 
-export type ThemeSliceType = {
+export type themeStateType = {
   currentThemeID: number;
   allThemes: ThemeItemType[];
 };

@@ -1,6 +1,4 @@
-import { useSelector } from "react-redux";
 import Footer from "@/components/footer";
-import { StateType } from "@/redux/store";
 import useCurrentLayout from "@/hooks/useCurrentLayout";
 import { StaticPagesType } from "@/types/slice/widgets";
 import DynamicLayout from "@/layout/dynamic";
@@ -10,11 +8,10 @@ import { positionProps } from "@/types/slice/layout";
 import { cn } from "@/utils/cn";
 import useCurrentTheme from "@/hooks/useCurrentTheme";
 import { useFavicon } from "@/utils/faviconURL";
+import { useLayout } from "@/storage";
 
 function App() {
-  const { currentSpace, toolBarPosition } = useSelector(
-    (state: StateType) => state.layout
-  );
+  const { currentSpace, toolBarPosition } = useLayout();
   const { mode } = useCurrentTheme();
   const { appProps } = positionProps[toolBarPosition];
   const layout = useCurrentLayout();

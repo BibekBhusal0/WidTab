@@ -1,11 +1,6 @@
 import MenuPopover from "@/components/popoverMenu";
 import Divider from "@mui/material/Divider";
 import MenuItem from "@mui/material/MenuItem";
-import { useDispatch } from "react-redux";
-import {
-  currentSpaceDeleteWidget,
-  currentSpaceEditWidget,
-} from "@/redux/slice/layout";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import { SelectChangeEvent } from "@mui/material/Select";
 import IconMenu from "@/components/menuWithIcon";
@@ -13,10 +8,13 @@ import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
 import useCurrentLayout from "@/hooks/useCurrentLayout";
 import SelectSize from "@/components/bookmarks/size";
 import { allFolderSizes, folderSizes } from "@/types/slice/bookmark";
+import {
+  currentSpaceDeleteWidget,
+  currentSpaceEditWidget,
+} from "@/storage/layout";
 
 function BookmarkControls({ id }: { id: number }) {
   const layout = useCurrentLayout();
-  const dispatch = useDispatch();
   const { delete_ } = useCurrentIcons();
   if (!layout) return null;
   const { widgets } = layout;
@@ -28,12 +26,10 @@ function BookmarkControls({ id }: { id: number }) {
   const { breadcrumb, iconSize, tabs } = props;
 
   const toggleValue = (type: "breadcrumb" | "tabs") => {
-    dispatch(
-      currentSpaceEditWidget({
-        type: "bookmark",
-        values: { ...props, [type]: !props[type] },
-      })
-    );
+    currentSpaceEditWidget({
+      type: "bookmark",
+      values: { ...props, [type]: !props[type] },
+    });
   };
 
   const switches: MenuSwitchProps["items"] = [
@@ -48,17 +44,14 @@ function BookmarkControls({ id }: { id: number }) {
   const handleSizeChange = (event: SelectChangeEvent<unknown>) => {
     const val = event.target.value as folderSizes;
     if (allFolderSizes.includes(val)) {
-      dispatch(
-        currentSpaceEditWidget({
-          type: "bookmark",
-          values: { ...props, iconSize: val },
-        })
-      );
+      currentSpaceEditWidget({
+        type: "bookmark",
+        values: { ...props, iconSize: val },
+      });
     }
   };
 
-  const deleteThis = () =>
-    dispatch(currentSpaceDeleteWidget({ type: "bookmark", id }));
+  const deleteThis = () => currentSpaceDeleteWidget({ type: "bookmark", id });
 
   return (
     <>

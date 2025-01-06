@@ -2,12 +2,11 @@ import useCurrentLayout from "@/hooks/useCurrentLayout";
 import { CustomWidgetType } from "@/types/slice/widgets";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { useDispatch } from "react-redux";
-import { currentSpaceEditWidget } from "@/redux/slice/layout";
 import { useEffect, useState } from "react";
 import MenuPopover from "@/components/popoverMenu";
 import { urlPattern } from "@/components/footer/addWidget/custom";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
+import { currentSpaceEditWidget } from "@/storage/layout";
 
 function CustomWidget(props: CustomWidgetType) {
   return <iframe src={props.url} className="size-full rounded-themed" />;
@@ -24,7 +23,6 @@ export function URLChange({ id }: { id: number }) {
 }
 
 export function ChangeURL({ url, id }: CustomWidgetType) {
-  const dispatch = useDispatch();
   const { edit } = useCurrentIcons();
   const [text, setText] = useState(url);
   const [extractedUrl, setExtractedUrl] = useState(url);
@@ -43,12 +41,10 @@ export function ChangeURL({ url, id }: CustomWidgetType) {
   const valid = extractedUrl !== "";
   const add = () => {
     if (valid && extractedUrl !== url) {
-      dispatch(
-        currentSpaceEditWidget({
-          type: "custom",
-          values: { id: id, url: extractedUrl },
-        })
-      );
+      currentSpaceEditWidget({
+        type: "custom",
+        values: { id: id, url: extractedUrl },
+      });
     }
   };
   return (

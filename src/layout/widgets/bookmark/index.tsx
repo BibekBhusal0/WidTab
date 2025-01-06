@@ -2,25 +2,21 @@ import BookmarkBreadcrumb from "@/components/bookmarks/breadcrumb";
 import BookmarkGrid from "@/components/bookmarks/grid";
 import { ScrollArea } from "@/components/scrollarea";
 import { useBookmarkFolder, useBookmarkSiblings } from "@/hooks/useBookmarks";
-import { currentSpaceEditWidget } from "@/redux/slice/layout";
 import { BookmarkWidgetType } from "@/types/slice/bookmark";
 import { cn } from "@/utils/cn";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import { useDispatch } from "react-redux";
+import { currentSpaceEditWidget } from "@/storage/layout";
 
 function BookmarkWidget(props: BookmarkWidgetType) {
   const { folderId, iconSize, breadcrumb, tabs } = props;
   const bookmark = useBookmarkFolder(folderId);
-  const dispatch = useDispatch();
   const onFolderChange = (id: string) => {
-    dispatch(
-      currentSpaceEditWidget({
-        type: "bookmark",
-        values: { ...props, folderId: id },
-      })
-    );
+    currentSpaceEditWidget({
+      type: "bookmark",
+      values: { ...props, folderId: id },
+    });
   };
   const header_height =
     (Number(breadcrumb) + Number(tabs)) * 28 + Number(breadcrumb || tabs) * 16;

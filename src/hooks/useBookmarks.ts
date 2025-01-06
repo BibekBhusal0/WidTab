@@ -1,23 +1,20 @@
-import { useSelector } from "react-redux";
-import { StateType } from "@/redux/store";
 import { useDeferredValue, useEffect, useState } from "react";
 import { treeNode, treeNodeArray } from "@/types/slice/bookmark";
 import browser from "webextension-polyfill";
+import { useBookmarkState } from "@/storage";
 
 function useBookmarksUpdate(callback: Function, dependencies: any[] = []) {
   useEffect(() => {
     callback();
-
     const listeners = [
       browser.bookmarks.onCreated,
       browser.bookmarks.onChanged,
       browser.bookmarks.onRemoved,
     ];
-
-    listeners.map((event) => event.addListener(() => callback()));
-
+    const c = () => callback();
+    listeners.map((event) => event.addListener(c));
     return () => {
-      listeners.map((event) => event.removeListener(() => callback()));
+      listeners.map((event) => event.removeListener(c));
     };
   }, dependencies);
 }
@@ -42,17 +39,15 @@ export function useAllBookmarks(dependencies: any[] = []) {
 export default useBookmarksUpdate;
 
 export const useFavoriteBookmarks = (dependencies: any[] = []) => {
-  const { favorites } = useSelector((state: StateType) => state.bookmarks);
+  const { favorites } = useBookmarkState();
 
   const [bookmark, setBookmark] = useState<treeNodeArray>([]);
   const getBookmarks = () => {
     const bookmarkPromises = favorites.map((id) => browser.bookmarks.get(id));
-
     Promise.all(bookmarkPromises).then((results) => {
       const bookmarks = results
         .flat()
         .filter((bookmark): bookmark is treeNode => !!bookmark);
-
       setBookmark(bookmarks);
     });
   };

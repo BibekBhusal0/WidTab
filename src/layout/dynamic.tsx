@@ -1,23 +1,18 @@
 import useCurrentLayout from "@/hooks/useCurrentLayout";
-import { StateType } from "@/redux/store";
-import { useDispatch, useSelector } from "react-redux";
 import GridLayout, { Layout } from "react-grid-layout";
-import { currentSpaceSetGridProps } from "@/redux/slice/layout";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-
 import Widget from "./widgets";
 import { positionProps } from "@/types/slice/layout";
 import { cn } from "@/utils/cn";
 import useFullSize from "@/hooks/useFullSize";
+import { useLayout } from "@/storage";
+import { currentSpaceSetGridProps } from "@/storage/layout";
 
 function DynamicLayout() {
-  const { n_cols, n_rows, currentSpace, toolBarPosition, locked } = useSelector(
-    (state: StateType) => state.layout
-  );
+  const { n_cols, n_rows, currentSpace, toolBarPosition, locked } = useLayout();
   const { mainComponentProps } = positionProps[toolBarPosition];
   const space = useCurrentLayout();
-  const dispatch = useDispatch();
   const gap = 10;
   const {
     ref,
@@ -26,10 +21,11 @@ function DynamicLayout() {
   const rowHeight = (height - gap * n_rows) / n_rows;
   if (!space) return null;
   const { widgets } = space;
+  console.log(widgets);
   const layout = widgets.map((w) => w.gridProps);
 
   const handleChange = (layout: Layout[]) => {
-    dispatch(currentSpaceSetGridProps(layout));
+    currentSpaceSetGridProps(layout);
   };
 
   return (

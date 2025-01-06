@@ -6,33 +6,29 @@ import {
   changePinnedTodo,
   deleteTask,
   toggleSortedFiltered,
-} from "@/redux/slice/todo";
-import { useDispatch, useSelector } from "react-redux";
-import { StateType } from "@/redux/store";
-import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
+} from "@/storage/todo";
+import { currentSpaceDeleteWidget } from "@/storage/layout";
 import IconButton from "@mui/material/IconButton";
+import { useLayout, useTodo } from "@/storage";
 
 export const TodoMenu: React.FC<{ id: number }> = ({ id }) => {
-  const dispatch = useDispatch();
-  const { pinnedTodo, Tasks } = useSelector((state: StateType) => state.todo);
+  const { pinnedTodo, Tasks } = useTodo();
   const crr = Tasks.find((t) => t.id === id);
-  const { currentSpace } = useSelector((state: StateType) => state.layout);
+  const { currentSpace } = useLayout();
   const { pin, delete_, sort, show, hide, add } = useCurrentIcons();
 
   if (!crr) return null;
   const { filtered, sorted } = crr;
 
   const pinned = pinnedTodo === id;
-  const handleFilter = () =>
-    dispatch(toggleSortedFiltered({ id, type: "filtered" }));
-  const handleSort = () =>
-    dispatch(toggleSortedFiltered({ id, type: "sorted" }));
-  const handlePin = () => dispatch(changePinnedTodo(id));
+  const handleFilter = () => toggleSortedFiltered({ id, type: "filtered" });
+  const handleSort = () => toggleSortedFiltered({ id, type: "sorted" });
+  const handlePin = () => changePinnedTodo(id);
   const handleDelete = () => {
     if (currentSpace.type === "dynamic") {
-      dispatch(currentSpaceDeleteWidget({ id, type: "todo" }));
+      currentSpaceDeleteWidget({ id, type: "todo" });
     } else {
-      dispatch(deleteTask(id));
+      deleteTask(id);
     }
   };
 
@@ -67,11 +63,8 @@ export const TodoMenu: React.FC<{ id: number }> = ({ id }) => {
 };
 
 function TodoControls({ id }: { id: number }) {
-  const dispatch = useDispatch();
   const { add } = useCurrentIcons();
-  const handleAdd = () => {
-    dispatch(addTodo({ task_id: id, task: "" }));
-  };
+  const handleAdd = () => addTodo(id, "");
 
   return (
     <>

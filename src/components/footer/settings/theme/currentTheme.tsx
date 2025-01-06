@@ -1,28 +1,22 @@
 import useCurrentTheme from "@/hooks/useCurrentTheme";
-import {
-  changeTheme,
-  deleteTheme,
-  toggleCurrentMode,
-} from "@/redux/slice/theme";
 import { numericalThemeValues } from "@/types/slice/theme";
 import Button from "@mui/material/Button";
 import Slider, { SliderProps } from "@mui/material/Slider";
-import { useDispatch } from "react-redux";
 import RenameTheme from "./renameTheme";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import SelectIconPack from "./iconPack";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
 import { HexPicker } from "@/components/color";
 import SelectBackgroundImage from "./selectBackgroundImage";
+import { changeTheme, deleteTheme, toggleCurrentMode } from "@/storage/theme";
 
 function CurrentThemeSettings() {
   const theme = useCurrentTheme();
-  const dispatch = useDispatch();
   const { delete_ } = useCurrentIcons();
   const numValues: numericalThemeValues[] = ["blur", "opacity", "roundness"];
   const toggle: MenuSwitchProps["items"] = [
     {
-      onChange: () => dispatch(toggleCurrentMode()),
+      onChange: () => toggleCurrentMode(),
       title: "Dark Mode",
       checked: theme.mode === "dark",
     },
@@ -41,7 +35,7 @@ function CurrentThemeSettings() {
               <HexPicker
                 color={theme.primaryColor}
                 setColor={(color) =>
-                  dispatch(changeTheme({ ...theme, primaryColor: color }))
+                  changeTheme({ ...theme, primaryColor: color })
                 }
               />
             </div>
@@ -66,7 +60,7 @@ function CurrentThemeSettings() {
           <RenameTheme />
           <Button
             variant="outlined"
-            onClick={() => dispatch(deleteTheme(theme.id))}
+            onClick={() => deleteTheme(theme.id)}
             color="error"
             startIcon={delete_}
             //
@@ -90,7 +84,6 @@ type changeSliderProps = SliderProps & {
 
 function ChangeSlider({ val, ...props }: changeSliderProps) {
   const theme = useCurrentTheme();
-  const dispatch = useDispatch();
 
   return (
     <div className="full-between">
@@ -98,7 +91,7 @@ function ChangeSlider({ val, ...props }: changeSliderProps) {
       <Slider
         value={theme[val]}
         onChange={(_, value) => {
-          dispatch(changeTheme({ ...theme, [val]: value as number }));
+          changeTheme({ ...theme, [val]: value as number });
         }}
         {...props}
       />
