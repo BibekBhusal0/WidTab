@@ -61,13 +61,17 @@ export const themeSlice = createSlice({
       }
     },
     resetThemeSlice: (state) => Object.assign(state, initialThemeState),
-    setThemeState: (state, action: PayloadAction<ThemeSliceType>) => {
-      const val = action.payload;
-      if (!val) return;
+    setThemeState: (
+      state,
+      action: PayloadAction<{ value: ThemeSliceType; check?: boolean }>
+    ) => {
+      const { value, check = true } = action.payload;
+      const val = value;
+      if (!val || !val.allThemes) return;
+      if (!Array.isArray(val.allThemes)) return;
+      if (!check) return Object.assign(state, val);
       if (typeof val.currentThemeID === "number")
         state.currentThemeID = val.currentThemeID;
-      if (!val.allThemes) return;
-      if (!Array.isArray(val.allThemes)) return;
       const allThemes = [...state.allThemes];
 
       for (const theme of val.allThemes) {

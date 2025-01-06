@@ -37,10 +37,16 @@ export const noteSlice = createSlice({
       state.allNotes = state.allNotes.filter((p) => p.id !== action.payload);
     },
     resetNoteState: (state) => Object.assign(state, initialNoteState),
-    setNoteState: (state, action: PayloadAction<noteStateType>) => {
-      const val = action.payload;
+    setNoteState: (
+      state,
+      action: PayloadAction<{ value: noteStateType; check?: boolean }>
+    ) => {
+      const { value, check = true } = action.payload;
+      const val = value;
       if (!val) return;
       if (!val.allNotes) return;
+      if (!check) return Object.assign(state, value);
+
       const { allNotes } = val;
       if (!Array.isArray(allNotes)) return;
       const notes = [...state.allNotes];

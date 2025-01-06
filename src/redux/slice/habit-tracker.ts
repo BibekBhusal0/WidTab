@@ -8,7 +8,7 @@ import { initialHabitTrackerState } from "./initialStates";
 import dayjs from "@/dayjsConfig";
 
 const habitTrackerSlice = createSlice({
-  name: "habit-tracker",
+  name: "habitTracker",
   initialState: { ...initialHabitTrackerState },
   reducers: {
     addItem: (state, action: PayloadAction<HabitTrackerItemType>) => {
@@ -48,13 +48,16 @@ const habitTrackerSlice = createSlice({
       if (state.pinned === action.payload) state.pinned = null;
       else state.pinned = action.payload;
     },
-    setTrackerState: (state, action: PayloadAction<HabitTrackerSliceType>) => {
-      const val = action.payload;
-      if (!val) return;
-      if (val.timerHistory) state.timerHistory = val.timerHistory;
-      if (!val.trackers) return;
+    setTrackerState: (
+      state,
+      action: PayloadAction<{ value: HabitTrackerSliceType; check?: boolean }>
+    ) => {
+      const { value, check = true } = action.payload;
+      const val = value;
+      if (!val || !val.trackers) return;
       if (!Array.isArray(val.trackers)) return;
-
+      if (!check) return Object.assign(state, val);
+      if (val.timerHistory) state.timerHistory = val.timerHistory;
       const trackers = [...state.trackers];
       val.trackers.forEach((tracker) => {
         const crr = trackers.find(

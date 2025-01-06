@@ -7,7 +7,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialBookmarkState } from "./initialStates";
 
 export const bookmarkSlice = createSlice({
-  name: "bookmark",
+  name: "bookmarks",
   initialState: { ...initialBookmarkState },
   reducers: {
     toggleFavorites: (state, action: PayloadAction<string>) => {
@@ -29,9 +29,14 @@ export const bookmarkSlice = createSlice({
     toggleLink: (state) => {
       state.linkInNewTab = !state.linkInNewTab;
     },
-    setBookmarkState: (state, action: PayloadAction<bookmarkSliceType>) => {
-      const val = action.payload;
+    setBookmarkState: (
+      state,
+      action: PayloadAction<{ value: bookmarkSliceType; check?: boolean }>
+    ) => {
+      const { value, check = true } = action.payload;
+      const val = value;
       if (!val) return;
+      if (!check) return Object.assign(state, val);
       if (allFolderSizes.includes(val.folderSize))
         state.folderSize = val.folderSize;
       if (typeof val.showFavorites === "boolean")

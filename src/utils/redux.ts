@@ -6,6 +6,46 @@ import { setThemeState } from "@/redux/slice/theme";
 import { setTodoState } from "@/redux/slice/todo";
 import { reducerNames, reducers, store } from "@/redux/store";
 
+export const actionMap: Record<reducers, (state: any) => any> = {
+  note: setNoteState,
+  todo: setTodoState,
+  bookmarks: setBookmarkState,
+  habitTracker: setTrackerState,
+  layout: setLayoutState,
+  theme: setThemeState,
+};
+
+export const saveToLocalStorage = (key: string, data: any): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    try {
+      localStorage.setItem(key, JSON.stringify(data));
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export const loadFromLocalStorage = (key: string): Promise<any | null> => {
+  return new Promise((resolve, reject) => {
+    try {
+      const data = localStorage.getItem(key);
+      resolve(data ? JSON.parse(data) : null);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export const setInitialStateFromLocalStorage = async () => {
+  for (const key in actionMap) {
+    const k = key as reducers;
+    if (!reducerNames.includes(k)) continue;
+    const data = await loadFromLocalStorage(key);
+    if (data) store.dispatch(actionMap[k]({ value: data, check: false }));
+  }
+};
+
 export const exportStateToJSON = () => {
   const state = store.getState();
   const stateJSON = JSON.stringify(state);
@@ -27,25 +67,12 @@ export const importStateFromJSON = async (file: File) => {
     for (const key in importedState) {
       const k = key as reducers;
       if (!reducerNames.includes(k)) continue;
+
       const state = importedState[k];
-      switch (k) {
-        case "note":
-          store.dispatch(setNoteState(state));
-          break;
-        case "todo":
-          store.dispatch(setTodoState(state));
-          break;
-        case "bookmarks":
-          store.dispatch(setBookmarkState(state));
-          break;
-        case "habitTracker":
-          store.dispatch(setTrackerState(state));
-          break;
-        case "layout":
-          store.dispatch(setLayoutState(state));
-          break;
-        case "theme":
-          store.dispatch(setThemeState(state));
+      const actionCreator = actionMap[k];
+
+      if (actionCreator) {
+        store.dispatch(actionCreator({ value: state, check: true }));
       }
     }
   } catch (error) {

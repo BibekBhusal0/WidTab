@@ -108,13 +108,17 @@ export const todoSlice = createSlice({
       else state.pinnedTodo = action.payload;
     },
     resetTodoSlice: (state) => Object.assign(state, initialTodoState),
-    setTodoState: (state, action: PayloadAction<todoStateType>) => {
-      const val = action.payload;
+    setTodoState: (
+      state,
+      action: PayloadAction<{ value: todoStateType; check?: boolean }>
+    ) => {
+      const { value, check = true } = action.payload;
+      const val = value;
       if (!val) return;
       if (!val.Tasks) return;
       if (!Array.isArray(val.Tasks)) return;
+      if (!check) return Object.assign(state, value);
       const tasks = state.Tasks;
-
       val.Tasks.forEach((task) => {
         const t = tasks.find((p) => p.id === task.id && p.title === task.title);
         if (t) Object.assign(t, task);
