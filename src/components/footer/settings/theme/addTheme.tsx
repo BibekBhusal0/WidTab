@@ -1,17 +1,21 @@
 import useCurrentTheme from "@/hooks/useCurrentTheme";
+import { useDispatch } from "react-redux";
+import { addTheme } from "@/redux/slice/theme";
 import AddItem from "@/components/addItem";
-import { addTheme } from "@/storage/theme";
 
 function AddTheme() {
   const crrTheme = useCurrentTheme();
+  const dispatch = useDispatch();
 
   const handleClick = (text: string) => {
-    addTheme({
-      ...crrTheme,
-      name: text,
-      id: 0,
-      editAble: true,
-    });
+    dispatch(
+      addTheme({
+        ...crrTheme,
+        name: text,
+        id: 0,
+        editAble: true,
+      })
+    );
   };
   return (
     <AddItem

@@ -3,14 +3,17 @@ import { ScrollArea } from "@/components/scrollarea";
 import { useFavoriteBookmarks } from "@/hooks/useBookmarks";
 import HabitTracker from "@/layout/widgets/habit-tracker";
 import Todo from "@/layout/widgets/todo";
-import { useBookmarkState, useHabitTracker, useTodo } from "@/storage";
+import { StateType } from "@/redux/store";
 import { cn } from "@/utils/cn";
 import Paper from "@mui/material/Paper";
+import { useSelector } from "react-redux";
 
 function Popup() {
-  const { pinnedTodo } = useTodo();
-  const { pinned } = useHabitTracker();
-  const { favorites } = useBookmarkState();
+  const {
+    todo: { pinnedTodo },
+    habitTracker: { pinned },
+    bookmarks: { favorites },
+  } = useSelector((state: StateType) => state);
   const showRightPanel = pinnedTodo !== null || pinned !== null;
   const showFavorites = favorites.length !== 0;
   const contentEmpty = pinnedTodo === null && pinned === null && !showFavorites;
@@ -60,7 +63,7 @@ function Favorites() {
 }
 
 function PinnedTodo() {
-  const { Tasks, pinnedTodo } = useTodo();
+  const { Tasks, pinnedTodo } = useSelector((state: StateType) => state.todo);
   if (pinnedTodo === null) return null;
   const p = Tasks.find((p) => p.id === pinnedTodo);
   if (!p) return null;
@@ -75,7 +78,9 @@ function PinnedTodo() {
 }
 
 function PinnedHabitTracker() {
-  const { trackers, pinned } = useHabitTracker();
+  const { trackers, pinned } = useSelector(
+    (state: StateType) => state.habitTracker
+  );
   if (!pinned) return null;
   const t = trackers.find((p) => p.id === pinned);
   if (!t) return null;

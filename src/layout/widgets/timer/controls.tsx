@@ -1,8 +1,9 @@
 import Divider from "@mui/material/Divider";
+import { useDispatch } from "react-redux";
 import {
   currentSpaceDeleteWidget,
   currentSpaceEditWidget,
-} from "@/storage/layout";
+} from "@/redux/slice/layout";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import IconMenu, { IconMenuType } from "@/components/menuWithIcon";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
@@ -19,6 +20,7 @@ function TimerCOntrols({
   contextMenu = false,
 }: ControlPropsDifferentForContextMenu) {
   const layout = useCurrentLayout();
+  const dispatch = useDispatch();
   const { delete_ } = useCurrentIcons();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const statsOpen = !!anchorEl;
@@ -34,26 +36,33 @@ function TimerCOntrols({
   const props = widget.values;
   const { music = false, time, running } = props;
   const toggleMusic = () =>
-    currentSpaceEditWidget({
-      type: "timer",
-      values: { ...props, music: !music },
-    });
+    dispatch(
+      currentSpaceEditWidget({
+        type: "timer",
+        values: { ...props, music: !music },
+      })
+    );
   const togglePlay = () =>
-    currentSpaceEditWidget({
-      type: "timer",
-      values: { ...props, running: !running },
-    });
+    dispatch(
+      currentSpaceEditWidget({
+        type: "timer",
+        values: { ...props, running: !running },
+      })
+    );
   const changeTime = (n: number) =>
-    currentSpaceEditWidget({
-      type: "timer",
-      values: { ...props, time: n },
-    });
+    dispatch(
+      currentSpaceEditWidget({
+        type: "timer",
+        values: { ...props, time: n },
+      })
+    );
 
   const switches: MenuSwitchProps["items"] = [
     { onChange: toggleMusic, title: "Music", checked: music },
   ];
 
-  const deleteThis = () => currentSpaceDeleteWidget({ type: "timer", id });
+  const deleteThis = () =>
+    dispatch(currentSpaceDeleteWidget({ type: "timer", id }));
 
   const stats = {
     name: "Stats",

@@ -1,11 +1,13 @@
+import { useDispatch } from "react-redux";
 import { useRef } from "react";
 import { cn } from "@/utils/cn";
 import { SelectIconMenu } from "@/components/select-icon";
 import { noteType } from "@/types/slice/notes";
 import { transparentInput } from "../todo";
-import { changeNoteContent } from "@/storage/note";
+import { changeNoteContent } from "@/redux/slice/note";
 
 function Note({ id, title, text, icon }: noteType) {
+  const dispatch = useDispatch();
   const titleRef = useRef<HTMLInputElement>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
 
@@ -16,13 +18,15 @@ function Note({ id, title, text, icon }: noteType) {
     }
   };
   const titleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    changeNoteContent({ content: "title", id, value: e.target.value });
+    dispatch(
+      changeNoteContent({ content: "title", id, value: e.target.value })
+    );
   };
   const iconChangeHandler = (icon: string) => {
-    changeNoteContent({ id, content: "icon", value: icon });
+    dispatch(changeNoteContent({ id, content: "icon", value: icon }));
   };
   const textChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    changeNoteContent({ content: "text", id, value: e.target.value });
+    dispatch(changeNoteContent({ content: "text", id, value: e.target.value }));
   };
 
   return (

@@ -22,7 +22,7 @@ export interface HabitTrackerEditProps {
   onChange: (value: HabitTrackerItemType) => void;
 }
 
-export type habitTrackerStateType = {
+export type HabitTrackerSliceType = {
   trackers: HabitTrackerItemType[];
   pinned: number | null;
   timerHistory?: HabitTrackerHistoryType;

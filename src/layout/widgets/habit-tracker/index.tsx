@@ -1,9 +1,10 @@
 import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
+import { useDispatch } from "react-redux";
+import { changeValue } from "@/redux/slice/habit-tracker";
 import Button from "@mui/material/Button";
 import { Icon } from "@iconify/react";
 import { cn } from "@/utils/cn";
 import dayjs from "dayjs";
-import { changeValue } from "@/storage/habit-tracker";
 
 function HabitTracker({
   id,
@@ -14,13 +15,14 @@ function HabitTracker({
   history = {},
 }: HabitTrackerItemType) {
   const value = history[dayjs().format("YYYY-MM-DD")] || 0;
+  const dispatch = useDispatch();
 
   const handleIncrement = () => {
-    changeValue(id, "increment");
+    dispatch(changeValue({ id, action: "increment" }));
   };
 
   const handleDecrement = () => {
-    changeValue(id, "decrement");
+    dispatch(changeValue({ id, action: "decrement" }));
   };
 
   const icons = [

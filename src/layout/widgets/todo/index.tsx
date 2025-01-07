@@ -1,4 +1,5 @@
 import { TaskType, todoType } from "@/types/slice/todo";
+import { useDispatch } from "react-redux";
 import { AnimatePresence, Reorder } from "framer-motion";
 import SortableCheckbox from "./checkbox";
 import { useRef } from "react";
@@ -8,7 +9,7 @@ import {
   changeTask,
   changeTodo,
   toggleTodo,
-} from "@/storage/todo";
+} from "@/redux/slice/todo";
 import { cn } from "@/utils/cn";
 import { SelectIconMenu } from "@/components/select-icon";
 import { ScrollArea } from "@/components/scrollarea";
@@ -17,6 +18,7 @@ export const transparentInput =
   "border-transparent w-full bg-transparent resize-none focus:outline-none";
 
 function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
+  const dispatch = useDispatch();
   const taskRefs = useRef<Map<number, HTMLTextAreaElement | null>>(new Map());
   const titleRef = useRef<HTMLInputElement>(null);
   var dynamicTasks = [...todos];
@@ -57,7 +59,7 @@ function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
     }
   };
   const addTodoItem = () => {
-    addTodo({ task_id: id, task: "" });
+    dispatch(addTodo({ task_id: id, task: "" }));
   };
   const titleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
@@ -75,24 +77,28 @@ function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
     }
   };
   const titleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
-    changeTask({
-      task_id: id,
-      change_item: "title",
-      title: e.target.value,
-    });
+    dispatch(
+      changeTask({
+        task_id: id,
+        change_item: "title",
+        title: e.target.value,
+      })
+    );
   const handleReorder = (newOrder: number[]) => {
     const orderedTasks = newOrder
       .map((id) => dynamicTasks.find((task) => task.id === id))
       .filter((task): task is todoType => task !== undefined);
 
-    changeTask({
-      task_id: id,
-      change_item: "todo",
-      todo: orderedTasks,
-    });
+    dispatch(
+      changeTask({
+        task_id: id,
+        change_item: "todo",
+        todo: orderedTasks,
+      })
+    );
   };
   const iconChangeHandler = (icon: string) => {
-    changeTask({ task_id: id, change_item: "icon", icon });
+    dispatch(changeTask({ task_id: id, change_item: "icon", icon }));
   };
 
   return (
@@ -122,19 +128,21 @@ function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
                   taskRefs.current.set(task.id, el)
                 }
                 handleDelete={() => {
-                  deleteTodo({ task_id: id, todo_id: task.id });
+                  dispatch(deleteTodo({ task_id: id, todo_id: task.id }));
                 }}
                 focusPrevious={() => focusPrevious(task.id)}
                 focusNext={() => focusNext(task.id)}
                 handleChange={(val: string) =>
-                  changeTodo({
-                    task_id: id,
-                    todo_id: task.id,
-                    task: val,
-                  })
+                  dispatch(
+                    changeTodo({
+                      task_id: id,
+                      todo_id: task.id,
+                      task: val,
+                    })
+                  )
                 }
                 handleToggle={() => {
-                  toggleTodo({ task_id: id, todo_id: task.id });
+                  dispatch(toggleTodo({ task_id: id, todo_id: task.id }));
                 }}
                 key={task.id}
                 addTodo={addTodoItem}

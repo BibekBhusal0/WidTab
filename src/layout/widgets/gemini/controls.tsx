@@ -1,8 +1,10 @@
+import MenuPopover from "@/components/popoverMenu";
 import Divider from "@mui/material/Divider";
+import { useDispatch } from "react-redux";
 import {
   currentSpaceDeleteWidget,
   currentSpaceEditWidget,
-} from "@/storage/layout";
+} from "@/redux/slice/layout";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import { SelectChangeEvent } from "@mui/material/Select";
 import IconMenu from "@/components/menuWithIcon";
@@ -13,6 +15,7 @@ import { setAPIKey } from "@/utils/api";
 
 function GeminiControls({ id }: { id: number }) {
   const layout = useCurrentLayout();
+  const dispatch = useDispatch();
   const { delete_, reset } = useCurrentIcons();
   if (!layout) return null;
   const { widgets } = layout;
@@ -24,24 +27,29 @@ function GeminiControls({ id }: { id: number }) {
   const HandleModelChange = (event: SelectChangeEvent<unknown>) => {
     const val = event.target.value as aiModel;
     if (AImodels.includes(val)) {
-      currentSpaceEditWidget({
-        type: "gemini",
-        values: { ...props, model: val },
-      });
+      dispatch(
+        currentSpaceEditWidget({
+          type: "gemini",
+          values: { ...props, model: val },
+        })
+      );
     }
   };
 
-  const deleteThis = () => currentSpaceDeleteWidget({ type: "gemini", id });
+  const deleteThis = () =>
+    dispatch(currentSpaceDeleteWidget({ type: "gemini", id }));
 
   const menuItems = [
     {
       icon: "ant-design:clear-outlined",
       name: "Clear History",
       onClick: () => {
-        currentSpaceEditWidget({
-          type: "gemini",
-          values: { ...props, conversation: [] },
-        });
+        dispatch(
+          currentSpaceEditWidget({
+            type: "gemini",
+            values: { ...props, conversation: [] },
+          })
+        );
       },
       color: "error.main",
     },

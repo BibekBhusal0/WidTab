@@ -4,22 +4,24 @@ import DuplicateThisSpace from "./duplicateSpace";
 import DeleteThisSpace from "./deleteSpace";
 import AddSpace from "./addSpace";
 import RenameItem from "@/components/renameItem";
-import { SelectIconMenu } from "@/components/select-icon";
-import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
-import { useLayout } from "@/storage";
+import { useDispatch, useSelector } from "react-redux";
 import {
   currentSpaceChangeIcon,
   currentSpaceRename,
   toggleLocked,
-} from "@/storage/layout";
+} from "@/redux/slice/layout";
+import { SelectIconMenu } from "@/components/select-icon";
+import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
+import { StateType } from "@/redux/store";
 
 function CurrentSpaceSetting() {
   const layout = useCurrentLayout();
-  const { locked } = useLayout();
+  const dispatch = useDispatch();
+  const { locked } = useSelector((state: StateType) => state.layout);
 
   const toggle: MenuSwitchProps["items"] = [
     {
-      onChange: () => toggleLocked(),
+      onChange: () => dispatch(toggleLocked()),
       title: "Lock Widgets",
       checked: locked,
     },
@@ -45,7 +47,7 @@ function CurrentSpaceSetting() {
           <RenameItem
             initialText={layout.name}
             handleChange={(e: string) => {
-              currentSpaceRename(e);
+              dispatch(currentSpaceRename(e));
             }}
             inputProps={{ placeholder: "Rename Space" }}
             wordLimit={20}
@@ -57,7 +59,7 @@ function CurrentSpaceSetting() {
           <div className="w-14 flex-center">
             <SelectIconMenu
               icon={layout.icon}
-              setIcon={(icon: string) => currentSpaceChangeIcon(icon)}
+              setIcon={(icon: string) => dispatch(currentSpaceChangeIcon(icon))}
             />
           </div>
         </div>

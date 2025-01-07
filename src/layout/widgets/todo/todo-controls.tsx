@@ -6,29 +6,33 @@ import {
   changePinnedTodo,
   deleteTask,
   toggleSortedFiltered,
-} from "@/storage/todo";
-import { currentSpaceDeleteWidget } from "@/storage/layout";
+} from "@/redux/slice/todo";
+import { useDispatch, useSelector } from "react-redux";
+import { StateType } from "@/redux/store";
+import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
 import IconButton from "@mui/material/IconButton";
-import { useLayout, useTodo } from "@/storage";
 
 export const TodoMenu: React.FC<{ id: number }> = ({ id }) => {
-  const { pinnedTodo, Tasks } = useTodo();
+  const dispatch = useDispatch();
+  const { pinnedTodo, Tasks } = useSelector((state: StateType) => state.todo);
   const crr = Tasks.find((t) => t.id === id);
-  const { currentSpace } = useLayout();
+  const { currentSpace } = useSelector((state: StateType) => state.layout);
   const { pin, delete_, sort, show, hide, add } = useCurrentIcons();
 
   if (!crr) return null;
   const { filtered, sorted } = crr;
 
   const pinned = pinnedTodo === id;
-  const handleFilter = () => toggleSortedFiltered({ id, type: "filtered" });
-  const handleSort = () => toggleSortedFiltered({ id, type: "sorted" });
-  const handlePin = () => changePinnedTodo(id);
+  const handleFilter = () =>
+    dispatch(toggleSortedFiltered({ id, type: "filtered" }));
+  const handleSort = () =>
+    dispatch(toggleSortedFiltered({ id, type: "sorted" }));
+  const handlePin = () => dispatch(changePinnedTodo(id));
   const handleDelete = () => {
     if (currentSpace.type === "dynamic") {
-      currentSpaceDeleteWidget({ id, type: "todo" });
+      dispatch(currentSpaceDeleteWidget({ id, type: "todo" }));
     } else {
-      deleteTask(id);
+      dispatch(deleteTask(id));
     }
   };
 
@@ -63,8 +67,11 @@ export const TodoMenu: React.FC<{ id: number }> = ({ id }) => {
 };
 
 function TodoControls({ id }: { id: number }) {
+  const dispatch = useDispatch();
   const { add } = useCurrentIcons();
-  const handleAdd = () => addTodo(id, "");
+  const handleAdd = () => {
+    dispatch(addTodo({ task_id: id, task: "" }));
+  };
 
   return (
     <>

@@ -1,24 +1,30 @@
 import { useGetSpaceAndIcon } from "@/hooks/useAllSpaceAndIcon";
+import { useDispatch, useSelector } from "react-redux";
+import { StateType } from "@/redux/store";
 import { Dock, dockItemProps } from "../dock";
+import { changeCurrentSpace } from "@/redux/slice/layout";
 import { Icon2RN } from "@/theme/icons";
 import { treeNodeArray } from "@/types/slice/bookmark";
 import { useBookmarkFolder, useFavoriteBookmarks } from "@/hooks/useBookmarks";
 import { cn } from "@/utils/cn";
 import Favicon from "@/utils/faviconURL";
 import { openLink } from "@/utils/bookmark";
-import { useLayout } from "@/storage/";
-import { useBookmarkState } from "@/storage/";
-import { changeCurrentSpace } from "@/storage/layout";
 
 export const ToolbarDock = () => {
-  const { content } = useLayout().dockContent;
+  const { content } = useSelector(
+    (state: StateType) => state.layout.dockContent
+  );
 
   if (content === "spaces") return <DockSpace />;
+
   return <DockBookmark />;
 };
 
 const DockSpace = () => {
-  const { dockContent, currentSpace, toolBarPosition } = useLayout();
+  const dispatch = useDispatch();
+  const { toolBarPosition, currentSpace, dockContent } = useSelector(
+    (state: StateType) => state.layout
+  );
 
   if (dockContent.content !== "spaces") return null;
 
@@ -35,14 +41,14 @@ const DockSpace = () => {
       </div>
     ),
     name,
-    onClick: () => changeCurrentSpace(space),
+    onClick: () => dispatch(changeCurrentSpace(space)),
   }));
 
   return <Dock position={toolBarPosition} items={dockItems} />;
 };
 
 const DockBookmark = () => {
-  const { dockContent } = useLayout();
+  const { dockContent } = useSelector((state: StateType) => state.layout);
   if (dockContent.content !== "bookmark") return null;
   if (dockContent.id === "favorites") return <DockBookmarkFav />;
   return <DockBookmarkFolder />;
@@ -61,7 +67,7 @@ function getDockContentFromBookmarks(
             icon: <Favicon src={item.url} className="iconify" />,
             name: item.title,
             onClick: (e) => {
-              openLink(item.url || "", linkInNewTab, e);
+                openLink(item.url || "", linkInNewTab, e);
             },
           }));
 
@@ -69,8 +75,8 @@ function getDockContentFromBookmarks(
 }
 
 const DockBookmarkFav = () => {
-  const { toolBarPosition } = useLayout();
-  const { linkInNewTab } = useBookmarkState();
+  const { linkInNewTab } = useSelector((state: StateType) => state.bookmarks);
+  const { toolBarPosition } = useSelector((state: StateType) => state.layout);
   const favoriteBookmarks = useFavoriteBookmarks();
   const dockItems = getDockContentFromBookmarks(
     favoriteBookmarks,
@@ -80,8 +86,10 @@ const DockBookmarkFav = () => {
 };
 
 const DockBookmarkFolder = () => {
-  const { toolBarPosition, dockContent } = useLayout();
-  const { linkInNewTab } = useBookmarkState();
+  const { linkInNewTab } = useSelector((state: StateType) => state.bookmarks);
+  const { toolBarPosition, dockContent } = useSelector(
+    (state: StateType) => state.layout
+  );
   const bookmark = useBookmarkFolder(dockContent.id);
   if (dockContent.content !== "bookmark" || dockContent.id === "favorites")
     return null;

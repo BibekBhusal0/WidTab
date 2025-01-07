@@ -1,3 +1,5 @@
+import { StateType } from "@/redux/store";
+import { useSelector } from "react-redux";
 import dayjs from "@/dayjsConfig";
 import useFullSize from "@/hooks/useFullSize";
 import Button, { ButtonProps } from "@mui/material/Button";
@@ -5,10 +7,9 @@ import { useState } from "react";
 import { Icon } from "@iconify/react";
 import CommitGraph from "./graphs/commit";
 import ProgressGraph, { allProgressGraphTypes } from "./graphs/progress";
-import { useHabitTracker } from "@/storage";
 
 function HabitTrackerStatsAll() {
-  const { trackers } = useHabitTracker();
+  const { trackers } = useSelector((state: StateType) => state.habitTracker);
   const { ref, size } = useFullSize();
   const weekThreshold = 500;
   const monthThreshold = 1200;

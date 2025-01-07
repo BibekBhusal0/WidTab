@@ -1,16 +1,18 @@
 import Autocomplete from "@mui/material/Autocomplete";
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
+import { useDispatch, useSelector } from "react-redux";
+import { StateType } from "@/redux/store";
 import { Icon } from "@iconify/react";
+import { changeCurrentFolder } from "@/redux/slice/bookmark";
 import Favicon from "@/utils/faviconURL";
 import { treeNode } from "@/types/slice/bookmark";
 import { useBookmarkSearch } from "@/hooks/useBookmarks";
 import { openLink } from "@/utils/bookmark";
-import { useBookmarkState } from "@/storage/";
-import { changeCurrentFolder } from "@/storage/bookmark";
 
 function BookmarkSearch() {
-  const { linkInNewTab } = useBookmarkState();
+  const dispatch = useDispatch();
+  const { linkInNewTab } = useSelector((state: StateType) => state.bookmarks);
   const [searchTerm, setSearchTerm] = useState("");
   const searchedBookmarks = useBookmarkSearch(searchTerm);
 
@@ -20,7 +22,7 @@ function BookmarkSearch() {
   ) => {
     if (!bookmark) return;
     if (bookmark.url) openLink(bookmark.url, linkInNewTab);
-    else changeCurrentFolder(bookmark.id);
+    else dispatch(changeCurrentFolder(bookmark.id));
     setSearchTerm("");
   };
 
@@ -52,7 +54,8 @@ interface LinkProps {
 }
 
 const Link = ({ link }: LinkProps) => {
-  const { favorites } = useBookmarkState();
+  const { favorites } = useSelector((state: StateType) => state.bookmarks);
+
   const { title, url, id } = link;
   const cls = "w-10 aspect-square";
   const icon = url ? (

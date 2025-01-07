@@ -1,8 +1,9 @@
 import { useEffect, useState, useRef, JSX, useMemo } from "react";
 import browser from "webextension-polyfill";
+import { useSelector } from "react-redux";
+import { StateType } from "@/redux/store";
 import { useTheme } from "@mui/material/styles";
 import { StaticPagesType } from "@/types/slice/widgets";
-import { useLayout } from "@/storage";
 
 const size = 64;
 const googleFaviconAPI = (url: string) => {
@@ -51,7 +52,7 @@ export { Favicon, chromeFaviconApi, googleFaviconAPI };
 export default Favicon;
 
 export function useFavicon() {
-  const { currentSpace } = useLayout();
+  const { currentSpace } = useSelector((state: StateType) => state.layout);
   const {
     palette: {
       primary: { contrastText, main },

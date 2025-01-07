@@ -1,18 +1,20 @@
+import { currentSpaceAddWidget } from "@/redux/slice/layout";
+import { StateType } from "@/redux/store";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Slider from "@mui/material/Slider";
 import TextField from "@mui/material/TextField";
+import { useDispatch, useSelector } from "react-redux";
 import { Icon } from "@iconify/react";
 import useAvailablePosition from "@/hooks/useAvailablePosition";
 import HelpInCustomWidget from "./helpCustom";
 import { useState } from "react";
-import { useLayout } from "@/storage";
-import { currentSpaceAddWidget } from "@/storage/layout";
 
 export const urlPattern = /(https?:\/\/[^\s"'"]+|www\.[^\s"'"]+)/;
 
 function AddCustomWidget() {
-  const { n_cols, n_rows } = useLayout();
+  const dispatch = useDispatch();
+  const { n_cols, n_rows } = useSelector((state: StateType) => state.layout);
   const [text, setText] = useState("");
   const [extractedUrl, setExtractedUrl] = useState("");
   const [rows, setRows] = useState(2);
@@ -28,11 +30,13 @@ function AddCustomWidget() {
   };
   const add = () => {
     if (available_widgets !== null && extractedUrl !== "") {
-      currentSpaceAddWidget({
-        gridProps: available_widgets,
-        type: "custom",
-        values: { id: 0, url: extractedUrl },
-      });
+      dispatch(
+        currentSpaceAddWidget({
+          gridProps: available_widgets,
+          type: "custom",
+          values: { id: 0, url: extractedUrl },
+        })
+      );
       setText("");
       setExtractedUrl("");
     }

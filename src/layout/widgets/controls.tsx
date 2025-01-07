@@ -2,14 +2,15 @@ import { DeleteWidgetParameters } from "@/types/slice/widgets";
 import { cn } from "@/utils/cn";
 import Box, { BoxProps } from "@mui/material/Box";
 import { ReactNode, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Paper, { PaperProps } from "@mui/material/Paper";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
+import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
 import IconButton from "@mui/material/IconButton";
+import { StateType } from "@/redux/store";
 import ContextMenu from "@/components/contextMenu";
 import MenuPopover from "@/components/popoverMenu";
 import IconMenu from "@/components/menuWithIcon";
-import { useLayout } from "@/storage";
-import { currentSpaceDeleteWidget } from "@/storage/layout";
 
 export type ControlPropsDifferentForContextMenu = {
   id: number;
@@ -38,7 +39,7 @@ function Controls({
   ...props
 }: ControlsProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const { locked } = useLayout();
+  const { locked } = useSelector((state: StateType) => state.layout);
   const show =
     showOn === "always" || (showOn === "hover" && isHovered) || !locked;
   const showDelete = deleteButton && widgetInfo;
@@ -102,7 +103,8 @@ export function DeleteWidgetButton({
   ...props
 }: deleteWidgetButtonProps) {
   const { delete_ } = useCurrentIcons();
-  const onClick = () => currentSpaceDeleteWidget(props);
+  const dispatch = useDispatch();
+  const onClick = () => dispatch(currentSpaceDeleteWidget(props));
 
   if (buttonType === "icon")
     return <IconButton color="error" onClick={onClick} children={delete_} />;

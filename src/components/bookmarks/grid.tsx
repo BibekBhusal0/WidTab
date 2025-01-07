@@ -1,3 +1,5 @@
+import { StateType } from "@/redux/store";
+import { useSelector } from "react-redux";
 import { Icon } from "@iconify/react";
 import { cn } from "@/utils/cn";
 import {
@@ -13,7 +15,6 @@ import Favicon from "@/utils/faviconURL";
 import { HoverFolder } from "./folder";
 import { bookmarkTreeNodeArray, treeNode } from "@/types/slice/bookmark";
 import { openLink } from "@/utils/bookmark";
-import { useBookmarkState } from "@/storage/";
 
 type l = { openLinkInNewTab?: boolean; contextMenu?: boolean };
 
@@ -47,7 +48,9 @@ function BookmarkGrid(props: ExtraBookmarkProps & bookmarkTreeNodeArray & l) {
 }
 
 function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
-  const { favorites, linkInNewTab } = useBookmarkState();
+  const { favorites, linkInNewTab } = useSelector(
+    (state: StateType) => state.bookmarks
+  );
   const {
     bookmarks,
     folderSize = "small",
@@ -71,8 +74,9 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
         className={cn(cls)}
         href={bookmarks.url}
         onClick={(e) => {
-          openLink(bookmarks.url || "", openLinkInNewTab, e);
-        }}>
+            openLink(bookmarks.url || '', openLinkInNewTab, e);
+        }}
+        >
         <Favicon src={bookmarks.url} className="size-1/2 aspect-square" />
 
         <div className="flex items-center justify-between w-full">

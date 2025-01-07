@@ -1,8 +1,12 @@
 import Button from "@mui/material/Button";
 import useAvailablePosition from "@/hooks/useAvailablePosition";
+import { currentSpaceAddWidget } from "@/redux/slice/layout";
+import { StateType } from "@/redux/store";
 import { widgetDimensions } from "@/utils/getWidget";
 import { getNextId } from "@/utils/next_id";
+import { useDispatch, useSelector } from "react-redux";
 import useCurrentLayout from "@/hooks/useCurrentLayout";
+import { addItem } from "@/redux/slice/habit-tracker";
 import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
 import HabitTrackerEdit from "@/layout/widgets/habit-tracker/edit";
 import { useState } from "react";
@@ -10,12 +14,12 @@ import { Icon } from "@iconify/react";
 import AllItemsList from "./allItemsList";
 import SettingHeader from "../settings/settings-header";
 import SimpleAddWidgetButton from "./simpleAddWidget";
-import { useHabitTracker } from "@/storage";
-import { currentSpaceAddWidget } from "@/storage/layout";
-import { addTracker } from "@/storage/habit-tracker";
 
 function AddHabitTracer() {
-  const { trackers, pinned } = useHabitTracker();
+  const dispatch = useDispatch();
+  const { trackers, pinned } = useSelector(
+    (state: StateType) => state.habitTracker
+  );
   const dimensions = widgetDimensions["habit-tracker"];
   const { minH, minW } = dimensions;
   const statsDimensions = widgetDimensions["habit-tracker-stats-single"];
@@ -37,33 +41,37 @@ function AddHabitTracer() {
 
   const addStatsWidget = (id: number) => {
     if (!availablePositionForStats || presentStatsId.includes(id)) return;
-    currentSpaceAddWidget({
-      type: "habit-tracker-stats-single",
-      values: { id },
-      gridProps: {
-        ...statsDimensions,
-        ...availablePositionForStats,
-        i: `habit-tracker-stats-single-${id}`,
-      },
-    });
+    dispatch(
+      currentSpaceAddWidget({
+        type: "habit-tracker-stats-single",
+        values: { id },
+        gridProps: {
+          ...statsDimensions,
+          ...availablePositionForStats,
+          i: `habit-tracker-stats-single-${id}`,
+        },
+      })
+    );
   };
   const addTrackerWidget = (id: number) => {
     if (!availablePosition || presentTrackersId.includes(id)) return;
-    currentSpaceAddWidget({
-      type: "habit-tracker",
-      values: { id },
-      gridProps: {
-        ...dimensions,
-        ...availablePosition,
-        i: `habit-tracker-${id}`,
-      },
-    });
+    dispatch(
+      currentSpaceAddWidget({
+        type: "habit-tracker",
+        values: { id },
+        gridProps: {
+          ...dimensions,
+          ...availablePosition,
+          i: `habit-tracker-${id}`,
+        },
+      })
+    );
   };
 
   const handleNewHabitTracker = (tracker: HabitTrackerItemType) => {
     if (!availablePosition) return;
     const newId = getNextId(trackers.map(({ id }) => id));
-    addTracker(tracker);
+    dispatch(addItem(tracker));
     addTrackerWidget(newId);
   };
 

@@ -1,8 +1,10 @@
+import { useDispatch } from "react-redux";
 import { treeNodeOrArray } from "@/types/slice/bookmark";
 import { useAllBookmarks } from "@/hooks/useBookmarks";
 import { ReactNode } from "react";
 import { widgetDimensions } from "@/utils/getWidget";
 import useAvailablePosition from "@/hooks/useAvailablePosition";
+import { currentSpaceAddWidget } from "@/redux/slice/layout";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import SimpleAddWidgetButton from "./simpleAddWidget";
@@ -11,7 +13,6 @@ import { Icon } from "@iconify/react";
 import useAddWidget from "@/hooks/useAddWidget";
 import Button from "@mui/material/Button";
 import browser from "webextension-polyfill";
-import { currentSpaceAddWidget } from "@/storage/layout";
 
 function AddBookmark() {
   const dimensions = widgetDimensions["bookmark"];
@@ -19,13 +20,16 @@ function AddBookmark() {
   const availablePosition = useAvailablePosition(minW, minH);
   const { bookmarks } = useAllBookmarks();
 
+  const dispatch = useDispatch();
   const addItem = (id: string) => {
     if (availablePosition) {
-      currentSpaceAddWidget({
-        type: "bookmark",
-        values: { id: 0, iconSize: "small", folderId: id },
-        gridProps: { ...dimensions, ...availablePosition },
-      });
+      dispatch(
+        currentSpaceAddWidget({
+          type: "bookmark",
+          values: { id: 0, iconSize: "small", folderId: id },
+          gridProps: { ...dimensions, ...availablePosition },
+        })
+      );
     }
   };
 

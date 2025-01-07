@@ -1,3 +1,10 @@
+import {
+  changeDockContentType,
+  changeDockSelected,
+  toggleDock,
+} from "@/redux/slice/layout";
+import { StateType } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
@@ -7,19 +14,14 @@ import { ReactNode } from "react";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { which } from "@/hooks/useAllSpaceAndIcon";
-import { useLayout } from "@/storage";
-import {
-  changeDockContent,
-  changeDockSelected,
-  toggleDock,
-} from "@/storage/layout";
 
 function DockSettings() {
-  const { dock, dockContent } = useLayout();
+  const { dock, dockContent } = useSelector((state: StateType) => state.layout);
+  const dispatch = useDispatch();
 
   const toggle: MenuSwitchProps["items"] = [
     {
-      onChange: () => toggleDock(),
+      onChange: () => dispatch(toggleDock()),
       title: "Show Dock",
       checked: dock,
     },
@@ -29,10 +31,8 @@ function DockSettings() {
     _: React.MouseEvent<HTMLElement>,
     dockContentType: string | null
   ) => {
-    if (dockContentType === "spaces")
-      changeDockContent({ content: "spaces", id: "all" });
-    else if (dockContentType === "bookmark")
-      changeDockContent({ content: "bookmark", id: "favorites" });
+    if (typeof dockContentType === "string")
+      dispatch(changeDockContentType(dockContentType));
   };
 
   return (
@@ -71,13 +71,14 @@ function DockSettings() {
 }
 
 function DockBookmarkSelect() {
-  const { dockContent } = useLayout();
+  const { dockContent } = useSelector((state: StateType) => state.layout);
+  const dispatch = useDispatch();
   const { bookmarks } = useAllBookmarks();
 
   const handleSelectionChange = (event: SelectChangeEvent<unknown>) => {
     const val = event.target.value;
     if (val && typeof val === "string") {
-      changeDockSelected(val);
+      dispatch(changeDockSelected(val));
     }
   };
   const getBookmarkFolders = (bookmark: treeNodeOrArray): ReactNode[] => {
@@ -121,12 +122,13 @@ function DockBookmarkSelect() {
 }
 
 function DockSpaceSelect() {
-  const { dockContent } = useLayout();
+  const { dockContent } = useSelector((state: StateType) => state.layout);
+  const dispatch = useDispatch();
 
   const handleSelectionChange = (event: SelectChangeEvent<unknown>) => {
     const val = event.target.value;
     if (val && typeof val === "string") {
-      changeDockSelected(val);
+      dispatch(changeDockSelected(val));
     }
   };
 

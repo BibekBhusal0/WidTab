@@ -1,15 +1,19 @@
+import { deleteTheme, duplicateTheme, switchTheme } from "@/redux/slice/theme";
+import { StateType } from "@/redux/store";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
+import { useDispatch, useSelector } from "react-redux";
 import AddTheme from "./addTheme";
 import ContextMenu from "@/components/contextMenu";
 import IconMenu, { IconMenuType } from "@/components/menuWithIcon";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
-import { useThemeState } from "@/storage";
-import { deleteTheme, duplicateTheme, switchTheme } from "@/storage/theme";
 
 function AllThemes() {
-  const { allThemes, currentThemeID } = useThemeState();
+  const { allThemes, currentThemeID } = useSelector(
+    (state: StateType) => state.theme
+  );
   const { delete_ } = useCurrentIcons();
+  const dispatch = useDispatch();
   return (
     <>
       <List>
@@ -18,7 +22,7 @@ function AllThemes() {
             {
               name: "Duplicate Theme",
               icon: "ion:duplicate",
-              onClick: () => duplicateTheme(theme.id),
+              onClick: () => dispatch(duplicateTheme(theme.id)),
             },
           ];
           if (theme.editAble) {
@@ -26,7 +30,7 @@ function AllThemes() {
               name: "Delete Theme",
               icon: delete_,
               color: "error.main",
-              onClick: () => deleteTheme(theme.id),
+              onClick: () => dispatch(deleteTheme(theme.id)),
             });
           }
           return (
@@ -35,7 +39,7 @@ function AllThemes() {
               key={theme.id}>
               <ListItemButton
                 selected={theme.id === currentThemeID}
-                onClick={() => switchTheme(theme.id)}
+                onClick={() => dispatch(switchTheme(theme.id))}
                 //
               >
                 {theme.name}

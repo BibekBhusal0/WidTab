@@ -1,11 +1,13 @@
 import useCurrentLayout from "@/hooks/useCurrentLayout";
 import Button, { ButtonProps } from "@mui/material/Button";
+import { useDispatch } from "react-redux";
+import { deleteSpace } from "@/redux/slice/layout";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
-import { deleteSpace } from "@/storage/layout";
 
 export function DeleteThisSpace(props: ButtonProps) {
   const layout = useCurrentLayout();
   const { delete_ } = useCurrentIcons();
+  const dispatch = useDispatch();
   if (!layout) return null;
   const { delete_able } = layout;
   if (!delete_able) return null;
@@ -16,7 +18,7 @@ export function DeleteThisSpace(props: ButtonProps) {
       children="Delete This Space"
       startIcon={delete_}
       {...props}
-      onClick={() => deleteSpace(layout.id)}
+      onClick={() => dispatch(deleteSpace(layout.id))}
     />
   );
 }

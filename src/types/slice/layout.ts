@@ -32,7 +32,7 @@ export type dockContentType =
   | { content: "spaces"; id: which }
   | { content: "bookmark"; id: string };
 
-export type layoutStateType = {
+export type LayoutSliceType = {
   toolBarPosition: ToolBarPositions;
   toolBarIcons: RemovableToolbarIcons[];
   locked: boolean;

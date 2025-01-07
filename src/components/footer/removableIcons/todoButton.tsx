@@ -1,13 +1,15 @@
 import Button from "@mui/material/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { StateType } from "@/redux/store";
 import Todo from "@/layout/widgets/todo";
+import { changeCurrentSpace } from "@/redux/slice/layout";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import FooterPopover from "@/components/footerPopover";
-import { useTodo } from "@/storage";
-import { changeCurrentSpace } from "@/storage/layout";
 
 function TodoButton() {
+  const dispatch = useDispatch();
   const { checklist } = useCurrentIcons();
-  const { Tasks, pinnedTodo } = useTodo();
+  const { Tasks, pinnedTodo } = useSelector((state: StateType) => state.todo);
   const pinned = Tasks.find((t) => t.id === pinnedTodo);
 
   return (
@@ -21,7 +23,9 @@ function TodoButton() {
         <div className="flex-center flex-col px-3">
           <Button
             variant="contained"
-            onClick={() => changeCurrentSpace({ type: "static", id: "todo" })}>
+            onClick={() =>
+              dispatch(changeCurrentSpace({ type: "static", id: "todo" }))
+            }>
             All To-dos
           </Button>
         </div>

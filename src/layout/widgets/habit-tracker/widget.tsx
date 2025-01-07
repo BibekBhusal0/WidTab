@@ -1,8 +1,9 @@
+import { StateType } from "@/redux/store";
 import { controlledWidgetValues } from "@/types/slice/widgets";
+import { useDispatch, useSelector } from "react-redux";
 import HabitTracker from ".";
+import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
 import HabitTrackerStatsSingle from "./stats/single";
-import { useHabitTracker } from "@/storage";
-import { currentSpaceDeleteWidget } from "@/storage/layout";
 
 type HabitTrackerOrStatsWidgetProps = controlledWidgetValues & {
   type: "tracker" | "stats";
@@ -12,15 +13,19 @@ export function HabitTrackerOrStatsWidget({
   id,
   type,
 }: HabitTrackerOrStatsWidgetProps) {
-  const habitTracker = useHabitTracker();
+  const habitTracker = useSelector((state: StateType) => state.habitTracker);
   const currentHabitTracker = habitTracker.trackers.find(
     (tracker) => tracker.id === id
   );
+  const dispatch = useDispatch();
   if (!currentHabitTracker) {
-    currentSpaceDeleteWidget({
-      id,
-      type: type === "tracker" ? "habit-tracker" : "habit-tracker-stats-single",
-    });
+    dispatch(
+      currentSpaceDeleteWidget({
+        id,
+        type:
+          type === "tracker" ? "habit-tracker" : "habit-tracker-stats-single",
+      })
+    );
     return null;
   }
   if (type === "stats")

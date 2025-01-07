@@ -1,20 +1,22 @@
 import useCurrentIcons from "@/hooks/useCurrentIcons";
-import { resetBookmarkState } from "@/storage/bookmark";
-import { resetHabitTrackerState } from "@/storage/habit-tracker";
-import { resetLayoutState } from "@/storage/layout";
-import { resetNoteState } from "@/storage/note";
-import { resetTheme } from "@/storage/theme";
-import { resetTodo } from "@/storage/todo";
+import { resetBookmarkState } from "@/redux/slice/bookmark";
+import { resetHabitTrackerState } from "@/redux/slice/habit-tracker";
+import { resetLayoutState } from "@/redux/slice/layout";
+import { resetNoteState } from "@/redux/slice/note";
+import { resetThemeSlice } from "@/redux/slice/theme";
+import { resetTodoSlice } from "@/redux/slice/todo";
 import { Icon2RN } from "@/theme/icons";
 import { cn } from "@/utils/cn";
 import { removeAllImagesFromStorage } from "@/utils/image";
 import { exportStateToJSON, importStateFromJSON } from "@/utils/redux";
 import Button, { ButtonProps } from "@mui/material/Button";
 import { useRef } from "react";
+import { useDispatch } from "react-redux";
 
 export const DataSettings = () => {
   const { reset } = useCurrentIcons();
   const fileRef = useRef<HTMLInputElement | null>(null);
+  const dispatch = useDispatch();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
@@ -27,12 +29,12 @@ export const DataSettings = () => {
   const handleBackup = () => exportStateToJSON();
 
   const handelReset = () => {
-    resetNoteState();
-    resetHabitTrackerState();
-    resetBookmarkState();
-    resetLayoutState();
-    resetTheme();
-    resetTodo();
+    dispatch(resetNoteState());
+    dispatch(resetHabitTrackerState());
+    dispatch(resetBookmarkState());
+    dispatch(resetLayoutState());
+    dispatch(resetThemeSlice());
+    dispatch(resetTodoSlice());
     removeAllImagesFromStorage();
   };
 

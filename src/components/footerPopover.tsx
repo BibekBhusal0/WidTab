@@ -1,10 +1,11 @@
-import { useLayout } from "@/storage/";
 import { Icon2RN, iconAsProp } from "@/theme/icons";
+import { StateType } from "@/redux/store";
 import { oppositePosition } from "@/types/slice/layout";
 import IconButton from "@mui/material/IconButton";
 import Popover, { PopoverProps } from "@mui/material/Popover";
 import Tooltip from "@mui/material/Tooltip";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 function FooterPopover({
   icon = "material-symbols:settings",
@@ -21,7 +22,7 @@ function FooterPopover({
   const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const { toolBarPosition } = useLayout();
+  const { toolBarPosition } = useSelector((state: StateType) => state.layout);
 
   const handleClose = () => {
     setAnchorEl(null);

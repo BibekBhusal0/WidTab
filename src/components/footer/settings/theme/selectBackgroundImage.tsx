@@ -1,5 +1,7 @@
 import { cn } from "@/utils/cn";
 import MenuPopover from "@/components/popoverMenu";
+import { useDispatch } from "react-redux";
+import { setBackgroundImage } from "@/redux/slice/theme";
 import Button from "@mui/material/Button";
 import { useEffect, useRef, useState } from "react";
 import useBackgroundImage, {
@@ -19,7 +21,6 @@ import ocean from "@/assets/img/ocean.jpg";
 import rose from "@/assets/img/rose.jpg";
 import space from "@/assets/img/space.jpg";
 import wood from "@/assets/img/wood.jpg";
-import { setBackgroundImage } from "@/storage/theme";
 
 const defaultImages = [
   { id: "abstract", data: abstract },
@@ -63,6 +64,7 @@ function PopoverContent() {
   const [images, setImages] = useState<{ id: string; data: string }[]>([
     ...defaultImages,
   ]);
+  const dispatch = useDispatch();
   const inpRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -98,7 +100,7 @@ function PopoverContent() {
   const handleClick = (id: string) => {
     const img = defaultImages.find((p) => p.id === id);
     const imageURL = img ? img.data : `storageId/${id}`;
-    setBackgroundImage(imageURL);
+    dispatch(setBackgroundImage(imageURL));
   };
 
   const dim = "w-96 max-h-96";
@@ -127,7 +129,7 @@ function PopoverContent() {
         </Button>
         <Button
           variant="outlined"
-          onClick={() => setBackgroundImage(undefined)}
+          onClick={() => dispatch(setBackgroundImage(undefined))}
           color="error">
           Remove Image
         </Button>

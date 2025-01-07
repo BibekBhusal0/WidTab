@@ -1,9 +1,11 @@
+import MenuPopover from "@/components/popoverMenu";
 import Divider from "@mui/material/Divider";
 import MenuItem from "@mui/material/MenuItem";
+import { useDispatch } from "react-redux";
 import {
   currentSpaceDeleteWidget,
   currentSpaceEditWidget,
-} from "@/storage/layout";
+} from "@/redux/slice/layout";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import { SelectChangeEvent } from "@mui/material/Select";
 import IconMenu from "@/components/menuWithIcon";
@@ -19,6 +21,7 @@ function Controls({
   type: "favorites" | "top-sites";
 }) {
   const layout = useCurrentLayout();
+  const dispatch = useDispatch();
   const { delete_ } = useCurrentIcons();
   if (!layout) return null;
   const { widgets } = layout;
@@ -30,14 +33,16 @@ function Controls({
   const handleSizeChange = (event: SelectChangeEvent<unknown>) => {
     const val = event.target.value as folderSizes;
     if (allFolderSizes.includes(val)) {
-      currentSpaceEditWidget({
-        type,
-        values: { ...props, iconSize: val },
-      });
+      dispatch(
+        currentSpaceEditWidget({
+          type,
+          values: { ...props, iconSize: val },
+        })
+      );
     }
   };
 
-  const deleteThis = () => currentSpaceDeleteWidget({ type, id });
+  const deleteThis = () => dispatch(currentSpaceDeleteWidget({ type, id }));
 
   return (
     <>

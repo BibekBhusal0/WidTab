@@ -1,24 +1,13 @@
-import {
-  allStorageKeys,
-  getFromStorage,
-  STORAGE_KEYS,
-  StorageKeys,
-} from "@/storage";
-import { setBookmarkState } from "@/storage/bookmark";
-import { setTrackerState } from "@/storage/habit-tracker";
-import { setLayoutState } from "@/storage/layout";
-import { setNoteState } from "@/storage/note";
-import { setThemeState } from "@/storage/theme";
-import { setTodoState } from "@/storage/todo";
+import { setBookmarkState } from "@/redux/slice/bookmark";
+import { setTrackerState } from "@/redux/slice/habit-tracker";
+import { setLayoutState } from "@/redux/slice/layout";
+import { setNoteState } from "@/redux/slice/note";
+import { setThemeState } from "@/redux/slice/theme";
+import { setTodoState } from "@/redux/slice/todo";
+import { reducerNames, reducers, store } from "@/redux/store";
 
-export const exportStateToJSON = async () => {
-  const state: any = {};
-  for (const key in STORAGE_KEYS) {
-    const s = await getFromStorage(
-      STORAGE_KEYS[key as keyof typeof STORAGE_KEYS]
-    );
-    if (s) state[key] = s;
-  }
+export const exportStateToJSON = () => {
+  const state = store.getState();
   const stateJSON = JSON.stringify(state);
   const blob = new Blob([stateJSON], { type: "application/json" });
   const url = URL.createObjectURL(blob);
@@ -36,28 +25,27 @@ export const importStateFromJSON = async (file: File) => {
     const importedState = JSON.parse(text);
 
     for (const key in importedState) {
-      const k = key as StorageKeys;
-      if (!allStorageKeys.includes(k)) continue;
+      const k = key as reducers;
+      if (!reducerNames.includes(k)) continue;
       const state = importedState[k];
       switch (k) {
         case "note":
-          setNoteState(state);
+          store.dispatch(setNoteState(state));
           break;
         case "todo":
-          setTodoState(state);
+          store.dispatch(setTodoState(state));
           break;
-        case "bookmark":
-          setBookmarkState(state);
+        case "bookmarks":
+          store.dispatch(setBookmarkState(state));
           break;
         case "habitTracker":
-          setTrackerState(state);
+          store.dispatch(setTrackerState(state));
           break;
         case "layout":
-          setLayoutState(state);
+          store.dispatch(setLayoutState(state));
           break;
         case "theme":
-          setThemeState(state);
-          break;
+          store.dispatch(setThemeState(state));
       }
     }
   } catch (error) {

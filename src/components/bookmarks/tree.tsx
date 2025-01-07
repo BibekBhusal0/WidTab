@@ -1,17 +1,18 @@
 import Folder from "@/components/bookmarks/folder";
+import { changeCurrentFolder, toggleFavorites } from "@/redux/slice/bookmark";
+import { StateType } from "@/redux/store";
 import { Icon } from "@iconify/react";
 import IconButton from "@mui/material/IconButton";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { TakeBookmarksProps } from "@/types/slice/bookmark";
 import { LinkContextMenu } from "./contextMenu";
 import { bookmarkTreeNode } from "@/types/slice/bookmark";
 import { useAllBookmarks } from "@/hooks/useBookmarks";
 import Favicon from "@/utils/faviconURL";
-import { useBookmarkState } from "@/storage/";
-import { changeCurrentFolder, toggleFavorites } from "@/storage/bookmark";
 
 function BookmarkTree() {
   const { bookmarks } = useAllBookmarks();
@@ -33,9 +34,10 @@ function BookmarkItem({ bookmarks }: TakeBookmarksProps) {
 }
 
 function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
-  const { favorites } = useBookmarkState();
-  const toggleItem = () => toggleFavorites(bookmarks.id);
+  const { favorites } = useSelector((state: StateType) => state.bookmarks);
+  const dispatch = useDispatch();
   const fav = favorites.includes(bookmarks.id);
+  const toggleItem = () => dispatch(toggleFavorites(bookmarks.id));
 
   return (
     <LinkContextMenu
@@ -65,8 +67,11 @@ function BookmarkFolder({ bookmarks }: bookmarkTreeNode) {
   const [open, setOpen] = useState(
     bookmarks.id === "1" || bookmarks.id === "0"
   );
+  const dispatch = useDispatch();
   const changeFolder = () => {
-    if (!open) changeCurrentFolder(bookmarks.id);
+    if (!open) {
+      dispatch(changeCurrentFolder(bookmarks.id));
+    }
   };
   if (!bookmarks.children) return null;
   return (

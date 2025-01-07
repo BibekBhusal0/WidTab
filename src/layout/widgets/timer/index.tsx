@@ -7,23 +7,26 @@ import Button, { ButtonProps } from "@mui/material/Button";
 import useFullSize from "@/hooks/useFullSize";
 import { cn } from "@/utils/cn";
 import MusicWidget from "./music";
-import { currentSpaceEditWidget } from "@/storage/layout";
+import { useDispatch } from "react-redux";
+import { currentSpaceEditWidget } from "@/redux/slice/layout";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import { Icon2RN } from "@/theme/icons";
-import { updateTimerHistory } from "@/storage/habit-tracker";
-// import {  } from "@/storage/habit-tracker";
+import { updateTimerHistory } from "@/redux/slice/habit-tracker";
 
 function TimerWidget(props: TimerWidgetType) {
   const { id, time, music = false, running = false } = props;
   const totalDuration = dayjs.duration(time, "minutes").asSeconds();
   const [remainingTime, setRemainingTime] = useState(totalDuration);
   const isPlaying = running;
+  const dispatch = useDispatch();
   const { reset } = useCurrentIcons();
   const setIsPlaying = (v: boolean) =>
-    currentSpaceEditWidget({
-      type: "timer",
-      values: { ...props, running: v },
-    });
+    dispatch(
+      currentSpaceEditWidget({
+        type: "timer",
+        values: { ...props, running: v },
+      })
+    );
   const togglePlay = () => setIsPlaying(!isPlaying);
 
   useEffect(() => {
@@ -32,7 +35,7 @@ function TimerWidget(props: TimerWidgetType) {
       intervalId = setInterval(() => {
         setRemainingTime((prev) => {
           if (prev === 1) {
-            updateTimerHistory(time);
+            dispatch(updateTimerHistory(time));
             setIsPlaying(false);
             return totalDuration;
           }
@@ -57,7 +60,7 @@ function TimerWidget(props: TimerWidgetType) {
   } = useFullSize();
 
   const resetTimer = () => {
-    updateTimerHistory(time - Math.floor(remainingTime / 60));
+    dispatch(updateTimerHistory(time - Math.floor(remainingTime / 60)));
     setRemainingTime(totalDuration);
     setIsPlaying(false);
   };

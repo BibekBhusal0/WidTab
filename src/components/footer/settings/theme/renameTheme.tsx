@@ -1,10 +1,14 @@
 import useCurrentTheme from "@/hooks/useCurrentTheme";
+import { changeTheme } from "@/redux/slice/theme";
+
+import { useDispatch } from "react-redux";
 import RenameItem from "@/components/renameItem";
-import { changeTheme } from "@/storage/theme";
 
 function RenameTheme() {
   const theme = useCurrentTheme();
-  const handleChange = (e: string) => changeTheme({ ...theme, name: e });
+  const dispatch = useDispatch();
+  const handleChange = (e: string) =>
+    dispatch(changeTheme({ ...theme, name: e }));
 
   return (
     <div className="full-between">

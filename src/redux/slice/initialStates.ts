@@ -1,9 +1,9 @@
-import { habitTrackerStateType } from "@/types/slice/habit-tracker";
-import { layoutStateType } from "@/types/slice/layout";
-import { themeStateType } from "@/types/slice/theme";
+import { HabitTrackerSliceType } from "@/types/slice/habit-tracker";
+import { LayoutSliceType } from "@/types/slice/layout";
+import { ThemeSliceType } from "@/types/slice/theme";
 import { todoStateType } from "@/types/slice/todo";
 import { noteStateType } from "@/types/slice/notes";
-import { bookmarkStateType } from "@/types/slice/bookmark";
+import { bookmarkSliceType } from "@/types/slice/bookmark";
 
 import autumn from "@/assets/img/autumn.jpg";
 import bananas from "@/assets/img/bananas.jpg";
@@ -11,7 +11,7 @@ import ocean from "@/assets/img/ocean.jpg";
 import rose from "@/assets/img/rose.jpg";
 import space from "@/assets/img/space.jpg";
 
-export const initialThemeState: themeStateType = {
+export const initialThemeState: ThemeSliceType = {
   currentThemeID: 5,
   allThemes: [
     {
@@ -107,7 +107,7 @@ export const initialTodoState: todoStateType = {
   ],
 };
 
-export const initialLayoutState: layoutStateType = {
+export const initialLayoutState: LayoutSliceType = {
   toolBarPosition: "bottom",
   locked: true,
   dock: true,
@@ -141,7 +141,7 @@ export const initialLayoutState: layoutStateType = {
   ],
 };
 
-export const initialHabitTrackerState: habitTrackerStateType = {
+export const initialHabitTrackerState: HabitTrackerSliceType = {
   pinned: null,
   trackers: [],
   timerHistory: {},
@@ -164,7 +164,7 @@ export const initialNoteState: noteStateType = {
   ],
 };
 
-export const initialBookmarkState: bookmarkStateType = {
+export const initialBookmarkState: bookmarkSliceType = {
   favorites: [],
   showFavorites: false,
   linkInNewTab: true,
