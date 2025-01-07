@@ -30,7 +30,7 @@ const getEmptySpace = (): DynamicSpaceType => {
 };
 
 export const layoutSlice = createSlice({
-  name: "layouts",
+  name: "layout",
   initialState: { ...initialLayoutState },
   reducers: {
     changeCurrentSpace: (state, action: PayloadAction<CurrentSpaceType>) => {
@@ -185,9 +185,16 @@ export const layoutSlice = createSlice({
     },
 
     resetLayoutState: (state) => Object.assign(state, initialLayoutState),
-    setLayoutState: (state, action: PayloadAction<LayoutSliceType>) => {
-      const val = action.payload;
-      if (!val) return;
+    setState: (
+      state,
+      action: PayloadAction<{ value: LayoutSliceType; check?: boolean }>
+    ) => {
+      const { value, check = true } = action.payload;
+      const val = value;
+      if (!val || !val.allSpaces) return;
+      if (!Array.isArray(val.allSpaces)) return;
+      if (!check) return Object.assign(state, val);
+
       if (val.toolBarPosition) state.toolBarPosition = val.toolBarPosition;
       if (val.toolBarIcons) state.toolBarIcons = val.toolBarIcons;
       if (typeof val.dock === "boolean") state.dock = val.dock;
@@ -196,8 +203,6 @@ export const layoutSlice = createSlice({
         state.dockContent = { content: "bookmark", id: "0" };
       else state.dockContent = val.dockContent;
 
-      if (!val.allSpaces) return;
-      if (!Array.isArray(val.allSpaces)) return;
       const allSpaces = [...state.allSpaces];
 
       for (const space of val.allSpaces) {
@@ -236,7 +241,7 @@ export const {
   duplicateSpace,
   resetLayoutState,
   toggleLocked,
-  setLayoutState,
+  setState,
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;
