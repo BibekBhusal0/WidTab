@@ -45,6 +45,9 @@ function RenameItem({
   return (
     <FormControl variant="outlined" fullWidth>
       <OutlinedInput
+        onKeyDown={(e) => {
+          if (e.key === "Enter") handleClick();
+        }}
         endAdornment={
           !realTime && (
             <InputAdornment position="end">

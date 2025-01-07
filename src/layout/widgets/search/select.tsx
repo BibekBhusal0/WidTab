@@ -19,6 +19,10 @@ export const searchEngineLogoAndLink: SearchEngineMapping = {
   },
   DuckDuckGo: { icon: "cib:duckduckgo", link: "https://duckduckgo.com/?q=%s" },
   Brave: { icon: "cib:brave", link: "https://search.brave.com/search?q=%s" },
+  Perplexity: {
+    icon: "ri:perplexity-line",
+    link: "https://www.perplexity.ai/?q=%s",
+  },
 };
 
 export type SearchEngineSelectProps = {

@@ -61,7 +61,7 @@ export const themeSlice = createSlice({
       }
     },
     resetThemeSlice: (state) => Object.assign(state, initialThemeState),
-    setThemeState: (
+    setState: (
       state,
       action: PayloadAction<{ value: ThemeSliceType; check?: boolean }>
     ) => {
@@ -105,6 +105,6 @@ export const {
   duplicateTheme,
   resetThemeSlice,
   setBackgroundImage,
-  setThemeState,
+  setState,
 } = themeSlice.actions;
 export default themeSlice.reducer;

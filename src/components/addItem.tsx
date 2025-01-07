@@ -55,6 +55,7 @@ function AddItem({
           helperText={reached_word_limit && `${word_limit} Character Max`}
           {...inputProps}
           onChange={(e) => setText(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleClick()}
         />
       )}
       <div className="flex-center gap-4">

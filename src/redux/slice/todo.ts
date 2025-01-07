@@ -108,7 +108,7 @@ export const todoSlice = createSlice({
       else state.pinnedTodo = action.payload;
     },
     resetTodoSlice: (state) => Object.assign(state, initialTodoState),
-    setTodoState: (
+    setState: (
       state,
       action: PayloadAction<{ value: todoStateType; check?: boolean }>
     ) => {
@@ -145,6 +145,6 @@ export const {
   setTasks,
   changePinnedTodo,
   resetTodoSlice,
-  setTodoState,
+  setState,
 } = todoSlice.actions;
 export default todoSlice.reducer;

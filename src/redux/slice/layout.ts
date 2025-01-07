@@ -185,7 +185,7 @@ export const layoutSlice = createSlice({
     },
 
     resetLayoutState: (state) => Object.assign(state, initialLayoutState),
-    setLayoutState: (
+    setState: (
       state,
       action: PayloadAction<{ value: LayoutSliceType; check?: boolean }>
     ) => {
@@ -241,7 +241,7 @@ export const {
   duplicateSpace,
   resetLayoutState,
   toggleLocked,
-  setLayoutState,
+  setState,
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

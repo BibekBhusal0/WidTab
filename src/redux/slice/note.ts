@@ -37,7 +37,7 @@ export const noteSlice = createSlice({
       state.allNotes = state.allNotes.filter((p) => p.id !== action.payload);
     },
     resetNoteState: (state) => Object.assign(state, initialNoteState),
-    setNoteState: (
+    setState: (
       state,
       action: PayloadAction<{ value: noteStateType; check?: boolean }>
     ) => {
@@ -68,6 +68,6 @@ export const {
   changeNoteContent,
   deleteNote,
   resetNoteState,
-  setNoteState,
+  setState,
 } = noteSlice.actions;
 export default noteSlice.reducer;

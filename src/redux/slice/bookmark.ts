@@ -29,7 +29,7 @@ export const bookmarkSlice = createSlice({
     toggleLink: (state) => {
       state.linkInNewTab = !state.linkInNewTab;
     },
-    setBookmarkState: (
+    setState: (
       state,
       action: PayloadAction<{ value: bookmarkSliceType; check?: boolean }>
     ) => {
@@ -56,7 +56,7 @@ export const {
   toggleShowFavorites,
   toggleLink,
   resetBookmarkState,
-  setBookmarkState,
+  setState,
 } = bookmarkSlice.actions;
 
 export default bookmarkSlice.reducer;

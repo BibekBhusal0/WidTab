@@ -8,7 +8,6 @@ import { addNoteWithTitle, deleteNote } from "@/redux/slice/note";
 import { ScrollArea } from "@/components/scrollarea";
 import Controls from "../widgets/controls";
 import IconButton from "@mui/material/IconButton";
-import { getWidgetControlsProps } from "@/utils/getWidget";
 import IconMenu from "@/components/menuWithIcon";
 
 function NotesPage() {
@@ -25,7 +24,10 @@ function NotesPage() {
         {allNotes.map((p) => {
           const handleDelete = () => dispatch(deleteNote(p.id));
           return (
-            <Paper key={p.id} className={commonCls}>
+            <Paper
+              key={p.id}
+              className={commonCls}
+              sx={{ backgroundColor: "secondaryContainer.paper" }}>
               <Controls
                 deleteButton={false}
                 includePopover={false}
@@ -55,6 +57,7 @@ function NotesPage() {
           );
         })}
         <Paper
+          sx={{ backgroundColor: "secondaryContainer.paper" }}
           onClick={() => dispatch(addNoteWithTitle(""))}
           className={cn(commonCls, "flex-center group cursor-pointer")}>
           <div className="group-hover:scale-[6] scale-[3] transition-all">

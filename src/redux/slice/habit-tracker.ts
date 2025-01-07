@@ -48,7 +48,7 @@ const habitTrackerSlice = createSlice({
       if (state.pinned === action.payload) state.pinned = null;
       else state.pinned = action.payload;
     },
-    setTrackerState: (
+    setState: (
       state,
       action: PayloadAction<{ value: HabitTrackerSliceType; check?: boolean }>
     ) => {
@@ -94,6 +94,6 @@ export const {
   changePinnedHabitTracker,
   resetHabitTrackerState,
   updateTimerHistory,
-  setTrackerState,
+  setState,
 } = habitTrackerSlice.actions;
 export default habitTrackerSlice.reducer;

@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, JSX, useMemo } from "react";
-import favicon from "@/assets/img/favicon/favicon.png";
+import browser from "webextension-polyfill";
 import { useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import { useTheme } from "@mui/material/styles";
@@ -10,45 +10,42 @@ const googleFaviconAPI = (url: string) => {
   const hostName = new URL(url).hostname;
   return `https://s2.googleusercontent.com/s2/favicons?domain_url=https://${hostName}&sz=${size}`;
 };
-const chromeFaviconApi = (_: string) => {
-  return favicon;
+const chromeFaviconApi = (url: string) => {
+  const faviconUrl = new URL(browser.runtime.getURL("/_favicon/"));
+  faviconUrl.searchParams.set("pageUrl", url);
+  faviconUrl.searchParams.set("size", `${size}`);
+  return faviconUrl.toString();
 };
 
 const Favicon = ({ src, ...props }: JSX.IntrinsicElements["img"]) => {
   const googleFavicon = googleFaviconAPI(src || "");
   const chromeFavicon = chromeFaviconApi(src || "");
-  const [logoSrc, setLogoSrc] = useState<string>(googleFavicon);
+  const [logoSrc, setLogoSrc] = useState<string>(chromeFavicon);
+  const [googleFaviconLoaded, setGoogleFaviconLoaded] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
-  const isGoogleFavicon = logoSrc === googleFavicon;
 
   useEffect(() => {
-    if (src) setLogoSrc(googleFavicon);
+    if (src) {
+      setLogoSrc(chromeFavicon);
+      setGoogleFaviconLoaded(false);
+    }
   }, [src]);
 
-  if (!src) return null;
+  useEffect(() => {
+    const img = new Image();
+    img.src = googleFavicon;
+    img.onload = () => {
+      if (img.naturalWidth !== 16 || img.naturalHeight !== 16) {
+        setGoogleFaviconLoaded(true);
+      }
+    };
+  }, [googleFavicon]);
 
-  const handleImageError = () => {
-    if (isGoogleFavicon) setLogoSrc(chromeFavicon);
-  };
+  useEffect(() => {
+    if (googleFaviconLoaded) setLogoSrc(googleFavicon);
+  }, [googleFaviconLoaded]);
 
-  const handleImageLoad = () => {
-    if (!imgRef.current) return;
-    const { naturalWidth, naturalHeight } = imgRef.current;
-    if (naturalWidth === 16 && naturalHeight === 16 && isGoogleFavicon) {
-      setLogoSrc(chromeFavicon);
-    }
-  };
-
-  return (
-    <img
-      ref={imgRef}
-      src={logoSrc}
-      alt="Favicon"
-      onError={handleImageError}
-      onLoad={handleImageLoad}
-      {...props}
-    />
-  );
+  return <img ref={imgRef} src={logoSrc} alt="Favicon" {...props} />;
 };
 
 export { Favicon, chromeFaviconApi, googleFaviconAPI };
@@ -76,20 +73,21 @@ export function useFavicon() {
 
   const svg = useMemo(() => {
     return `<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M15.991 8.838l-3.259 2.499c-4.941 3.789-7.415 5.683-8.738 8.352s-1.327 5.757-1.327 11.926v6.694c0 12.109 0 18.163 3.82 21.926S16.45 64 28.741 64h6.519c12.291 0 18.438 0 22.254-3.763s3.82-9.818 3.82-21.93v-6.688c0-6.173 0-9.258-1.326-11.93s-3.797-4.563-8.738-8.352L48.01 8.842C40.318 2.944 36.472 0 32 0s-8.318 2.944-16.01 8.838z" fill="${main}"/>
-      ${innerIcon}
-    </svg>`;
+        <path d="M15.991 8.838l-3.259 2.499c-4.941 3.789-7.415 5.683-8.738 8.352s-1.327 5.757-1.327 11.926v6.694c0 12.109 0 18.163 3.82 21.926S16.45 64 28.741 64h6.519c12.291 0 18.438 0 22.254-3.763s3.82-9.818 3.82-21.93v-6.688c0-6.173 0-9.258-1.326-11.93s-3.797-4.563-8.738-8.352L48.01 8.842C40.318 2.944 36.472 0 32 0s-8.318 2.944-16.01 8.838z" fill="${main}"/>
+        ${innerIcon}
+      </svg>`;
   }, [innerIcon, main]);
 
   useEffect(() => {
     const favicon = document.getElementById("favicon") as HTMLLinkElement;
+    const newHref = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
+      svg
+    )}`;
     if (favicon) {
-      const newHref = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
-        svg
-      )}`;
       if (favicon.href !== newHref) {
         favicon.href = newHref;
       }
     }
+    browser.action.setIcon({ path: { "64": newHref } });
   }, [svg]);
 }

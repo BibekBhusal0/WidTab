@@ -11,7 +11,6 @@ export const middleware: Middleware = (store) => (next) => (action: any) => {
   const val = next(action);
   const s = action.type.split("/")[0] as reducers;
   if (reducerNames.includes(s)) {
-    console.log(s);
     saveToLocalStorage(s, store.getState()[s]);
   }
   return val;

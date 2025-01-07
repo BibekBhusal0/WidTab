@@ -23,7 +23,14 @@ const UW = [
   "bookmark",
   "favorites",
 ] as const;
-const SE = ["Google", "Bing", "YouTube", "Brave", "DuckDuckGo"] as const;
+const SE = [
+  "Google",
+  "Bing",
+  "YouTube",
+  "Brave",
+  "DuckDuckGo",
+  "Perplexity",
+] as const;
 
 export type StaticPagesType = (typeof SP)[number];
 export type controlledWidgetsType = (typeof CW)[number];

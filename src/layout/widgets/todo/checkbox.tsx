@@ -23,9 +23,7 @@ function SortableCheckbox({
   const ref = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (ref_ && ref.current) {
-      ref_(ref.current);
-    }
+    if (ref_ && ref.current) ref_(ref.current);
   }, [ref_, ref]);
 
   useEffect(() => {
@@ -75,21 +73,18 @@ function SortableCheckbox({
         autoFocus={task.trim() === ""}
         onChange={(e) => handleChange(e.target.value)}
         onKeyDown={(e) => {
-          if (e.key === "Backspace" && task.trim() === "") {
+          if (
+            (e.key === "Backspace" || e.key === "Delete") &&
+            task.trim() === ""
+          ) {
             e.preventDefault();
             handleDelete();
-            setTimeout(() => {
-              focusPrevious();
-            }, 100);
-          } else if (["ArrowUp", "Enter", "ArrowDown"].includes(e.key)) {
+            setTimeout(() => focusPrevious(), 100);
+          } else if (["ArrowUp", "Enter", "ArrowDown", "Tab"].includes(e.key)) {
             e.preventDefault();
-            if (e.key === "Enter") {
-              addTodo();
-            } else if (e.key === "ArrowUp") {
-              focusPrevious();
-            } else if (e.key === "ArrowDown") {
-              focusNext();
-            }
+            if (e.key === "Enter" || e.key === "Tab") addTodo();
+            else if (e.key === "ArrowUp") focusPrevious();
+            else if (e.key === "ArrowDown") focusNext();
           }
         }}
         className={`${transparentInput} text-lg`}
@@ -97,7 +92,7 @@ function SortableCheckbox({
       />
       <div className="w-8 h-full">
         <button
-          className="h-full hidden group-hover:block icon-md"
+          className="h-full hidden group-hover:block icon-md text-error-main"
           onClick={handleDelete}
           //
         >
