@@ -1,5 +1,5 @@
 <h1 align="center">
-    <a href="https://github.com/bibekbhusal0/chrome-extension">
+    <a href="https://github.com/bibekbhusal0/WidTab">
         <img src="./public/icon-128.png" width="50">
     </a>
     <br>
@@ -12,12 +12,12 @@
 
 <div align="center">
 
-![License](https://img.shields.io/github/license/bibekbhusal0/chrome-extension)
-![Last Commit](https://img.shields.io/github/last-commit/bibekbhusal0/chrome-extension)
+![License](https://img.shields.io/github/license/bibekbhusal0/WidTab)
+![Last Commit](https://img.shields.io/github/last-commit/bibekbhusal0/WidTab)
 
-<!-- ![GitHub contributors](https://img.shields.io/github/contributors/bibekbhusal0/chrome-extension)
-![GitHub stars](https://img.shields.io/github/stars/bibekbhusal0/chrome-extension)
-![GitHub forks](https://img.shields.io/github/forks/bibekbhusal0/chrome-extension) -->
+<!-- ![GitHub contributors](https://img.shields.io/github/contributors/bibekbhusal0/WidTab)
+![GitHub stars](https://img.shields.io/github/stars/bibekbhusal0/WidTab)
+![GitHub forks](https://img.shields.io/github/forks/bibekbhusal0/WidTab) -->
 
 </div>
 
@@ -32,9 +32,9 @@
 
 ## 🔗 Important Links
 
-#### **Github**: https://github.com/bibekbhusal0/chrome-extension
+#### **Github**: https://github.com/bibekbhusal0/WidTab
 
-#### **Live** : https://bibekbhusal0.github.io/chrome-extension/
+#### **Live** : https://bibekbhusal0.github.io/WidTab/
 
 <!-- #### **Firefox Addon Store**: releasing soon -->
 <!-- #### **Chrome extension**: releasing soon -->
@@ -80,7 +80,7 @@ Static space can't be customized as dynamic space it contains all bookmark or al
 
 ### Download
 
-Download Latest build for you browser (chrome or firefox) from [Build Page](https://github.com/BibekBhusal0/chrome-extension/actions)
+Download Latest build for you browser (chrome or firefox) from [Build Page](https://github.com/BibekBhusal0/WidTab/actions)
 
 ---
 
@@ -89,7 +89,7 @@ Download Latest build for you browser (chrome or firefox) from [Build Page](http
 1. **Clone the Repository**:
 
    ```bash
-   git clone https://github.com/bibekbhusal0/chrome-extension.git
+   git clone https://github.com/bibekbhusal0/WidTab.git
    ```
 
 2. **Install all required packages**:
@@ -176,7 +176,7 @@ Contributions are welcome! If you'd like to contribute:
 
 ## ❓ Issues and Support
 
-If you encounter any bugs or issues, please [submit an issue](https://github.com/bibekbhusal0/chrome-extension/issues) on the GitHub repository.
+If you encounter any bugs or issues, please [submit an issue](https://github.com/bibekbhusal0/WidTab/issues) on the GitHub repository.
 
 ## 🔒 Privacy Policy -->
 
