@@ -40,3 +40,7 @@ export const openLink = (
   else if (newTab) browser.tabs.create({ url, active: true });
   else browser.tabs.update({ url });
 };
+
+export const reorderFavorites = (favorites: treeNodeArray): string[] => {
+  return favorites.map((node) => node.id);
+};

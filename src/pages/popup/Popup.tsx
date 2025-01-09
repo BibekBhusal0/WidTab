@@ -1,6 +1,4 @@
-import BookmarkGrid from "@/components/bookmarks/grid";
-import { ScrollArea } from "@/components/scrollarea";
-import { useFavoriteBookmarks } from "@/hooks/useBookmarks";
+import FavoritesWidget from "@/layout/widgets/favorites";
 import HabitTracker from "@/layout/widgets/habit-tracker";
 import Todo from "@/layout/widgets/todo";
 import { StateType } from "@/redux/store";
@@ -42,25 +40,13 @@ function Popup() {
   );
 }
 
-function Favorites() {
-  const favorites = useFavoriteBookmarks();
-
-  return (
-    <Paper
-      className="h-full w-[350px] relative"
-      sx={{ backgroundColor: "primaryContainer.paper" }}>
-      <ScrollArea className="size-full">
-        <div className="py-4 px-1">
-          <BookmarkGrid
-            bookmarks={favorites}
-            // openLinkInNewTab={true}
-            contextMenu={false}
-          />
-        </div>
-      </ScrollArea>
-    </Paper>
-  );
-}
+const Favorites = () => (
+  <Paper
+    className="h-full w-[350px] relative"
+    sx={{ backgroundColor: "primaryContainer.paper" }}>
+    <FavoritesWidget id={0} iconSize="small" />
+  </Paper>
+);
 
 function PinnedTodo() {
   const { Tasks, pinnedTodo } = useSelector((state: StateType) => state.todo);

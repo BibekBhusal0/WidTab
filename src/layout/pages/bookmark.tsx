@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import { toggleShowFavorites } from "@/redux/slice/bookmark";
 import BookmarkSearch from "@/components/bookmarks/search";
-import { useBookmarkFolder, useFavoriteBookmarks } from "@/hooks/useBookmarks";
+import { useBookmarkFolder } from "@/hooks/useBookmarks";
 import BookmarkBreadcrumb from "@/components/bookmarks/breadcrumb";
 import BookmarkGrid from "@/components/bookmarks/grid";
 import { changeCurrentFolder } from "@/redux/slice/bookmark";
@@ -19,6 +19,7 @@ import {
   folderSizes,
 } from "@/types/slice/bookmark";
 import { ScrollArea } from "@/components/scrollarea";
+import Favorites from "@/layout/widgets/favorites";
 
 function BookmarkManager() {
   return (
@@ -79,7 +80,7 @@ function FavButton() {
 }
 
 function MainBookmarks() {
-  const { currentFolderID, showFavorites } = useSelector(
+  const { currentFolderID, showFavorites, folderSize } = useSelector(
     (state: StateType) => state.bookmarks
   );
   const dispatch = useDispatch();
@@ -91,10 +92,13 @@ function MainBookmarks() {
       <div className="p-4">
         {showFavorites ? "Favorites" : <BookmarkBreadcrumb {...props} />}
       </div>
-      <ScrollArea>
-        {showFavorites ? <BookmarksFavorite /> : <BookmarksFolder />}
-        <div className="py-2"></div>
-      </ScrollArea>
+      {showFavorites ? (
+        <Favorites {...props} id={1} iconSize={folderSize} />
+      ) : (
+        <ScrollArea>
+          <BookmarksFolder />
+        </ScrollArea>
+      )}
     </>
   );
 }
@@ -105,10 +109,6 @@ function BookmarksFolder() {
   );
   const bookmarks = useBookmarkFolder(currentFolderID);
   return <OnlyBookmarks bookmarks={bookmarks} />;
-}
-function BookmarksFavorite() {
-  const fav = useFavoriteBookmarks();
-  return <OnlyBookmarks bookmarks={fav} />;
 }
 
 function OnlyBookmarks({ bookmarks }: bookmarkTreeNodeArray) {
