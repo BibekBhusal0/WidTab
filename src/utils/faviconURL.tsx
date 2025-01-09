@@ -1,9 +1,10 @@
 import { useEffect, useState, useRef, JSX, useMemo } from "react";
-import browser from "webextension-polyfill";
+// import browser from "webextension-polyfill";
 import { useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import { useTheme } from "@mui/material/styles";
 import { StaticPagesType } from "@/types/slice/widgets";
+import logo from "@/assets/img/favicon/favicon.png";
 
 const size = 64;
 const googleFaviconAPI = (url: string) => {
@@ -11,10 +12,11 @@ const googleFaviconAPI = (url: string) => {
   return `https://s2.googleusercontent.com/s2/favicons?domain_url=https://${hostName}&sz=${size}`;
 };
 const chromeFaviconApi = (url: string) => {
-  const faviconUrl = new URL(browser.runtime.getURL("/_favicon/"));
-  faviconUrl.searchParams.set("pageUrl", url);
-  faviconUrl.searchParams.set("size", `${size}`);
-  return faviconUrl.toString();
+  //   const faviconUrl = new URL(browser.runtime.getURL("/_favicon/"));
+  //   faviconUrl.searchParams.set("pageUrl", url);
+  //   faviconUrl.searchParams.set("size", `${size}`);
+  //   return faviconUrl.toString();
+  return logo;
 };
 
 const Favicon = ({ src, ...props }: JSX.IntrinsicElements["img"]) => {
@@ -88,6 +90,6 @@ export function useFavicon() {
         favicon.href = newHref;
       }
     }
-    browser.action.setIcon({ path: { "64": newHref } });
+    // browser.action.setIcon({ path: { "64": newHref } });
   }, [svg]);
 }

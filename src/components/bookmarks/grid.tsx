@@ -10,16 +10,19 @@ import {
 import useFullSize from "@/hooks/useFullSize";
 import { LinkContextMenu } from "./contextMenu";
 import Card from "@mui/material/Card";
-import CardActionArea from "@mui/material/CardActionArea";
 import Favicon from "@/utils/faviconURL";
 import { HoverFolder } from "./folder";
 import { bookmarkTreeNodeArray, treeNode } from "@/types/slice/bookmark";
+import { treeToLayout } from "@/utils/bookmark";
+import ReactGridLayout from "react-grid-layout";
+import { useMemo, useRef } from "react";
 
 type l = { openLinkInNewTab?: boolean; contextMenu?: boolean };
 
 function BookmarkGrid(props: ExtraBookmarkProps & bookmarkTreeNodeArray & l) {
-  const { folderSize = "small", bookmarks } = props;
+  const { folderSize = "small", bookmarks, onReorder } = props;
   const itemWidth = folderSizeMapping[folderSize];
+  const dragCount = useRef(1);
   const gap = 16;
   const {
     ref,
@@ -27,14 +30,38 @@ function BookmarkGrid(props: ExtraBookmarkProps & bookmarkTreeNodeArray & l) {
   } = useFullSize([]);
   const numItems = Math.floor((width + gap) / (itemWidth + gap));
   const finalWidth = numItems * (itemWidth + gap) - gap;
+  const layout = useMemo(() => {
+    const t = treeToLayout(bookmarks, numItems || 1);
+    console.log(t);
+    return t;
+  }, [bookmarks.length, numItems, dragCount.current]);
 
   const content =
     !bookmarks || bookmarks.length === 0 ? (
       <div className="text-center text-3xl pt-4">No bookmarks Found Here</div>
     ) : (
-      <div className="flex flex-wrap mx-auto w-full" style={{ gap }}>
-        <Bookmarks {...props} />
-      </div>
+      <ReactGridLayout
+        layout={layout}
+        onLayoutChange={(layout) => onReorder?.(layout, numItems)}
+        //
+        cols={numItems}
+        rowHeight={itemWidth}
+        width={finalWidth}
+        margin={[gap, gap]}
+        //
+        isDraggable={!!onReorder}
+        onDragStop={() => dragCount.current++}
+        isResizable={false}
+        compactType={"horizontal"}
+
+        //
+      >
+        {bookmarks.map((bookmark) => (
+          <div key={bookmark.id}>
+            <Bookmarks {...props} bookmarks={bookmark} />
+          </div>
+        ))}
+      </ReactGridLayout>
     );
 
   return (
@@ -102,7 +129,7 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
 
   return (
     <Card
-      variant="outlined"
+      variant="elevation"
       className="group"
       sx={{
         backgroundColor: "secondaryContainer.paper",
@@ -124,7 +151,7 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
           },
         },
       }}>
-      <CardActionArea className="size-full">{content}</CardActionArea>
+      {content}
     </Card>
   );
 }
