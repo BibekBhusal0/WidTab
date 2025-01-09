@@ -12,17 +12,19 @@ import { LinkContextMenu } from "./contextMenu";
 import Card from "@mui/material/Card";
 import Favicon from "@/utils/faviconURL";
 import { HoverFolder } from "./folder";
-import { bookmarkTreeNodeArray, treeNode } from "@/types/slice/bookmark";
-import { treeToLayout } from "@/utils/bookmark";
-import ReactGridLayout from "react-grid-layout";
-import { useMemo, useRef } from "react";
+import { bookmarkTreeNodeArray } from "@/types/slice/bookmark";
+import {
+  Sortable,
+  SortableDragHandle,
+  SortableItem,
+} from "@/components/sortable";
 
 type l = { openLinkInNewTab?: boolean; contextMenu?: boolean };
 
 function BookmarkGrid(props: ExtraBookmarkProps & bookmarkTreeNodeArray & l) {
   const { folderSize = "small", bookmarks, onReorder } = props;
   const itemWidth = folderSizeMapping[folderSize];
-  const dragCount = useRef(1);
+  //   const dragCount = useRef(1);
   const gap = 16;
   const {
     ref,
@@ -30,38 +32,22 @@ function BookmarkGrid(props: ExtraBookmarkProps & bookmarkTreeNodeArray & l) {
   } = useFullSize([]);
   const numItems = Math.floor((width + gap) / (itemWidth + gap));
   const finalWidth = numItems * (itemWidth + gap) - gap;
-  const layout = useMemo(() => {
-    const t = treeToLayout(bookmarks, numItems || 1);
-    console.log(t);
-    return t;
-  }, [bookmarks.length, numItems, dragCount.current]);
 
   const content =
     !bookmarks || bookmarks.length === 0 ? (
       <div className="text-center text-3xl pt-4">No bookmarks Found Here</div>
     ) : (
-      <ReactGridLayout
-        layout={layout}
-        onLayoutChange={(layout) => onReorder?.(layout, numItems)}
-        //
-        cols={numItems}
-        rowHeight={itemWidth}
-        width={finalWidth}
-        margin={[gap, gap]}
-        //
-        isDraggable={!!onReorder}
-        onDragStop={() => dragCount.current++}
-        isResizable={false}
-        compactType={"horizontal"}
-
+      <Sortable
+        orientation="mixed"
+        value={bookmarks}
+        onValueChange={onReorder}
+        // overlay={<div className="size-full rounded-themed bg-primary-1"></div>}
         //
       >
-        {bookmarks.map((bookmark) => (
-          <div key={bookmark.id}>
-            <Bookmarks {...props} bookmarks={bookmark} />
-          </div>
-        ))}
-      </ReactGridLayout>
+        <div className="flex flex-wrap mx-auto w-full" style={{ gap }}>
+          <Bookmarks {...props} />
+        </div>
+      </Sortable>
     );
 
   return (
@@ -90,47 +76,13 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
       <Bookmarks key={child.id} {...props} bookmarks={child} />
     ));
   }
+  const cm = bookmarks.url && contextMenu;
   const size = folderSizeMapping[folderSize];
-  const cls = "flex-center flex-col gap-2 size-full relative p-1";
-  const textCls = "px-2 truncate w-full text-center";
   const fav = favorites.includes(bookmarks.id);
-  const link = (bookmarks: treeNode) => {
-    return (
-      <a
-        className={cn(cls)}
-        href={bookmarks.url}
-        target={openLinkInNewTab ? "_blank" : "_self"}>
-        <Favicon src={bookmarks.url} className="size-1/2 aspect-square" />
-
-        <div className="flex items-center justify-between w-full">
-          {fav && contextMenu && <Icon className="text-2xl" icon="mdi:heart" />}
-          <div className={cn(textCls)}>{bookmarks.title}</div>
-        </div>
-      </a>
-    );
-  };
-
-  const content = !bookmarks.url ? (
-    <div
-      onClick={() => onFolderChange(bookmarks.id)}
-      className={cn(cls, "gap-2")}>
-      <div className="w-[70%] h-[50%] relative">
-        <HoverFolder
-          empty={!bookmarks.children || bookmarks.children.length === 0}
-        />
-      </div>
-      <div className={cn(textCls)}>{bookmarks.title}</div>
-    </div>
-  ) : contextMenu ? (
-    <LinkContextMenu id={bookmarks.id}>{link(bookmarks)}</LinkContextMenu>
-  ) : (
-    link(bookmarks)
-  );
-
-  return (
+  const content = (
     <Card
       variant="elevation"
-      className="group"
+      className="group cursor-pointer"
       sx={{
         backgroundColor: "secondaryContainer.paper",
         width: size,
@@ -151,8 +103,43 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
           },
         },
       }}>
-      {content}
+      <div
+        className={cn("flex-center flex-col gap-1 size-full relative p-1", {})}>
+        {!bookmarks.url ? (
+          <div className="w-[70%] h-[50%] relative">
+            <HoverFolder empty={!bookmarks.children?.length} />
+          </div>
+        ) : (
+          <Favicon src={bookmarks.url} className="size-1/2 aspect-square" />
+        )}
+        <SortableDragHandle className="flex-center w-full px-1 py-0.5 gap-[2px]">
+          {fav && cm && (
+            <Icon style={{ fontSize: size / 5 }} icon="mdi:heart" />
+          )}
+          <div className="truncate w-full text-center">{bookmarks.title}</div>
+        </SortableDragHandle>
+      </div>
     </Card>
+  );
+
+  return (
+    <SortableItem
+      onClick={() => {
+        bookmarks.url
+          ? window.open(bookmarks.url, openLinkInNewTab ? "_blank" : "_self")
+          : onFolderChange(bookmarks.id);
+      }}
+      value={bookmarks.id}>
+      {cm ? (
+        <LinkContextMenu
+          id={bookmarks.id}
+          containerProps={{ sx: { width: size, height: size } }}
+          children={content}
+        />
+      ) : (
+        content
+      )}
+    </SortableItem>
   );
 }
 

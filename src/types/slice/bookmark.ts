@@ -1,5 +1,4 @@
 const s = ["small", "medium", "large"] as const;
-import { Layout } from "react-grid-layout";
 
 export type folderSizes = (typeof s)[number];
 export const allFolderSizes: folderSizes[] = [...s];
@@ -40,7 +39,7 @@ export interface TakeBookmarksProps {
 export type ExtraBookmarkProps = {
   folderSize?: folderSizes;
   onFolderChange?: (id: string) => any;
-  onReorder?: (layout: Layout[], n_cols: number) => any;
+  onReorder?: (bookmark: treeNodeArray) => any;
 };
 
 export const folderSizeMapping: Record<folderSizes, number> = {

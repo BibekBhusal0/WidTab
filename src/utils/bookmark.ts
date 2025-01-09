@@ -1,6 +1,5 @@
 import { treeNode, treeNodeArray } from "@/types/slice/bookmark";
 import bookmark from "@/assets/bookmarks.json";
-import { Layout } from "react-grid-layout";
 
 export const loadBookmarksFromJson = () => bookmark as treeNodeArray;
 
@@ -39,23 +38,6 @@ export const findPath = async (id: string): Promise<treeNodeArray> => {
 
 export const deleteBookmark = (_: string) => {};
 
-type layoutIndex = Layout & { index: number };
-export const coors2index = (coors: Layout[], n_cols: number): layoutIndex[] => {
-  return coors.map((coor) => {
-    return { ...coor, index: coor.y * n_cols + coor.x };
-  });
-};
-export const sortByIndex = (coors: layoutIndex[]) =>
-  coors.sort((a, b) => a.index - b.index);
-
-export const treeToLayout = (tree: treeNodeArray, n_cols: number): Layout[] =>
-  tree.map((node, i) => {
-    return { x: i % n_cols, y: Math.floor(i / n_cols), w: 1, h: 1, i: node.id };
-  });
-
-export const reorderFavorites = (
-  favorites: Layout[],
-  n_cols: number
-): string[] => {
-  return sortByIndex(coors2index(favorites, n_cols)).map((coor) => coor.i);
+export const reorderFavorites = (favorites: treeNodeArray): string[] => {
+  return favorites.map((node) => node.id);
 };

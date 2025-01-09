@@ -18,9 +18,7 @@ function Favorites({ iconSize }: FavoritesWidgetType) {
           bookmarks={favorites}
           folderSize={iconSize}
           contextMenu={false}
-          onReorder={(...props) =>
-            dispatch(setFavorites(reorderFavorites(...props)))
-          }
+          onReorder={(props) => dispatch(setFavorites(reorderFavorites(props)))}
         />
       </div>
     </ScrollArea>
