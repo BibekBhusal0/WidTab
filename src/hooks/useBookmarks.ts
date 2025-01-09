@@ -12,6 +12,7 @@ function useBookmarksUpdate(callback: Function, dependencies: any[] = []) {
       browser.bookmarks.onCreated,
       browser.bookmarks.onChanged,
       browser.bookmarks.onRemoved,
+      browser.bookmarks.onMoved
     ];
 
     listeners.map((event) => event.addListener(() => callback()));

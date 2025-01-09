@@ -44,3 +44,9 @@ export const openLink = (
 export const reorderFavorites = (favorites: treeNodeArray): string[] => {
   return favorites.map((node) => node.id);
 };
+
+export const reorderBookmarks = (bookmarks: treeNodeArray) => {
+  bookmarks.forEach((node, index) => {
+    browser.bookmarks.move(node.id, { index, parentId: node.parentId });
+  });
+};

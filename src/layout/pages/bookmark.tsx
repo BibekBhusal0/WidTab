@@ -20,6 +20,7 @@ import {
 } from "@/types/slice/bookmark";
 import { ScrollArea } from "@/components/scrollarea";
 import Favorites from "@/layout/widgets/favorites";
+import { reorderBookmarks } from "@/utils/bookmark";
 
 function BookmarkManager() {
   return (
@@ -115,7 +116,8 @@ function OnlyBookmarks({ bookmarks }: bookmarkTreeNodeArray) {
   const { folderSize } = useSelector((state: StateType) => state.bookmarks);
   const dispatch = useDispatch();
   const onFolderChange = (id: string) => dispatch(changeCurrentFolder(id));
-  const props = { folderSize, bookmarks, onFolderChange };
+  const onReorder = reorderBookmarks;
+  const props = { folderSize, bookmarks, onFolderChange, onReorder };
 
   return <BookmarkGrid {...props} />;
 }
