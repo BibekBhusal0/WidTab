@@ -8,6 +8,7 @@ import { changeCurrentFolder } from "@/redux/slice/bookmark";
 import Favicon from "@/utils/faviconURL";
 import { treeNode } from "@/types/slice/bookmark";
 import { useBookmarkSearch } from "@/hooks/useBookmarks";
+import { openLink } from "@/utils/bookmark";
 
 function BookmarkSearch() {
   const dispatch = useDispatch();
@@ -20,11 +21,8 @@ function BookmarkSearch() {
     bookmark: treeNode | null
   ) => {
     if (!bookmark) return;
-    if (bookmark.url) {
-      window.open(bookmark.url, linkInNewTab ? "_blank" : "_self");
-    } else {
-      dispatch(changeCurrentFolder(bookmark.id));
-    }
+    if (bookmark.url) openLink(bookmark.url, linkInNewTab);
+    else dispatch(changeCurrentFolder(bookmark.id));
     setSearchTerm("");
   };
 

@@ -19,14 +19,20 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/utils/cn";
+import { findBookmarkById } from "@/utils/bookmark";
+import { openLink } from "@/utils/bookmark";
 
 function BookmarkTree() {
   const { bookmarks } = useAllBookmarks();
   if (!bookmarks || bookmarks.length === 0) return null;
 
   function handleDragEnd(event: DragEndEvent) {
-    const { active, over, activatorEvent } = event;
-    console.log(active, over, activatorEvent);
+    const { active, over } = event;
+    if (!over) return;
+    const activeBookmark = findBookmarkById(bookmarks, `${active.id}`);
+    const overBookmark = findBookmarkById(bookmarks, `${over.id}`);
+    if (!activeBookmark || !overBookmark) return;
+    alert(`${activeBookmark.title} -> ${overBookmark.title}`);
   }
 
   return (
@@ -44,14 +50,14 @@ function BookmarkItem({ bookmarks }: TakeBookmarksProps) {
       <BookmarkItem key={child.id} bookmarks={child} />
     ));
   }
-  if (bookmarks.children) {
-    return <BookmarkFolder bookmarks={bookmarks} />;
-  }
+  if (bookmarks.children) return <BookmarkFolder bookmarks={bookmarks} />;
   return <BookmarkTreeLink bookmarks={bookmarks} />;
 }
 
 function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
-  const { favorites } = useSelector((state: StateType) => state.bookmarks);
+  const { favorites, linkInNewTab } = useSelector(
+    (state: StateType) => state.bookmarks
+  );
   const dispatch = useDispatch();
   const fav = favorites.includes(bookmarks.id);
   const toggleItem = () => dispatch(toggleFavorites(bookmarks.id));
@@ -69,6 +75,7 @@ function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
   return (
     <LinkContextMenu id={bookmarks.id}>
       <div
+        onClick={(e) => openLink(bookmarks.url || "", linkInNewTab, e)}
         ref={setNodeRef}
         {...attributes}
         style={style}

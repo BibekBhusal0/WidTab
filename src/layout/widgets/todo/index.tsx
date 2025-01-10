@@ -85,10 +85,6 @@ function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
       })
     );
   const handleReorder = (newOrder: todoType[]) => {
-    // const orderedTasks = newOrder
-    //   .map((id) => dynamicTasks.find((task) => task.id === id))
-    //   .filter((task): task is todoType => task !== undefined);
-
     dispatch(
       changeTask({
         task_id: id,

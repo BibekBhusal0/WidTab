@@ -18,8 +18,9 @@ import {
   SortableDragHandle,
   SortableItem,
 } from "@/components/sortable";
+import { openLink } from "@/utils/bookmark";
 
-type l = { openLinkInNewTab?: boolean; contextMenu?: boolean };
+type l = { contextMenu?: boolean };
 
 function BookmarkGrid(props: ExtraBookmarkProps & bookmarkTreeNodeArray & l) {
   const { folderSize = "small", bookmarks, onReorder } = props;
@@ -67,7 +68,6 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
     folderSize = "small",
     onFolderChange = () => {},
     contextMenu = true,
-    openLinkInNewTab = linkInNewTab,
   } = props;
 
   if (Array.isArray(bookmarks)) {
@@ -81,9 +81,9 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
   const content = (
     <Card
       variant="elevation"
-      onClick={() => {
+      onClick={(e) => {
         bookmarks.url
-          ? window.open(bookmarks.url, openLinkInNewTab ? "_blank" : "_self")
+          ? openLink(bookmarks.url, linkInNewTab, e)
           : onFolderChange(bookmarks.id);
       }}
       className="group cursor-pointer"

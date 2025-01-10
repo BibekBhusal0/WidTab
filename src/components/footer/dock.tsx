@@ -8,6 +8,7 @@ import { treeNodeArray } from "@/types/slice/bookmark";
 import { useBookmarkFolder, useFavoriteBookmarks } from "@/hooks/useBookmarks";
 import { cn } from "@/utils/cn";
 import Favicon from "@/utils/faviconURL";
+import { openLink } from "@/utils/bookmark";
 
 export const ToolbarDock = () => {
   const { content } = useSelector(
@@ -65,8 +66,8 @@ function getDockContentFromBookmarks(
           .map((item) => ({
             icon: <Favicon src={item.url} className="iconify" />,
             name: item.title,
-            onClick: () => {
-              window.open(item.url, linkInNewTab ? "_blank" : "_self");
+            onClick: (e) => {
+              openLink(item.url || "", linkInNewTab, e);
             },
           }));
 

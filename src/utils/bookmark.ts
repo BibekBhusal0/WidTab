@@ -38,6 +38,16 @@ export const findPath = async (id: string): Promise<treeNodeArray> => {
 
 export const deleteBookmark = (_: string) => {};
 
+export const openLink = (
+  url: string,
+  newTab = false,
+  event?: React.MouseEvent<HTMLElement, MouseEvent>
+) => {
+  event?.preventDefault();
+  const nt = newTab || event?.shiftKey || event?.metaKey || event?.ctrlKey;
+  window.open(url, nt ? "_blank" : "_self");
+};
+
 export const reorderFavorites = (favorites: treeNodeArray): string[] => {
   return favorites.map((node) => node.id);
 };
