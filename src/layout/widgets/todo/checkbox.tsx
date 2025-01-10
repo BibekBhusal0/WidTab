@@ -44,7 +44,7 @@ function SortableCheckbox({
 
   return (
     <SortableItem
-      className="flex align-center group items-start justify-center gap-2 transition-all"
+      className="flex align-center group items-start justify-center gap-2"
       asChild={false}
       value={id}>
       <div className="w-8 h-full">

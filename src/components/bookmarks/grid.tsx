@@ -1,7 +1,6 @@
 import { StateType } from "@/redux/store";
 import { useSelector } from "react-redux";
 import { Icon } from "@iconify/react";
-import { cn } from "@/utils/cn";
 import {
   ExtraBookmarkProps,
   folderSizeMapping,
@@ -10,6 +9,7 @@ import {
 import useFullSize from "@/hooks/useFullSize";
 import { LinkContextMenu } from "./contextMenu";
 import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
 import Favicon from "@/utils/faviconURL";
 import { HoverFolder } from "./folder";
 import { bookmarkTreeNodeArray } from "@/types/slice/bookmark";
@@ -24,7 +24,6 @@ type l = { openLinkInNewTab?: boolean; contextMenu?: boolean };
 function BookmarkGrid(props: ExtraBookmarkProps & bookmarkTreeNodeArray & l) {
   const { folderSize = "small", bookmarks, onReorder } = props;
   const itemWidth = folderSizeMapping[folderSize];
-  //   const dragCount = useRef(1);
   const gap = 16;
   const {
     ref,
@@ -108,22 +107,23 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
           },
         },
       }}>
-      <div
-        className={cn("flex-center flex-col gap-1 size-full relative p-1", {})}>
-        {!bookmarks.url ? (
-          <div className="w-[70%] h-[50%] relative">
-            <HoverFolder empty={!bookmarks.children?.length} />
-          </div>
-        ) : (
-          <Favicon src={bookmarks.url} className="size-1/2 aspect-square" />
-        )}
-        <SortableDragHandle className="flex-center w-full px-1 py-0.5 gap-[2px]">
-          {fav && cm && (
-            <Icon style={{ fontSize: size / 5 }} icon="mdi:heart" />
+      <CardActionArea className="size-full p-1">
+        <div className="flex-center flex-col gap-1 size-full">
+          {!bookmarks.url ? (
+            <div className="w-[70%] h-[50%] relative">
+              <HoverFolder empty={!bookmarks.children?.length} />
+            </div>
+          ) : (
+            <Favicon src={bookmarks.url} className="size-1/2 aspect-square" />
           )}
-          <div className="truncate w-full text-center">{bookmarks.title}</div>
-        </SortableDragHandle>
-      </div>
+          <SortableDragHandle className="flex-center w-full px-1 py-0.5 gap-[2px]">
+            {fav && cm && (
+              <Icon style={{ fontSize: size / 5 }} icon="mdi:heart" />
+            )}
+            <div className="truncate w-full text-center">{bookmarks.title}</div>
+          </SortableDragHandle>
+        </div>
+      </CardActionArea>
     </Card>
   );
 
