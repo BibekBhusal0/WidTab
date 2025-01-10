@@ -82,6 +82,11 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
   const content = (
     <Card
       variant="elevation"
+      onClick={() => {
+        bookmarks.url
+          ? window.open(bookmarks.url, openLinkInNewTab ? "_blank" : "_self")
+          : onFolderChange(bookmarks.id);
+      }}
       className="group cursor-pointer"
       sx={{
         backgroundColor: "secondaryContainer.paper",
@@ -123,13 +128,7 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
   );
 
   return (
-    <SortableItem
-      onClick={() => {
-        bookmarks.url
-          ? window.open(bookmarks.url, openLinkInNewTab ? "_blank" : "_self")
-          : onFolderChange(bookmarks.id);
-      }}
-      value={bookmarks.id}>
+    <SortableItem value={bookmarks.id}>
       {cm ? (
         <LinkContextMenu
           id={bookmarks.id}
