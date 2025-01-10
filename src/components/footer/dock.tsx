@@ -67,7 +67,7 @@ function getDockContentFromBookmarks(
             icon: <Favicon src={item.url} className="iconify" />,
             name: item.title,
             onClick: (e) => {
-                openLink(item.url || "", linkInNewTab, e);
+              openLink(item.url || "", linkInNewTab, e);
             },
           }));
 

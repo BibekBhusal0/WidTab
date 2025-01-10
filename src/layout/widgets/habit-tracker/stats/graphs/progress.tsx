@@ -74,7 +74,7 @@ function ProgressGraph({ type = "daily", trackers }: ProgressGraphProps) {
           fill="var(--mui-palette-primary-main)"
           isAnimationActive={false}
           {...pieProps}>
-          {data.map((entry, index) => (
+          {data.map((_, index) => (
             <Cell
               key={`cell-${index}`}
               fill={

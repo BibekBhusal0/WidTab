@@ -17,7 +17,7 @@ export const TodoMenu: React.FC<{ id: number }> = ({ id }) => {
   const { pinnedTodo, Tasks } = useSelector((state: StateType) => state.todo);
   const crr = Tasks.find((t) => t.id === id);
   const { currentSpace } = useSelector((state: StateType) => state.layout);
-  const { pin, delete_, sort, show, hide, add } = useCurrentIcons();
+  const { pin, delete_, sort, show, hide } = useCurrentIcons();
 
   if (!crr) return null;
   const { filtered, sorted } = crr;

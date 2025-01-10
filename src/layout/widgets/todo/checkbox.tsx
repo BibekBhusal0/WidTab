@@ -1,10 +1,10 @@
 import { sortableCheckboxProps } from "@/types/slice/todo";
 import { useEffect, useRef } from "react";
-import { Reorder, useDragControls } from "framer-motion";
 import { transparentInput } from "./index";
 import Checkbox from "@mui/material/Checkbox";
 import { Icon } from "@iconify/react";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
+import { SortableDragHandle, SortableItem } from "@/components/sortable";
 
 function SortableCheckbox({
   id,
@@ -18,7 +18,6 @@ function SortableCheckbox({
   focusPrevious = () => {},
   focusNext = () => {},
 }: sortableCheckboxProps) {
-  const controls = useDragControls();
   const { delete_ } = useCurrentIcons();
   const ref = useRef<HTMLTextAreaElement>(null);
 
@@ -44,26 +43,14 @@ function SortableCheckbox({
   }, [task]);
 
   return (
-    <Reorder.Item
-      value={id}
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      transition={{ ease: "easeInOut" }}
-      dragControls={controls}
-      dragListener={false}
+    <SortableItem
       className="flex align-center group items-start justify-center gap-2"
-      //
-    >
+      asChild={false}
+      value={id}>
       <div className="w-8 h-full">
-        <div
-          onPointerDown={(e) => {
-            e.preventDefault();
-            controls.start(e);
-          }}
-          className="opacity-45 cursor-grab focus:cursor-grabbing hidden group-hover:block m-0 p-0">
+        <SortableDragHandle className="opacity-45 cursor-grab focus:cursor-grabbing hidden group-hover:block m-0 p-0">
           <Icon className="text-2xl" icon="material-symbols:drag-indicator" />
-        </div>
+        </SortableDragHandle>
       </div>
       <Checkbox checked={checked} sx={{ padding: 0 }} onChange={handleToggle} />
       <textarea
@@ -99,7 +86,7 @@ function SortableCheckbox({
           {delete_}
         </button>
       </div>
-    </Reorder.Item>
+    </SortableItem>
   );
 }
 

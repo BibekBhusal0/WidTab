@@ -207,7 +207,7 @@ export function ReformatContent({
             </Paper>
           )}
           {role === "model" && (
-            <Paper className={cn(cls, "mx-w-[80%]")} variant="outlined">
+            <Paper className={cn(cls, "max-w-[80%]")} variant="outlined">
               <ReactMarkdown className="w-full">
                 {parts.map(({ text }) => text || "").join("\n")}
               </ReactMarkdown>
