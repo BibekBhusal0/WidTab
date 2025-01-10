@@ -1,8 +1,7 @@
 import Folder from "@/components/bookmarks/folder";
-import { changeCurrentFolder, toggleFavorites } from "@/redux/slice/bookmark";
+import { changeCurrentFolder } from "@/redux/slice/bookmark";
 import { StateType } from "@/redux/store";
 import { Icon } from "@iconify/react";
-import IconButton from "@mui/material/IconButton";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { TakeBookmarksProps } from "@/types/slice/bookmark";
@@ -58,9 +57,7 @@ function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
   const { favorites, linkInNewTab } = useSelector(
     (state: StateType) => state.bookmarks
   );
-  const dispatch = useDispatch();
   const fav = favorites.includes(bookmarks.id);
-  const toggleItem = () => dispatch(toggleFavorites(bookmarks.id));
 
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({
@@ -88,11 +85,7 @@ function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
             </div>
           </div>
         </div>
-        {fav && (
-          <IconButton onClick={toggleItem}>
-            <Icon className="text-3xl" icon="mdi:heart" />
-          </IconButton>
-        )}
+        {fav && <Icon className="text-3xl" icon="mdi:heart" />}
       </div>
     </LinkContextMenu>
   );
@@ -104,9 +97,7 @@ function BookmarkFolder({ bookmarks }: bookmarkTreeNode) {
   );
   const dispatch = useDispatch();
   const changeFolder = () => {
-    if (!open) {
-      dispatch(changeCurrentFolder(bookmarks.id));
-    }
+    if (!open) dispatch(changeCurrentFolder(bookmarks.id));
   };
   const {
     attributes,
