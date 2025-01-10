@@ -1,6 +1,5 @@
 import { TaskType, todoType } from "@/types/slice/todo";
 import { useDispatch } from "react-redux";
-import { AnimatePresence, Reorder } from "framer-motion";
 import SortableCheckbox from "./checkbox";
 import { useRef } from "react";
 import {
@@ -13,6 +12,7 @@ import {
 import { cn } from "@/utils/cn";
 import { SelectIconMenu } from "@/components/select-icon";
 import { ScrollArea } from "@/components/scrollarea";
+import { Sortable } from "@/components/sortable";
 
 export const transparentInput =
   "border-transparent w-full bg-transparent resize-none focus:outline-none";
@@ -84,16 +84,16 @@ function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
         title: e.target.value,
       })
     );
-  const handleReorder = (newOrder: number[]) => {
-    const orderedTasks = newOrder
-      .map((id) => dynamicTasks.find((task) => task.id === id))
-      .filter((task): task is todoType => task !== undefined);
+  const handleReorder = (newOrder: todoType[]) => {
+    // const orderedTasks = newOrder
+    //   .map((id) => dynamicTasks.find((task) => task.id === id))
+    //   .filter((task): task is todoType => task !== undefined);
 
     dispatch(
       changeTask({
         task_id: id,
         change_item: "todo",
-        todo: orderedTasks,
+        todo: newOrder,
       })
     );
   };
@@ -117,11 +117,11 @@ function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
         />
       </div>
       <ScrollArea className="py-2 px-0.5 space-y-3 h-[calc(100%-48px)]">
-        <Reorder.Group
-          className="space-y-2"
-          values={dynamicTasks.map((t) => t.id)}
-          onReorder={handleReorder}>
-          <AnimatePresence>
+        <Sortable
+          value={dynamicTasks}
+          onValueChange={handleReorder}
+          orientation="vertical">
+          <div className="flex flex-col gap-2 p-1">
             {dynamicTasks.map((task) => (
               <SortableCheckbox
                 ref_={(el: HTMLTextAreaElement | null) =>
@@ -134,11 +134,7 @@ function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
                 focusNext={() => focusNext(task.id)}
                 handleChange={(val: string) =>
                   dispatch(
-                    changeTodo({
-                      task_id: id,
-                      todo_id: task.id,
-                      task: val,
-                    })
+                    changeTodo({ task_id: id, todo_id: task.id, task: val })
                   )
                 }
                 handleToggle={() => {
@@ -149,8 +145,8 @@ function Todo({ id, title, todos, filtered, sorted, icon }: TaskType) {
                 {...task}
               />
             ))}
-          </AnimatePresence>
-        </Reorder.Group>
+          </div>
+        </Sortable>
       </ScrollArea>
     </>
   );
