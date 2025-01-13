@@ -41,6 +41,7 @@ module.exports = {
         ...generateColorMapping(),
         ...generateOpacityMapping("primary"),
         "text-primary": "var(--mui-palette-text-primary)",
+        "text-disabled": "var(--mui-palette-text-disabled)",
         "text-secondary": "var(--mui-palette-text-secondary)",
         divider: "var(--mui-palette-divider)",
       },
