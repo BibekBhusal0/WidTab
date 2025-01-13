@@ -61,12 +61,11 @@
   ul[data-type="taskList"] {
     @apply pl-1;
     li {
-      @apply flex gap-3 items-start my-2;
+      @apply flex gap-2 items-start;
       > label {
-        margin-right: 0.2rem;
         user-select: none;
         input[type="checkbox"] {
-          @apply appearance-none bg-transparent rounded-themed m-0 cursor-pointer size-5 relative border-primary-main border-2 grid place-content-center hover:bg-primary-3 active:bg-primary-5 top-1 checked:bg-primary-main checked:hover:bg-primary-main;
+          @apply appearance-none bg-transparent rounded-themed m-0 cursor-pointer size-5 relative border-primary-main border-2 grid place-content-center hover:bg-primary-3 active:bg-primary-5 top-[1.2px] checked:bg-primary-main checked:hover:bg-primary-main;
           @apply before:content-[''] before:size-3 before:scale-0 before:transition-transform before:duration-100 before:ease-in-out before:origin-center checked:before:scale-100 text-primary-contrastText;
 
           &::before {

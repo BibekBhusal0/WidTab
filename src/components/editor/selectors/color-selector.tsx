@@ -98,8 +98,9 @@ export const ColorSelector = () => {
       icon={<div className="text-sm text-center w-full">A</div>}>
       <div className="flex flex-col">
         <div className="my-1 px-2 text-lg font-semibold">Color</div>
-        {TEXT_COLORS.map(({ name, color }) => (
+        {TEXT_COLORS.map(({ name, color }, i) => (
           <MenuItem
+            key={i}
             onClick={() => {
               editor.commands.unsetColor();
               name !== "Default" &&
@@ -123,8 +124,9 @@ export const ColorSelector = () => {
         <div className="my-1 pt-1 px-2 text-lg font-semibold border-t-border border-t-2">
           Highlight
         </div>
-        {HIGHLIGHT_COLORS.map(({ name, color }) => (
+        {HIGHLIGHT_COLORS.map(({ name, color }, i) => (
           <MenuItem
+            key={i}
             onClick={() => {
               editor.commands.unsetHighlight();
               name !== "Default" &&

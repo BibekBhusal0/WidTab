@@ -20,7 +20,7 @@ export const defaultExtensions = [
   Placeholder,
   TiptapLink,
   TaskList,
-  TaskItem,
+  TaskItem.configure({ nested: true, taskListTypeName: "taskList" }),
   TiptapUnderline,
   Color,
   TextStyle,
