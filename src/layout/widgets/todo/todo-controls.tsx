@@ -5,7 +5,7 @@ import {
   addTodo,
   changePinnedTodo,
   deleteTask,
-  toggleSortedFiltered,
+  toggleFiltered,
 } from "@/redux/slice/todo";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
@@ -17,16 +17,13 @@ export const TodoMenu: React.FC<{ id: number }> = ({ id }) => {
   const { pinnedTodo, Tasks } = useSelector((state: StateType) => state.todo);
   const crr = Tasks.find((t) => t.id === id);
   const { currentSpace } = useSelector((state: StateType) => state.layout);
-  const { pin, delete_, sort, show, hide } = useCurrentIcons();
+  const { pin, delete_, show, hide } = useCurrentIcons();
 
   if (!crr) return null;
-  const { filtered, sorted } = crr;
+  const { filtered } = crr;
 
   const pinned = pinnedTodo === id;
-  const handleFilter = () =>
-    dispatch(toggleSortedFiltered({ id, type: "filtered" }));
-  const handleSort = () =>
-    dispatch(toggleSortedFiltered({ id, type: "sorted" }));
+  const handleFilter = () => dispatch(toggleFiltered({ id }));
   const handlePin = () => dispatch(changePinnedTodo(id));
   const handleDelete = () => {
     if (currentSpace.type === "dynamic") {
@@ -43,12 +40,7 @@ export const TodoMenu: React.FC<{ id: number }> = ({ id }) => {
       onClick: handlePin,
       color: pinned ? "primary.main" : "action.main",
     },
-    {
-      name: "Sort",
-      icon: sort,
-      onClick: handleSort,
-      color: sorted ? "primary.main" : "action.main",
-    },
+
     {
       name: `${filtered ? "Show" : "Hide"} Done`,
       icon: filtered ? show : hide,

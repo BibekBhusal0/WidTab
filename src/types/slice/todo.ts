@@ -6,7 +6,6 @@ export interface todoType {
 
 export interface TaskType {
   id: number;
-  sorted?: boolean;
   filtered?: boolean;
   icon: string;
   title: string;

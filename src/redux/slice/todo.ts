@@ -15,7 +15,6 @@ export const todoSlice = createSlice({
     addTask: (state, action: PayloadAction<string>) => {
       state.Tasks.push({
         filtered: false,
-        sorted: false,
         id: getNextId(state.Tasks.map(({ id }) => id)),
         title: action.payload,
         todos: [],
@@ -69,7 +68,6 @@ export const todoSlice = createSlice({
           } else {
             task.todos = action.payload.todo;
           }
-          task.sorted = false;
         } else if (type === "title") task.title = action.payload.title;
         else if (type === "icon") task.icon = action.payload.icon;
       }
@@ -92,15 +90,10 @@ export const todoSlice = createSlice({
         }
       }
     },
-    toggleSortedFiltered: (
-      state,
-      action: PayloadAction<{ id: number; type: "sorted" | "filtered" }>
-    ) => {
+    toggleFiltered: (state, action: PayloadAction<{ id: number }>) => {
       const task = state.Tasks.find((p) => p.id === action.payload.id);
       if (task) {
-        task[action.payload.type] = !task[action.payload.type];
-        if (action.payload.type === "sorted") task.filtered = false;
-        if (action.payload.type === "filtered") task.sorted = false;
+        task.filtered = !task.filtered;
       }
     },
     changePinnedTodo: (state, action: PayloadAction<number>) => {
@@ -141,7 +134,7 @@ export const {
   changeTask,
   changeTodo,
   toggleTodo,
-  toggleSortedFiltered,
+  toggleFiltered,
   setTasks,
   changePinnedTodo,
   resetTodoSlice,

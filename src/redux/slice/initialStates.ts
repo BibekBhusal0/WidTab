@@ -94,7 +94,6 @@ export const initialTodoState: todoStateType = {
     {
       filtered: false,
       id: 1,
-      sorted: false,
       icon: "fluent:sparkle-16-filled",
       title: "Customize new tab",
       todos: [
