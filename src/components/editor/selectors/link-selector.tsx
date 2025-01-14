@@ -1,5 +1,4 @@
 import { useEditor } from "novel";
-// import { Check, Trash, Link2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
