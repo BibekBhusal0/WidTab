@@ -1,8 +1,6 @@
-import MenuPopover from "@/components/popoverMenu";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import IconMenu, { IconMenuType } from "@/components/menuWithIcon";
 import {
-  addTodo,
   changePinnedTodo,
   deleteTask,
   toggleFiltered,
@@ -10,9 +8,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
-import IconButton from "@mui/material/IconButton";
 
-export const TodoMenu: React.FC<{ id: number }> = ({ id }) => {
+export const TodoControls: React.FC<{ id: number }> = ({ id }) => {
   const dispatch = useDispatch();
   const { pinnedTodo, Tasks } = useSelector((state: StateType) => state.todo);
   const crr = Tasks.find((t) => t.id === id);
@@ -57,22 +54,5 @@ export const TodoMenu: React.FC<{ id: number }> = ({ id }) => {
 
   return <IconMenu menuItems={items} />;
 };
-
-function TodoControls({ id }: { id: number }) {
-  const dispatch = useDispatch();
-  const { add } = useCurrentIcons();
-  const handleAdd = () => {
-    dispatch(addTodo({ task_id: id, task: "" }));
-  };
-
-  return (
-    <>
-      <IconButton onClick={handleAdd}>{add}</IconButton>
-      <MenuPopover>
-        <TodoMenu id={id} />
-      </MenuPopover>
-    </>
-  );
-}
 
 export default TodoControls;

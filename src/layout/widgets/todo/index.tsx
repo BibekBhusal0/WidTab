@@ -1,7 +1,11 @@
 import { TaskType, todoType } from "@/types/slice/todo";
 import { useDispatch } from "react-redux";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { changeTask } from "@/redux/slice/todo";
+import {
+  changeTaskIcon,
+  changeTaskTitle,
+  changeTaskTodos,
+} from "@/redux/slice/todo";
 import { cn } from "@/utils/cn";
 import { SelectIconMenu } from "@/components/select-icon";
 import TodoList from "@/components/editor/todo";
@@ -27,26 +31,14 @@ function Todo({ id, title, todos, filtered, icon }: TaskType) {
   }, [dynamicTasks.length, todos.length]);
 
   const titleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
-    dispatch(
-      changeTask({
-        task_id: id,
-        change_item: "title",
-        title: e.target.value,
-      })
-    );
+    dispatch(changeTaskTitle({ task_id: id, title: e.target.value }));
 
   const handleChange = (newTodos: todoType[]) => {
-    dispatch(
-      changeTask({
-        task_id: id,
-        change_item: "todo",
-        todo: newTodos,
-      })
-    );
+    dispatch(changeTaskTodos({ task_id: id, todo: newTodos }));
   };
 
   const iconChangeHandler = (icon: string) => {
-    dispatch(changeTask({ task_id: id, change_item: "icon", icon }));
+    dispatch(changeTaskIcon({ task_id: id, icon }));
   };
 
   return (
