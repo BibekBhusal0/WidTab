@@ -61,7 +61,7 @@
   ul[data-type="taskList"] {
     @apply pl-1;
     li {
-      @apply flex gap-2 items-start;
+      @apply flex gap-3 items-start my-2;
       > label {
         margin-right: 0.2rem;
         user-select: none;
