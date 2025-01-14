@@ -1,5 +1,5 @@
 import { geminiWidgetType } from "@/types/slice/widgets";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState, useMemo } from "react";
 import { Icon } from "@iconify/react";
 import IconButton from "@mui/material/IconButton";
 import { GoogleGenerativeAI, Content } from "@google/generative-ai";
@@ -8,6 +8,7 @@ import ReactMarkdown from "react-markdown";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
 import Link from "@mui/material/Link";
 import { cn } from "@/utils/cn";
 import { useDispatch } from "react-redux";
@@ -15,7 +16,62 @@ import { currentSpaceEditWidget } from "@/redux/slice/layout";
 import { ScrollArea } from "@/components/scrollarea";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import useCurrentTheme from "@/hooks/useCurrentTheme";
+import reactNodeToString from "react-node-to-string";
 import browser from "webextension-polyfill";
+
+// https://github.com/chathub-dev/chathub/blob/b31739fe103f24df41f75a7556ce670c1437dbff/src/app/components/Markdown/index.tsx#L8
+function CustomCode(props: { children: React.ReactNode; className?: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const language = useMemo(() => {
+    const match = props.className?.match(/language-(\w+)/);
+    return match ? match[1] : "text";
+  }, [props.className]);
+
+  const code = useMemo(
+    () => reactNodeToString(props.children),
+    [props.children]
+  );
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 3000);
+  };
+
+  const cls = "size-5 transition-all duration-300 absolute-center";
+
+  return (
+    <div className="relative size-full flex-col">
+      <div className="full-between px-4 py-2 bg-slate-700 top-0 left-0">
+        {language && (
+          <span className="font-medium uppercase slate-100">{language}</span>
+        )}
+
+        <Tooltip placement="left" title={copied ? "Copied" : "Copy"}>
+          <Button
+            variant="outlined"
+            onClick={copyToClipboard}
+            sx={{ minWidth: "0px", borderColor: "#cbd5e1" }}>
+            <div className="size-full relative px-0 py-2 text-slate-300">
+              <Icon
+                icon="mingcute:copy-2-line"
+                className={cn(cls, copied ? "scale-0" : "scale-100")}
+              />
+              <Icon
+                icon="mingcute:check-fill"
+                className={cn(cls, copied ? "scale-100" : "scale-0")}
+              />
+            </div>
+          </Button>
+        </Tooltip>
+      </div>
+      <div className="w-full overflow-auto size-full px-5">
+        <code className={props.className}>{props.children}</code>
+      </div>
+    </div>
+  );
+}
 
 function GeminiWidget(props: geminiWidgetType) {
   const [input, setInput] = useState("");
@@ -140,7 +196,7 @@ export function AIChat({
         style={{ height: `calc(100% - ${height + 20}px)` }}>
         <div
           className={cn(
-            "size-full max-w-full prose prose-orange flex flex-col gap-4 p-4 transition-all",
+            "size-full max-w-full prose prose-pre:relative prose-pre:p-0 flex flex-col gap-4 p-4 transition-all",
             mode === "dark" && "dark:prose-invert"
           )}>
           <ReformatContent {...{ conversation, loading }} />
@@ -207,8 +263,46 @@ export function ReformatContent({
             </Paper>
           )}
           {role === "model" && (
-            <Paper className={cn(cls, "max-w-[80%]")} variant="outlined">
-              <ReactMarkdown className="w-full">
+            <Paper className={cn(cls, "max-w-[90%]")} variant="outlined">
+              <ReactMarkdown
+                className="w-full"
+                components={{
+                  a: ({ node, ...props }) => {
+                    if (!props.title) {
+                      return <a {...props} />;
+                    }
+                    return (
+                      <Tooltip title={props.title} arrow>
+                        <a
+                          {...props}
+                          className={cn(
+                            props?.className,
+                            "transition-all hover:text-primary-main"
+                          )}
+                          title={undefined}
+                        />
+                      </Tooltip>
+                    );
+                  },
+                  code: ({ node, className, children, ...props }) => {
+                    const inline =
+                      typeof children === "boolean" ||
+                      typeof children === "number" ||
+                      (typeof children === "string" &&
+                        !children.includes("\n"));
+
+                    if (inline) {
+                      return (
+                        <code className={className} {...props}>
+                          {children}
+                        </code>
+                      );
+                    }
+                    return (
+                      <CustomCode className={className}>{children}</CustomCode>
+                    );
+                  },
+                }}>
                 {parts.map(({ text }) => text || "").join("\n")}
               </ReactMarkdown>
             </Paper>
