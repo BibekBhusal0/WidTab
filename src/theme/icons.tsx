@@ -24,7 +24,6 @@ const R_icons = [
   "unlock",
   "habitTracker",
   "pin",
-  "sort",
   "show",
   "hide",
   "search",
