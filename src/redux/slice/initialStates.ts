@@ -83,7 +83,7 @@ export const initialThemeState: ThemeSliceType = {
       blur: 0.55,
       roundness: 0.24,
       opacity: 0.85,
-      iconPack: "cil",
+      iconPack: "Bootstrap Fill",
     },
   ],
 };
@@ -94,7 +94,6 @@ export const initialTodoState: todoStateType = {
     {
       filtered: false,
       id: 1,
-      sorted: false,
       icon: "fluent:sparkle-16-filled",
       title: "Customize new tab",
       todos: [

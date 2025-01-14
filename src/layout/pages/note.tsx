@@ -1,8 +1,8 @@
 import { StateType } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
+import useCurrentIcons from "@/hooks/useCurrentIcons";
 import Paper from "@mui/material/Paper";
 import { cn } from "@/utils/cn";
-import useCurrentIcons from "@/hooks/useCurrentIcons";
 import Note from "../widgets/note";
 import { addNoteWithTitle, deleteNote } from "@/redux/slice/note";
 import { ScrollArea } from "@/components/scrollarea";

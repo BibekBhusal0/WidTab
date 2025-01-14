@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "WidTab",
-  "description": "Fully Customizable new tab with many widgets",
+  "description": "Fully Customizable new tab with different types of widgets",
   "options_page": "src/pages/options/index.html",
 
   "action": {

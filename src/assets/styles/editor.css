@@ -1,6 +1,7 @@
 .child-full > div {
   @apply size-full;
 }
+
 .todo-list {
   .is-editor-empty:first-child::before,
   .is-empty::before {
@@ -12,13 +13,24 @@
     @apply h-0 float-left pointer-events-none text-divider;
     content: attr(data-placeholder);
     pointer-events: none;
-    margin-left: -14px;
+    margin-left: -9px;
   }
+
   ul[data-type="taskList"] li[data-checked="true"] > div {
     @apply line-through;
     color: var(--mui-palette-text-disabled);
-    text-decoration-thickness: 1px;
+    text-decoration-thickness: 2px;
   }
+  ul[data-type="taskList"] li > label {
+    margin-right: 0.2rem;
+  }
+}
+
+.prose-sm ul[data-type="taskList"] li > label input[type="checkbox"] {
+  @apply top-[1.2px];
+}
+.prose-xl ul[data-type="taskList"] li > label input[type="checkbox"] {
+  @apply top-[6.4px];
 }
 
 .ProseMirror {
@@ -65,9 +77,8 @@
       > label {
         user-select: none;
         input[type="checkbox"] {
-          @apply appearance-none bg-transparent rounded-themed m-0 cursor-pointer size-5 relative border-primary-main border-2 grid place-content-center hover:bg-primary-3 active:bg-primary-5 top-[1.2px] checked:bg-primary-main checked:hover:bg-primary-main;
+          @apply appearance-none bg-transparent rounded-themed m-0 cursor-pointer size-5 relative border-primary-main border-2 grid place-content-center hover:bg-primary-3 active:bg-primary-5  checked:bg-primary-main checked:hover:bg-primary-main;
           @apply before:content-[''] before:size-3 before:scale-0 before:transition-transform before:duration-100 before:ease-in-out before:origin-center checked:before:scale-100 text-primary-contrastText;
-
           &::before {
             box-shadow: inset 1em 1em;
             clip-path: polygon(
@@ -114,8 +125,8 @@
 .editor .drag-handle {
   @apply fixed bg-no-repeat bg-center size-6 z-50 duration-200 cursor-grab transition-colors rounded-md;
   @apply hover:bg-stone-100 hover:bg-opacity-5 active:bg-stone-200 active:bg-opacity-5 active:cursor-grabbing;
-  left: 0 !important;
-  transform: translate(0, -40%);
+  /* left: 0 !important; */
+  transform: translate(-50%, -50%);
 
   &.hide {
     @apply opacity-0 pointer-events-none;

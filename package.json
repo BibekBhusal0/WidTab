@@ -1,7 +1,7 @@
 {
   "name": "widtab",
   "version": "1.0.0",
-  "description": "Add ",
+  "description": "Fully Customizable new tab with different types of widgets",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "@mui/x-date-pickers": "^7.18.0",
     "@radix-ui/react-scroll-area": "^1.2.0",
     "@reduxjs/toolkit": "^2.2.7",
+    "@tiptap/extension-document": "^2.11.2",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
     "framer-motion": "^11.15.0",
@@ -77,6 +78,7 @@
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "fs-extra": "^11.2.0",
+    "gh-pages": "^6.2.0",
     "nodemon": "^3.1.7",
     "postcss": "^8.4.38",
     "tailwind-scrollbar": "^3.1.0",
