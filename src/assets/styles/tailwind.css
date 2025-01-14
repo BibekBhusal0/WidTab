@@ -22,3 +22,34 @@
     @apply horizontal-center vertical-center;
   }
 }
+
+@layer base {
+  :root {
+    --text-default: #000000;
+    --text-red: #c62828;
+    --text-blue: #1976d2;
+    --text-green: #388e3c;
+    --text-orange: #ff9800;
+    --text-pink: #d81b60;
+    --text-gray: #757575;
+
+    --highlight-default: rgba(255, 255, 0, 0);
+    --highlight-opacity: 0.5;
+    --highlight-red: rgba(224, 0, 0, var(--highlight-opacity));
+    --highlight-blue: rgba(37, 99, 235, var(--highlight-opacity));
+    --highlight-green: rgba(0, 138, 0, var(--highlight-opacity));
+    --highlight-orange: rgba(255, 165, 0, var(--highlight-opacity));
+    --highlight-pink: rgba(186, 64, 129, var(--highlight-opacity));
+    --highlight-gray: rgba(168, 162, 158, var(--highlight-opacity));
+  }
+
+  .dark {
+    --text-default: #ffffff;
+    --text-red: #ff5252;
+    --text-blue: #90caf9;
+    --text-green: #a5d6a7;
+    --text-orange: #ffb74d;
+    --text-pink: #f48fb1;
+    --text-gray: #bdbdbd;
+  }
+}
