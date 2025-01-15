@@ -3,7 +3,7 @@
   "name": "WidTab",
   "description": "Fully Customizable new tab with different types of widgets",
   "options_page": "src/pages/options/index.html",
-
+  "browser_specific_settings": { "gecko": { "id": "notEmail@widtab.com" } },
   "action": {
     "default_popup": "src/pages/popup/index.html",
     "default_icon": {
