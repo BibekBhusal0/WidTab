@@ -24,7 +24,7 @@ export const oppositePosition: Record<ToolBarPositions, ToolBarPositions> = {
   bottom: "top",
 };
 
-const RTBI = ["spaces", "todo", "lock", "theme"] as const;
+const RTBI = ["spaces", "lock", "theme"] as const;
 
 export type RemovableToolbarIcons = (typeof RTBI)[number];
 export const allRemovableToolbarIcons: RemovableToolbarIcons[] = [...RTBI];

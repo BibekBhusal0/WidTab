@@ -16,7 +16,7 @@ function AddSearch() {
   };
 
   return (
-    <div className="flex-center flex-col size-full gap-5">
+    <div className="flex-center flex-col w-full pt-4 gap-5">
       <FormControl fullWidth>
         <InputLabel id="search-engines">Search Engine</InputLabel>
         <SearchEngineSelect

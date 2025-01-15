@@ -17,9 +17,11 @@
   }
 
   ul[data-type="taskList"] li[data-checked="true"] > div {
-    @apply line-through;
-    color: var(--mui-palette-text-disabled);
+    @apply line-through text-text-disabled;
     text-decoration-thickness: 2px;
+  }
+  ul[data-type="taskList"] li > div {
+    @apply text-text-primary;
   }
   ul[data-type="taskList"] li > label {
     margin-right: 0.2rem;
@@ -94,8 +96,7 @@
       }
 
       &[data-checked="true"] > div > p {
-        @apply line-through;
-        color: var(--mui-palette-text-disabled);
+        @apply line-through text-text-disabled;
         text-decoration-thickness: 1px;
       }
       > div > p {
@@ -125,6 +126,7 @@
 .editor .drag-handle {
   @apply fixed bg-no-repeat bg-center size-6 z-50 duration-200 cursor-grab transition-colors rounded-md;
   @apply hover:bg-stone-100 hover:bg-opacity-5 active:bg-stone-200 active:bg-opacity-5 active:cursor-grabbing;
+  /* left: 0 !important; */
   transform: translate(-50%, -50%);
 
   &.hide {

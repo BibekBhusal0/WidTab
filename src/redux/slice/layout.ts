@@ -61,7 +61,7 @@ export const layoutSlice = createSlice({
       if (dockContentType === "spaces") {
         state.dockContent = { content: "spaces", id: "all" };
       } else if (dockContentType === "bookmark") {
-        state.dockContent = { content: "bookmark", id: "1" };
+        state.dockContent = { content: "bookmark", id: "favorites" };
       }
     },
     changeDockSelected: (state, action: PayloadAction<string>) => {
