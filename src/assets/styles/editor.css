@@ -17,9 +17,11 @@
   }
 
   ul[data-type="taskList"] li[data-checked="true"] > div {
-    @apply line-through;
-    color: var(--mui-palette-text-disabled);
+    @apply line-through text-text-disabled;
     text-decoration-thickness: 2px;
+  }
+  ul[data-type="taskList"] li > div {
+    @apply text-text-primary;
   }
   ul[data-type="taskList"] li > label {
     margin-right: 0.2rem;
@@ -94,8 +96,7 @@
       }
 
       &[data-checked="true"] > div > p {
-        @apply line-through;
-        color: var(--mui-palette-text-disabled);
+        @apply line-through text-text-disabled;
         text-decoration-thickness: 1px;
       }
       > div > p {

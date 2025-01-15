@@ -51,6 +51,10 @@ function SearchEngineSelect({ showName, ...props }: SearchEngineSelectProps) {
       {...props}
       renderValue={renderValue}
       className={cn("icon-xl", props.className)}
+      MenuProps={{
+        style: { maxHeight: "300px", ...props?.MenuProps?.style },
+        ...props?.MenuProps,
+      }}
       sx={{
         ".MuiSelect-select": {
           padding: "10px",

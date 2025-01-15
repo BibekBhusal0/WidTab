@@ -66,8 +66,8 @@ function CustomCode(props: { children: React.ReactNode; className?: string }) {
           </Button>
         </Tooltip>
       </div>
-      <div className="w-full overflow-auto size-full px-5">
-        <code className={props.className}>{props.children}</code>
+      <div className="overflow-auto size-full px-5">
+        <code {...props} />
       </div>
     </div>
   );
