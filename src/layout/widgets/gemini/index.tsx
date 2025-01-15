@@ -17,6 +17,7 @@ import { ScrollArea } from "@/components/scrollarea";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import useCurrentTheme from "@/hooks/useCurrentTheme";
 import reactNodeToString from "react-node-to-string";
+import rehypeHighlight from "rehype-highlight";
 import browser from "webextension-polyfill";
 
 // https://github.com/chathub-dev/chathub/blob/b31739fe103f24df41f75a7556ce670c1437dbff/src/app/components/Markdown/index.tsx#L8
@@ -265,6 +266,9 @@ export function ReformatContent({
           {role === "model" && (
             <Paper className={cn(cls, "max-w-[90%]")} variant="outlined">
               <ReactMarkdown
+                rehypePlugins={[
+                  [rehypeHighlight, { detect: true, ignoreMissing: true }],
+                ]}
                 className="w-full"
                 components={{
                   a: ({ node, ...props }) => {
