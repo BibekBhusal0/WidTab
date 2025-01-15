@@ -1,6 +1,5 @@
 import { currentSpaceAddWidget } from "@/redux/slice/layout";
 import { StateType } from "@/redux/store";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Slider from "@mui/material/Slider";
 import TextField from "@mui/material/TextField";
@@ -9,6 +8,7 @@ import { Icon } from "@iconify/react";
 import useAvailablePosition from "@/hooks/useAvailablePosition";
 import HelpInCustomWidget from "./helpCustom";
 import { useState } from "react";
+import { getUrlFromString } from "@/utils/url";
 
 export const urlPattern = /(https?:\/\/[^\s"'"]+|www\.[^\s"'"]+)/;
 
@@ -16,7 +16,8 @@ function AddCustomWidget() {
   const dispatch = useDispatch();
   const { n_cols, n_rows } = useSelector((state: StateType) => state.layout);
   const [text, setText] = useState("");
-  const [extractedUrl, setExtractedUrl] = useState("");
+  const [helperText, setHelperText] = useState("");
+  //   const [extractedUrl, setExtractedUrl] = useState("");
   const [rows, setRows] = useState(2);
   const [cols, setCols] = useState(2);
   const available_widgets = useAvailablePosition(cols, rows);
@@ -24,64 +25,65 @@ function AddCustomWidget() {
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     setText(inputValue);
-
-    const matchedUrl = inputValue.match(urlPattern);
-    setExtractedUrl(matchedUrl ? matchedUrl[0] : "");
+    if (helperText) setHelperText("");
+    // const matchedUrl = inputValue.match(urlPattern);
+    // setExtractedUrl(matchedUrl ? matchedUrl[0] : "");
   };
   const add = () => {
-    if (available_widgets !== null && extractedUrl !== "") {
-      dispatch(
-        currentSpaceAddWidget({
-          gridProps: available_widgets,
-          type: "custom",
-          values: { id: 0, url: extractedUrl },
-        })
-      );
-      setText("");
-      setExtractedUrl("");
-    }
+    if (!available_widgets) return;
+    if (text.trim() === "") return setHelperText("URL can't be empty");
+    const extractedURL = getUrlFromString(text);
+    if (!extractedURL) return setHelperText("Enter valid URL");
+    dispatch(
+      currentSpaceAddWidget({
+        gridProps: available_widgets,
+        type: "custom",
+        values: { id: 0, url: extractedURL },
+      })
+    );
+    setText("");
+    setHelperText("");
   };
   return (
-    <Box className="size-full relative flex flex-col gap-3 pt-3">
+    <div className="size-full relative flex flex-col gap-3 pt-3">
       <TextField
-        error={extractedUrl === "" && text.trim() !== ""}
-        helperText={
-          extractedUrl === "" && text.trim() !== "" && "Enter valid URL"
-        }
+        helperText={helperText}
+        error={!!helperText}
         autoFocus
         onChange={handleTextChange}
         value={text}
         label="Widget URL"
+        placeholder="Widget URL"
       />
       <div className="flex items-center px-3 gap-2 flex-col">
-        <Box className="flex justify-start gap-5 w-full">
-          <Box className="text-xl">X:</Box>
+        <div className="flex justify-start gap-5 w-full">
+          <div className="text-xl">X:</div>
           <Slider
             value={cols}
             onChange={(_, value) => setCols(value as number)}
             min={1}
             max={n_cols}
           />
-        </Box>
-        <Box className="flex justify-start gap-5 w-full">
-          <Box className="text-xl">Y:</Box>
+        </div>
+        <div className="flex justify-start gap-5 w-full">
+          <div className="text-xl">Y:</div>
           <Slider
             value={rows}
             onChange={(_, value) => setRows(value as number)}
             min={1}
             max={n_rows}
           />
-        </Box>
-        <Box className="text-xl">
+        </div>
+        <div className="text-xl">
           Position: ({cols}, {rows})
-        </Box>
-        <Box sx={{ color: "error.main" }}>
-          {available_widgets === null ? "No space available" : ""}
-        </Box>
+        </div>
+        {!available_widgets && (
+          <div className="text-error-main">No space available</div>
+        )}{" "}
       </div>
 
       <Button
-        disabled={extractedUrl === "" || available_widgets === null}
+        disabled={available_widgets === null}
         onClick={add}
         variant="contained"
         className="mx-5"
@@ -91,7 +93,7 @@ function AddCustomWidget() {
         Add
       </Button>
       <HelpInCustomWidget />
-    </Box>
+    </div>
   );
 }
 

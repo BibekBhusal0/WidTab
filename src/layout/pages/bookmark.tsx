@@ -1,7 +1,7 @@
 import Sidebar from "@/components/sidebar";
 import BookmarkTree from "@/components/bookmarks/tree";
 import SelectSize from "@/components/bookmarks/size";
-import Button from "@mui/material/Button";
+import Button, { ButtonProps } from "@mui/material/Button";
 import { Icon } from "@iconify/react";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
@@ -20,6 +20,10 @@ import {
 } from "@/types/slice/bookmark";
 import { ScrollArea } from "@/components/scrollarea";
 import Favorites from "../widgets/favorites";
+import MenuPopover, { MenuPopoverProps } from "@/components/popoverMenu";
+import TextField from "@mui/material/TextField";
+import { ReactNode, useState } from "react";
+import { addFolder, addLink } from "@/utils/bookmark";
 
 function BookmarkManager() {
   return (
@@ -28,7 +32,7 @@ function BookmarkManager() {
       resizableBoxProps={{
         children: (
           <ScrollArea className="h-full bg-primary-1">
-            <FavButton />
+            <BookmarkButtons />
             <BookmarkTree />
           </ScrollArea>
         ),
@@ -60,22 +64,174 @@ function BookmarkSizeSelect() {
   return <SelectSize value={folderSize} onChange={handleChange} />;
 }
 
-function FavButton() {
+const addIcon = <Icon icon="material-symbols:add-rounded" />;
+function BookmarkButtons() {
+  const gap = 10;
+  const btnW = 90;
+  const width = `calc(${btnW / 2}% - ${gap / 2}px)`;
+
+  const getMenuProps = (c: ReactNode): Partial<MenuPopoverProps> => {
+    return {
+      icon: (
+        <Button
+          children={c}
+          startIcon={addIcon}
+          sx={{ width: "100%" }}
+          variant="contained"
+        />
+      ),
+      buttonProps: { sx: { width } },
+      button: false,
+      menuProps: {
+        anchorOrigin: { horizontal: "center", vertical: "bottom" },
+        transformOrigin: { horizontal: "center", vertical: "top" },
+        sx: { marginTop: "5px" },
+      },
+    };
+  };
+  const { showFavorites } = useSelector((state: StateType) => state.bookmarks);
+
+  return (
+    <div style={{ gap }} className="flex-center w-full my-3 flex-wrap">
+      <FavButton sx={{ width: `${btnW}%` }} />
+      {!showFavorites && (
+        <>
+          <AddFolderButton {...getMenuProps("Folder")} />
+          <AddLinkButton {...getMenuProps("Link")} />
+        </>
+      )}
+    </div>
+  );
+}
+
+function AddFolderButton(props: Partial<MenuPopoverProps>) {
+  const { currentFolderID } = useSelector(
+    (state: StateType) => state.bookmarks
+  );
+  const [key, setKey] = useState(1);
+  const [name, setName] = useState("");
+  const [helperText, setHelperText] = useState("");
+  const handleClose = () => {
+    setKey((prev) => prev + 1);
+    setName("");
+    setHelperText("");
+  };
+  const handleTextChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setName(e.target.value);
+    if (helperText) setHelperText("");
+  };
+  const handleClick = () => {
+    if (name.trim().length === 0) {
+      setHelperText("Name is required");
+      return;
+    }
+    addFolder(currentFolderID, name);
+    handleClose();
+  };
+  return (
+    <MenuPopover key={key} icon={<>Add Folder </>} button={false} {...props}>
+      <div className="px-5 py-3 gap-3 flex-center flex-col">
+        <TextField
+          autoFocus
+          size="small"
+          error={!!helperText}
+          label="Name"
+          value={name}
+          onChange={handleTextChange}
+          helperText={helperText}
+        />
+        <Button onClick={handleClick} startIcon={addIcon} variant="contained">
+          Add Folder
+        </Button>
+      </div>
+    </MenuPopover>
+  );
+}
+function AddLinkButton(props: Partial<MenuPopoverProps>) {
+  const { currentFolderID } = useSelector(
+    (state: StateType) => state.bookmarks
+  );
+  const [key, setKey] = useState(1);
+  const [url, setUrl] = useState("");
+  const [name, setName] = useState("");
+  const [urlHelperText, setUrlHelperText] = useState("");
+  const [nameHelperText, setNameHelperText] = useState("");
+
+  const handleClose = () => {
+    setKey((prev) => prev + 1);
+    if (name) setName("");
+    if (url) setUrl("");
+    if (nameHelperText) setNameHelperText("");
+    if (urlHelperText) setUrlHelperText("");
+  };
+  const handleUrlChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setUrl(e.target.value);
+    if (urlHelperText) setUrlHelperText("");
+  };
+  const handleNameChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setName(e.target.value);
+    if (nameHelperText) setNameHelperText("");
+  };
+
+  const handleClick = () => {
+    if (name.trim().length === 0) {
+      setNameHelperText("Name is required");
+      return;
+    }
+    if (url.trim().length === 0) {
+      setUrlHelperText("Url is required");
+      return;
+    }
+    addLink(currentFolderID, url, name);
+    handleClose();
+  };
+
+  return (
+    <MenuPopover key={key} icon={<>Add Link </>} button={false} {...props}>
+      <div className="px-5 py-3 gap-3 flex-center flex-col">
+        <TextField
+          autoFocus
+          size="small"
+          error={!!nameHelperText}
+          label="Title"
+          value={name}
+          onChange={handleNameChange}
+          helperText={nameHelperText}
+        />
+        <TextField
+          size="small"
+          error={!!urlHelperText}
+          label="URL"
+          value={url}
+          onChange={handleUrlChange}
+          helperText={urlHelperText}
+        />
+        <Button onClick={handleClick} startIcon={addIcon} variant="contained">
+          Add Link
+        </Button>
+      </div>
+    </MenuPopover>
+  );
+}
+
+function FavButton(props: ButtonProps) {
   const dispatch = useDispatch();
   const { showFavorites } = useSelector((state: StateType) => state.bookmarks);
+
   return (
-    <div className="flex-center w-full">
-      <Button
-        sx={{ marginX: "auto", marginY: "1rem" }}
-        className="transition-all"
-        variant={showFavorites ? "outlined" : "contained"}
-        onClick={() => dispatch(toggleShowFavorites())}>
-        <div className="text-xl flex-center gap-2">
-          <Icon icon="mdi:heart-outline" />
-          <div>{showFavorites ? "Hide " : "Show "} All Favorites</div>
-        </div>
-      </Button>
-    </div>
+    <Button
+      variant={showFavorites ? "outlined" : "contained"}
+      startIcon={<Icon icon="mdi:heart-outline" />}
+      children={`${showFavorites ? "Hide " : "Show "} All Favorites`}
+      {...props}
+      onClick={() => dispatch(toggleShowFavorites())}
+    />
   );
 }
 

@@ -25,7 +25,7 @@ export default function Sidebar({
   containerProps,
 }: SidebarProps) {
   const [drawerWidth, setDrawerWidth] = useState(600);
-  const minW = 150;
+  const minW = 200;
   const [open, setOpen] = useState(true);
   const toggleOpen = () => {
     if (!open && drawerWidth <= minW) setDrawerWidth(minW);

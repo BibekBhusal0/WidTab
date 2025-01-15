@@ -36,7 +36,20 @@ export const findPath = async (id: string): Promise<treeNodeArray> => {
   return path;
 };
 
-export const deleteBookmark = (_: string) => {};
+export const deleteLink = (id: string) => {};
+export const deleteFolder = (id: string) => {};
+export const addFolder = (parentId: string, folderName: string) => {
+  alert(`${folderName} Added`);
+};
+export const addLink = (parentId: string, url: string, title: string) => {
+  alert(`${title} Added`);
+};
+export const editLink = (id: string, url: string, title: string) => {
+  alert(`${title} Edited`);
+};
+export const editFolder = (id: string, title: string) => {
+  alert(`${title} Edited`);
+};
 
 export const openLink = (
   url: string,

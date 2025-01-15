@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { TakeBookmarksProps } from "@/types/slice/bookmark";
-import { LinkContextMenu } from "./contextMenu";
+import { FolderContextMenu, LinkContextMenu } from "./contextMenu";
 import { bookmarkTreeNode } from "@/types/slice/bookmark";
 import { useAllBookmarks } from "@/hooks/useBookmarks";
 import Favicon from "@/utils/faviconURL";
@@ -126,24 +126,26 @@ function BookmarkFolder({ bookmarks }: bookmarkTreeNode) {
         "relative py-1 my-1 ml-1 pl-2  border-2 border-transparent",
         isOver && "border-primary-3"
       )}>
-      <div
-        className="flex w-full items-center gap-4 cursor-pointer"
-        ref={draggableRef}
-        style={style}
-        {...attributes}
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          setOpen(!open);
-          changeFolder();
-        }}>
-        <div className="aspect-square h-full shrink-0">
-          <Folder open={open} />
+      <FolderContextMenu id={bookmarks.id}>
+        <div
+          className="flex w-full items-center gap-4 cursor-pointer"
+          ref={draggableRef}
+          style={style}
+          {...attributes}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setOpen(!open);
+            changeFolder();
+          }}>
+          <div className="aspect-square h-full shrink-0">
+            <Folder open={open} />
+          </div>
+          <div {...listeners} className="text-2xl truncate">
+            {bookmarks.title}
+          </div>
         </div>
-        <div {...listeners} className="text-2xl truncate">
-          {bookmarks.title}
-        </div>
-      </div>
+      </FolderContextMenu>
 
       <AnimatePresence>
         {open &&
@@ -154,7 +156,6 @@ function BookmarkFolder({ bookmarks }: bookmarkTreeNode) {
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-              //   className="ml-2 pl-2"
               //
             >
               <BookmarkItem bookmarks={child} />
