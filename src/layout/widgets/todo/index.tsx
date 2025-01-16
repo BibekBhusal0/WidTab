@@ -24,7 +24,6 @@ function Todo({ id, title, todos, filtered, icon }: TaskType) {
 
   useEffect(() => {
     if (todos.length === previousTodosLength.current) {
-      console.log("todo length not ");
       setKey((prev) => prev + 1);
     }
     previousTodosLength.current = todos.length;
@@ -42,7 +41,7 @@ function Todo({ id, title, todos, filtered, icon }: TaskType) {
   };
 
   return (
-    <div className="size-full editor">
+    <div className="size-full drag-handle-left editor">
       <div className="flex justify-start items-center gap-2 px-3 h-12 icon-xl">
         <SelectIconMenu icon={icon} setIcon={iconChangeHandler} />
         <input

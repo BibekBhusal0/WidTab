@@ -89,7 +89,7 @@ export const TodoList = ({ tasks, onChange }: TodoListProps) => {
         }}
         editorProps={{
           attributes: {
-            class: `prose dark:prose-invert prose-xl prose-headings:font-title font-default focus:outline-none max-w-full size-full min-h-[270px] todo-list `,
+            class: `prose dark:prose-invert prose-xl prose-headings:font-title font-default focus:outline-none max-w-full size-full min-h-[250px] todo-list `,
           },
         }}
       />
