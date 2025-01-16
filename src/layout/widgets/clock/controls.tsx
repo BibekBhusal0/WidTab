@@ -15,12 +15,8 @@ import IconMenu from "@/components/menuWithIcon";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
 import moment from "moment-timezone";
 import useCurrentLayout from "@/hooks/useCurrentLayout";
-import { ControlPropsDifferentForContextMenu } from "../controls";
 
-function ClockControls({
-  id,
-  contextMenu = false,
-}: ControlPropsDifferentForContextMenu) {
+function ClockControls({ id }: { id: number }) {
   const layout = useCurrentLayout();
   const dispatch = useDispatch();
   const { delete_ } = useCurrentIcons();
@@ -111,24 +107,18 @@ function ClockControls({
         </ToggleButtonGroup>
       </MenuItem>
       <Divider />
-      {!contextMenu && (
-        <>
-          {" "}
-          <MenuItem className="p-2 ">
-            <Autocomplete
-              fullWidth
-              disableClearable
-              value={timeZone}
-              onChange={changeTimezone}
-              options={allTimezones}
-              renderInput={(params) => (
-                <TextField {...params} label="Timezone" />
-              )}
-            />
-          </MenuItem>
-          <Divider />{" "}
-        </>
-      )}
+
+      <MenuItem className="p-2 ">
+        <Autocomplete
+          fullWidth
+          disableClearable
+          value={timeZone}
+          onChange={changeTimezone}
+          options={allTimezones}
+          renderInput={(params) => <TextField {...params} label="Timezone" />}
+        />
+      </MenuItem>
+      <Divider />
       <MenuSwitch items={switches} />
       <Divider />
       <IconMenu

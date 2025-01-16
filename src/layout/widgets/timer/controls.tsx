@@ -13,12 +13,8 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import Popover from "@mui/material/Popover";
 import TimerStats from "./stats";
-import { ControlPropsDifferentForContextMenu } from "../controls";
 
-function TimerCOntrols({
-  id,
-  contextMenu = false,
-}: ControlPropsDifferentForContextMenu) {
+function TimerCOntrols({ id }: { id: number }) {
   const layout = useCurrentLayout();
   const dispatch = useDispatch();
   const { delete_ } = useCurrentIcons();
@@ -78,7 +74,7 @@ function TimerCOntrols({
     color: running ? "error.main" : "action.main",
   };
   const menuItems: IconMenuType[] = [];
-  if (!contextMenu && !running) menuItems.push(stats);
+  if (!running) menuItems.push(stats);
   menuItems.push(pausePlay);
   const deleteButton = [
     {
@@ -93,7 +89,7 @@ function TimerCOntrols({
     <>
       <IconMenu menuItems={menuItems} />
       <MenuSwitch items={switches} />
-      {!running && !contextMenu && (
+      {!running && (
         <div className="full-between p-3">
           <div className="text-xl">Time</div>
           <OutlinedInput
