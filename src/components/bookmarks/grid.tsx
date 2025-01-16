@@ -7,7 +7,7 @@ import {
   TakeBookmarksProps,
 } from "@/types/slice/bookmark";
 import useFullSize from "@/hooks/useFullSize";
-import { LinkContextMenu } from "./contextMenu";
+import { FolderContextMenu, LinkContextMenu } from "./contextMenu";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import Favicon from "@/utils/faviconURL";
@@ -41,7 +41,6 @@ function BookmarkGrid(props: ExtraBookmarkProps & bookmarkTreeNodeArray & l) {
         orientation="mixed"
         value={bookmarks}
         onValueChange={onReorder}
-        // overlay={<div className="size-full rounded-themed bg-primary-1"></div>}
         //
       >
         <div className="flex flex-wrap mx-auto w-full" style={{ gap }}>
@@ -75,7 +74,7 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
       <Bookmarks key={child.id} {...props} bookmarks={child} />
     ));
   }
-  const cm = bookmarks.url && contextMenu;
+  const linkAndContextMenu = bookmarks.url && contextMenu;
   const size = folderSizeMapping[folderSize];
   const fav = favorites.includes(bookmarks.id);
   const content = (
@@ -117,7 +116,7 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
             <Favicon src={bookmarks.url} className="size-1/2 aspect-square" />
           )}
           <SortableDragHandle className="flex-center w-full px-1 py-0.5 gap-[2px]">
-            {fav && cm && (
+            {fav && linkAndContextMenu && (
               <Icon style={{ fontSize: size / 5 }} icon="mdi:heart" />
             )}
             <div className="truncate w-full text-center">{bookmarks.title}</div>
@@ -127,10 +126,14 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
     </Card>
   );
 
+  const ContextMenuWrapper = bookmarks.url
+    ? LinkContextMenu
+    : FolderContextMenu;
+
   return (
     <SortableItem value={bookmarks.id}>
-      {cm ? (
-        <LinkContextMenu
+      {contextMenu ? (
+        <ContextMenuWrapper
           id={bookmarks.id}
           containerProps={{ sx: { width: size, height: size } }}
           children={content}

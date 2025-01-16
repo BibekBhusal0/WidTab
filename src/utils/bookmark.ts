@@ -13,12 +13,8 @@ export const findPath = (id: string) => {
           path.unshift(node);
           if (node.parentId) {
             getPathRecursive(node.parentId);
-          } else {
-            resolve(path);
-          }
-        } else {
-          resolve(path);
-        }
+          } else resolve(path);
+        } else resolve(path);
       });
     };
 
@@ -26,7 +22,16 @@ export const findPath = (id: string) => {
   });
 };
 
-export const deleteBookmark = (id: string) => browser.bookmarks.remove(id);
+export const deleteLink = (id: string) => browser.bookmarks.remove(id);
+export const deleteFolder = (id: string) => browser.bookmarks.removeTree(id);
+export const addFolder = (parentId: string, folderName: string) =>
+  browser.bookmarks.create({ parentId, title: folderName });
+export const addLink = (parentId: string, url: string, title: string) =>
+  browser.bookmarks.create({ parentId, url, title });
+export const editLink = (id: string, url: string, title: string) =>
+  browser.bookmarks.update(id, { url, title });
+export const editFolder = (id: string, title: string) =>
+  browser.bookmarks.update(id, { title });
 
 export const openLink = (
   url: string,
