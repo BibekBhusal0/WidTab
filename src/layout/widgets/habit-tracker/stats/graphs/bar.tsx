@@ -49,7 +49,8 @@ function BarGraph({
             textAnchor="end"
             tick={{ fill: text.primary, fontSize: 10 }}
             tickCount={10}
-            axisLine={{ stroke: text.primary }}></XAxis>
+            axisLine={{ stroke: text.primary }}
+          />
           <YAxis
             label={{
               value: unit,
@@ -59,10 +60,8 @@ function BarGraph({
             }}
             tick={{ fill: text.primary }}
             axisLine={{ stroke: text.primary }}
-            domain={[
-              0,
-              Math.max(target || 0, ...data.map((d) => d.value)),
-            ]}></YAxis>
+            domain={[0, Math.max(target || 0, ...data.map((d) => d.value))]}
+          />
 
           <Bar dataKey="value" radius={[10, 10, 0, 0]} fill={success.main}>
             {data.map((entry, index) => (
