@@ -108,16 +108,17 @@ function TimerWidget(props: TimerWidgetType) {
   const commonButtonProps: ButtonProps = {
     size: sm ? "small" : md ? "medium" : "large",
     className: "icon-lg",
+    sx: sm ? { width: "42px", minWidth: "42px" } : {},
   };
   const buttons: ButtonProps[] = [
     {
-      variant: isPlaying ? "outlined" : "contained",
+      variant: "contained",
       onClick: togglePlay,
       children: sm ? <Icon2RN icon={icon[btn1Text]} /> : btn1Text,
       startIcon: sm ? null : <Icon2RN icon={icon[btn1Text]} />,
     },
     {
-      variant: "text",
+      variant: "outlined",
       onClick: resetTimer,
       children: sm ? <Icon2RN icon={reset} /> : "Reset",
       color: "error",

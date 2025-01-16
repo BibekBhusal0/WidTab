@@ -12,10 +12,6 @@ import ContextMenu from "@/components/contextMenu";
 import MenuPopover from "@/components/popoverMenu";
 import IconMenu from "@/components/menuWithIcon";
 
-export type ControlPropsDifferentForContextMenu = {
-  id: number;
-  contextMenu?: boolean;
-};
 export type ControlsProps = {
   widgetInfo?: DeleteWidgetParameters;
   controls?: ReactNode;
@@ -87,12 +83,18 @@ function Controls({
 
   if (showDelete) {
     menuContent = (
-      <>
+      <div>
         {menuContent} <DeleteWidgetButton {...widgetInfo} buttonType="menu" />
-      </>
+      </div>
     );
   }
-  return <ContextMenu menuContent={menuContent}>{component}</ContextMenu>;
+  return (
+    <ContextMenu
+      menuContent={menuContent}
+      closeOnClick={false}
+      children={component}
+    />
+  );
 }
 
 type deleteWidgetButtonProps = {
