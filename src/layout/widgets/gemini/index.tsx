@@ -14,16 +14,14 @@ import { cn } from "@/utils/cn";
 import { useDispatch } from "react-redux";
 import { currentSpaceEditWidget } from "@/redux/slice/layout";
 import { ScrollArea } from "@/components/scrollarea";
-import { TextareaAutosize } from "@mui/base/TextareaAutosize";
-import useCurrentTheme from "@/hooks/useCurrentTheme";
 import reactNodeToString from "react-node-to-string";
-import rehypeHighlight from "rehype-highlight";
 import browser from "webextension-polyfill";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
 
 // https://github.com/chathub-dev/chathub/blob/b31739fe103f24df41f75a7556ce670c1437dbff/src/app/components/Markdown/index.tsx#L8
 function CustomCode(props: { children: React.ReactNode; className?: string }) {
   const [copied, setCopied] = useState(false);
-
   const language = useMemo(() => {
     const match = props.className?.match(/language-(\w+)/);
     return match ? match[1] : "text";
@@ -67,7 +65,7 @@ function CustomCode(props: { children: React.ReactNode; className?: string }) {
           </Button>
         </Tooltip>
       </div>
-      <div className="overflow-auto size-full px-5">
+      <div className="overflow-auto size-full px-5 py-3">
         <code {...props} />
       </div>
     </div>
@@ -130,37 +128,23 @@ function GeminiWidget(props: geminiWidgetType) {
   );
 }
 
-export function AIChat({
-  APIkey,
-  ...props
-}: { APIkey: string } & geminiWidgetType) {
-  const { conversation, model } = props;
-  const [input, setInput] = useState("");
-  const dispatch = useDispatch();
-  const { mode } = useCurrentTheme();
-  const setContent = (conversation: Content[]) =>
-    dispatch(
-      currentSpaceEditWidget({
-        type: "gemini",
-        values: { ...props, conversation },
-      })
-    );
-
-  const [focus, setFocus] = useState(false);
+type aiChatProp = { APIkey: string } & geminiWidgetType;
+export function AIChat({ ...props }: aiChatProp) {
   const [loading, setLoading] = useState(false);
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  return (
+    <div className="size-full flex flex-col gap-2 relative">
+      <AIChatContent {...{ loading }} {...props} />
+      <AIChatInput {...{ loading, setLoading }} {...props} />
+    </div>
+  );
+}
+
+function AIChatContent({
+  loading,
+  conversation,
+}: aiChatProp & { loading: boolean }) {
   const mainRef = useRef<HTMLDivElement>(null);
-  const textAreaParentRef = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState(60);
-
-  useEffect(() => {
-    const h = textAreaParentRef.current?.scrollHeight;
-    if (!h) return;
-    if (h === height) return;
-    setHeight(h);
-  }, [textAreaParentRef.current?.scrollHeight, input]);
-
-  useEffect(() => scrollBottom(), []);
   useEffect(() => scrollBottom(), [loading]);
 
   const scrollBottom = () =>
@@ -169,9 +153,41 @@ export function AIChat({
       behavior: "smooth",
     });
 
-  const handelModelResponse = async () => {
+  return (
+    <ScrollArea ref={mainRef}>
+      <div
+        className={cn(
+          "size-full max-w-full prose prose-pre:relative dark:prose-invert prose-pre:p-0 flex flex-col gap-4 p-4 transition-all"
+        )}>
+        <ReformatContent {...{ conversation, loading }} />
+      </div>
+    </ScrollArea>
+  );
+}
+function AIChatInput({
+  setLoading,
+  loading,
+  APIkey,
+  ...props
+}: aiChatProp & {
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
+  const [input, setInput] = useState("");
+  const dispatch = useDispatch();
+
+  const { conversation, model } = props;
+  const setContent = (conversation: Content[]) =>
+    dispatch(
+      currentSpaceEditWidget({
+        type: "gemini",
+        values: { ...props, conversation },
+      })
+    );
+
+  const expand = input.trim() !== "";
+  const handleModelResponse = async () => {
     if (input.trim() === "" || loading) return;
-    setFocus(false);
     setInput("");
     setLoading(true);
     try {
@@ -185,55 +201,35 @@ export function AIChat({
     } catch (error) {
       console.log("Error during API call:", error);
     } finally {
-      setFocus(false);
       setLoading(false);
     }
   };
 
   return (
-    <div className="size-full dark relative">
-      <ScrollArea
-        ref={mainRef}
-        style={{ height: `calc(100% - ${height + 20}px)` }}>
-        <div
-          className={cn(
-            "size-full max-w-full prose prose-pre:relative prose-pre:p-0 flex flex-col gap-4 p-4 transition-all",
-            mode === "dark" && "dark:prose-invert"
-          )}>
-          <ReformatContent {...{ conversation, loading }} />
-        </div>
-      </ScrollArea>
-      <div
-        ref={textAreaParentRef}
-        className={cn(
-          "p-1 bottom-1 horizontal-center flex-center rounded-themed",
-          "ring-1 ring-divider transition-all hover:ring-text-primary w-80",
-          (focus || input !== "") &&
-            "ring-2 ring-primary-main hover:ring-primary-main w-[80%]"
-        )}
-        onClick={() => textAreaRef.current?.focus()}>
-        <TextareaAutosize
-          autoFocus
-          maxRows={5}
-          minRows={1}
-          onFocus={() => setFocus(true)}
-          onAbort={() => setFocus(false)}
-          onBlur={() => setFocus(false)}
-          placeholder="Ask me anything..."
-          ref={textAreaRef}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="size-full bg-transparent p-2 outline-none resize-none text-xl"
-          disabled={loading}
-        />
-        <IconButton
-          disabled={loading}
-          className="self-end"
-          onClick={handelModelResponse}>
-          <Icon icon="ri:send-plane-fill" className="text-2xl" />
-        </IconButton>
-      </div>
-    </div>
+    <OutlinedInput
+      autoFocus
+      multiline
+      maxRows={5}
+      minRows={1}
+      size="small"
+      placeholder="Ask me anything..."
+      sx={{
+        width: expand ? "80%" : "320px",
+        "&.Mui-focused": { width: "80%" },
+        transition: "all 0.3s ease",
+        alignSelf: "center",
+      }}
+      value={input}
+      onChange={(e) => setInput(e.target.value)}
+      disabled={loading}
+      endAdornment={
+        <InputAdornment className="self-end" position="end">
+          <IconButton disabled={loading} onClick={handleModelResponse}>
+            <Icon icon="ri:send-plane-fill" className="text-2xl" />
+          </IconButton>
+        </InputAdornment>
+      }
+    />
   );
 }
 
@@ -266,9 +262,6 @@ export function ReformatContent({
           {role === "model" && (
             <Paper className={cn(cls, "max-w-[90%]")} variant="outlined">
               <ReactMarkdown
-                rehypePlugins={[
-                  [rehypeHighlight, { detect: true, ignoreMissing: true }],
-                ]}
                 className="w-full"
                 components={{
                   a: ({ node, ...props }) => {
