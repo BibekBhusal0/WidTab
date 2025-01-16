@@ -16,6 +16,7 @@ import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
+import { isValidUrl } from "@/utils/url";
 
 type AddFavProps = { id: string } & contextMenuProps;
 
@@ -56,6 +57,10 @@ export function LinkContextMenu({ id, ...props }: AddFavProps) {
     }
     if (url.trim().length === 0) {
       setUrlHelperText("Url is required");
+      return;
+    }
+    if (!isValidUrl(url)) {
+      setUrlHelperText("Invalid Url");
       return;
     }
     editLink(id, url, name);

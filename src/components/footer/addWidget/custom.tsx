@@ -10,14 +10,11 @@ import HelpInCustomWidget from "./helpCustom";
 import { useState } from "react";
 import { getUrlFromString } from "@/utils/url";
 
-export const urlPattern = /(https?:\/\/[^\s"'"]+|www\.[^\s"'"]+)/;
-
 function AddCustomWidget() {
   const dispatch = useDispatch();
   const { n_cols, n_rows } = useSelector((state: StateType) => state.layout);
   const [text, setText] = useState("");
   const [helperText, setHelperText] = useState("");
-  //   const [extractedUrl, setExtractedUrl] = useState("");
   const [rows, setRows] = useState(2);
   const [cols, setCols] = useState(2);
   const available_widgets = useAvailablePosition(cols, rows);
@@ -26,8 +23,6 @@ function AddCustomWidget() {
     const inputValue = e.target.value;
     setText(inputValue);
     if (helperText) setHelperText("");
-    // const matchedUrl = inputValue.match(urlPattern);
-    // setExtractedUrl(matchedUrl ? matchedUrl[0] : "");
   };
   const add = () => {
     if (!available_widgets) return;
@@ -79,7 +74,7 @@ function AddCustomWidget() {
         </div>
         {!available_widgets && (
           <div className="text-error-main">No space available</div>
-        )}{" "}
+        )}
       </div>
 
       <Button

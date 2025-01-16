@@ -24,6 +24,7 @@ import MenuPopover, { MenuPopoverProps } from "@/components/popoverMenu";
 import TextField from "@mui/material/TextField";
 import { ReactNode, useState } from "react";
 import { addFolder, addLink } from "@/utils/bookmark";
+import { isValidUrl } from "@/utils/url";
 
 function BookmarkManager() {
   return (
@@ -186,6 +187,10 @@ function AddLinkButton(props: Partial<MenuPopoverProps>) {
     }
     if (url.trim().length === 0) {
       setUrlHelperText("Url is required");
+      return;
+    }
+    if (!isValidUrl(url)) {
+      setUrlHelperText("Invalid Url");
       return;
     }
     addLink(currentFolderID, url, name);

@@ -35,12 +35,8 @@ export function ChangeURL({ url, id }: CustomWidgetType) {
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
     if (helperText) setHelperText("");
-
-    // const matchedUrl = inputValue.match(urlPattern);
-    // setExtractedUrl(matchedUrl ? matchedUrl[0] : "");
   };
 
-  //   const valid = extractedUrl !== "";
   const add = () => {
     if (!text || text.trim().length === 0) {
       setHelperText("URL is required");
