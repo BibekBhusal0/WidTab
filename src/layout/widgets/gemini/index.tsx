@@ -133,7 +133,7 @@ export function AIChat({ ...props }: aiChatProp) {
   const [loading, setLoading] = useState(false);
 
   return (
-    <div className="size-full flex flex-col gap-2 relative">
+    <div className="size-full flex justify-between flex-col gap-2 relative">
       <AIChatContent {...{ loading }} {...props} />
       <AIChatInput {...{ loading, setLoading }} {...props} />
     </div>

@@ -8,14 +8,12 @@ import StaticLayout from "@/layout/static";
 import Box from "@mui/material/Box";
 import { positionProps } from "@/types/slice/layout";
 import { cn } from "@/utils/cn";
-import useCurrentTheme from "@/hooks/useCurrentTheme";
 import { useFavicon } from "@/utils/faviconURL";
 
 function App() {
   const { currentSpace, toolBarPosition } = useSelector(
     (state: StateType) => state.layout
   );
-  const { mode } = useCurrentTheme();
   const { appProps } = positionProps[toolBarPosition];
   const layout = useCurrentLayout();
   var crrLayout = <DynamicLayout />;
@@ -28,11 +26,7 @@ function App() {
   return (
     <Box
       {...appProps}
-      className={cn(
-        "size-full h-screen relative flex",
-        appProps?.className,
-        mode
-      )}>
+      className={cn("size-full h-screen relative flex", appProps?.className)}>
       {crrLayout}
       <Footer />
     </Box>

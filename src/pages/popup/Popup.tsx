@@ -57,7 +57,7 @@ function PinnedTodo() {
   return (
     <Paper
       sx={{ backgroundColor: "primaryContainer.paper" }}
-      className="w-[380px] h-[350px]">
+      className="w-[380px] h-[350px] overflow-hidden">
       <Todo {...p} />
     </Paper>
   );
