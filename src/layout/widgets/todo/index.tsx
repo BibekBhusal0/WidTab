@@ -41,7 +41,7 @@ function Todo({ id, title, todos, filtered, icon }: TaskType) {
   };
 
   return (
-    <div className="size-full drag-handle-left editor">
+    <div className="size-full relative flex flex-col gap-2 drag-handle-left editor">
       <div className="flex justify-start items-center gap-2 px-3 h-12 icon-xl">
         <SelectIconMenu icon={icon} setIcon={iconChangeHandler} />
         <input
@@ -53,9 +53,7 @@ function Todo({ id, title, todos, filtered, icon }: TaskType) {
           onChange={titleChangeHandler}
         />
       </div>
-      <div className="w-full h-[calc(100%-48px)]">
-        <TodoList key={key} tasks={dynamicTasks} onChange={handleChange} />
-      </div>
+      <TodoList key={key} tasks={dynamicTasks} onChange={handleChange} />
     </div>
   );
 }

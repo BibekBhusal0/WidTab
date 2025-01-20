@@ -21,8 +21,8 @@ function Note({ id, title, text, icon }: noteType) {
   };
 
   return (
-    <>
-      <div className="flex justify-start items-center gap-2 px-3 h-12 icon-xl">
+    <div className="size-full flex flex-col gap-2">
+      <div className="flex justify-start items-center gap-2 px-3 icon-xl">
         <SelectIconMenu icon={icon} setIcon={iconChangeHandler} />
         <input
           className={cn(transparentInput, "text-3xl w-[calc(100%-92px)]")}
@@ -33,10 +33,10 @@ function Note({ id, title, text, icon }: noteType) {
           onChange={titleChangeHandler}
         />
       </div>
-      <div className="w-full px-2  h-[calc(100%-48px)] editor">
+      <div className="size-full px-2 editor">
         <Editor value={text} onChange={textChangeHandler} />
       </div>
-    </>
+    </div>
   );
 }
 

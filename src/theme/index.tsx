@@ -14,7 +14,12 @@ import useBackgroundImage from "@/utils/image";
 import { useTheme } from "@mui/material/styles";
 
 type themeBackgroundProps = { children: ReactNode } & ThemeItemType;
-function ThemeBackground({ image, opacity, children }: themeBackgroundProps) {
+function ThemeBackground({
+  image,
+  opacity,
+  children,
+  mode,
+}: themeBackgroundProps) {
   const full = "size-full h-screen";
   const backgroundImage = useBackgroundImage();
   const {
@@ -35,7 +40,7 @@ function ThemeBackground({ image, opacity, children }: themeBackgroundProps) {
 
   return (
     <div
-      className={cn(full, image && "bg-cover bg-center bg-no-repeat")}
+      className={cn(full, image && "bg-cover bg-center bg-no-repeat", mode)}
       style={
         backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {}
       }>

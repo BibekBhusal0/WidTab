@@ -97,7 +97,8 @@ function BookmarkFolder({ bookmarks }: bookmarkTreeNode) {
   );
   const dispatch = useDispatch();
   const changeFolder = () => {
-    if (!open) dispatch(changeCurrentFolder(bookmarks.id));
+    // if (!open)
+    dispatch(changeCurrentFolder(bookmarks.id));
   };
   const {
     attributes,
@@ -120,48 +121,48 @@ function BookmarkFolder({ bookmarks }: bookmarkTreeNode) {
   if (!bookmarks.children) return null;
 
   return (
-    <div
-      ref={droppableRef}
-      className={cn(
-        "relative py-1 my-1 ml-1 pl-2  border-2 border-transparent",
-        isOver && "border-primary-3"
-      )}>
-      <FolderContextMenu id={bookmarks.id}>
-        <div
-          className="flex w-full items-center gap-4 cursor-pointer"
-          ref={draggableRef}
-          style={style}
-          {...attributes}
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setOpen(!open);
-            changeFolder();
-          }}>
-          <div className="aspect-square h-full shrink-0">
-            <Folder open={open} />
+    <div ref={draggableRef} style={style} {...attributes}>
+      <div
+        ref={droppableRef}
+        className={cn(
+          "relative py-1 my-1 ml-1 pl-2  border-2 border-transparent",
+          isOver && "border-primary-3"
+        )}>
+        <FolderContextMenu id={bookmarks.id}>
+          <div
+            className="flex w-full items-center gap-4 cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setOpen(!open);
+              changeFolder();
+            }}>
+            <div className="aspect-square h-full shrink-0">
+              <Folder open={open} />
+            </div>
+            <div {...listeners} className="text-2xl truncate">
+              {bookmarks.title}
+            </div>
           </div>
-          <div {...listeners} className="text-2xl truncate">
-            {bookmarks.title}
-          </div>
-        </div>
-      </FolderContextMenu>
+        </FolderContextMenu>
 
-      <AnimatePresence>
-        {open &&
-          bookmarks.children.map((child: any) => (
-            <motion.div
-              key={child.id}
-              initial={{ height: 0, opacity: 0.4 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-              //
-            >
-              <BookmarkItem bookmarks={child} />
-            </motion.div>
-          ))}
-      </AnimatePresence>
+        <AnimatePresence>
+          {open &&
+            !isDragging &&
+            bookmarks.children.map((child: any) => (
+              <motion.div
+                key={child.id}
+                initial={{ height: 0, opacity: 0.4 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+                //
+              >
+                <BookmarkItem bookmarks={child} />
+              </motion.div>
+            ))}
+        </AnimatePresence>
+      </div>
     </div>
   );
 }
