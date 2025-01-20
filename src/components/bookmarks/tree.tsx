@@ -92,12 +92,10 @@ function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
         {...attributes}
         style={style}
         className={cn("w-full flex items-center gap-4 pl-2 ml-2")}>
-        <div className="py-1 my-1 w-full">
-          <div className="flex items-center gap-4 w-full">
-            <Favicon src={bookmarks.url} className="size-10 aspect-square" />
-            <div {...listeners} className="text-xl truncate">
-              {bookmarks.title}
-            </div>
+        <div className="py-1 my-1 flex items-center gap-4 w-full">
+          <Favicon src={bookmarks.url} className="size-10 aspect-square" />
+          <div {...listeners} className="text-xl truncate">
+            {bookmarks.title}
           </div>
         </div>
         {fav && <Icon className="text-3xl" icon="mdi:heart" />}
@@ -112,7 +110,7 @@ function BookmarkFolder({ bookmarks }: bookmarkTreeNode) {
   );
   const dispatch = useDispatch();
   const changeFolder = () => {
-    if (!open) dispatch(changeCurrentFolder(bookmarks.id));
+    dispatch(changeCurrentFolder(bookmarks.id));
   };
   const {
     attributes,
@@ -135,48 +133,48 @@ function BookmarkFolder({ bookmarks }: bookmarkTreeNode) {
   if (!bookmarks.children) return null;
 
   return (
-    <div
-      ref={droppableRef}
-      className={cn(
-        "relative py-1 my-1 ml-1 pl-2  border-2 border-transparent",
-        isOver && "border-primary-3"
-      )}>
-      <FolderContextMenu id={bookmarks.id}>
-        <div
-          className="flex w-full items-center gap-4 cursor-pointer"
-          ref={draggableRef}
-          style={style}
-          {...attributes}
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setOpen(!open);
-            changeFolder();
-          }}>
-          <div className="aspect-square h-full shrink-0">
-            <Folder open={open} />
+    <div ref={draggableRef} style={style} {...attributes}>
+      <div
+        ref={droppableRef}
+        className={cn(
+          "relative py-1 my-1 ml-1 pl-2  border-2 border-transparent",
+          isOver && "border-primary-3"
+        )}>
+        <FolderContextMenu id={bookmarks.id}>
+          <div
+            className="flex w-full items-center gap-4 cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setOpen(!open);
+              changeFolder();
+            }}>
+            <div className="aspect-square h-full shrink-0">
+              <Folder open={open} />
+            </div>
+            <div {...listeners} className="text-2xl truncate">
+              {bookmarks.title}
+            </div>
           </div>
-          <div {...listeners} className="text-2xl truncate">
-            {bookmarks.title}
-          </div>
-        </div>
-      </FolderContextMenu>
+        </FolderContextMenu>
 
-      <AnimatePresence>
-        {open &&
-          bookmarks.children.map((child: any) => (
-            <motion.div
-              key={child.id}
-              initial={{ height: 0, opacity: 0.4 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-              //
-            >
-              <BookmarkItem bookmarks={child} />
-            </motion.div>
-          ))}
-      </AnimatePresence>
+        <AnimatePresence>
+          {open &&
+            !isDragging &&
+            bookmarks.children.map((child: any) => (
+              <motion.div
+                key={child.id}
+                initial={{ height: 0, opacity: 0.4 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+                //
+              >
+                <BookmarkItem bookmarks={child} />
+              </motion.div>
+            ))}
+        </AnimatePresence>
+      </div>
     </div>
   );
 }

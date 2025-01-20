@@ -16,7 +16,7 @@ export const noteSlice = createSlice({
       state.allNotes.push({
         title: action.payload,
         id,
-        text: "",
+        text: "<p></p>",
         icon: "mage:note-text",
       });
     },
