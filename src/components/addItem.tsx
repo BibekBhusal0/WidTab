@@ -53,6 +53,7 @@ function AddItem({
           value={text}
           error={reached_word_limit}
           helperText={reached_word_limit && `${word_limit} Character Max`}
+          autoFocus
           {...inputProps}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleClick()}

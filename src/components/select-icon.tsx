@@ -1,14 +1,72 @@
 import { Icon, listIcons } from "@iconify/react";
-import { CSSProperties, useDeferredValue, useEffect, useState } from "react";
+import { useDeferredValue, useEffect, useState } from "react";
 import type { IconifyInfo, IconifyJSON } from "@iconify/types";
-import { iconPackNames, IconPacks } from "@/theme/icons";
 import Button from "@mui/material/Button";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 import TextField from "@mui/material/TextField";
 import { FixedSizeGrid as Grid, GridChildComponentProps } from "react-window";
 import MenuPopover, { MenuPopoverProps } from "./popoverMenu";
 import { cn } from "@/utils/cn";
+
+const getIcons = async (
+  mode: "Loaded" | string,
+  searchTerm = ""
+): Promise<string[]> => {
+  if (mode === "Loaded") {
+    const icons = listIcons();
+    return icons;
+  } else if (mode === "Search") {
+    if (!searchTerm || searchTerm.trim() === "") return [];
+    try {
+      const response = await fetch(
+        `https://api.iconify.design/search?query=${searchTerm}&limit=999`
+      );
+      if (!response.ok || !response || response.status !== 200) return [];
+
+      const data: APISearchResponse = await response.json();
+      return data.icons;
+    } catch (error) {
+      return [];
+    }
+  } else {
+    try {
+      const response = await fetch(
+        `https://api.iconify.design/collection?prefix=${mode}`
+      );
+
+      if (!response.ok || !response || response.status !== 200) return [];
+
+      const data: APIv2CollectionResponse = await response.json();
+      if (!data) return [];
+      const formattedIcons: string[] = [];
+
+      if (data.categories) {
+        for (const category in data.categories) {
+          formattedIcons.push(
+            ...data.categories[category].map(
+              (iconName) => `${data.prefix}:${iconName}`
+            )
+          );
+        }
+      }
+      if (data.uncategorized) {
+        formattedIcons.push(
+          ...data.uncategorized.map((iconName) => `${data.prefix}:${iconName}`)
+        );
+      }
+      if (data.hidden) {
+        formattedIcons.push(
+          ...data.hidden.map((iconName) => `${data.prefix}:${iconName}`)
+        );
+      }
+
+      return formattedIcons;
+    } catch (error) {
+      return [];
+    }
+  }
+};
 
 const SelectIcon = ({ icon, setIcon }: SelectIconProps) => {
   const [currentMode, setCurrentMode] = useState("Loaded");
@@ -18,102 +76,33 @@ const SelectIcon = ({ icon, setIcon }: SelectIconProps) => {
   const deferredSearchTerm = useDeferredValue(searchTerm);
 
   useEffect(() => {
-    const fetchIcons = async () => {
-      try {
-        const response = await fetch(
-          `https://api.iconify.design/collection?prefix=${currentMode}`
-        );
-
-        if (!response.ok || !response || response.status !== 200) {
-          return;
-        }
-
-        const data: APIv2CollectionResponse = await response.json();
-
-        const formattedIcons: string[] = [];
-
-        if (data.categories) {
-          for (const category in data.categories) {
-            formattedIcons.push(
-              ...data.categories[category].map(
-                (iconName) => `${data.prefix}:${iconName}`
-              )
-            );
-          }
-        }
-        if (data.uncategorized) {
-          formattedIcons.push(
-            ...data.uncategorized.map(
-              (iconName) => `${data.prefix}:${iconName}`
-            )
-          );
-        }
-        if (data.hidden) {
-          formattedIcons.push(
-            ...data.hidden.map((iconName) => `${data.prefix}:${iconName}`)
-          );
-        }
-
-        setIconsList(formattedIcons);
-      } catch (error) {
-        console.error("Error fetching icons:", error);
-      }
-    };
-
-    if (currentMode === "Loaded") {
-      setIconsList(listIcons());
-    } else if (currentMode !== "Search") fetchIcons();
-  }, [currentMode]);
-
-  useEffect(() => {
-    const search = async () => {
-      try {
-        const response = await fetch(
-          `https://api.iconify.design/search?query=${deferredSearchTerm}&limit=999`
-        );
-        if (!response.ok || !response || response.status !== 200) {
-          return;
-        }
-        const data: APISearchResponse = await response.json();
-        setIconsList(data.icons);
-      } catch (error) {
-        console.error("Error searching icons:", error);
-      }
-    };
-    if (currentMode === "Search") {
-      if (deferredSearchTerm.trim().length === 0) setIconsList([]);
-      else search();
+    async function fetchIcons() {
+      const icons = await getIcons(currentMode, deferredSearchTerm);
+      if (Array.isArray(icons)) setIconsList(icons);
     }
+    fetchIcons();
   }, [currentMode, deferredSearchTerm]);
 
   return (
     <div className="size-full flex flex-col items-center gap-3">
-      <div
-        className="flex flex-col items-center gap-3 w-full"
-        onClick={(e) => {
-          e.preventDefault();
-        }}
-        //
-      >
-        <SelectIconType
-          currentMode={currentMode}
-          setCurrentMode={setCurrentMode}
+      <SelectIconType
+        currentMode={currentMode}
+        setCurrentMode={setCurrentMode}
+      />
+      {currentMode === "Search" && (
+        <TextField
+          autoFocus
+          size="small"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search Icon"
         />
-        {currentMode === "Search" && (
-          <TextField
-            autoFocus
-            size="small"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search Icon"
-          />
-        )}
-        <IconsGrid
-          iconsList={iconsList}
-          selected={selected}
-          setSelected={setSelected}
-        />
-      </div>
+      )}
+      <IconsGrid
+        iconsList={iconsList}
+        selected={selected}
+        setSelected={setSelected}
+      />
       <Button variant="contained" onClick={() => setIcon(selected)}>
         Change
       </Button>
@@ -162,32 +151,22 @@ export function IconsGrid({ iconsList, selected, setSelected }: IconGridProps) {
       {({ columnIndex, rowIndex, style }: GridChildComponentProps) => {
         const iconIndex = rowIndex * columnCount + columnIndex;
         const icon = iconsList[iconIndex];
-
         if (!icon) return null;
 
         return (
-          <SingleIcon
-            icon={icon}
-            selected={selected === icon}
-            style={style}
-            setSelected={setSelected}
-          />
+          <div
+            className={cn("p-2 hover:bg-primary-6", {
+              "bg-primary-5": selected === icon,
+            })}
+            onClick={() => setSelected(icon)}
+            style={{
+              ...style,
+            }}>
+            <Icon className="size-full" icon={icon} />
+          </div>
         );
       }}
     </Grid>
-  );
-}
-
-function SingleIcon({ icon, selected, style, setSelected }: singleIconProps) {
-  return (
-    <div
-      className={cn("p-2 hover:bg-primary-6", { "bg-primary-5": selected })}
-      onClick={() => setSelected(icon)}
-      style={{
-        ...style,
-      }}>
-      <Icon className="size-full" icon={icon} />
-    </div>
   );
 }
 
@@ -198,20 +177,33 @@ function SelectIconType({
   currentMode: string;
   setCurrentMode: (mode: string) => void;
 }) {
+  const height = "30px";
+  const sx = { padding: "5px", minHeight: "0px", minWidth: "70px" };
+  const tabs = [
+    { value: "Loaded", label: "Loaded" },
+    { value: "Search", label: "Search" },
+    { value: "noto", label: "Emoji" },
+  ];
   return (
-    <Select
-      size="small"
+    <Tabs
       value={currentMode}
-      MenuProps={{ style: { maxHeight: "300px" } }}
-      onChange={(e) => setCurrentMode(e.target.value)}>
-      <MenuItem value="Loaded">Loaded</MenuItem>
-      <MenuItem value="Search">Search</MenuItem>
-      {IconPacks.map((pack: string) => (
-        <MenuItem key={pack} value={pack}>
-          {iconPackNames[pack] || pack}
-        </MenuItem>
+      sx={{
+        "& .MuiTabs-indicator": {
+          height: "100%",
+          opacity: 0.3,
+          zIndex: -1,
+          borderTop: "var(--custom-border-radius)",
+        },
+        minHeight: height,
+        height,
+      }}
+      onChange={(_, newValue) => {
+        if (typeof newValue === "string") setCurrentMode(newValue);
+      }}>
+      {tabs.map((tab) => (
+        <Tab key={tab.value} value={tab.value} label={tab.label} sx={sx} />
       ))}
-    </Select>
+    </Tabs>
   );
 }
 
@@ -223,12 +215,6 @@ export interface SelectIconProps {
 interface IconGridProps {
   iconsList: string[];
   selected: string;
-  setSelected: (icon: string) => void;
-}
-interface singleIconProps {
-  style: CSSProperties;
-  icon: string;
-  selected: boolean;
   setSelected: (icon: string) => void;
 }
 export interface APIv2CollectionResponse {
