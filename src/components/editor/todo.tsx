@@ -1,13 +1,9 @@
 import { EditorRoot, EditorContent, JSONContent } from "novel";
 import Document from "@tiptap/extension-document";
-import {
-  GlobalDragHandle,
-  Placeholder,
-  TaskItem,
-  TaskList,
-} from "novel/extensions";
+import { Placeholder, TaskItem, TaskList } from "novel/extensions";
 import { starterKit } from "@/components/editor/extensions";
 import { todoType } from "@/types/slice/todo";
+import GlobalDragHandle from "./drag-handle";
 
 const Task2JSON = (todos: todoType[]): JSONContent => {
   return {
@@ -47,7 +43,7 @@ const CustomTaskItem = TaskItem.extend({ content: "inline*" });
 
 const extensions = [
   TaskList,
-  GlobalDragHandle,
+  GlobalDragHandle.configure({ yOffset: 50 }),
   Placeholder.configure({ placeholder: "Add a task..." }),
   starterKit.configure({
     horizontalRule: false,
