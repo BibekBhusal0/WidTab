@@ -3,6 +3,7 @@ import {
   changeCurrentSpace,
   deleteSpace,
   duplicateSpace,
+  reorderSpaces,
 } from "@/redux/slice/layout";
 import { StateType } from "@/redux/store";
 import List from "@mui/material/List";
@@ -12,6 +13,11 @@ import { useDispatch, useSelector } from "react-redux";
 import ContextMenu from "@/components/contextMenu";
 import IconMenu, { IconMenuType } from "@/components/menuWithIcon";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
+import {
+  Sortable,
+  SortableDragHandle,
+  SortableItem,
+} from "@/components/sortable";
 
 function AllDynamicSpace() {
   const { delete_ } = useCurrentIcons();
@@ -20,8 +26,11 @@ function AllDynamicSpace() {
   );
   const dispatch = useDispatch();
   return (
-    <>
-      <List>
+    <List>
+      <Sortable
+        value={allSpaces}
+        orientation="vertical"
+        onValueChange={(value) => dispatch(reorderSpaces(value))}>
         {allSpaces.map((s) => {
           const menuItems: IconMenuType[] = [
             {
@@ -39,26 +48,33 @@ function AllDynamicSpace() {
             });
           }
           return (
-            <ContextMenu
-              key={s.id}
-              menuContent={<IconMenu menuItems={menuItems} />}>
-              <ListItemButton
-                selected={
-                  currentSpace.type === "dynamic" && currentSpace.id === s.id
-                }
-                onClick={() =>
-                  dispatch(changeCurrentSpace({ type: "dynamic", id: s.id }))
-                }>
-                <ListItemIcon className="icon-lg">
-                  <Icon2RN icon={s.icon} />
-                </ListItemIcon>
-                {s.name}
-              </ListItemButton>
-            </ContextMenu>
+            <SortableItem value={s.id} key={s.id}>
+              <ContextMenu menuContent={<IconMenu menuItems={menuItems} />}>
+                <ListItemButton
+                  selected={
+                    currentSpace.type === "dynamic" && currentSpace.id === s.id
+                  }
+                  onClick={() =>
+                    dispatch(changeCurrentSpace({ type: "dynamic", id: s.id }))
+                  }
+                  sx={{ justifyContent: "space-between" }}
+                  className="flex">
+                  <div className="flex">
+                    <ListItemIcon className="icon-lg">
+                      <Icon2RN icon={s.icon} />
+                    </ListItemIcon>
+                    <div className="text-md">{s.name}</div>
+                  </div>
+                  <SortableDragHandle
+                    children={<Icon2RN icon="icon-park-outline:drag" />}
+                  />
+                </ListItemButton>
+              </ContextMenu>
+            </SortableItem>
           );
         })}
-      </List>
-    </>
+      </Sortable>
+    </List>
   );
 }
 export default AllDynamicSpace;

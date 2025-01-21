@@ -36,6 +36,9 @@ export const noteSlice = createSlice({
     deleteNote: (state, action: PayloadAction<number>) => {
       state.allNotes = state.allNotes.filter((p) => p.id !== action.payload);
     },
+    reorderNotes: (state, action: PayloadAction<noteType[]>) => {
+      state.allNotes = action.payload;
+    },
     resetNoteState: (state) => Object.assign(state, initialNoteState),
     setState: (
       state,
@@ -69,5 +72,6 @@ export const {
   deleteNote,
   resetNoteState,
   setState,
+  reorderNotes,
 } = noteSlice.actions;
 export default noteSlice.reducer;

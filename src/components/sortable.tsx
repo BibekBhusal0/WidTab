@@ -238,6 +238,7 @@ const SortableItem = React.forwardRef<HTMLDivElement, SortableItemProps>(
     );
     const style: React.CSSProperties = {
       opacity: isDragging ? 0.8 : 1,
+      zIndex: isDragging ? 1000 : "auto",
       transform: CSS.Translate.toString(transform),
       transition,
     };
@@ -265,19 +266,18 @@ const SortableItem = React.forwardRef<HTMLDivElement, SortableItemProps>(
 );
 SortableItem.displayName = "SortableItem";
 
-interface SortableDragHandleProps
-  extends React.HTMLAttributes<HTMLButtonElement> {
+interface SortableDragHandleProps extends React.HTMLAttributes<HTMLDivElement> {
   withHandle?: boolean;
 }
 
 const SortableDragHandle = React.forwardRef<
-  HTMLButtonElement,
+  HTMLDivElement,
   SortableDragHandleProps
 >(({ className, ...props }, ref) => {
   const { attributes, listeners, isDragging } = useSortableItem();
 
   return (
-    <button
+    <div
       ref={composeRefs(ref)}
       data-state={isDragging ? "dragging" : undefined}
       className={cn(

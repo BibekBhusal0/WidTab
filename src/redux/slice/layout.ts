@@ -76,6 +76,9 @@ export const layoutSlice = createSlice({
         state.dockContent = { content: "bookmark", id: action.payload };
       }
     },
+    reorderSpaces: (state, action: PayloadAction<DynamicSpaceType[]>) => {
+      state.allSpaces = action.payload;
+    },
 
     toggleLocked: (state) => {
       state.locked = !state.locked;
@@ -242,6 +245,7 @@ export const {
   resetLayoutState,
   toggleLocked,
   setState,
+  reorderSpaces,
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

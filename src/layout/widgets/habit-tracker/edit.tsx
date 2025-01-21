@@ -28,7 +28,7 @@ const HabitTrackerEdit: FunctionComponent<HabitTrackerEditProps> = ({
   ): void => {
     setState((prev) => ({ ...prev, [key]: value }));
   };
-  const wordLimit = 20;
+  const wordLimit = 15;
 
   const checkIfOk = () => {
     var message = "";
