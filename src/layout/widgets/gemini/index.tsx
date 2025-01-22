@@ -18,6 +18,8 @@ import reactNodeToString from "react-node-to-string";
 import browser from "webextension-polyfill";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
+import Lowlight from "react-lowlight";
+import "react-lowlight/all";
 
 // https://github.com/chathub-dev/chathub/blob/b31739fe103f24df41f75a7556ce670c1437dbff/src/app/components/Markdown/index.tsx#L8
 function CustomCode(props: { children: React.ReactNode; className?: string }) {
@@ -41,18 +43,20 @@ function CustomCode(props: { children: React.ReactNode; className?: string }) {
   const cls = "size-5 transition-all duration-300 absolute-center";
 
   return (
-    <div className="relative size-full flex-col">
-      <div className="full-between px-4 py-2 bg-slate-700 top-0 left-0">
+    <div className="relative size-full">
+      <div className="full-between px-4 py-2 bg-secondaryContainer-default">
         {language && (
-          <span className="font-medium uppercase slate-100">{language}</span>
+          <span className="font-medium uppercase text-text-primary">
+            {language}
+          </span>
         )}
 
         <Tooltip placement="left" title={copied ? "Copied" : "Copy"}>
           <Button
             variant="outlined"
             onClick={copyToClipboard}
-            sx={{ minWidth: "0px", borderColor: "#cbd5e1" }}>
-            <div className="size-full relative px-0 py-2 text-slate-300">
+            sx={{ minWidth: "0px" }}>
+            <div className="size-full relative px-0 py-2">
               <Icon
                 icon="mingcute:copy-2-line"
                 className={cn(cls, copied ? "scale-0" : "scale-100")}
@@ -65,8 +69,14 @@ function CustomCode(props: { children: React.ReactNode; className?: string }) {
           </Button>
         </Tooltip>
       </div>
-      <div className="overflow-auto size-full px-5 py-3">
-        <code {...props} />
+      <div className="overflow-auto size-full px-5 py-3 text-[#24292e] bg-[#ffffff] dark:text-[#c9d1d9] dark:bg-[#0d1117]">
+        <Lowlight
+          inline
+          value={code}
+          language={language}
+          markers={[]}
+          className={props.className}
+        />
       </div>
     </div>
   );
@@ -100,7 +110,7 @@ function GeminiWidget(props: geminiWidgetType) {
   };
 
   return (
-    <div className="size-full p-2">
+    <div className="size-full p-2 pt-0">
       {hasKey ? (
         <AIChat APIkey={key} {...props} />
       ) : (
@@ -157,7 +167,7 @@ function AIChatContent({
     <ScrollArea ref={mainRef}>
       <div
         className={cn(
-          "size-full max-w-full prose prose-pre:relative dark:prose-invert prose-pre:p-0 flex flex-col gap-4 p-4 transition-all"
+          "size-full max-w-full prose dark:prose-invert prose-pre:p-0 prose-pre:border prose-pre:border-divider flex flex-col gap-4 p-4 transition-all"
         )}>
         <ReformatContent {...{ conversation, loading }} />
       </div>
