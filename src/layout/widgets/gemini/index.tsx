@@ -254,8 +254,8 @@ export function ReformatContent({
   const cls = "px-4 self-start";
   return (
     <>
-      {conversation.map(({ parts, role }) => (
-        <>
+      {conversation.map(({ parts, role }, index) => (
+        <Fragment key={index}>
           {role === "user" && (
             <Paper
               variant="outlined"
@@ -314,7 +314,7 @@ export function ReformatContent({
               </ReactMarkdown>
             </Paper>
           )}
-        </>
+        </Fragment>
       ))}
       {loading && (
         <Paper
