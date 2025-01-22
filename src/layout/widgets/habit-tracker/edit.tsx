@@ -11,7 +11,7 @@ import { SelectIconMenu } from "@/components/select-icon";
 const HabitTrackerEdit: FunctionComponent<HabitTrackerEditProps> = ({
   initialState = {
     id: 0,
-    icon: "majesticons:skull",
+    icon: "material-symbols:potted-plant",
     increment: 10,
     target: 100,
     title: "",
@@ -28,7 +28,7 @@ const HabitTrackerEdit: FunctionComponent<HabitTrackerEditProps> = ({
   ): void => {
     setState((prev) => ({ ...prev, [key]: value }));
   };
-  const wordLimit = 20;
+  const wordLimit = 15;
 
   const checkIfOk = () => {
     var message = "";

@@ -37,7 +37,7 @@ const Editor = ({ value, onChange }: EditorProp) => {
           },
 
           attributes: {
-            class: `prose dark:prose-invert prose-sm prose-headings:font-title font-default focus:outline-none max-w-full size-full min-h-[250px]`,
+            class: `prose dark:prose-invert prose-sm prose-headings:font-title font-default focus:outline-none max-w-full min-h-[250px]`,
           },
         }}
         onUpdate={({ editor }) => {
@@ -49,7 +49,7 @@ const Editor = ({ value, onChange }: EditorProp) => {
             (onChange as (value: JSONContent) => void)(editor.getJSON());
           }
         }}>
-        <EditorCommand className="z-50 h-auto max-h-[300px] overflow-auto w-[250px] size-full px-1 py-3 bg-background-default">
+        <EditorCommand className="z-50 h-auto max-h-[300px] overflow-auto w-[250px] px-1 py-3 bg-background-default rounded-themed">
           <EditorCommandEmpty className="px-2 text-divider">
             No results
           </EditorCommandEmpty>

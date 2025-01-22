@@ -8,8 +8,8 @@ import {
   Color,
   TextStyle,
   HighlightExtension,
-  GlobalDragHandle,
 } from "novel/extensions";
+import GlobalDragHandle from "./drag-handle";
 
 export const starterKit = StarterKit.configure({
   dropcursor: { color: "var(--mui-palette-divider)", width: 3 },

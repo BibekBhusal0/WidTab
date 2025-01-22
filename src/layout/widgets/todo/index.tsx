@@ -41,7 +41,7 @@ function Todo({ id, title, todos, filtered, icon }: TaskType) {
   };
 
   return (
-    <div className="size-full relative flex flex-col gap-2 drag-handle-left editor">
+    <div className="size-full relative flex flex-col gap-2 editor">
       <div className="flex justify-start items-center gap-2 px-3 h-12 icon-xl">
         <SelectIconMenu icon={icon} setIcon={iconChangeHandler} />
         <input

@@ -1,4 +1,4 @@
-import { todoStateType, todoType } from "@/types/slice/todo";
+import { TaskType, todoStateType, todoType } from "@/types/slice/todo";
 import { getNextId } from "@/utils/next_id";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialTodoState } from "./initialStates";
@@ -52,6 +52,9 @@ export const todoSlice = createSlice({
         } else task.todos = action.payload.todo;
       }
     },
+    reorderTodos: (state, action: PayloadAction<TaskType[]>) => {
+      state.Tasks = action.payload;
+    },
 
     toggleFiltered: (state, action: PayloadAction<{ id: number }>) => {
       const task = state.Tasks.find((p) => p.id === action.payload.id);
@@ -97,6 +100,7 @@ export const {
   resetTodoSlice,
   setState,
   changeTaskIcon,
+  reorderTodos,
   changeTaskTitle,
   changeTaskTodos,
 } = todoSlice.actions;

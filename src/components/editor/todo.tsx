@@ -1,27 +1,22 @@
 import { EditorRoot, EditorContent, JSONContent } from "novel";
 import Document from "@tiptap/extension-document";
-import {
-  GlobalDragHandle,
-  Placeholder,
-  TaskItem,
-  TaskList,
-} from "novel/extensions";
+import { Placeholder, TaskItem, TaskList } from "novel/extensions";
 import { starterKit } from "@/components/editor/extensions";
 import { todoType } from "@/types/slice/todo";
+import GlobalDragHandle from "./drag-handle";
 
 const Task2JSON = (todos: todoType[]): JSONContent => {
+  const content = todos.map((todo) => ({
+    type: "taskItem",
+    attrs: { checked: todo.checked },
+    content: todo.task ? [{ type: "text", text: todo.task }] : [],
+  }));
+  if (content.length === 0) {
+    content.push({ type: "taskItem", attrs: { checked: false }, content: [] });
+  }
   return {
     type: "doc",
-    content: [
-      {
-        type: "taskList",
-        content: todos.map((todo) => ({
-          type: "taskItem",
-          attrs: { checked: todo.checked },
-          content: todo.task ? [{ type: "text", text: todo.task }] : [],
-        })),
-      },
-    ],
+    content: [{ type: "taskList", content }],
   };
 };
 
@@ -38,7 +33,6 @@ const JSON2Task = (json: JSONContent): todoType[] => {
     task: taskItem.content?.[0]?.text || "",
     checked: taskItem.attrs?.checked || false,
   }));
-  console.log(JSON.stringify(tasks, null, 1));
   return tasks;
 };
 
@@ -47,7 +41,7 @@ const CustomTaskItem = TaskItem.extend({ content: "inline*" });
 
 const extensions = [
   TaskList,
-  GlobalDragHandle,
+  GlobalDragHandle.configure({ yOffset: 50 }),
   Placeholder.configure({ placeholder: "Add a task..." }),
   starterKit.configure({
     horizontalRule: false,

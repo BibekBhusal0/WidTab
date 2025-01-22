@@ -2,46 +2,30 @@ import { StateType } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import Paper from "@mui/material/Paper";
 import HabitTracker from "../widgets/habit-tracker";
-import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
 import HabitTrackerStatsAll from "../widgets/habit-tracker/stats/all";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Button from "@mui/material/Button";
 import HabitTrackerEdit from "../widgets/habit-tracker/edit";
 import { Icon } from "@iconify/react";
-import { addItem } from "@/redux/slice/habit-tracker";
+import { addItem, reorderTrackers } from "@/redux/slice/habit-tracker";
 import { cn } from "@/utils/cn";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import Controls from "../widgets/controls";
 import { getWidgetControlsProps } from "@/utils/getWidget";
 import { ScrollArea } from "@/components/scrollarea";
+import {
+  Sortable,
+  SortableDragHandle,
+  SortableItem,
+} from "@/components/sortable";
 
 function HabitTrackerPage() {
   const { pinned, trackers } = useSelector(
     (state: StateType) => state.habitTracker
   );
+  const dispatch = useDispatch();
   const [showStats, setShowStats] = useState(false);
-  const pinnedTracker = trackers.filter((t) => t.id === pinned);
-  const unPinnedTrackers = trackers.filter((t) => t.id !== pinned);
-
-  const renderTrackers = (trackerList: HabitTrackerItemType[]) =>
-    trackerList.map((tracker) => (
-      <Paper
-        key={tracker.id}
-        sx={{
-          backgroundColor:
-            tracker.id === pinned
-              ? "primaryContainer.paper"
-              : "secondaryContainer.paper",
-        }}
-        className="h-[150px] overflow-hidden">
-        <Controls
-          {...getWidgetControlsProps("habit-tracker", tracker.id)}
-          showOn="always">
-          <HabitTracker {...tracker} />
-        </Controls>
-      </Paper>
-    ));
 
   return (
     <ScrollArea className="size-full">
@@ -66,12 +50,35 @@ function HabitTrackerPage() {
           {showStats ? "Hide" : "Show"} Stats
         </Button>
       </div>
-
-      <div className="grid gap-3 grid-cols-1 m-3 sm:grid-cols-2 md:grid-cols-3">
-        {renderTrackers(pinnedTracker)}
-        {renderTrackers(unPinnedTrackers)}
-        <AddNewHabitTracker />
-      </div>
+      <Sortable
+        value={trackers}
+        orientation="mixed"
+        onValueChange={(t) => dispatch(reorderTrackers(t))}>
+        <div className="grid gap-3 grid-cols-1 m-3 sm:grid-cols-2 md:grid-cols-3">
+          {trackers.map((tracker) => (
+            <SortableItem key={tracker.id} value={tracker.id}>
+              <Paper
+                sx={{
+                  backgroundColor:
+                    tracker.id === pinned
+                      ? "primaryContainer.paper"
+                      : "secondaryContainer.paper",
+                }}
+                className="h-[150px] overflow-hidden relative">
+                <Controls
+                  {...getWidgetControlsProps("habit-tracker", tracker.id)}
+                  showOn="always">
+                  <SortableDragHandle className="w-full h-3 absolute top-0 bg-primary-2" />
+                  <div className="size-full z-0">
+                    <HabitTracker {...tracker} />
+                  </div>
+                </Controls>
+              </Paper>
+            </SortableItem>
+          ))}
+          <AddNewHabitTracker />
+        </div>
+      </Sortable>
     </ScrollArea>
   );
 }
