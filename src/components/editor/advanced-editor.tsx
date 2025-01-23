@@ -37,14 +37,16 @@ const Editor = ({ value, onChange }: EditorProp) => {
           },
 
           attributes: {
-            class: `prose dark:prose-invert prose-sm prose-headings:font-title font-default focus:outline-none max-w-full min-h-[250px]`,
+            class: `prose dark:prose-invert prose-sm prose-headings:font-title font-default focus:outline-none max-w-full min-h-[250px]  prose-pre:text-[#24292e] prose-pre:bg-[#ffffff] prose-pre:dark:text-[#c9d1d9] prose-pre:dark:bg-[#0d1117]`,
           },
         }}
         onUpdate={({ editor }) => {
-          if (!editor || !onChange || !value) return;
+          if (!editor || !onChange || typeof value === "undefined") return;
 
           if (typeof value === "string") {
-            (onChange as (value: string) => void)(editor.getHTML());
+            (onChange as (value: string) => void)(
+              editor.storage.markdown.getMarkdown()
+            );
           } else {
             (onChange as (value: JSONContent) => void)(editor.getJSON());
           }
@@ -58,7 +60,7 @@ const Editor = ({ value, onChange }: EditorProp) => {
               <EditorCommandItem
                 value={item.title}
                 onCommand={(val) => item.command?.(val)}
-                className={`flex w-full cursor-pointer items-center space-x-2 rounded-md px-2 py-1 text-left text-sm hover:bg-[rgba(var(--mui-palette-primary-mainChannel)/var(--mui-palette-action-selectedOpacity))] aria-selected:bg-[rgba(var(--mui-palette-primary-mainChannel)/var(--mui-palette-action-selectedOpacity))] `}
+                className={`flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-left text-sm aria-selected:bg-primary-selected`}
                 key={item.title}>
                 <Icon2RN
                   icon={item.icon}

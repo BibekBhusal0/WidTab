@@ -39,6 +39,23 @@ export const TextButtons = () => {
       command: (editor) => editor.chain().focus().toggleCode().run(),
       icon: "gravity-ui:code",
     },
+    {
+      name: "math",
+      isActive: (editor) => editor.isActive("math"),
+      command: (editor) => {
+        if (editor.isActive("math")) {
+          editor.chain().focus().unsetLatex().run();
+        } else {
+          const { from, to } = editor.state.selection;
+          const latex = editor.state.doc.textBetween(from, to);
+
+          if (!latex) return;
+
+          editor.chain().focus().setLatex({ latex }).run();
+        }
+      },
+      icon: "gravity-ui:curly-brackets-function",
+    },
   ];
 
   return (
@@ -55,6 +72,7 @@ export const TextButtons = () => {
             backgroundColor: item.isActive(editor)
               ? "var(--primary-3)"
               : "transparent",
+            paddingX: "0",
           }}
           variant="outlined">
           <Icon2RN icon={item.icon} className="size-4" />
