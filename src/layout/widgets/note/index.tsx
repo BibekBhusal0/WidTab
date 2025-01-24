@@ -5,6 +5,7 @@ import { noteType } from "@/types/slice/notes";
 import { transparentInput } from "../todo";
 import { changeNoteContent } from "@/redux/slice/note";
 import Editor from "@/components/editor/advanced-editor";
+import { ScrollArea } from "@/components/scrollarea";
 
 function Note({ id, title, text, icon }: noteType) {
   const dispatch = useDispatch();
@@ -33,7 +34,9 @@ function Note({ id, title, text, icon }: noteType) {
           onChange={titleChangeHandler}
         />
       </div>
-      <Editor value={text} onChange={textChangeHandler} />
+      <ScrollArea>
+        <Editor value={text} onChange={textChangeHandler} />
+      </ScrollArea>
     </div>
   );
 }

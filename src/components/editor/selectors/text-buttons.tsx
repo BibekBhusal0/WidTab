@@ -1,6 +1,7 @@
 import { useEditor } from "novel";
 import type { SelectorItem } from "./node-selector";
 import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { Icon2RN } from "@/theme/icons";
 
@@ -60,23 +61,25 @@ export const TextButtons = () => {
 
   return (
     <ButtonGroup variant="outlined" className="p-2">
-      {items.map((item, index) => (
-        <Button
+      {items.map(({ command, icon, isActive, name }, index) => (
+        <Tooltip
           key={index}
-          size="medium"
-          onClick={() => {
-            item.command(editor);
-          }}
-          sx={{
-            color: item.isActive(editor) ? "primary.main" : "text.primary",
-            backgroundColor: item.isActive(editor)
-              ? "var(--primary-3)"
-              : "transparent",
-            paddingX: "0",
-          }}
-          variant="outlined">
-          <Icon2RN icon={item.icon} className="size-4" />
-        </Button>
+          arrow
+          title=<div className="capitalize">{name}</div>>
+          <Button
+            size="medium"
+            onClick={() => command(editor)}
+            sx={{
+              color: isActive(editor) ? "primary.main" : "text.primary",
+              backgroundColor: isActive(editor)
+                ? "var(--primary-3)"
+                : "transparent",
+              paddingX: "0",
+            }}
+            variant="outlined">
+            <Icon2RN icon={icon} className="size-4" />
+          </Button>
+        </Tooltip>
       ))}
     </ButtonGroup>
   );

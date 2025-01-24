@@ -3,6 +3,7 @@ import { useState } from "react";
 import MenuPopover from "@/components/popoverMenu";
 import MenuItem from "@mui/material/MenuItem";
 import { Icon2RN, iconAsProp } from "@/theme/icons";
+import { ScrollArea } from "@/components/scrollarea";
 
 export type SelectorItem = {
   name: string;
@@ -91,33 +92,35 @@ export const NodeSelector = () => {
   return (
     <MenuPopover
       key={key}
-      menuProps={{ sx: { maxHeight: "300px" } }}
       icon={
         <div className="size-full flex-center gap-2 icon-sm">
           <div className="text-sm">{activeItem.name}</div>
-          <Icon2RN icon="ludice:chevron-down" />
+          <Icon2RN icon="ri:arrow-down-s-line" className="size-4" />
         </div>
       }>
-      {items.map((i) => {
-        return (
-          <MenuItem
-            key={i.name}
-            onClick={() => {
-              i.command(editor);
-              handleClose();
-            }}
-            selected={activeItem.name === i.name}
-            className="gap-2 px-3 py-2">
-            {/* <i.icon className="size-6 border-divider border rounded-md p-1" /> */}
-            <Icon2RN
-              icon={i.icon}
-              className="size-6 border-divider border rounded-md p-1"
-            />
+      <ScrollArea
+        viewPortProps={{ className: "h-auto max-h-[200px]" }}
+        scrollBarProps={{ className: "w-2" }}>
+        {items.map((i) => {
+          return (
+            <MenuItem
+              key={i.name}
+              onClick={() => {
+                i.command(editor);
+                handleClose();
+              }}
+              selected={activeItem.name === i.name}
+              className="gap-2 px-3 py-2">
+              <Icon2RN
+                icon={i.icon}
+                className="size-6 border-divider border rounded-md p-1"
+              />
 
-            <div>{i.name}</div>
-          </MenuItem>
-        );
-      })}
+              <div>{i.name}</div>
+            </MenuItem>
+          );
+        })}
+      </ScrollArea>
     </MenuPopover>
   );
 };

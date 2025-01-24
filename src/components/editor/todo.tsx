@@ -41,7 +41,7 @@ const CustomTaskItem = TaskItem.extend({ content: "inline*" });
 
 const extensions = [
   TaskList,
-  GlobalDragHandle.configure({ yOffset: 50 }),
+  GlobalDragHandle.configure({ yOffset: 50, scrollAbleParent: 1 }),
   Placeholder.configure({ placeholder: "Add a task..." }),
   starterKit.configure({
     horizontalRule: false,
@@ -72,7 +72,6 @@ export const TodoList = ({ tasks, onChange }: TodoListProps) => {
     <EditorRoot>
       <EditorContent
         autofocus
-        className="size-full overflow-auto"
         extensions={extensions}
         initialContent={Task2JSON(tasks)}
         onUpdate={({ editor }) => {

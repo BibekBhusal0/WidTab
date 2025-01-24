@@ -17,6 +17,7 @@ import { TextButtons } from "./selectors/text-buttons";
 import { slashCommand, suggestionItems } from "./slash-command";
 import Divider from "@mui/material/Divider";
 import { Icon2RN } from "@/theme/icons";
+import { ScrollArea } from "../scrollarea";
 
 const extensions = [...defaultExtensions, slashCommand];
 
@@ -28,7 +29,7 @@ const Editor = ({ value, onChange }: EditorProp) => {
   return (
     <EditorRoot>
       <EditorContent
-        className="size-full overflow-auto"
+        autofocus
         extensions={extensions}
         initialContent={value as JSONContent}
         editorProps={{
@@ -37,7 +38,7 @@ const Editor = ({ value, onChange }: EditorProp) => {
           },
 
           attributes: {
-            class: `prose dark:prose-invert prose-sm prose-headings:font-title font-default focus:outline-none max-w-full min-h-[250px]  prose-pre:text-[#24292e] prose-pre:bg-[#ffffff] prose-pre:dark:text-[#c9d1d9] prose-pre:dark:bg-[#0d1117]`,
+            class: `prose dark:prose-invert prose-sm prose-headings:font-title font-default focus:outline-none max-w-full min-h-[250px] prose-pre:text-[#24292e] prose-pre:bg-[#ffffff] prose-pre:dark:text-[#c9d1d9] prose-pre:dark:bg-[#0d1117]`,
           },
         }}
         onUpdate={({ editor }) => {
@@ -51,28 +52,32 @@ const Editor = ({ value, onChange }: EditorProp) => {
             (onChange as (value: JSONContent) => void)(editor.getJSON());
           }
         }}>
-        <EditorCommand className="z-50 h-auto max-h-[300px] overflow-auto w-[250px] px-1 py-3 bg-background-default rounded-themed">
-          <EditorCommandEmpty className="px-2 text-divider">
-            No results
-          </EditorCommandEmpty>
-          <EditorCommandList>
-            {suggestionItems.map((item) => (
-              <EditorCommandItem
-                value={item.title}
-                onCommand={(val) => item.command?.(val)}
-                className={`flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-left text-sm aria-selected:bg-primary-selected`}
-                key={item.title}>
-                <Icon2RN
-                  icon={item.icon}
-                  className="size-10 p-2 border-divider rounded-md border"
-                />
-                <div>
-                  <p className="font-medium">{item.title}</p>
-                  <p className="text-xs">{item.description}</p>
-                </div>
-              </EditorCommandItem>
-            ))}
-          </EditorCommandList>
+        <EditorCommand className="z-50 w-[250px] px-1 py-3 bg-background-default rounded-themed">
+          <ScrollArea
+            viewPortProps={{ className: "h-auto max-h-[300px]" }}
+            scrollBarProps={{ className: "w-2" }}>
+            <EditorCommandEmpty className="px-2 text-divider">
+              No results
+            </EditorCommandEmpty>
+            <EditorCommandList>
+              {suggestionItems.map((item) => (
+                <EditorCommandItem
+                  value={item.title}
+                  onCommand={(val) => item.command?.(val)}
+                  className={`flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-left text-sm aria-selected:bg-primary-selected`}
+                  key={item.title}>
+                  <Icon2RN
+                    icon={item.icon}
+                    className="size-10 p-2 border-divider rounded-md border"
+                  />
+                  <div>
+                    <p className="font-medium">{item.title}</p>
+                    <p className="text-xs">{item.description}</p>
+                  </div>
+                </EditorCommandItem>
+              ))}
+            </EditorCommandList>
+          </ScrollArea>
         </EditorCommand>
 
         <EditorBubble
