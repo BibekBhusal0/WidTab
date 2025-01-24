@@ -1,7 +1,6 @@
-import { createSuggestionItems } from "novel/extensions";
-import { Command, renderItems } from "novel/extensions";
+import { Command, renderItems, SuggestionItem } from "novel/extensions";
 
-export const suggestionItems = createSuggestionItems([
+export const suggestionItems: SuggestionItem[] = [
   {
     title: "Text",
     description: "Just Plain text.",
@@ -107,7 +106,7 @@ export const suggestionItems = createSuggestionItems([
     command: ({ editor, range }) =>
       editor.chain().focus().deleteRange(range).toggleCodeBlock().run(),
   },
-]);
+];
 
 export const slashCommand = Command.configure({
   suggestion: {

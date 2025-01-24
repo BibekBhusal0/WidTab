@@ -394,7 +394,7 @@ const GlobalDragHandle = Extension.create({
     return {
       dragHandleWidth: 20,
       scrollTreshold: 100,
-      yOffset: 50,
+      yOffset: 45,
       excludedTags: [],
       customNodes: [],
       editorScrollable: true,

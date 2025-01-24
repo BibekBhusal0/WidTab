@@ -38,7 +38,7 @@ const Editor = ({ value, onChange }: EditorProp) => {
           },
 
           attributes: {
-            class: `prose dark:prose-invert prose-sm prose-headings:font-title font-default focus:outline-none max-w-full min-h-[250px] prose-pre:text-[#24292e] prose-pre:bg-[#ffffff] prose-pre:dark:text-[#c9d1d9] prose-pre:dark:bg-[#0d1117]`,
+            class: `prose dark:prose-invert prose-sm prose-headings:font-title font-default focus:outline-none max-w-full min-h-[250px]`,
           },
         }}
         onUpdate={({ editor }) => {
