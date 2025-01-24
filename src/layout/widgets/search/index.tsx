@@ -7,7 +7,6 @@ import {
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import { SelectChangeEvent } from "@mui/material/Select";
 import { ChangeEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
@@ -35,7 +34,7 @@ function SearchWidget({ id, engine }: SearchWidgetType) {
     }
   };
 
-  const changeSearchEngine = (e: SelectChangeEvent<unknown>) => {
+  const changeSearchEngine = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value as AllSearchEngines;
     if (!searchEngines.includes(val)) return;
     dispatch(
