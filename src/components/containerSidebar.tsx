@@ -5,8 +5,7 @@ import Tab, { TabProps } from "@mui/material/Tab";
 import Tabs, { TabsProps } from "@mui/material/Tabs";
 import { styled } from "@mui/material/styles";
 import alphaColor from "@/utils/alpha";
-import { ScrollBar } from "./scrollarea";
-import { Root, Viewport } from "@radix-ui/react-scroll-area";
+import { ScrollArea } from "./scrollarea";
 
 export type SidebarComponent = {
   index: number;
@@ -94,17 +93,17 @@ function ContainerSidebar({
           />
         ))}
       </CustomTabs>
-      <Root className="overflow-hidden size-full">
-        <Viewport
-          {...panelProps}
-          className={cn(
-            "border-l-3 p-4 size-full relative",
+      <ScrollArea
+        className="size-full"
+        viewPortProps={{
+          ...panelProps,
+          className: cn(
+            "border-l-3 p-2 size-full relative",
             panelProps?.className
-          )}>
-          {crrComponent}
-        </Viewport>
-        <ScrollBar />
-      </Root>
+          ),
+        }}
+        children={crrComponent}
+      />
     </Box>
   );
 }
