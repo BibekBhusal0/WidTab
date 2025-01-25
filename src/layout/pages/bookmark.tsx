@@ -262,7 +262,9 @@ function MainBookmarks() {
         <Favorites {...props} id={1} iconSize={folderSize} />
       ) : (
         <ScrollArea>
-          <BookmarksFolder />
+          <div className="py-2">
+            <BookmarksFolder />
+          </div>
         </ScrollArea>
       )}
     </>

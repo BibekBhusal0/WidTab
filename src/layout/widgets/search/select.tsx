@@ -23,6 +23,7 @@ export const searchEngineLogoAndLink: SearchEngineMapping = {
     icon: "ri:perplexity-line",
     link: "https://www.perplexity.ai/?q=%s",
   },
+  ChatGPT: { icon: "ri:openai-fill", link: "https://chatgpt.com/?q=%s" },
 };
 
 export type SearchEngineSelectProps = {
