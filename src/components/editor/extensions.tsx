@@ -24,6 +24,7 @@ import { CopyButton } from "../copyButton";
 import { createLowlight, all } from "lowlight";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import { ScrollArea } from "../scrollarea";
 
 export const CodeBlockComponent = ({
   node,
@@ -37,8 +38,8 @@ export const CodeBlockComponent = ({
   const languages = extension.options.lowlight.listLanguages();
 
   return (
-    <NodeViewWrapper className="my-4 mx-2 border-divider rounded-lg border overflow-hidden">
-      <div className="full-between px-4 py-2 bg-secondaryContainer-default">
+    <NodeViewWrapper className="my-4 mx-2 border-divider rounded-lg border">
+      <div className="full-between px-4 py-1 bg-secondaryContainer-default sticky top-0 z-10 rounded-t-lg">
         {editor.isEditable ? (
           <Select
             value={currentLanguage || "auto"}
@@ -74,12 +75,14 @@ export const CodeBlockComponent = ({
 
         <CopyButton children={codeContent} />
       </div>
-
-      <pre
-        spellCheck={"false"}
-        className="m-0 border-none rounded-none text-[#24292e] bg-[#ffffff] dark:text-[#c9d1d9] dark:bg-[#0d1117]">
-        <NodeViewContent as="code" />
-      </pre>
+      <ScrollArea
+        scrollBarProps={{ orientation: "horizontal", className: "h-2" }}>
+        <pre
+          spellCheck={"false"}
+          className="m-0 border-none rounded-b-lg text-[#24292e] bg-[#ffffff] dark:text-[#c9d1d9] dark:bg-[#0d1117] w-max">
+          <NodeViewContent as="code" />
+        </pre>
+      </ScrollArea>
     </NodeViewWrapper>
   );
 };
