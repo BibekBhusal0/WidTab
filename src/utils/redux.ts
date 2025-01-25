@@ -1,3 +1,4 @@
+import { tost } from "@/components/tost";
 import { reducerNames, reducers, store } from "@/redux/store";
 
 export const saveToLocalStorage = (key: string, data: any): Promise<void> => {
@@ -61,7 +62,8 @@ export const importStateFromJSON = async (file: File) => {
         payload: { value: state, check: true },
       });
     }
+    tost({ children: "State Imported Successfully", severity: "success" });
   } catch (error) {
-    console.error("Failed to import state:", error);
+    tost({ children: "Failed to import state", severity: "error" });
   }
 };

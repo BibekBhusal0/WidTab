@@ -1,3 +1,4 @@
+import { useTost } from "@/components/tost";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import { resetBookmarkState } from "@/redux/slice/bookmark";
 import { resetHabitTrackerState } from "@/redux/slice/habit-tracker";
@@ -15,6 +16,7 @@ import { useDispatch } from "react-redux";
 
 export const DataSettings = () => {
   const { reset } = useCurrentIcons();
+  const { showTost } = useTost();
   const fileRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useDispatch();
 
@@ -26,7 +28,10 @@ export const DataSettings = () => {
   };
 
   const handleRestore = () => fileRef.current?.click();
-  const handleBackup = () => exportStateToJSON();
+  const handleBackup = () => {
+    exportStateToJSON();
+    showTost({ children: "Data Backed Up Sucessfully", severity: "success" });
+  };
 
   const handelReset = () => {
     dispatch(resetNoteState());
@@ -36,6 +41,7 @@ export const DataSettings = () => {
     dispatch(resetThemeSlice());
     dispatch(resetTodoSlice());
     removeAllImagesFromStorage();
+    showTost({ children: "Data Reset Sucessfully", severity: "success" });
   };
 
   const commonProps: ButtonProps = {

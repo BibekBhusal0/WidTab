@@ -9,6 +9,7 @@ import "@/assets/styles/index.css";
 import "@/assets/styles/editor.css";
 import { setInitialStateFromLocalStorage } from "@/utils/redux";
 import { Icon } from "@iconify/react";
+import { TostProvider } from "@/components/tost";
 
 type EPprovider = { children: ReactNode };
 
@@ -33,7 +34,9 @@ const EverythingProvider = ({ children }: EPprovider) => {
     <Provider store={store}>
       <CustomThemeProvider>
         <CssBaseline />
-        <ReduxStorage>{children}</ReduxStorage>
+        <ReduxStorage>
+          <TostProvider>{children}</TostProvider>
+        </ReduxStorage>
       </CustomThemeProvider>
     </Provider>
   );
