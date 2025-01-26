@@ -59,10 +59,7 @@ function SearchEngineSelect({ showName, ...props }: SearchEngineSelectProps) {
         },
       }}
       sx={{
-        ".MuiSelect-select": {
-          padding: "10px",
-          paddingBottom: "4px",
-        },
+        ".MuiSelect-select": { padding: "5px" },
         ...props.sx,
       }}>
       {Object.entries(searchEngineLogoAndLink).map(([key, { icon }]) => (
