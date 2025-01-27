@@ -34,7 +34,7 @@ function Note({ id, title, text, icon }: noteType) {
           onChange={titleChangeHandler}
         />
       </div>
-      <ScrollArea>
+      <ScrollArea scrollBarProps={{ className: "w-2" }}>
         <Editor value={text} onChange={textChangeHandler} />
       </ScrollArea>
     </div>

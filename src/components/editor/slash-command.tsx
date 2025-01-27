@@ -1,4 +1,13 @@
 import { Command, renderItems, SuggestionItem } from "novel/extensions";
+import { tost } from "../tost";
+import {
+  EditorCommand,
+  EditorCommandItem,
+  EditorCommandEmpty,
+  EditorCommandList,
+} from "novel";
+import { Icon2RN } from "@/theme/icons";
+import { ScrollArea } from "../scrollarea";
 
 export const suggestionItems: SuggestionItem[] = [
   {
@@ -18,7 +27,7 @@ export const suggestionItems: SuggestionItem[] = [
   {
     title: "To-do List",
     description: "Track tasks with a to-do list.",
-    searchTerms: ["todo", "task", "list", "check", "checkbox"],
+    searchTerms: ["todo", "task", "list", "check", "checkbox", "list"],
     icon: "gravity-ui:square-check",
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).toggleTaskList().run();
@@ -106,7 +115,70 @@ export const suggestionItems: SuggestionItem[] = [
     command: ({ editor, range }) =>
       editor.chain().focus().deleteRange(range).toggleCodeBlock().run(),
   },
+  {
+    title: "Download",
+    description: "Download contents in markdown",
+    icon: "tabler:download",
+    command: ({ editor }) => {
+      try {
+        const content = editor.storage.markdown.getMarkdown();
+        const a = document.createElement("a");
+        const url = URL.createObjectURL(
+          new Blob([content], { type: "text/markdown" })
+        );
+        a.href = url;
+        a.download = "editor.md";
+        a.click();
+        URL.revokeObjectURL(url);
+        tost({ children: "Download Sucessful", severity: "success" });
+      } catch (error) {
+        tost({
+          children: (
+            <>
+              <div className="text-lg">Download Failed</div> {`${error}`}
+            </>
+          ),
+          severity: "error",
+        });
+      }
+    },
+  },
 ];
+
+export const SlashCommand = () => {
+  return (
+    <EditorCommand className="z-50 w-[250px] px-1 py-3 bg-background-default rounded-themed">
+      <ScrollArea
+        viewPortProps={{ className: "h-auto max-h-[300px]" }}
+        scrollBarProps={{ className: "w-2" }}>
+        <EditorCommandEmpty className="px-2 text-divider">
+          No results
+        </EditorCommandEmpty>
+        <EditorCommandList>
+          {suggestionItems.map((item) => (
+            <EditorCommandItem
+              value={[
+                item.title,
+                ...(item.searchTerms === undefined ? [] : item.searchTerms),
+              ].join(" ")}
+              onCommand={(val) => item.command?.(val)}
+              className="flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-sm aria-selected:bg-primary-selected"
+              key={item.title}>
+              <Icon2RN
+                icon={item.icon}
+                className="size-10 p-2 border-divider rounded-md border"
+              />
+              <div>
+                <p className="font-medium">{item.title}</p>
+                <p className="text-xs">{item.description}</p>
+              </div>
+            </EditorCommandItem>
+          ))}
+        </EditorCommandList>
+      </ScrollArea>
+    </EditorCommand>
+  );
+};
 
 export const slashCommand = Command.configure({
   suggestion: {

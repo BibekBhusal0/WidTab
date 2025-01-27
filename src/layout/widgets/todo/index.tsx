@@ -54,7 +54,7 @@ function Todo({ id, title, todos, filtered, icon }: TaskType) {
           onChange={titleChangeHandler}
         />
       </div>
-      <ScrollArea>
+      <ScrollArea scrollBarProps={{ className: "w-2" }}>
         <TodoList key={key} tasks={dynamicTasks} onChange={handleChange} />
       </ScrollArea>
     </div>

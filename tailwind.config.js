@@ -66,9 +66,7 @@ module.exports = {
         half: "calc(var(--custom-blur) / 2)",
       },
       borderRadius: { themed: "var(--custom-border-radius)" },
-      animation: {
-        "spin-slow": "spin 20s linear infinite",
-      },
+      animation: { "spin-slow": "spin 20s linear infinite" },
     },
   },
   darkMode: "class",

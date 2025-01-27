@@ -12,6 +12,7 @@ import {
   MarkdownExtension,
   CustomKeymap,
   CodeBlockLowlight,
+  TiptapImage,
 } from "novel/extensions";
 import GlobalDragHandle from "./drag-handle";
 import {
@@ -79,7 +80,7 @@ export const CodeBlockComponent = ({
         scrollBarProps={{ orientation: "horizontal", className: "h-2" }}>
         <pre
           spellCheck={"false"}
-          className="m-0 border-none rounded-b-lg text-[#24292e] bg-[#ffffff] dark:text-[#c9d1d9] dark:bg-[#0d1117] w-max">
+          className="m-0 border-none rounded-b-lg text-[#24292e] bg-[#ffffff] dark:text-[#c9d1d9] dark:bg-[#0d1117] w-max min-w-full">
           <NodeViewContent as="code" />
         </pre>
       </ScrollArea>
@@ -131,10 +132,11 @@ export const defaultExtensions = [
   TiptapUnderline,
   Color,
   TextStyle,
-  HighlightExtension.configure({ multicolor: true }),
+  HighlightExtension,
   GlobalDragHandle,
   Mathematics,
   markdownExtension,
   CustomKeymap,
   codeBlockLowlight,
+  TiptapImage,
 ];

@@ -110,7 +110,6 @@ export const ColorSelector = () => {
             <MenuItem
               key={i}
               onClick={() => {
-                editor.commands.unsetColor();
                 name !== "Default" &&
                   editor
                     .chain()
