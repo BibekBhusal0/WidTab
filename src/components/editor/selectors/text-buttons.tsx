@@ -64,7 +64,12 @@ export const TextButtons = () => {
       {items.map(({ command, icon, isActive, name }, index) => (
         <Tooltip
           key={index}
-          arrow
+          placement="top"
+          slotProps={{
+            popper: {
+              modifiers: [{ name: "offset", options: { offset: [0, -10] } }],
+            },
+          }}
           title=<div className="capitalize">{name}</div>>
           <Button
             size="medium"
