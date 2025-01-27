@@ -43,6 +43,7 @@ function AddBookmark() {
           {bookmark.title && bookmark.title.trim() !== "" && (
             <ListItemButton
               className="text-xl"
+              disabled={!availablePosition}
               onClick={() => addItem(bookmark.id)}>
               {bookmark.title}
             </ListItemButton>

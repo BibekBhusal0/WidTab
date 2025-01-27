@@ -1,6 +1,7 @@
 import { useEditor } from "novel";
 import type { SelectorItem } from "./node-selector";
 import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { Icon2RN } from "@/theme/icons";
 
@@ -39,26 +40,51 @@ export const TextButtons = () => {
       command: (editor) => editor.chain().focus().toggleCode().run(),
       icon: "gravity-ui:code",
     },
+    {
+      name: "math",
+      isActive: (editor) => editor.isActive("math"),
+      command: (editor) => {
+        if (editor.isActive("math")) {
+          editor.chain().focus().unsetLatex().run();
+        } else {
+          const { from, to } = editor.state.selection;
+          const latex = editor.state.doc.textBetween(from, to);
+
+          if (!latex) return;
+
+          editor.chain().focus().setLatex({ latex }).run();
+        }
+      },
+      icon: "gravity-ui:curly-brackets-function",
+    },
   ];
 
   return (
     <ButtonGroup variant="outlined" className="p-2">
-      {items.map((item, index) => (
-        <Button
+      {items.map(({ command, icon, isActive, name }, index) => (
+        <Tooltip
           key={index}
-          size="medium"
-          onClick={() => {
-            item.command(editor);
+          placement="top"
+          slotProps={{
+            popper: {
+              modifiers: [{ name: "offset", options: { offset: [0, -10] } }],
+            },
           }}
-          sx={{
-            color: item.isActive(editor) ? "primary.main" : "text.primary",
-            backgroundColor: item.isActive(editor)
-              ? "var(--primary-3)"
-              : "transparent",
-          }}
-          variant="outlined">
-          <Icon2RN icon={item.icon} className="size-4" />
-        </Button>
+          title=<div className="capitalize">{name}</div>>
+          <Button
+            size="medium"
+            onClick={() => command(editor)}
+            sx={{
+              color: isActive(editor) ? "primary.main" : "text.primary",
+              backgroundColor: isActive(editor)
+                ? "var(--primary-3)"
+                : "transparent",
+              paddingX: "0",
+            }}
+            variant="outlined">
+            <Icon2RN icon={icon} className="size-4" />
+          </Button>
+        </Tooltip>
       ))}
     </ButtonGroup>
   );

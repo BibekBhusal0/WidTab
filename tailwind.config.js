@@ -43,6 +43,18 @@ module.exports = {
         "text-primary": "var(--mui-palette-text-primary)",
         "text-disabled": "var(--mui-palette-text-disabled)",
         "text-secondary": "var(--mui-palette-text-secondary)",
+        "primary-selected":
+          "rgb(var(--mui-palette-primary-mainChannel ) / var(--mui-palette-action-selectedOpacity))",
+        "secondary-selected":
+          "rgb(var(--mui-palette-secondary-mainChannel) / var(--mui-palette-action-selectedOpacity))",
+        "success-selected":
+          "rgb(var(--mui-palette-success-mainChannel) / var(--mui-palette-action-selectedOpacity))",
+        "error-selected":
+          "rgb(var(--mui-palette-error-mainChannel) / var(--mui-palette-action-selectedOpacity))",
+        "info-selected":
+          "rgb(var(--mui-palette-info-mainChannel) / var(--mui-palette-action-selectedOpacity))",
+        "warning-selected":
+          "rgb(var(--mui-palette-warning-mainChannel) / var(--mui-palette-action-selectedOpacity))",
         divider: "var(--mui-palette-divider)",
       },
       backdropBlur: {
@@ -54,9 +66,7 @@ module.exports = {
         half: "calc(var(--custom-blur) / 2)",
       },
       borderRadius: { themed: "var(--custom-border-radius)" },
-      animation: {
-        "spin-slow": "spin 20s linear infinite",
-      },
+      animation: { "spin-slow": "spin 20s linear infinite" },
     },
   },
   darkMode: "class",

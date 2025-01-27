@@ -1,4 +1,3 @@
-import MenuPopover from "@/components/popoverMenu";
 import Divider from "@mui/material/Divider";
 import MenuItem from "@mui/material/MenuItem";
 import { useDispatch } from "react-redux";
@@ -7,7 +6,6 @@ import {
   currentSpaceEditWidget,
 } from "@/redux/slice/layout";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
-import { SelectChangeEvent } from "@mui/material/Select";
 import IconMenu from "@/components/menuWithIcon";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
 import useCurrentLayout from "@/hooks/useCurrentLayout";
@@ -45,7 +43,7 @@ function BookmarkControls({ id }: { id: number }) {
     { onChange: () => toggleValue("tabs"), title: "Show Tabs", checked: tabs },
   ];
 
-  const handleSizeChange = (event: SelectChangeEvent<unknown>) => {
+  const handleSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event.target.value as folderSizes;
     if (allFolderSizes.includes(val)) {
       dispatch(

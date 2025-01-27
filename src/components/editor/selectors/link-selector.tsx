@@ -42,7 +42,7 @@ export const LinkSelector = () => {
         key={key}
         icon={
           <div className="size-full icon-sm flex-center gap-2">
-            <Icon2RN icon="tabler:link" />
+            <Icon2RN icon="gravity-ui:link" />
             <div
               className={cn(
                 "underline decoration-stone-400 underline-offset-4 text-sm",

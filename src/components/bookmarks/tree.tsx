@@ -92,10 +92,12 @@ function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
         {...attributes}
         style={style}
         className={cn("w-full flex items-center gap-4 pl-2 ml-2")}>
-        <div className="py-1 my-1 flex items-center gap-4 w-full">
-          <Favicon src={bookmarks.url} className="size-10 aspect-square" />
-          <div {...listeners} className="text-xl truncate">
-            {bookmarks.title}
+        <div className="py-1 my-1 w-full">
+          <div className="flex items-center gap-4 w-full">
+            <Favicon src={bookmarks.url} className="size-10 aspect-square" />
+            <div {...listeners} className="text-xl truncate">
+              {bookmarks.title}
+            </div>
           </div>
         </div>
         {fav && <Icon className="text-3xl" icon="mdi:heart" />}

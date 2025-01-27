@@ -34,6 +34,14 @@
 .prose-xl ul[data-type="taskList"] li > label input[type="checkbox"] {
   @apply top-[6.4px];
 }
+.moveable-line {
+  background-color: var(--mui-palette-text-primary) !important;
+  padding: 1px;
+}
+.moveable-control {
+  border-color: var(--mui-palette-text-primary) !important;
+  background-color: var(--mui-palette-primary-contrastText) !important;
+}
 
 .ProseMirror {
   @apply p-2 pl-5;
@@ -140,18 +148,18 @@
 }
 
 /*!
-  SYNTAX HIGHLIGHT
-  Theme: GitHub / Github Dark
-  Author: github.com
-  Maintainer: @Hirse
-  Updated: 2021-05-15
-  Outdated base versions: https://github.com/primer/github-syntax-dark & : https://github.com/primer/github-syntax-light
-  Current colors taken from GitHub's CSS
-*/
+    SYNTAX HIGHLIGHT
+    Theme: GitHub / Github Dark
+    Author: github.com
+    Maintainer: @Hirse
+    Updated: 2021-05-15
+    Outdated base versions: https://github.com/primer/github-syntax-dark & : https://github.com/primer/github-syntax-light
+    Current colors taken from GitHub's CSS
+  */
 
 .hljs {
-  color: #24292e;
-  background: #ffffff;
+  color: #24292e !important;
+  background: #ffffff !important;
 }
 
 .hljs-doctag,
@@ -252,8 +260,8 @@
 
 .dark {
   .hljs {
-    color: #c9d1d9;
-    background: #0d1117;
+    color: #c9d1d9 !important;
+    background: #0d1117 !important;
   }
 
   .hljs-doctag,

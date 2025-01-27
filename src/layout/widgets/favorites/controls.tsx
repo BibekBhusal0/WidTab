@@ -1,4 +1,3 @@
-import MenuPopover from "@/components/popoverMenu";
 import Divider from "@mui/material/Divider";
 import MenuItem from "@mui/material/MenuItem";
 import { useDispatch } from "react-redux";
@@ -7,7 +6,6 @@ import {
   currentSpaceEditWidget,
 } from "@/redux/slice/layout";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
-import { SelectChangeEvent } from "@mui/material/Select";
 import IconMenu from "@/components/menuWithIcon";
 import useCurrentLayout from "@/hooks/useCurrentLayout";
 import SelectSize from "@/components/bookmarks/size";
@@ -30,7 +28,7 @@ function Controls({
   const props = widget.values;
   const { iconSize = "small" } = props;
 
-  const handleSizeChange = (event: SelectChangeEvent<unknown>) => {
+  const handleSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event.target.value as folderSizes;
     if (allFolderSizes.includes(val)) {
       dispatch(

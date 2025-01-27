@@ -1,13 +1,5 @@
+import { isValidUrl } from "novel/utils";
 export const urlPattern = /(https?:\/\/[^\s"'"]+|www\.[^\s"'"]+)/;
-
-export function isValidUrl(url: string) {
-  try {
-    new URL(url);
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
 
 export const extractURL = (text: string) => text.match(urlPattern) || [];
 

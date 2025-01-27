@@ -1,6 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import CustomThemeProvider from "./";
 import { Provider } from "react-redux";
+import { store } from "../redux/store";
 import CssBaseline from "@mui/material/CssBaseline";
 import "@/assets/styles/tailwind.css";
 import "@/assets/styles/icons.css";
@@ -8,8 +9,7 @@ import "@/assets/styles/index.css";
 import "@/assets/styles/editor.css";
 import { setInitialStateFromLocalStorage } from "@/utils/redux";
 import { Icon } from "@iconify/react";
-import { reducerNames, reducers, store } from "@/redux/store";
-import browser from "webextension-polyfill";
+import { TostProvider } from "@/components/tost";
 
 type EPprovider = { children: ReactNode };
 
@@ -55,13 +55,14 @@ const ReduxStorage = ({ children }: EPprovider) => {
     <>{children}</>
   );
 };
-
 const EverythingProvider = ({ children }: EPprovider) => {
   return (
     <Provider store={store}>
       <CustomThemeProvider>
         <CssBaseline />
-        <ReduxStorage>{children}</ReduxStorage>
+        <ReduxStorage>
+          <TostProvider>{children}</TostProvider>
+        </ReduxStorage>
       </CustomThemeProvider>
     </Provider>
   );

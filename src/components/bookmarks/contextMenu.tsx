@@ -15,7 +15,7 @@ import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
-import { isValidUrl } from "@/utils/url";
+import { isValidUrl } from "novel/utils";
 
 type AddFavProps = { id: string } & contextMenuProps;
 

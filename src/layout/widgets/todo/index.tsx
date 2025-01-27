@@ -9,6 +9,7 @@ import {
 import { cn } from "@/utils/cn";
 import { SelectIconMenu } from "@/components/select-icon";
 import TodoList from "@/components/editor/todo";
+import { ScrollArea } from "@/components/scrollarea";
 
 export const transparentInput =
   "border-transparent w-full bg-transparent resize-none focus:outline-none";
@@ -53,7 +54,9 @@ function Todo({ id, title, todos, filtered, icon }: TaskType) {
           onChange={titleChangeHandler}
         />
       </div>
-      <TodoList key={key} tasks={dynamicTasks} onChange={handleChange} />
+      <ScrollArea scrollBarProps={{ className: "w-2" }}>
+        <TodoList key={key} tasks={dynamicTasks} onChange={handleChange} />
+      </ScrollArea>
     </div>
   );
 }

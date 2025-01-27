@@ -2,7 +2,7 @@ import { TimerWidgetType } from "@/types/slice/widgets";
 import { useState, useEffect } from "react";
 import dayjs from "@/dayjsConfig";
 import { FitText } from "../clock/digital";
-import { PieChart, Pie, Cell } from "recharts";
+import { RadialBarChart, RadialBar, PolarAngleAxis } from "recharts";
 import Button, { ButtonProps } from "@mui/material/Button";
 import useFullSize from "@/hooks/useFullSize";
 import { cn } from "@/utils/cn";
@@ -74,15 +74,11 @@ function TimerWidget(props: TimerWidgetType) {
     ((totalDuration - remainingTime) / totalDuration) * 100;
 
   const showMusic = music && height > 400;
-  const data = [
-    { name: "completed", value: calculateProgress() },
-    { name: "remaining", value: 100 - calculateProgress() },
-  ];
   const h = showMusic ? (height * 4) / 6 : height;
   const radius = Math.min(width, h) / 2 - 10;
   const dia = radius * 2;
   const angle = 45;
-  const pieProps = {
+  const chart = {
     width,
     height: h,
     innerRadius: radius * 0.78,
@@ -132,26 +128,21 @@ function TimerWidget(props: TimerWidgetType) {
           "w-full relative",
           showMusic ? "h-4/6 pb-3 border-b-2 border-divider" : "h-full"
         )}>
-        <PieChart {...pieProps}>
-          <Pie
-            data={data}
-            dataKey={"value"}
+        <RadialBarChart data={[{ value: calculateProgress() }]} {...chart}>
+          <PolarAngleAxis
+            angleAxisId={0}
+            domain={[0, 100]}
+            tick={false}
+            type="number"
+          />
+          <RadialBar
+            dataKey="value"
             fill="var(--mui-palette-primary-main)"
+            background={{ fill: "var(--mui-palette-divider)" }}
             isAnimationActive={false}
-            {...pieProps}>
-            {data.map((_, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={
-                  index === 0
-                    ? "var(--mui-palette-primary-main)"
-                    : "var(--mui-palette-divider)"
-                }
-                stroke="none"
-              />
-            ))}
-          </Pie>
-        </PieChart>
+            {...chart}
+          />
+        </RadialBarChart>
         <FitText
           aria-label="time"
           min={10}

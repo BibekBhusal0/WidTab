@@ -11,7 +11,7 @@ import { SelectIconMenu } from "@/components/select-icon";
 const HabitTrackerEdit: FunctionComponent<HabitTrackerEditProps> = ({
   initialState = {
     id: 0,
-    icon: "material-symbols:potted-plant",
+    icon: "majesticons:skull",
     increment: 10,
     target: 100,
     title: "",

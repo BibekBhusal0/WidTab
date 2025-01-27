@@ -11,7 +11,6 @@ import { useBookmarkFolder } from "@/hooks/useBookmarks";
 import BookmarkBreadcrumb from "@/components/bookmarks/breadcrumb";
 import BookmarkGrid from "@/components/bookmarks/grid";
 import { changeCurrentFolder } from "@/redux/slice/bookmark";
-import { SelectChangeEvent } from "@mui/material/Select";
 import { changeFolderSize } from "@/redux/slice/bookmark";
 import {
   allFolderSizes,
@@ -25,7 +24,7 @@ import MenuPopover, { MenuPopoverProps } from "@/components/popoverMenu";
 import TextField from "@mui/material/TextField";
 import { ReactNode, useState } from "react";
 import { addFolder, addLink } from "@/utils/bookmark";
-import { isValidUrl } from "@/utils/url";
+import { isValidUrl } from "novel/utils";
 
 function BookmarkManager() {
   return (
@@ -57,13 +56,19 @@ function BookmarkSizeSelect() {
   const { folderSize } = useSelector((state: StateType) => state.bookmarks);
   const dispatch = useDispatch();
 
-  const handleChange = (event: SelectChangeEvent<unknown>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event.target.value as folderSizes;
     if (allFolderSizes.includes(val)) {
       dispatch(changeFolderSize(val));
     }
   };
-  return <SelectSize value={folderSize} onChange={handleChange} />;
+  return (
+    <SelectSize
+      sx={{ width: "150px" }}
+      value={folderSize}
+      onChange={handleChange}
+    />
+  );
 }
 
 const addIcon = <Icon icon="material-symbols:add-rounded" />;
@@ -258,7 +263,9 @@ function MainBookmarks() {
         <Favorites {...props} id={1} iconSize={folderSize} />
       ) : (
         <ScrollArea>
-          <BookmarksFolder />
+          <div className="py-2">
+            <BookmarksFolder />
+          </div>
         </ScrollArea>
       )}
     </>

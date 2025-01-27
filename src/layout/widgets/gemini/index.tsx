@@ -4,7 +4,6 @@ import { Icon } from "@iconify/react";
 import IconButton from "@mui/material/IconButton";
 import { GoogleGenerativeAI, Content } from "@google/generative-ai";
 import { APIkeyURL, getAPIKey, setAPIKey } from "@/utils/api";
-import ReactMarkdown from "react-markdown";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -18,69 +17,7 @@ import reactNodeToString from "react-node-to-string";
 import browser from "webextension-polyfill";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
-import Lowlight from "react-lowlight";
-import "react-lowlight/all";
-
-// https://github.com/chathub-dev/chathub/blob/b31739fe103f24df41f75a7556ce670c1437dbff/src/app/components/Markdown/index.tsx#L8
-function CustomCode(props: { children: React.ReactNode; className?: string }) {
-  const [copied, setCopied] = useState(false);
-  const language = useMemo(() => {
-    const match = props.className?.match(/language-(\w+)/);
-    return match ? match[1] : "text";
-  }, [props.className]);
-
-  const code = useMemo(
-    () => reactNodeToString(props.children),
-    [props.children]
-  );
-
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 3000);
-  };
-
-  const cls = "size-5 transition-all duration-300 absolute-center";
-
-  return (
-    <div className="relative size-full">
-      <div className="full-between px-4 py-2 bg-secondaryContainer-default">
-        {language && (
-          <span className="font-medium uppercase text-text-primary">
-            {language}
-          </span>
-        )}
-
-        <Tooltip placement="left" title={copied ? "Copied" : "Copy"}>
-          <Button
-            variant="outlined"
-            onClick={copyToClipboard}
-            sx={{ minWidth: "0px" }}>
-            <div className="size-full relative px-0 py-2">
-              <Icon
-                icon="mingcute:copy-2-line"
-                className={cn(cls, copied ? "scale-0" : "scale-100")}
-              />
-              <Icon
-                icon="mingcute:check-fill"
-                className={cn(cls, copied ? "scale-100" : "scale-0")}
-              />
-            </div>
-          </Button>
-        </Tooltip>
-      </div>
-      <div className="overflow-auto size-full px-5 py-3 text-[#24292e] bg-[#ffffff] dark:text-[#c9d1d9] dark:bg-[#0d1117]">
-        <Lowlight
-          inline
-          value={code}
-          language={language}
-          markers={[]}
-          className={props.className}
-        />
-      </div>
-    </div>
-  );
-}
+import { MarkdownPreview } from "@/components/editor/advanced-editor";
 
 function GeminiWidget(props: geminiWidgetType) {
   const [input, setInput] = useState("");
@@ -271,7 +208,7 @@ export function ReformatContent({
           )}
           {role === "model" && (
             <Paper className={cn(cls, "max-w-[90%]")} variant="outlined">
-              <ReactMarkdown
+              {/* <ReactMarkdown
                 className="w-full"
                 components={{
                   a: ({ node, ...props }) => {
@@ -310,8 +247,10 @@ export function ReformatContent({
                     );
                   },
                 }}>
-                {parts.map(({ text }) => text || "").join("\n")}
-              </ReactMarkdown>
+              </ReactMarkdown> */}
+              <MarkdownPreview
+                value={parts.map(({ text }) => text || "").join("\n")}
+              />
             </Paper>
           )}
         </Fragment>

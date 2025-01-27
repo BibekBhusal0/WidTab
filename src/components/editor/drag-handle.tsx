@@ -315,11 +315,22 @@ export function DragHandlePlugin(
 
           if (!dragHandleElement) return;
 
-          const top = options.editorScrollable
-            ? editorRect.top
-            : view.dom.parentElement?.parentElement?.getBoundingClientRect()
-                .top || 0;
+          var top = editorRect.top;
+          function getScrollableParent(element: Element | null) {
+            while (element) {
+              const overflowY = window.getComputedStyle(element).overflowY;
+              if (overflowY === "auto" || overflowY === "scroll")
+                return element;
 
+              element = element.parentElement;
+            }
+            return null;
+          }
+
+          if (options.editorScrollable) {
+            const parentElement = getScrollableParent(view.dom.parentElement);
+            top = parentElement?.getBoundingClientRect().top || top;
+          }
           dragHandleElement.style.left = `${
             rect.left - options.dragHandleWidth - editorRect.left
           }px`;
@@ -386,7 +397,7 @@ const GlobalDragHandle = Extension.create({
       yOffset: 45,
       excludedTags: [],
       customNodes: [],
-      editorScrollable: false,
+      editorScrollable: true,
     };
   },
 

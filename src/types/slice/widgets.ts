@@ -33,6 +33,7 @@ const SE = [
   "Brave",
   "DuckDuckGo",
   "Perplexity",
+  "ChatGPT",
 ] as const;
 
 export type StaticPagesType = (typeof SP)[number];

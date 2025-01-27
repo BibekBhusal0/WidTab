@@ -1,7 +1,7 @@
 import { AllSearchEngines } from "@/types/slice/widgets";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectProps } from "@mui/material/Select";
+import TextField, { TextFieldProps } from "@mui/material/TextField";
 import { cn } from "@/utils/cn";
 import { Icon } from "@iconify/react";
 
@@ -23,11 +23,12 @@ export const searchEngineLogoAndLink: SearchEngineMapping = {
     icon: "ri:perplexity-line",
     link: "https://www.perplexity.ai/?q=%s",
   },
+  ChatGPT: { icon: "ri:openai-fill", link: "https://chatgpt.com/?q=%s" },
 };
 
 export type SearchEngineSelectProps = {
   showName?: boolean;
-} & Partial<SelectProps>;
+} & Partial<TextFieldProps>;
 
 function SearchEngineSelect({ showName, ...props }: SearchEngineSelectProps) {
   const renderValue = (selected: unknown) => {
@@ -44,22 +45,21 @@ function SearchEngineSelect({ showName, ...props }: SearchEngineSelectProps) {
   };
 
   return (
-    <Select
+    <TextField
       variant="filled"
       size="small"
-      disableUnderline
       {...props}
-      renderValue={renderValue}
+      select
       className={cn("icon-xl", props.className)}
-      MenuProps={{
-        style: { maxHeight: "300px", ...props?.MenuProps?.style },
-        ...props?.MenuProps,
+      slotProps={{
+        select: {
+          renderValue,
+          MenuProps: { style: { maxHeight: "300px" } },
+          disableUnderline: true,
+        },
       }}
       sx={{
-        ".MuiSelect-select": {
-          padding: "10px",
-          paddingBottom: "4px",
-        },
+        ".MuiSelect-select": { padding: "5px" },
         ...props.sx,
       }}>
       {Object.entries(searchEngineLogoAndLink).map(([key, { icon }]) => (
@@ -73,7 +73,7 @@ function SearchEngineSelect({ showName, ...props }: SearchEngineSelectProps) {
           <span>{key}</span>
         </MenuItem>
       ))}
-    </Select>
+    </TextField>
   );
 }
 
