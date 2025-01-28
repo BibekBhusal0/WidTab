@@ -2,7 +2,7 @@ import Folder from "@/components/bookmarks/folder";
 import { changeCurrentFolder } from "@/redux/slice/bookmark";
 import { StateType } from "@/redux/store";
 import { Icon } from "@iconify/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { TakeBookmarksProps } from "@/types/slice/bookmark";
 import { FolderContextMenu, LinkContextMenu } from "./contextMenu";
@@ -105,11 +105,25 @@ function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
 
 function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
   const [open, setOpen] = useState(false);
+  const folderRef = useRef<HTMLDivElement>(null);
+  const { currentFolderID } = useSelector(
+    (state: StateType) => state.bookmarks
+  );
+  const isCurrentFolder = currentFolderID === bookmarks.id;
 
   useEffect(() => {
     console.log(paths, bookmarks.id);
     if (paths?.includes(bookmarks.id)) {
       setOpen(true);
+      if (paths?.length) {
+        const last = paths[paths.length - 1];
+        if (last === bookmarks.id) {
+          folderRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
+      }
     }
   }, [paths, bookmarks.id]);
   const dispatch = useDispatch();
@@ -142,10 +156,12 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
         ref={droppableRef}
         className={cn(
           "relative py-1 my-1 ml-1 pl-2  border-2 border-transparent",
-          isOver && "border-primary-3"
+          isOver && "border-primary-5",
+          isCurrentFolder && "bg-primary-2"
         )}>
         <FolderContextMenu id={bookmarks.id}>
           <div
+            ref={folderRef}
             className="flex w-full items-center gap-4 cursor-pointer"
             onClick={(e) => {
               e.preventDefault();
