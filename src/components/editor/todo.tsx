@@ -1,9 +1,10 @@
-import { EditorRoot, EditorContent, JSONContent } from "novel";
+import { EditorRoot, JSONContent, EditorContent, useEditor } from "novel";
 import Document from "@tiptap/extension-document";
 import { Placeholder, TaskItem, TaskList } from "novel/extensions";
 import { starterKit } from "@/components/editor/extensions";
 import { todoType } from "@/types/slice/todo";
 import GlobalDragHandle from "./drag-handle";
+import { useEffect, useMemo, useRef } from "react";
 
 const Task2JSON = (todos: todoType[]): JSONContent => {
   const content = todos.map((todo) => ({
@@ -14,10 +15,7 @@ const Task2JSON = (todos: todoType[]): JSONContent => {
   if (content.length === 0) {
     content.push({ type: "taskItem", attrs: { checked: false }, content: [] });
   }
-  return {
-    type: "doc",
-    content: [{ type: "taskList", content }],
-  };
+  return { type: "doc", content: [{ type: "taskList", content }] };
 };
 
 const JSON2Task = (json: JSONContent): todoType[] => {
@@ -63,17 +61,20 @@ const extensions = [
 ];
 
 export type TodoListProps = {
-  tasks: todoType[];
+  todos: todoType[];
   onChange?: (value: todoType[]) => void;
+  filtered?: boolean;
 };
 
-export const TodoList = ({ tasks, onChange }: TodoListProps) => {
+type setContentProp = Omit<TodoListProps, "onChange">;
+
+export const TodoList = ({ todos, onChange, filtered }: TodoListProps) => {
   return (
     <EditorRoot>
       <EditorContent
         autofocus
         extensions={extensions}
-        initialContent={Task2JSON(tasks)}
+        initialContent={Task2JSON(todos)}
         onUpdate={({ editor }) => {
           if (onChange) {
             const updatedTasks = JSON2Task(editor.getJSON());
@@ -84,10 +85,30 @@ export const TodoList = ({ tasks, onChange }: TodoListProps) => {
           attributes: {
             class: `prose dark:prose-invert prose-xl prose-headings:font-title font-default focus:outline-none max-w-full size-full min-h-[250px] todo-list `,
           },
-        }}
-      />
+        }}>
+        <SetContent {...{ todos, filtered }} />
+      </EditorContent>
     </EditorRoot>
   );
 };
 
 export default TodoList;
+
+const SetContent = ({ todos, filtered }: setContentProp) => {
+  const { editor } = useEditor();
+  const dynamicTasks = useMemo(
+    () => (filtered ? todos.filter((t) => !t.checked) : [...todos]),
+    [filtered, todos]
+  );
+  const prevLength = useRef(dynamicTasks.length);
+
+  useEffect(() => {
+    if (editor && dynamicTasks.length !== prevLength.current) {
+      console.count("editor");
+      editor.commands.setContent(Task2JSON(dynamicTasks));
+    }
+    prevLength.current = dynamicTasks.length;
+  }, [dynamicTasks.length]);
+
+  return <> </>;
+};

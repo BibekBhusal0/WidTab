@@ -77,7 +77,6 @@ export const ColorSelector = () => {
                     .setColor(color || "")
                     .run();
                 }
-                // name !== "Default" &&
                 handleClose();
               }}
               selected={name === activeColorItem?.name}
