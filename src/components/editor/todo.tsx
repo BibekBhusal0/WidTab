@@ -39,7 +39,7 @@ const CustomTaskItem = TaskItem.extend({ content: "inline*" });
 
 const extensions = [
   TaskList,
-  GlobalDragHandle.configure({ yOffset: 55, scrollAbleParent: 1 }),
+  GlobalDragHandle.configure({ yOffset: 55 }),
   Placeholder.configure({ placeholder: "Add a task..." }),
   starterKit.configure({
     horizontalRule: false,

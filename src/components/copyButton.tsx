@@ -3,9 +3,8 @@ import { iconAsProp, Icon2RN } from "@/theme/icons";
 import Button, { ButtonProps } from "@mui/material/Button";
 import Tooltip, { TooltipProps } from "@mui/material/Tooltip";
 import { cn } from "@/utils/cn";
-import reactNodeToString from "react-node-to-string";
 
-export type CopyButtonProps = ButtonProps & {
+export type CopyButtonProps = Omit<ButtonProps, "children"> & {
   copyIcon?: iconAsProp;
   copiedIcon?: iconAsProp;
   showTooltip?: boolean;
@@ -13,6 +12,7 @@ export type CopyButtonProps = ButtonProps & {
     | Partial<TooltipProps>
     | ((copied: boolean) => Partial<TooltipProps>);
   iconCls?: string;
+  children: string;
 };
 
 export function CopyButton({
@@ -26,7 +26,7 @@ export function CopyButton({
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(reactNodeToString(props.children));
+    navigator.clipboard.writeText(props.children);
     setCopied(true);
     setTimeout(() => setCopied(false), 3000);
   };

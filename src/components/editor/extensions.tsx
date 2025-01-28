@@ -80,7 +80,7 @@ export const CodeBlockComponent = ({
         scrollBarProps={{ orientation: "horizontal", className: "h-2" }}>
         <pre
           spellCheck={"false"}
-          className="m-0 border-none rounded-b-lg text-[#24292e] bg-[#ffffff] dark:text-[#c9d1d9] dark:bg-[#0d1117] w-max min-w-full">
+          className="m-0 border-none rounded-b-lg w-max min-w-full text-base">
           <NodeViewContent as="code" />
         </pre>
       </ScrollArea>
