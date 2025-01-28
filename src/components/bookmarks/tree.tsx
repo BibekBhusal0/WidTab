@@ -2,7 +2,7 @@ import Folder from "@/components/bookmarks/folder";
 import { changeCurrentFolder } from "@/redux/slice/bookmark";
 import { StateType } from "@/redux/store";
 import { Icon } from "@iconify/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { TakeBookmarksProps } from "@/types/slice/bookmark";
 import { FolderContextMenu, LinkContextMenu } from "./contextMenu";
@@ -18,11 +18,22 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/utils/cn";
-import { findBookmarkById } from "@/utils/bookmark";
+import { findBookmarkById, findPath } from "@/utils/bookmark";
 import { openLink } from "@/utils/bookmark";
 
+type defaultOpen = { paths?: string[] };
 function BookmarkTree() {
   const { bookmarks } = useAllBookmarks();
+  const [path, setPath] = useState<string[]>([]);
+  const { currentFolderID } = useSelector(
+    (state: StateType) => state.bookmarks
+  );
+  useEffect(() => {
+    findPath(currentFolderID).then((data) => {
+      setPath(data.map((item) => item.id));
+    });
+  }, [currentFolderID]);
+
   if (!bookmarks || bookmarks.length === 0) return null;
 
   function handleDragEnd(event: DragEndEvent) {
@@ -37,19 +48,20 @@ function BookmarkTree() {
   return (
     <div className="px-3">
       <DndContext onDragEnd={handleDragEnd}>
-        <BookmarkItem bookmarks={bookmarks} />
+        <BookmarkItem bookmarks={bookmarks} paths={path} />
       </DndContext>
     </div>
   );
 }
 
-function BookmarkItem({ bookmarks }: TakeBookmarksProps) {
+function BookmarkItem({ bookmarks, paths }: TakeBookmarksProps & defaultOpen) {
   if (Array.isArray(bookmarks)) {
     return bookmarks.map((child) => (
-      <BookmarkItem key={child.id} bookmarks={child} />
+      <BookmarkItem key={child.id} bookmarks={child} paths={paths} />
     ));
   }
-  if (bookmarks.children) return <BookmarkFolder bookmarks={bookmarks} />;
+  if (bookmarks.children)
+    return <BookmarkFolder bookmarks={bookmarks} paths={paths} />;
   return <BookmarkTreeLink bookmarks={bookmarks} />;
 }
 
@@ -91,13 +103,17 @@ function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
   );
 }
 
-function BookmarkFolder({ bookmarks }: bookmarkTreeNode) {
-  const [open, setOpen] = useState(
-    bookmarks.id === "1" || bookmarks.id === "0"
-  );
+function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    console.log(paths, bookmarks.id);
+    if (paths?.includes(bookmarks.id)) {
+      setOpen(true);
+    }
+  }, [paths, bookmarks.id]);
   const dispatch = useDispatch();
   const changeFolder = () => {
-    // if (!open)
     dispatch(changeCurrentFolder(bookmarks.id));
   };
   const {
@@ -138,7 +154,7 @@ function BookmarkFolder({ bookmarks }: bookmarkTreeNode) {
               changeFolder();
             }}>
             <div className="aspect-square h-full shrink-0">
-              <Folder open={open} />
+              <Folder {...{ open }} />
             </div>
             <div {...listeners} className="text-2xl truncate">
               {bookmarks.title}
@@ -158,7 +174,7 @@ function BookmarkFolder({ bookmarks }: bookmarkTreeNode) {
                 transition={{ type: "spring", duration: 0.3, bounce: 0 }}
                 //
               >
-                <BookmarkItem bookmarks={child} />
+                <BookmarkItem bookmarks={child} paths={paths} />
               </motion.div>
             ))}
         </AnimatePresence>
