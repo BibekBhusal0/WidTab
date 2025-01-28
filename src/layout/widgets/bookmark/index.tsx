@@ -8,6 +8,7 @@ import { cn } from "@/utils/cn";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import { reorderBookmarks } from "@/utils/bookmark";
 import { useDispatch } from "react-redux";
 
 function BookmarkWidget(props: BookmarkWidgetType) {
@@ -54,6 +55,7 @@ function BookmarkWidget(props: BookmarkWidgetType) {
             bookmarks={bookmark}
             folderSize={iconSize}
             onFolderChange={onFolderChange}
+            onReorder={reorderBookmarks}
           />
         </div>
       </ScrollArea>
