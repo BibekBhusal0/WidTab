@@ -8,6 +8,12 @@ import {
   defaultDropAnimationSideEffects,
   DndContext,
   DragOverlay,
+  KeyboardSensor,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+  PointerActivationConstraint,
 } from "@dnd-kit/core";
 import {
   restrictToHorizontalAxis,
@@ -111,6 +117,8 @@ interface SortableProps<TData extends { id: UniqueIdentifier }>
    * overlay={<Skeleton className="w-full h-8" />}
    */
   overlay?: React.ReactNode | null;
+
+  constraint?: PointerActivationConstraint;
 }
 
 function Sortable<TData extends { id: UniqueIdentifier }>({
@@ -123,15 +131,26 @@ function Sortable<TData extends { id: UniqueIdentifier }>({
   orientation = "vertical",
   overlay,
   children,
+  constraint,
   ...props
 }: SortableProps<TData>) {
   const [activeId, setActiveId] = React.useState<UniqueIdentifier | null>(null);
+  const activationConstraint: PointerActivationConstraint = constraint || {
+    delay: 0,
+    distance: 0,
+  };
+  const sensors = useSensors(
+    useSensor(MouseSensor, { activationConstraint }),
+    useSensor(TouchSensor, { activationConstraint }),
+    useSensor(KeyboardSensor)
+  );
 
   const config = orientationConfig[orientation];
 
   return (
     <DndContext
       modifiers={modifiers ?? config.modifiers}
+      sensors={sensors}
       onDragStart={({ active }) => setActiveId(active.id)}
       onDragEnd={({ active, over }) => {
         if (over && active.id !== over?.id) {

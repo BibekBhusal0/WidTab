@@ -41,6 +41,7 @@ function BookmarkGrid(props: ExtraBookmarkProps & bookmarkTreeNodeArray & l) {
         orientation="mixed"
         value={bookmarks}
         onValueChange={onReorder}
+        constraint={{ distance: 10, delay: 400 }}
         //
       >
         <div className="flex flex-wrap mx-auto w-full" style={{ gap }}>
@@ -85,7 +86,7 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
           ? openLink(bookmarks.url, linkInNewTab, e)
           : onFolderChange(bookmarks.id);
       }}
-      className="group cursor-pointer"
+      className="group"
       sx={{
         backgroundColor: "secondaryContainer.paper",
         width: size,
@@ -106,8 +107,8 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
           },
         },
       }}>
-      <CardActionArea className="size-full p-1">
-        <div className="flex-center flex-col gap-1 size-full">
+      <CardActionArea className="size-full p-1" sx={{ cursor: "unset" }}>
+        <SortableDragHandle className="flex-center flex-col gap-1 size-full cursor-pointer data-[state=dragging]:cursor-grabbing">
           {!bookmarks.url ? (
             <div className="w-[70%] h-[50%] relative">
               <HoverFolder empty={!bookmarks.children?.length} />
@@ -115,13 +116,13 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
           ) : (
             <Favicon src={bookmarks.url} className="size-1/2 aspect-square" />
           )}
-          <SortableDragHandle className="flex-center w-full px-1 py-0.5 gap-[2px]">
+          <div className="flex-center w-full px-1 py-0.5 gap-[2px]">
             {fav && linkAndContextMenu && (
               <Icon style={{ fontSize: size / 5 }} icon="mdi:heart" />
             )}
             <div className="truncate w-full text-center">{bookmarks.title}</div>
-          </SortableDragHandle>
-        </div>
+          </div>
+        </SortableDragHandle>
       </CardActionArea>
     </Card>
   );

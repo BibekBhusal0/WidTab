@@ -14,6 +14,11 @@ import {
   DragEndEvent,
   useDraggable,
   useDroppable,
+  useSensors,
+  useSensor,
+  MouseSensor,
+  TouchSensor,
+  PointerActivationConstraint,
 } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 import { AnimatePresence, motion } from "framer-motion";
@@ -34,6 +39,17 @@ function BookmarkTree() {
     });
   }, [currentFolderID]);
 
+  const activationConstraint: PointerActivationConstraint = {
+    delay: 400,
+    distance: 10,
+  };
+  const mouseSensor = useSensor(MouseSensor, {
+    activationConstraint,
+  });
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint,
+  });
+  const sensors = useSensors(mouseSensor, touchSensor);
   if (!bookmarks || bookmarks.length === 0) return null;
 
   function handleDragEnd(event: DragEndEvent) {
@@ -47,7 +63,7 @@ function BookmarkTree() {
 
   return (
     <div className="px-3">
-      <DndContext onDragEnd={handleDragEnd}>
+      <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
         <BookmarkItem bookmarks={bookmarks} paths={path} />
       </DndContext>
     </div>
@@ -84,17 +100,19 @@ function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
   return (
     <LinkContextMenu id={bookmarks.id}>
       <div
-        onClick={(e) => openLink(bookmarks.url || "", linkInNewTab, e)}
         ref={setNodeRef}
         {...attributes}
+        {...listeners}
         style={style}
-        className={cn("w-full flex items-center gap-4 pl-2 ml-2")}>
+        onClick={(e) => openLink(bookmarks.url || "", linkInNewTab, e)}
+        className={cn(
+          "w-full flex items-center gap-4 pl-2 ml-2",
+          isDragging && "cursor-grabbing"
+        )}>
         <div className="py-1 my-1 w-full">
           <div className="flex items-center gap-4 w-full">
             <Favicon src={bookmarks.url} className="size-10 aspect-square" />
-            <div {...listeners} className="text-xl truncate">
-              {bookmarks.title}
-            </div>
+            <div className="text-xl truncate">{bookmarks.title}</div>
           </div>
         </div>
         {fav && <Icon className="text-3xl" icon="mdi:heart" />}
@@ -112,17 +130,13 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
   const isCurrentFolder = currentFolderID === bookmarks.id;
 
   useEffect(() => {
-    console.log(paths, bookmarks.id);
     if (paths?.includes(bookmarks.id)) {
       setOpen(true);
-      if (paths?.length) {
-        const last = paths[paths.length - 1];
-        if (last === bookmarks.id) {
-          folderRef.current?.scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-          });
-        }
+      if (isCurrentFolder) {
+        folderRef.current?.scrollIntoView({
+          behavior: "smooth",
+          inline: "start",
+        });
       }
     }
   }, [paths, bookmarks.id]);
@@ -161,20 +175,20 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
         )}>
         <FolderContextMenu id={bookmarks.id}>
           <div
+            {...listeners}
             ref={folderRef}
-            className="flex w-full items-center gap-4 cursor-pointer"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
+            className={cn(
+              "flex w-full items-center gap-4 cursor-pointer",
+              isDragging && "cursor-grabbing"
+            )}
+            onClick={() => {
+              if (!open) changeFolder();
               setOpen(!open);
-              changeFolder();
             }}>
             <div className="aspect-square h-full shrink-0">
               <Folder {...{ open }} />
             </div>
-            <div {...listeners} className="text-2xl truncate">
-              {bookmarks.title}
-            </div>
+            <div className="text-2xl truncate">{bookmarks.title}</div>
           </div>
         </FolderContextMenu>
 
