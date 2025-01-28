@@ -21,7 +21,7 @@ function NotesPage() {
   const { delete_ } = useCurrentIcons();
 
   const dispatch = useDispatch();
-  const commonCls = "h-80 overflow-hidden";
+  const commonCls = "h-[400px] overflow-hidden";
 
   return (
     <ScrollArea className="size-full">
@@ -29,7 +29,7 @@ function NotesPage() {
         value={allNotes}
         onValueChange={(n) => dispatch(reorderNotes(n))}
         orientation="mixed">
-        <div className="grid gap-3 grid-cols-1 p-3 sm:grid-cols-2 md:grid-cols-3">
+        <div className="grid gap-2 grid-cols-1 p-3 sm:grid-cols-2 md:grid-cols-3">
           {allNotes.map((p) => {
             const handleDelete = () => dispatch(deleteNote(p.id));
             return (
@@ -61,7 +61,7 @@ function NotesPage() {
                         ]}
                       />
                     }>
-                    <SortableDragHandle className="absolute w-full h-2 bg-primary-2 top-0 z-10" />
+                    <SortableDragHandle className="absolute w-full h-3 bg-primary-2 top-0 z-10" />
 
                     <Note {...p} />
                   </Controls>

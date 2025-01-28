@@ -14,11 +14,7 @@ import useCurrentIcons from "@/hooks/useCurrentIcons";
 import Controls from "../widgets/controls";
 import { getWidgetControlsProps } from "@/utils/getWidget";
 import { ScrollArea } from "@/components/scrollarea";
-import {
-  Sortable,
-  SortableDragHandle,
-  SortableItem,
-} from "@/components/sortable";
+import { Sortable, SortableItem } from "@/components/sortable";
 
 function HabitTrackerPage() {
   const { pinned, trackers } = useSelector(
@@ -53,10 +49,17 @@ function HabitTrackerPage() {
       <Sortable
         value={trackers}
         orientation="mixed"
+        constraint={{ distance: 20, delay: 400 }}
         onValueChange={(t) => dispatch(reorderTrackers(t))}>
         <div className="grid gap-3 grid-cols-1 m-3 sm:grid-cols-2 md:grid-cols-3">
           {trackers.map((tracker) => (
-            <SortableItem key={tracker.id} value={tracker.id}>
+            <SortableItem
+              key={tracker.id}
+              value={tracker.id}
+              asTrigger
+              className="cursor-auto data-[state=dragging]:cursor-grabbing"
+              //
+            >
               <Paper
                 sx={{
                   backgroundColor:
@@ -68,7 +71,6 @@ function HabitTrackerPage() {
                 <Controls
                   {...getWidgetControlsProps("habit-tracker", tracker.id)}
                   showOn="always">
-                  <SortableDragHandle className="w-full h-3 absolute top-0 bg-primary-2" />
                   <div className="size-full z-0">
                     <HabitTracker {...tracker} />
                   </div>

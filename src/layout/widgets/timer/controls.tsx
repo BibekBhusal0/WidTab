@@ -77,9 +77,8 @@ function TimerControls({ id }: { id: number }) {
     onClick: togglePlay,
     color: running ? "error.main" : "action.main",
   };
-  const menuItems: IconMenuType[] = [];
+  const menuItems: IconMenuType[] = [pausePlay];
   if (!running) menuItems.push(stats);
-  menuItems.push(pausePlay);
   const deleteButton = [
     {
       icon: delete_,
@@ -94,7 +93,7 @@ function TimerControls({ id }: { id: number }) {
       <IconMenu menuItems={menuItems} />
       <MenuSwitch items={switches} />
       {!running && (
-        <div className="full-between p-3">
+        <div className="p-3">
           <ChangeTime time={props.time} setTime={changeTime} />
         </div>
       )}

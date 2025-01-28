@@ -11,65 +11,23 @@ export interface BubbleColorMenuItem {
 }
 
 const TEXT_COLORS: BubbleColorMenuItem[] = [
-  {
-    name: "Default",
-    color: "var(--text-default)",
-  },
-
-  {
-    name: "Red",
-    color: "var(--text-red)",
-  },
-
-  {
-    name: "Blue",
-    color: "var(--text-blue)",
-  },
-  {
-    name: "Green",
-    color: "var(--text-green)",
-  },
-  {
-    name: "Orange",
-    color: "var(--text-orange)",
-  },
-
-  {
-    name: "Gray",
-    color: "var(--text-gray)",
-  },
+  { name: "Default", color: "" },
+  { name: "Blue", color: "#006FEE" },
+  { name: "Purple", color: "#7828C8" },
+  { name: "Green", color: "#17C964" },
+  { name: "Red", color: "#F31260" },
+  { name: "Pink", color: "#FF4ECD" },
+  { name: "Yellow", color: "#F5A524" },
 ];
+
 const HIGHLIGHT_COLORS: BubbleColorMenuItem[] = [
-  {
-    name: "Default",
-    color: "var(--highlight-default)",
-  },
-
-  {
-    name: "Red",
-    color: "var(--highlight-red)",
-  },
-
-  {
-    name: "Blue",
-    color: "var(--highlight-blue)",
-  },
-  {
-    name: "Green",
-    color: "var(--highlight-green)",
-  },
-  {
-    name: "Orange",
-    color: "var(--highlight-orange)",
-  },
-  {
-    name: "Pink",
-    color: "var(--highlight-pink)",
-  },
-  {
-    name: "Gray",
-    color: "var(--highlight-gray)",
-  },
+  { name: "Default", color: "" },
+  { name: "Blue", color: "#006FEE66" },
+  { name: "Purple", color: "#7828C866" },
+  { name: "Green", color: "#17C96466" },
+  { name: "Red", color: "#F3126066" },
+  { name: "Pink", color: "#FF4ECD66" },
+  { name: "Yellow", color: "#F5A52466" },
 ];
 
 export const ColorSelector = () => {
@@ -110,12 +68,15 @@ export const ColorSelector = () => {
             <MenuItem
               key={i}
               onClick={() => {
-                name !== "Default" &&
+                if (name === "Default") {
+                  editor.commands.unsetColor();
+                } else {
                   editor
                     .chain()
                     .focus()
                     .setColor(color || "")
                     .run();
+                }
                 handleClose();
               }}
               selected={name === activeColorItem?.name}

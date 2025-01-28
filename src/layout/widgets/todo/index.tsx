@@ -1,6 +1,5 @@
 import { TaskType, todoType } from "@/types/slice/todo";
 import { useDispatch } from "react-redux";
-import { useEffect, useMemo, useRef, useState } from "react";
 import {
   changeTaskIcon,
   changeTaskTitle,
@@ -16,19 +15,6 @@ export const transparentInput =
 
 function Todo({ id, title, todos, filtered, icon }: TaskType) {
   const dispatch = useDispatch();
-  const [key, setKey] = useState(1);
-  const previousTodosLength = useRef(todos.length);
-  const dynamicTasks = useMemo(
-    () => (filtered ? todos.filter((t) => !t.checked) : [...todos]),
-    [filtered, todos]
-  );
-
-  useEffect(() => {
-    if (todos.length === previousTodosLength.current) {
-      setKey((prev) => prev + 1);
-    }
-    previousTodosLength.current = todos.length;
-  }, [dynamicTasks.length, todos.length]);
 
   const titleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
     dispatch(changeTaskTitle({ task_id: id, title: e.target.value }));
@@ -55,7 +41,7 @@ function Todo({ id, title, todos, filtered, icon }: TaskType) {
         />
       </div>
       <ScrollArea scrollBarProps={{ className: "w-2" }}>
-        <TodoList key={key} tasks={dynamicTasks} onChange={handleChange} />
+        <TodoList onChange={handleChange} {...{ todos, filtered }} />
       </ScrollArea>
     </div>
   );

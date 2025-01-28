@@ -43,10 +43,7 @@ export default function ContextMenu({
     <Box
       {...containerProps}
       onContextMenu={handleContextMenu}
-      className={cn(
-        "cursor-context-menu size-full",
-        containerProps?.className
-      )}>
+      className={cn("size-full", containerProps?.className)}>
       <Menu
         {...menuProps}
         open={contextMenu !== null}

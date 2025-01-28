@@ -37,7 +37,7 @@ export const HoverFolder = ({ empty = false }: { empty?: boolean }) => {
   const paper =
     "absolute inset-1 rounded-2xl transition-all ease duration-300 origin-bottom";
   return (
-    <div className="file relative size-full cursor-pointer origin-bottom [perspective:1500px] z-50">
+    <div className="file relative size-full  origin-bottom [perspective:1500px] z-50">
       <div
         className={cn(
           "bg-primary-dark size-full origin-top rounded-2xl rounded-tl-none",
