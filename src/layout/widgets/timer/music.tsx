@@ -42,8 +42,8 @@ export default function MusicWidget({ play_ = false }: { play_?: boolean }) {
   useEffect(() => setPlay(play_), [play_]);
 
   useEffect(() => {
-    if (play) audioRef.current?.play();
-    else audioRef.current?.pause();
+    if (play && audioRef.current?.paused) audioRef.current?.play();
+    else if (!play && audioRef.current?.played) audioRef.current?.pause();
   }, [play]);
 
   useEffect(() => {
@@ -85,7 +85,13 @@ export default function MusicWidget({ play_ = false }: { play_?: boolean }) {
 
   return (
     <>
-      <audio ref={audioRef} src={path} loop />
+      <audio
+        ref={audioRef}
+        src={path}
+        loop
+        onPlay={() => setPlay(true)}
+        onPause={() => setPlay(false)}
+      />
       <div className="flex size-full flex-col p-4 gap-4">
         <div
           aria-label="title-and-music-icons"
