@@ -8,15 +8,11 @@ import useCurrentIcons from "@/hooks/useCurrentIcons";
 import IconMenu, { IconMenuType } from "@/components/menuWithIcon";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
 import useCurrentLayout from "@/hooks/useCurrentLayout";
-import { useState, useId, useEffect } from "react";
-import OutlinedInput from "@mui/material/OutlinedInput";
+import { useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
-import InputAdornment from "@mui/material/InputAdornment";
-import FormControl from "@mui/material/FormControl";
 import Popover from "@mui/material/Popover";
-import IconButton from "@mui/material/IconButton";
 import TimerStats from "./stats";
-import { Icon2RN } from "@/theme/icons";
+import RenameItem from "@/components/renameItem";
 
 function TimerControls({ id }: { id: number }) {
   const layout = useCurrentLayout();
@@ -94,7 +90,22 @@ function TimerControls({ id }: { id: number }) {
       <MenuSwitch items={switches} />
       {!running && (
         <div className="p-3">
-          <ChangeTime time={props.time} setTime={changeTime} />
+          <RenameItem
+            initialText={props.time.toString()}
+            handleChange={(e) => {
+              try {
+                const num = Number(e);
+                if (num && num > 0) changeTime(num);
+              } catch {}
+            }}
+            inputProps={{
+              type: "number",
+              size: "small",
+              sx: { width: "120px" },
+              label: "Time (min)",
+            }}
+            children={<InputLabel> Time (min) </InputLabel>}
+          />
         </div>
       )}
       <Divider />
@@ -102,10 +113,7 @@ function TimerControls({ id }: { id: number }) {
       <Popover
         anchorEl={anchorEl}
         marginThreshold={30}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         open={statsOpen}
         onClose={handleStatsClose}>
         <div className="size-[400px]">
@@ -115,41 +123,5 @@ function TimerControls({ id }: { id: number }) {
     </>
   );
 }
-
-type changeTimeProps = { time: number; setTime: (time: number) => void };
-const ChangeTime = ({ time, setTime }: changeTimeProps) => {
-  const [val, setVal] = useState(time);
-  useEffect(() => {
-    setVal(time);
-  }, [time]);
-  const id = useId();
-  const handleClick = () => {
-    if (val > 0 && val !== time) setTime(val);
-  };
-
-  return (
-    <FormControl className="flex-center w-full">
-      <InputLabel htmlFor={id}> Time (min) </InputLabel>
-      <OutlinedInput
-        id={id}
-        size="small"
-        sx={{ width: "120px" }}
-        label="Time (min)"
-        value={val}
-        onChange={(e) => setVal(Number(e.target.value))}
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButton
-              sx={{ padding: "4px", margin: "0" }}
-              onClick={handleClick}>
-              <Icon2RN icon="material-symbols:check-rounded"></Icon2RN>
-            </IconButton>
-          </InputAdornment>
-        }
-        type="number"
-      />
-    </FormControl>
-  );
-};
 
 export default TimerControls;
