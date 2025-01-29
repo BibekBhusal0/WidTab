@@ -60,7 +60,7 @@ function BookmarkGrid(props: ExtraBookmarkProps & bookmarkTreeNodeArray & l) {
 }
 
 function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
-  const { favorites, linkInNewTab } = useSelector(
+  const { favorites, linkInNewTab, folderIcons } = useSelector(
     (state: StateType) => state.bookmarks
   );
   const {
@@ -111,7 +111,10 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
         <SortableDragHandle className="flex-center flex-col gap-1 size-full cursor-pointer data-[state=dragging]:cursor-grabbing">
           {!bookmarks.url ? (
             <div className="w-[70%] h-[50%] relative">
-              <HoverFolder empty={!bookmarks.children?.length} />
+              <HoverFolder
+                empty={!bookmarks.children?.length}
+                icon={folderIcons?.[bookmarks.id]}
+              />
             </div>
           ) : (
             <Favicon src={bookmarks.url} className="size-1/2 aspect-square" />

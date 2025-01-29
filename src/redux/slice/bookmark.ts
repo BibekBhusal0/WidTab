@@ -16,6 +16,22 @@ export const bookmarkSlice = createSlice({
       if (!fav.includes(newId)) fav.push(newId);
       else state.favorites = fav.filter((id) => id !== newId);
     },
+    removeFavorete: (state, action: PayloadAction<string>) => {
+      state.favorites = state.favorites.filter((id) => id !== action.payload);
+    },
+    setFolderIcon: (
+      state,
+      action: PayloadAction<{ fodler: string; icon: string }>
+    ) => {
+      const { fodler, icon } = action.payload;
+      const icons = state.folderIcons || {};
+      icons[fodler] = icon;
+      state.folderIcons = icons;
+    },
+    removeFolderIcon: (state, action: PayloadAction<{ fodler: string }>) => {
+      const icons = state.folderIcons;
+      if (icons) delete icons[action.payload.fodler];
+    },
     changeCurrentFolder: (state, action: PayloadAction<string>) => {
       state.currentFolderID = action.payload;
       state.showFavorites = false;
@@ -61,6 +77,9 @@ export const {
   resetBookmarkState,
   setState,
   setFavorites,
+  removeFavorete,
+  removeFolderIcon,
+  setFolderIcon,
 } = bookmarkSlice.actions;
 
 export default bookmarkSlice.reducer;

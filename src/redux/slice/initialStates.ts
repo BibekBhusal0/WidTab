@@ -169,4 +169,13 @@ export const initialBookmarkState: bookmarkSliceType = {
   linkInNewTab: true,
   currentFolderID: "1",
   folderSize: "medium",
+  folderIcons: {
+    "23": "mingcute:ai-fill",
+    "46": "mingcute:code-fill",
+    "97": "ion:extension-puzzle-sharp",
+    "122": "mingclute:paint-brush-ai-fil",
+    "148": "mingcute:music-fill",
+    "152": "mingcute:movie-fill",
+    "159": "mingcute:message-fill-1",
+  },
 };
