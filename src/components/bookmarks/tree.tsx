@@ -140,7 +140,7 @@ function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
 function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
   const [open, setOpen] = useState(false);
   const folderRef = useRef<HTMLDivElement>(null);
-  const { currentFolderID } = useSelector(
+  const { currentFolderID, folderIcons } = useSelector(
     (state: StateType) => state.bookmarks
   );
   const isCurrentFolder = currentFolderID === bookmarks.id;
@@ -202,7 +202,7 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
               setOpen(!open);
             }}>
             <div className="aspect-square h-full shrink-0">
-              <Folder {...{ open }} />
+              <Folder {...{ open }} icon={folderIcons?.[bookmarks.id]} />
             </div>
             <div className="text-2xl truncate">{bookmarks.title}</div>
           </div>

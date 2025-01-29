@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
-import { toggleFavorites } from "@/redux/slice/bookmark";
+import { setFolderIcon, toggleFavorites } from "@/redux/slice/bookmark";
 import ContextMenu, { contextMenuProps } from "@/components/contextMenu";
 import IconMenu from "@/components/menuWithIcon";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
@@ -14,8 +14,11 @@ import browser from "webextension-polyfill";
 import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
+import InputLabel from "@mui/material/InputLabel";
 import { useEffect, useState } from "react";
 import { isValidUrl } from "novel/utils";
+import RenameItem from "../renameItem";
+import { SelectIconMenu } from "../select-icon";
 
 type AddFavProps = { id: string } & contextMenuProps;
 
@@ -128,7 +131,8 @@ export function LinkContextMenu({ id, ...props }: AddFavProps) {
 export function FolderContextMenu({ id, ...props }: AddFavProps) {
   const { delete_ } = useCurrentIcons();
   const [name, setName] = useState("");
-  const [helperText, setHelperText] = useState("");
+  const { folderIcons } = useSelector((state: StateType) => state.bookmarks);
+  const dispatch = useDispatch();
   useEffect(() => {
     browser.bookmarks.get(id).then((bookmarks) => {
       if (!bookmarks || bookmarks.length === 0) return;
@@ -136,19 +140,8 @@ export function FolderContextMenu({ id, ...props }: AddFavProps) {
       link?.title && setName(link.title);
     });
   }, []);
-  const handleTextChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setName(e.target.value);
-    if (helperText) setHelperText("");
-  };
-  const handleClick = () => {
-    if (name.trim().length === 0) {
-      setHelperText("Name is required");
-      return;
-    }
-    editFolder(id, name);
-  };
+
+  const emptyIcon = "ic:outline-circle";
   const items = [
     {
       name: "Delete",
@@ -163,21 +156,27 @@ export function FolderContextMenu({ id, ...props }: AddFavProps) {
       {...props}
       menuContent={
         <div>
-          <div className="flex-center flex-col p-2 gap-3">
-            <TextField
-              sx={{ width: "130px" }}
-              autoFocus
-              size="small"
-              error={!!helperText}
-              placeholder="Name"
-              label="Name"
-              value={name}
-              onChange={handleTextChange}
-              helperText={helperText}
+          <div className="flex-center flex-col p-2 w-40">
+            <RenameItem
+              handleChange={(a) => editFolder(id, a)}
+              initialText={name}
+              inputProps={{
+                placeholder: "Name",
+                autoFocus: true,
+                label: "Name",
+              }}
+              children=<InputLabel children="Name" />
             />
-            <Button onClick={handleClick} variant="outlined">
-              Rename
-            </Button>
+            <div className="full-between text-lg icon-lg px-1">
+              Icon
+              <SelectIconMenu
+                icon={folderIcons?.[id] || emptyIcon}
+                setIcon={(a) =>
+                  a !== emptyIcon &&
+                  dispatch(setFolderIcon({ fodler: id, icon: a }))
+                }
+              />
+            </div>
           </div>
           <Divider />
           <IconMenu menuItems={items} />

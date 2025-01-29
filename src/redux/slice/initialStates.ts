@@ -169,4 +169,6 @@ export const initialBookmarkState: bookmarkSliceType = {
   linkInNewTab: true,
   currentFolderID: "1",
   folderSize: "medium",
+  folderIcons: {
+  },
 };

@@ -5,6 +5,7 @@ export const allFolderSizes: folderSizes[] = [...s];
 
 export type bookmarkSliceType = {
   favorites: string[];
+  folderIcons?: { [key: string]: string };
 
   currentFolderID: string;
   linkInNewTab: boolean;

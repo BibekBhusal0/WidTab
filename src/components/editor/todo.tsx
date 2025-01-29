@@ -1,4 +1,4 @@
-import { EditorRoot, EditorContent, JSONContent } from "novel";
+import { EditorRoot, JSONContent, EditorContent, useEditor } from "novel";
 import Document from "@tiptap/extension-document";
 import { Placeholder, TaskItem, TaskList } from "novel/extensions";
 import { starterKit } from "@/components/editor/extensions";

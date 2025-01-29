@@ -54,14 +54,17 @@ interface LinkProps {
 }
 
 const Link = ({ link }: LinkProps) => {
-  const { favorites } = useSelector((state: StateType) => state.bookmarks);
+  const { favorites, folderIcons } = useSelector(
+    (state: StateType) => state.bookmarks
+  );
 
   const { title, url, id } = link;
-  const cls = "w-10 aspect-square";
+  const cls = "w-12 aspect-square";
+
   const icon = url ? (
     <Favicon src={url} className={cls} />
   ) : (
-    <Icon className={cls} icon="ic:round-folder" />
+    <Icon className={cls} icon={folderIcons?.[id] || "ic:round-folder"} />
   );
 
   return (

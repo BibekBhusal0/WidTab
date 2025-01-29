@@ -1,39 +1,53 @@
+import { Icon2RN, iconAsProp } from "@/theme/icons";
 import { cn } from "@/utils/cn";
 
-const Folder = ({ open = false }: { open?: boolean }) => {
-  const commonCls = "transition transform overflow-visible origin-bottom-left";
+type folderProps = {
+  open?: boolean;
+  icon?: iconAsProp;
+};
+
+type hoverFolderProps = {
+  empty?: boolean;
+
+  icon?: iconAsProp;
+};
+const Folder = ({ open = false, icon }: folderProps) => {
+  const border = "border-text-primary border";
   return (
-    <div className={cn(commonCls, "group relative")}>
-      <svg
-        width="36"
-        height="30"
-        viewBox="0 0 36 30"
-        xmlns="http://www.w3.org/2000/svg"
+    <div className="relative w-9 h-[30px]">
+      {/* Back part of the folder */}
+      <div
         className={cn(
-          commonCls,
-          "group size-full relative stroke-text-primary"
-        )}>
-        <path
-          className={cn(commonCls, "fill-primary-dark", {
-            "skew-x-[10deg]": open,
-          })}
-          d="M0 1.8C0 0.805886 0.805887 0 1.8 0H11.5284C12.1887 0 12.796 0.361581 13.1108 0.942101L14.2492 3.04205C14.564 3.62257 15.1713 3.98415 15.8316 3.98415H34.2C35.1941 3.98415 36 4.79003 36 5.78415V27.9C36 28.8941 35.1941 29.7 34.2 29.7H1.8C0.805886 29.7 0 28.8941 0 27.9V1.8Z"
-        />
-        <rect
-          className={cn(commonCls, "fill-primary-light", {
-            "-skew-x-[25deg]": open,
-          })}
-          y="10"
-          width="36"
-          height="19.7"
-          rx="1.8"
-        />
-      </svg>
+          "absolute bg-primary-dark rounded-[1.8px] h-[90%] bottom-0 left-0 w-full",
+          "transition-transform transform origin-bottom-left",
+          "after:absolute after:content-[''] after:bottom-[99%] after:bg-red-400 after:-left-[1px]",
+          "after:w-[40%] after:h-[20%] after:bg-primary-dark after:rounded-t-[1.8px] after:border after:border-text-primary after:border-b-0",
+          border,
+          { "skew-x-[10deg]": open }
+        )}
+      />
+
+      {/* Front flap of the folder */}
+      <div
+        className={cn(
+          "absolute bottom-0 left-0 w-full h-[75%]",
+          "bg-primary-light rounded-[1.8px]",
+          "transition-transform transform origin-bottom-left",
+          border,
+          { "-skew-x-[25deg]": open }
+        )}
+        children={
+          <Icon2RN
+            icon={icon}
+            className="flex-center size-full px-[20%] py-[5%]"
+          />
+        }
+      />
     </div>
   );
 };
 
-export const HoverFolder = ({ empty = false }: { empty?: boolean }) => {
+export const HoverFolder = ({ empty = false, icon }: hoverFolderProps) => {
   const paper =
     "absolute inset-1 rounded-2xl transition-all ease duration-300 origin-bottom";
   return (
@@ -76,6 +90,12 @@ export const HoverFolder = ({ empty = false }: { empty?: boolean }) => {
           "transition-all ease duration-300 group-hover:[transform:rotateX(-48deg)_translateY(1px)]",
           "origin-bottom flex items-end"
         )}
+        children={
+          <Icon2RN
+            icon={icon}
+            className="flex-center size-full px-[20%] py-[5%]"
+          />
+        }
       />
     </div>
   );

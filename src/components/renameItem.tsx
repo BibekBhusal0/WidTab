@@ -8,18 +8,20 @@ import { Icon } from "@iconify/react";
 
 type RenameItemProps = {
   initialText: string;
-  handleChange: (item: string) => void;
+  handleChange: (item: string) => any;
   realTime?: boolean;
   wordLimit?: number;
   inputProps?: OutlinedInputProps;
+  children?: React.ReactNode;
 };
 
 function RenameItem({
   initialText,
   handleChange,
-  inputProps = undefined,
+  inputProps,
+  wordLimit,
+  children,
   realTime = false,
-  wordLimit = undefined,
 }: RenameItemProps) {
   const [text, setText] = useState(initialText);
   const hitsWordLimit: boolean =
@@ -43,14 +45,19 @@ function RenameItem({
     }
   };
   return (
-    <FormControl variant="outlined" fullWidth>
+    <FormControl fullWidth>
+      {children}
+
       <OutlinedInput
         onKeyDown={(e) => {
           if (e.key === "Enter") handleClick();
         }}
         endAdornment={
           !realTime && (
-            <InputAdornment position="end">
+            <InputAdornment
+              position="end"
+              //  sx={{ padding: "0", margin: "0" }}
+            >
               <IconButton
                 disabled={hitsWordLimit || isEmpty}
                 children={<Icon icon="material-symbols:done" />}
@@ -62,9 +69,11 @@ function RenameItem({
         size="small"
         error={hitsWordLimit}
         {...inputProps}
+        sx={{ paddingRight: "0", ...inputProps?.sx }}
         value={text}
         onChange={handleInputChange}
       />
+
       <FormHelperText error>
         {hitsWordLimit ? "Word limit exceeded." : null}
       </FormHelperText>
