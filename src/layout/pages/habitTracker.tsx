@@ -14,7 +14,11 @@ import useCurrentIcons from "@/hooks/useCurrentIcons";
 import Controls from "../widgets/controls";
 import { getWidgetControlsProps } from "@/utils/getWidget";
 import { ScrollArea } from "@/components/scrollarea";
-import { Sortable, SortableItem } from "@/components/sortable";
+import {
+  Sortable,
+  SortableItem,
+  SortableDragHandle,
+} from "@/components/sortable";
 
 function HabitTrackerPage() {
   const { pinned, trackers } = useSelector(
@@ -56,10 +60,7 @@ function HabitTrackerPage() {
             <SortableItem
               key={tracker.id}
               value={tracker.id}
-              asTrigger
-              className="cursor-auto data-[state=dragging]:cursor-grabbing"
-              //
-            >
+              className="relative">
               <Paper
                 sx={{
                   backgroundColor:
@@ -72,6 +73,7 @@ function HabitTrackerPage() {
                   {...getWidgetControlsProps("habit-tracker", tracker.id)}
                   showOn="always">
                   <div className="size-full z-0">
+                    <SortableDragHandle className="absolute size-full top-0 left-0 cursor-auto data-[state=dragging]:cursor-grabbing rounded-themed" />
                     <HabitTracker {...tracker} />
                   </div>
                 </Controls>
