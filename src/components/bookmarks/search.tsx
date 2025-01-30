@@ -68,7 +68,7 @@ const Link = ({ link }: LinkProps) => {
   );
 
   return (
-    <div className="size-full flex gap-4 items-center text-xl">
+    <div className="size-full flex gap-4 items-center text-xl icon-2xl">
       {icon}
       <div className="text-xl truncate">{title}</div>
       {favorites.includes(id) && (

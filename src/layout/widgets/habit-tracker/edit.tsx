@@ -96,7 +96,7 @@ const HabitTrackerEdit: FunctionComponent<HabitTrackerEditProps> = ({
       />
     ),
     Icon: (
-      <div className="w-14 flex-center">
+      <div className="icon-xl">
         <SelectIconMenu
           icon={state.icon}
           setIcon={(icon: string) => handleChange("icon", icon)}

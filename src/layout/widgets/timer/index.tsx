@@ -12,6 +12,7 @@ import { currentSpaceEditWidget } from "@/redux/slice/layout";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import { Icon2RN } from "@/theme/icons";
 import { updateTimerHistory } from "@/redux/slice/habit-tracker";
+import { tost } from "@/components/tost";
 
 function TimerWidget(props: TimerWidgetType) {
   const { id, time, music = false, running = false } = props;
@@ -36,6 +37,7 @@ function TimerWidget(props: TimerWidgetType) {
         setRemainingTime((prev) => {
           if (prev === 1) {
             dispatch(updateTimerHistory(time));
+            tost({ severity: "success", children: "Timer Finished" });
             setIsPlaying(false);
             return totalDuration;
           }

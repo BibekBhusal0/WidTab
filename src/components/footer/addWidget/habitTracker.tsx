@@ -76,7 +76,7 @@ function AddHabitTracer() {
   };
 
   return (
-    <div className="text-lg mb-6">
+    <div className="text-lg p-2 size-full">
       {!!trackers.length && (
         <>
           <SettingHeader first>Habit Tracker</SettingHeader>
@@ -112,6 +112,7 @@ function AddHabitTracer() {
         addHabitTracker={handleNewHabitTracker}
         disabled={!availablePosition}
       />
+      <div className="py-2"></div>
     </div>
   );
 }
@@ -119,10 +120,9 @@ function AddHabitTracer() {
 function AddHabitTracerStatsAll() {
   return (
     <div className="flex-center w-full my-5">
-      {" "}
       <SimpleAddWidgetButton
         widget={{ type: "habit-tracker-stats-all", values: { id: 0 } }}
-      />{" "}
+      />
     </div>
   );
 }

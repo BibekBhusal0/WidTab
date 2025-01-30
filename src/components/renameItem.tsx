@@ -54,10 +54,7 @@ function RenameItem({
         }}
         endAdornment={
           !realTime && (
-            <InputAdornment
-              position="end"
-              //  sx={{ padding: "0", margin: "0" }}
-            >
+            <InputAdornment position="end">
               <IconButton
                 disabled={hitsWordLimit || isEmpty}
                 children={<Icon icon="material-symbols:done" />}
