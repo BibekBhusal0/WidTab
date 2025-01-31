@@ -39,7 +39,7 @@ const Folder = ({ open = false, icon }: folderProps) => {
         children={
           <Icon2RN
             icon={icon}
-            className="flex-center size-full px-[20%] py-[5%]"
+            className="flex-center size-full px-[20%] py-[5%] text-primary-contrastText"
           />
         }
       />
@@ -93,7 +93,7 @@ export const HoverFolder = ({ empty = false, icon }: hoverFolderProps) => {
         children={
           <Icon2RN
             icon={icon}
-            className="flex-center size-full px-[20%] py-[5%]"
+            className="flex-center size-full px-[20%] py-[5%] text-primary-contrastText"
           />
         }
       />

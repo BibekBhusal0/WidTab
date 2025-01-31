@@ -43,6 +43,12 @@
   background-color: var(--mui-palette-primary-contrastText) !important;
 }
 
+.pre:not(.node-codeBlock)[data-placeholder]:not(:empty)::before {
+  @apply h-0 float-left pointer-events-none text-divider;
+  content: attr(data-placeholder);
+  pointer-events: none;
+}
+
 .ProseMirror {
   @apply p-2 pl-5;
   p {
@@ -56,6 +62,9 @@
   }
   li {
     @apply leading-normal;
+    &::marker {
+      @apply text-divider;
+    }
   }
   ol {
     @apply list-decimal list-outside leading-3;
@@ -72,14 +81,6 @@
   a {
     @apply underline underline-offset-[3px] hover:text-primary-main transition-colors cursor-pointer;
   }
-
-  .is-editor-empty:first-child::before,
-  .is-empty::before {
-    @apply h-0 float-left pointer-events-none text-divider;
-    content: attr(data-placeholder);
-    pointer-events: none;
-  }
-
   ul[data-type="taskList"] {
     @apply pl-1;
     li {

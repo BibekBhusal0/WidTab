@@ -1,13 +1,17 @@
 import { Icon, listIcons } from "@iconify/react";
-import { useDeferredValue, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { IconifyInfo, IconifyJSON } from "@iconify/types";
 import Button from "@mui/material/Button";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
 import { FixedSizeGrid as Grid, GridChildComponentProps } from "react-window";
 import MenuPopover, { MenuPopoverProps } from "./popoverMenu";
 import { cn } from "@/utils/cn";
+import useCurrentIcons from "@/hooks/useCurrentIcons";
+import { Icon2RN } from "@/theme/icons";
 
 const getIcons = async (
   mode: "Loaded" | string,
@@ -73,7 +77,8 @@ const SelectIcon = ({ icon, setIcon }: SelectIconProps) => {
   const [selected, setSelected] = useState(icon);
   const [iconsList, setIconsList] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const deferredSearchTerm = useDeferredValue(searchTerm);
+  const [deferredSearchTerm, setDeferredSearchTerm] = useState(searchTerm);
+  const { search } = useCurrentIcons();
 
   useEffect(() => {
     async function fetchIcons() {
@@ -90,12 +95,20 @@ const SelectIcon = ({ icon, setIcon }: SelectIconProps) => {
         setCurrentMode={setCurrentMode}
       />
       {currentMode === "Search" && (
-        <TextField
+        <OutlinedInput
           autoFocus
+          sx={{ paddingRight: "0", width: "200px" }}
           size="small"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search Icon"
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton onClick={() => setDeferredSearchTerm(searchTerm)}>
+                <Icon2RN icon={search} />
+              </IconButton>
+            </InputAdornment>
+          }
         />
       )}
       <IconsGrid
