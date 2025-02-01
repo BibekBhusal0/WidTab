@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { treeNodeOrArray } from "@/types/slice/bookmark";
 import { useAllBookmarks } from "@/hooks/useBookmarks";
-import { ReactNode } from "react";
+import { Fragment, ReactNode } from "react";
 import { widgetDimensions } from "@/utils/getWidget";
 import useAvailablePosition from "@/hooks/useAvailablePosition";
 import { currentSpaceAddWidget } from "@/redux/slice/layout";
@@ -35,13 +35,16 @@ function AddBookmark() {
 
   const getBookmarkFolders = (bookmark: treeNodeOrArray): ReactNode => {
     if (Array.isArray(bookmark)) {
-      return bookmarks.map((child) => getBookmarkFolders(child));
+      return bookmarks.map((child, i) => (
+        <Fragment key={i}> {getBookmarkFolders(child)} </Fragment>
+      ));
     }
     if (bookmark.children) {
       return (
         <>
           {bookmark.title && bookmark.title.trim() !== "" && (
             <MenuItem
+              key={bookmark.id}
               disabled={!availablePosition}
               onClick={() => addItem(bookmark.id)}>
               <ListItemIcon>
@@ -50,14 +53,15 @@ function AddBookmark() {
               <div className="text-xl truncate">{bookmark.title}</div>
             </MenuItem>
           )}
-          {bookmark.children.map((child: treeNodeOrArray) =>
-            getBookmarkFolders(child)
-          )}
+          {bookmark.children.map((child: treeNodeOrArray, i) => (
+            <Fragment key={i}>{getBookmarkFolders(child)} </Fragment>
+          ))}
         </>
       );
     }
     return null;
   };
+
   return (
     <div className="w-full h-[330px] relative">
       <ScrollArea className="w-full h-[80%]">

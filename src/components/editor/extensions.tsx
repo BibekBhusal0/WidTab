@@ -158,6 +158,24 @@ export const placeholderExtension = Placeholder.configure({
   showOnlyWhenEditable: true,
   emptyNodeClass: "pre",
 });
+
+export const MathExtension = Mathematics.extend({
+  addKeyboardShortcuts() {
+    return {
+      "Mod-m": () => {
+        if (this.editor.isActive("math")) {
+          return this.editor.chain().focus().unsetLatex().run();
+        } else {
+          const { from, to } = this.editor.state.selection;
+          const latex = this.editor.state.doc.textBetween(from, to);
+          if (!latex) return false;
+          return this.editor.chain().focus().setLatex({ latex }).run();
+        }
+      },
+    };
+  },
+});
+
 export const defaultExtensions = [
   starterKit,
   placeholderExtension,
@@ -169,7 +187,7 @@ export const defaultExtensions = [
   TextStyle,
   HighlightExtension,
   GlobalDragHandle,
-  Mathematics,
+  MathExtension,
   markdownExtension,
   CustomKeymap,
   codeBlockLowlight,

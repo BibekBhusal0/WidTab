@@ -101,15 +101,20 @@ const SetContent = ({ todos, filtered }: setContentProp) => {
     () => (filtered ? todos.filter((t) => !t.checked) : [...todos]),
     [filtered, todos]
   );
-  const prevLength = useRef(dynamicTasks.length);
+  const prevHiddenLength = useRef(todos.length - dynamicTasks.length);
+  const hiddenTasks = todos.length - dynamicTasks.length;
+  const firstRender = useRef(true);
 
   useEffect(() => {
-    if (editor && dynamicTasks.length !== prevLength.current) {
-      console.count("editor");
-      editor.commands.setContent(Task2JSON(dynamicTasks));
+    const change = () =>
+      editor && editor.commands.setContent(Task2JSON(dynamicTasks));
+    if (firstRender.current) {
+      change();
+      firstRender.current = false;
     }
-    prevLength.current = dynamicTasks.length;
-  }, [dynamicTasks.length]);
+    if (hiddenTasks !== prevHiddenLength.current) change();
 
+    prevHiddenLength.current = hiddenTasks;
+  }, [dynamicTasks.length]);
   return <> </>;
 };
