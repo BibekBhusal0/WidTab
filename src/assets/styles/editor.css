@@ -61,10 +61,7 @@
     @apply border-divider border-2 mt-4 mb-6;
   }
   li {
-    @apply leading-normal;
-    &::marker {
-      @apply text-divider;
-    }
+    @apply leading-normal marker:text-divider;
   }
   ol {
     @apply list-decimal list-outside leading-3;

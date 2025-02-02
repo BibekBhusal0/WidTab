@@ -1,6 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
-import { setFolderIcon, toggleFavorites } from "@/redux/slice/bookmark";
+import {
+  removeFolderIcon,
+  setFolderIcon,
+  toggleFavorites,
+} from "@/redux/slice/bookmark";
 import ContextMenu, { contextMenuProps } from "@/components/contextMenu";
 import IconMenu from "@/components/menuWithIcon";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
@@ -20,6 +24,7 @@ import { useEffect, useState } from "react";
 import { isValidUrl } from "novel/utils";
 import RenameItem from "../renameItem";
 import { SelectIconMenu } from "../select-icon";
+import { Icon2RN } from "@/theme/icons";
 
 type AddFavProps = { id: string } & contextMenuProps;
 
@@ -167,6 +172,13 @@ export function FolderContextMenu({ id, ...props }: AddFavProps) {
                   a !== emptyIcon &&
                   dispatch(setFolderIcon({ fodler: id, icon: a }))
                 }
+                children=<Button
+                  onClick={() => dispatch(removeFolderIcon({ fodler: id }))}
+                  variant="outlined"
+                  color="error"
+                  startIcon={<Icon2RN icon={delete_} />}>
+                  Remove
+                </Button>
               />
             </div>
           </div>
