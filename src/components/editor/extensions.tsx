@@ -24,8 +24,11 @@ import {
 import { CopyButton } from "../copyButton";
 import { createLowlight, all } from "lowlight";
 import Select from "@mui/material/Select";
+import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { ScrollArea } from "../scrollarea";
+import { Icon2RN } from "@/theme/icons";
+import { useState } from "react";
 
 export const CodeBlockComponent = ({
   node,
@@ -38,8 +41,15 @@ export const CodeBlockComponent = ({
   const codeContent = node.textContent;
   const languages = extension.options.lowlight.listLanguages();
 
+  const getMarkdownHTML = () => {
+    if (!editor.storage.markdown?.parser) return "";
+    return editor.storage.markdown.parser.parse(codeContent);
+  };
+
+  const [showPreview, setShowPreview] = useState(false);
+
   return (
-    <NodeViewWrapper className="my-4 mx-2 border-divider rounded-lg border">
+    <NodeViewWrapper className="my-4 mx-2 border-divider border bg-secondaryContainer-default rounded-lg">
       <div className="full-between px-4 py-1 bg-secondaryContainer-default sticky top-0 z-10 rounded-t-lg">
         {editor.isEditable ? (
           <Select
@@ -74,14 +84,39 @@ export const CodeBlockComponent = ({
           />
         )}
 
+        {currentLanguage === "markdown" && (
+          <Button
+            sx={{ paddingY: "2px", paddingX: "14px" }}
+            onClick={() => setShowPreview(!showPreview)}
+            variant={showPreview ? "outlined" : "contained"}
+            className="text-sm uppercase font-medium"
+            startIcon={
+              <Icon2RN icon="mdi:language-markdown" className="size-6" />
+            }>
+            {showPreview ? "Code" : "Preview"}
+          </Button>
+        )}
+
         <CopyButton children={codeContent} />
       </div>
       <ScrollArea
-        scrollBarProps={{ orientation: "horizontal", className: "h-2" }}>
+        className="rounded-b-lg rounded-t-0"
+        scrollBarProps={{
+          orientation: "horizontal",
+          className: "h-2 cursor-default",
+        }}>
         <pre
           spellCheck={"false"}
-          className="m-0 border-none rounded-b-lg w-max min-w-full text-base">
-          <NodeViewContent as="code" />
+          className="m-0 border-none w-max min-w-full text-base hljs rounded-none">
+          {showPreview && currentLanguage === "markdown" ? (
+            <div
+              className="pointer-events-none cursor-auto "
+              dangerouslySetInnerHTML={{ __html: getMarkdownHTML() }}
+              contentEditable={false}
+            />
+          ) : (
+            <NodeViewContent as="code" />
+          )}
         </pre>
       </ScrollArea>
     </NodeViewWrapper>
@@ -123,6 +158,24 @@ export const placeholderExtension = Placeholder.configure({
   showOnlyWhenEditable: true,
   emptyNodeClass: "pre",
 });
+
+export const MathExtension = Mathematics.extend({
+  addKeyboardShortcuts() {
+    return {
+      "Mod-m": () => {
+        if (this.editor.isActive("math")) {
+          return this.editor.chain().focus().unsetLatex().run();
+        } else {
+          const { from, to } = this.editor.state.selection;
+          const latex = this.editor.state.doc.textBetween(from, to);
+          if (!latex) return false;
+          return this.editor.chain().focus().setLatex({ latex }).run();
+        }
+      },
+    };
+  },
+});
+
 export const defaultExtensions = [
   starterKit,
   placeholderExtension,
@@ -134,7 +187,7 @@ export const defaultExtensions = [
   TextStyle,
   HighlightExtension,
   GlobalDragHandle,
-  Mathematics,
+  MathExtension,
   markdownExtension,
   CustomKeymap,
   codeBlockLowlight,
