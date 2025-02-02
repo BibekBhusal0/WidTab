@@ -72,7 +72,12 @@ const getIcons = async (
   }
 };
 
-const SelectIcon = ({ icon, setIcon }: SelectIconProps) => {
+const SelectIcon = ({
+  icon,
+  setIcon,
+  children,
+}: SelectIconProps & { children?: React.ReactNode }) => {
+  console.log(children);
   const [currentMode, setCurrentMode] = useState("Loaded");
   const [selected, setSelected] = useState(icon);
   const [iconsList, setIconsList] = useState<string[]>([]);
@@ -112,13 +117,16 @@ const SelectIcon = ({ icon, setIcon }: SelectIconProps) => {
         />
       )}
       <IconsGrid
-        iconsList={iconsList}
-        selected={selected}
-        setSelected={setSelected}
+        {...{
+          iconsList,
+          selected,
+          setSelected,
+        }}
       />
       <Button variant="contained" onClick={() => setIcon(selected)}>
         Change
       </Button>
+      {children}
     </div>
   );
 };
@@ -144,7 +152,7 @@ export const SelectIconMenu = ({
         transformOrigin: { vertical: "bottom", horizontal: "left" },
         ...props.menuProps,
       }}>
-      <SelectIcon icon={icon} setIcon={setIcon} />
+      <SelectIcon {...{ icon, setIcon, children }} />
     </MenuPopover>
   );
 };
@@ -169,7 +177,7 @@ export function IconsGrid({ iconsList, selected, setSelected }: IconGridProps) {
         return (
           <div
             className={cn("p-2 hover:bg-primary-6", {
-              "bg-primary-5": selected === icon,
+              "bg-primary-selected": selected === icon,
             })}
             onClick={() => setSelected(icon)}
             style={{

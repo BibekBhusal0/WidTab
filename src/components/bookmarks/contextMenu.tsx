@@ -1,6 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
-import { setFolderIcon, toggleFavorites } from "@/redux/slice/bookmark";
+import {
+  removeFolderIcon,
+  setFolderIcon,
+  toggleFavorites,
+} from "@/redux/slice/bookmark";
 import ContextMenu, { contextMenuProps } from "@/components/contextMenu";
 import IconMenu from "@/components/menuWithIcon";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
@@ -9,8 +13,9 @@ import {
   deleteLink,
   editFolder,
   editLink,
+  findBookmarkById,
+  loadBookmarksFromJson,
 } from "@/utils/bookmark";
-import browser from "webextension-polyfill";
 import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
@@ -19,6 +24,7 @@ import { useEffect, useState } from "react";
 import { isValidUrl } from "novel/utils";
 import RenameItem from "../renameItem";
 import { SelectIconMenu } from "../select-icon";
+import { Icon2RN } from "@/theme/icons";
 
 type AddFavProps = { id: string } & contextMenuProps;
 
@@ -34,15 +40,9 @@ export function LinkContextMenu({ id, ...props }: AddFavProps) {
   const [nameHelperText, setNameHelperText] = useState("");
 
   useEffect(() => {
-    browser.bookmarks
-      .get(id)
-      .then((bookmarks) => {
-        if (!bookmarks || bookmarks.length === 0) return;
-        const link = bookmarks[0];
-        link?.title && setName(link.title);
-        link?.url && setUrl(link.url);
-      })
-      .catch();
+    const link = findBookmarkById(loadBookmarksFromJson(), id);
+    link?.title && setName(link.title);
+    link?.url && setUrl(link.url);
   }, []);
 
   const handleUrlChange = (
@@ -134,11 +134,8 @@ export function FolderContextMenu({ id, ...props }: AddFavProps) {
   const { folderIcons } = useSelector((state: StateType) => state.bookmarks);
   const dispatch = useDispatch();
   useEffect(() => {
-    browser.bookmarks.get(id).then((bookmarks) => {
-      if (!bookmarks || bookmarks.length === 0) return;
-      const link = bookmarks[0];
-      link?.title && setName(link.title);
-    });
+    const link = findBookmarkById(loadBookmarksFromJson(), id);
+    link?.title && setName(link.title);
   }, []);
 
   const emptyIcon = "ic:outline-circle";
@@ -175,6 +172,13 @@ export function FolderContextMenu({ id, ...props }: AddFavProps) {
                   a !== emptyIcon &&
                   dispatch(setFolderIcon({ fodler: id, icon: a }))
                 }
+                children=<Button
+                  onClick={() => dispatch(removeFolderIcon({ fodler: id }))}
+                  variant="outlined"
+                  color="error"
+                  startIcon={<Icon2RN icon={delete_} />}>
+                  Remove
+                </Button>
               />
             </div>
           </div>
