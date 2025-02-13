@@ -9,8 +9,8 @@ export type CopyButtonProps = Omit<ButtonProps, "children"> & {
   copiedIcon?: iconAsProp;
   showTooltip?: boolean;
   tooltipProps?:
-    | Partial<TooltipProps>
-    | ((copied: boolean) => Partial<TooltipProps>);
+  | Partial<TooltipProps>
+  | ((copied: boolean) => Partial<TooltipProps>);
   iconCls?: string;
   children: string;
 };
@@ -42,7 +42,8 @@ export function CopyButton({
         border: "1.7px solid",
         ...props.sx,
       }}
-      {...props}>
+      {...props}
+    >
       <div className="size-full relative px-0 py-2">
         <Icon2RN
           icon={copyIcon}
@@ -65,7 +66,8 @@ export function CopyButton({
       {...(typeof tooltipProps === "function"
         ? tooltipProps(copied)
         : tooltipProps)}
-      children={button}
-    />
+    >
+      {button}
+    </Tooltip>
   );
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import {
@@ -13,8 +14,6 @@ import {
   deleteLink,
   editFolder,
   editLink,
-  findBookmarkById,
-  loadBookmarksFromJson,
 } from "@/utils/bookmark";
 import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
@@ -24,6 +23,7 @@ import { useEffect, useState } from "react";
 import { isValidUrl } from "novel/utils";
 import RenameItem from "../renameItem";
 import { SelectIconMenu } from "../select-icon";
+import browser from "webextension-polyfill";
 import { Icon2RN } from "@/theme/icons";
 
 type AddFavProps = { id: string } & contextMenuProps;
@@ -40,19 +40,25 @@ export function LinkContextMenu({ id, ...props }: AddFavProps) {
   const [nameHelperText, setNameHelperText] = useState("");
 
   useEffect(() => {
-    const link = findBookmarkById(loadBookmarksFromJson(), id);
-    link?.title && setName(link.title);
-    link?.url && setUrl(link.url);
+    browser.bookmarks
+      .get(id)
+      .then((bookmarks) => {
+        if (!bookmarks || bookmarks.length === 0) return;
+        const link = bookmarks[0];
+        link?.title && setName(link.title);
+        link?.url && setUrl(link.url);
+      })
+      .catch();
   }, []);
 
   const handleUrlChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setUrl(e.target.value);
     if (urlHelperText) setUrlHelperText("");
   };
   const handleNameChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setName(e.target.value);
     if (nameHelperText) setNameHelperText("");
@@ -134,8 +140,11 @@ export function FolderContextMenu({ id, ...props }: AddFavProps) {
   const { folderIcons } = useSelector((state: StateType) => state.bookmarks);
   const dispatch = useDispatch();
   useEffect(() => {
-    const link = findBookmarkById(loadBookmarksFromJson(), id);
-    link?.title && setName(link.title);
+    browser.bookmarks.get(id).then((bookmarks) => {
+      if (!bookmarks || bookmarks.length === 0) return;
+      const link = bookmarks[0];
+      link?.title && setName(link.title);
+    });
   }, []);
 
   const emptyIcon = "ic:outline-circle";
@@ -176,7 +185,8 @@ export function FolderContextMenu({ id, ...props }: AddFavProps) {
                   onClick={() => dispatch(removeFolderIcon({ fodler: id }))}
                   variant="outlined"
                   color="error"
-                  startIcon={<Icon2RN icon={delete_} />}>
+                  startIcon={<Icon2RN icon={delete_} />}
+                >
                   Remove
                 </Button>
               />
