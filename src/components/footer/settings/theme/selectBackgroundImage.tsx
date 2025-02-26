@@ -16,11 +16,9 @@ import bananas from "@/assets/img/bananas.jpg";
 import clouds from "@/assets/img/clouds.jpg";
 import colors from "@/assets/img/colors.jpg";
 import flowers from "@/assets/img/flowers.jpg";
-import mountains from "@/assets/img/mountains.jpg";
 import ocean from "@/assets/img/ocean.jpg";
 import rose from "@/assets/img/rose.jpg";
 import space from "@/assets/img/space.jpg";
-import wood from "@/assets/img/wood.jpg";
 
 const defaultImages = [
   { id: "abstract", data: abstract },
@@ -29,11 +27,9 @@ const defaultImages = [
   { id: "clouds", data: clouds },
   { id: "colors", data: colors },
   { id: "flowers", data: flowers },
-  { id: "mountains", data: mountains },
   { id: "ocean", data: ocean },
   { id: "rose", data: rose },
   { id: "space", data: space },
-  { id: "wood", data: wood },
 ];
 
 function SelectBackgroundImage() {
@@ -53,7 +49,8 @@ function SelectBackgroundImage() {
           ) : (
             <div className="flex w-full flex-center">No Image Selected</div>
           )
-        }>
+        }
+      >
         <PopoverContent />
       </MenuPopover>
     </div>
@@ -119,7 +116,8 @@ function PopoverContent() {
             <div
               key={id}
               onClick={() => handleClick(id)}
-              className="size-20 object-cover cursor-pointer">
+              className="size-20 object-cover cursor-pointer"
+            >
               <img src={data} className="w-full h-full object-cover" />
             </div>
           ))}
@@ -130,7 +128,8 @@ function PopoverContent() {
         <Button
           variant="outlined"
           onClick={() => dispatch(setBackgroundImage(undefined))}
-          color="error">
+          color="error"
+        >
           Remove Image
         </Button>
       </div>
