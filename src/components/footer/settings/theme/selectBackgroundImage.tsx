@@ -53,7 +53,8 @@ function SelectBackgroundImage() {
           ) : (
             <div className="flex w-full flex-center">No Image Selected</div>
           )
-        }>
+        }
+      >
         <PopoverContent />
       </MenuPopover>
     </div>
@@ -119,7 +120,8 @@ function PopoverContent() {
             <div
               key={id}
               onClick={() => handleClick(id)}
-              className="size-20 object-cover cursor-pointer">
+              className="size-20 object-cover cursor-pointer"
+            >
               <img src={data} className="w-full h-full object-cover" />
             </div>
           ))}
@@ -130,7 +132,8 @@ function PopoverContent() {
         <Button
           variant="outlined"
           onClick={() => dispatch(setBackgroundImage(undefined))}
-          color="error">
+          color="error"
+        >
           Remove Image
         </Button>
       </div>

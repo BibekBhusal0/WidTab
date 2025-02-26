@@ -4,8 +4,6 @@ import { cn } from "@/utils/cn";
 import IconButton from "@mui/material/IconButton";
 import calmAcoustic from "@/assets/music/calm-acoustic-quiet-quest-251658.mp3";
 import calmNightPiano from "@/assets/music/calm-night-piano-music-249235.mp3";
-import himalayanVillage from "@/assets/music/himalayan-village-flute-251427.mp3";
-import lofiSongRoom from "@/assets/music/lofi-song-room-by-lofium-242714.mp3";
 import relaxingPiano from "@/assets/music/relaxing-piano-music-248868.mp3";
 
 export type MusicObjectType = {
@@ -25,8 +23,6 @@ export const allMusic: MusicObjectType[] = [
     artist: "CalvinClavier",
     path: calmNightPiano,
   },
-  { title: "Himalayan Village Flute", artist: "Oqu", path: himalayanVillage },
-  { title: "Lofi Song Room", artist: "Lofium", path: lofiSongRoom },
   {
     title: "Relaxing Piano Music",
     artist: "CalvinClavier",
@@ -61,7 +57,7 @@ export default function MusicWidget({ play_ = false }: { play_?: boolean }) {
 
   const handlePrev = () => {
     setCurrentSong(
-      (prevValue) => (prevValue - 1 + allMusic.length) % allMusic.length
+      (prevValue) => (prevValue - 1 + allMusic.length) % allMusic.length,
     );
   };
 
@@ -95,7 +91,8 @@ export default function MusicWidget({ play_ = false }: { play_?: boolean }) {
       <div className="flex size-full flex-col p-4 gap-4">
         <div
           aria-label="title-and-music-icons"
-          className="relative flex flex-1 flex-col justify-between">
+          className="relative flex flex-1 flex-col justify-between"
+        >
           <div className="full-between gap-3">
             <div className="flex flex-col gap-2">
               <p className="line-clamp-1 w-full text-2xl font-bold leading-none truncate">
