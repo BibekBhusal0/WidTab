@@ -31,10 +31,12 @@ function BookmarkManager() {
       showButton
       resizableBoxProps={{
         children: (
-          <ScrollArea className="h-full bg-primary-1">
+          <div className="flex flex-col h-full">
             <BookmarkButtons />
-            <BookmarkTree />
-          </ScrollArea>
+            <ScrollArea>
+              <BookmarkTree />
+            </ScrollArea>
+          </div>
         ),
       }}
       headerProps={{ className: "h-20" }}
@@ -112,7 +114,7 @@ function BookmarkButtons() {
 
 function AddFolderButton(props: Partial<MenuPopoverProps>) {
   const { currentFolderID } = useSelector(
-    (state: StateType) => state.bookmarks
+    (state: StateType) => state.bookmarks,
   );
   const [key, setKey] = useState(1);
   const [name, setName] = useState("");
@@ -123,7 +125,7 @@ function AddFolderButton(props: Partial<MenuPopoverProps>) {
     setHelperText("");
   };
   const handleTextChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setName(e.target.value);
     if (helperText) setHelperText("");
@@ -157,7 +159,7 @@ function AddFolderButton(props: Partial<MenuPopoverProps>) {
 }
 function AddLinkButton(props: Partial<MenuPopoverProps>) {
   const { currentFolderID } = useSelector(
-    (state: StateType) => state.bookmarks
+    (state: StateType) => state.bookmarks,
   );
   const [key, setKey] = useState(1);
   const [url, setUrl] = useState("");
@@ -173,13 +175,13 @@ function AddLinkButton(props: Partial<MenuPopoverProps>) {
     if (urlHelperText) setUrlHelperText("");
   };
   const handleUrlChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setUrl(e.target.value);
     if (urlHelperText) setUrlHelperText("");
   };
   const handleNameChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setName(e.target.value);
     if (nameHelperText) setNameHelperText("");
@@ -247,7 +249,7 @@ function FavButton(props: ButtonProps) {
 
 function MainBookmarks() {
   const { currentFolderID, showFavorites, folderSize } = useSelector(
-    (state: StateType) => state.bookmarks
+    (state: StateType) => state.bookmarks,
   );
   const dispatch = useDispatch();
   const onFolderChange = (id: string) => dispatch(changeCurrentFolder(id));
@@ -273,7 +275,7 @@ function MainBookmarks() {
 
 function BookmarksFolder() {
   const { currentFolderID } = useSelector(
-    (state: StateType) => state.bookmarks
+    (state: StateType) => state.bookmarks,
   );
   const bookmarks = useBookmarkFolder(currentFolderID);
   return <OnlyBookmarks bookmarks={bookmarks} />;
