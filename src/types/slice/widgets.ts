@@ -12,6 +12,7 @@ const CW = [
   "habit-tracker-stats-all",
   "note",
 ] as const;
+
 const UW = [
   "custom",
   "clock",
@@ -26,6 +27,7 @@ const UW = [
   "top-sites",
   "gemini",
 ] as const;
+
 const SE = [
   "Google",
   "Bing",
@@ -50,6 +52,8 @@ export const searchEngines: AllSearchEngines[] = [...SE];
 export type CustomWidgetType = { id: number; url: string };
 
 const am = [
+  "gemini-2.0-flash",
+  "gemini-2.0-flash-lite",
   "gemini-1.5-flash",
   "gemini-1.5-flash-8b",
   "gemini-1.5-pro",

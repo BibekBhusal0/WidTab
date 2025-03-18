@@ -1,5 +1,5 @@
 import { geminiWidgetType } from "@/types/slice/widgets";
-import { Fragment, useEffect, useRef, useState, useMemo } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import IconButton from "@mui/material/IconButton";
 import { GoogleGenerativeAI, Content } from "@google/generative-ai";
@@ -7,17 +7,17 @@ import { APIkeyURL, getAPIKey, setAPIKey } from "@/utils/api";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
+// import Tooltip from "@mui/material/Tooltip";
 import Link from "@mui/material/Link";
 import { cn } from "@/utils/cn";
 import { useDispatch } from "react-redux";
 import { currentSpaceEditWidget } from "@/redux/slice/layout";
 import { ScrollArea } from "@/components/scrollarea";
-import reactNodeToString from "react-node-to-string";
 import browser from "webextension-polyfill";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import { MarkdownPreview } from "@/components/editor/advanced-editor";
+import { useTost } from "@/components/tost";
 
 function GeminiWidget(props: geminiWidgetType) {
   const [input, setInput] = useState("");
@@ -27,7 +27,7 @@ function GeminiWidget(props: geminiWidgetType) {
   useEffect(() => {
     const onStorageChange = (
       changes: { [key: string]: chrome.storage.StorageChange },
-      namespace: string
+      namespace: string,
     ) => {
       if (namespace === "local" && changes.gemini) {
         setKey(changes.gemini.newValue);
@@ -63,7 +63,8 @@ function GeminiWidget(props: geminiWidgetType) {
             onClick={handleClick}
             size="large"
             variant="outlined"
-            disabled={input.trim() === ""}>
+            disabled={input.trim() === ""}
+          >
             Set API KEY
           </Button>
           <Link href={APIkeyURL.gemini} target="_blank">
@@ -104,8 +105,9 @@ function AIChatContent({
     <ScrollArea ref={mainRef}>
       <div
         className={cn(
-          "size-full max-w-full prose dark:prose-invert prose-pre:p-0 prose-pre:border prose-pre:border-divider flex flex-col gap-4 p-4 transition-all"
-        )}>
+          "size-full max-w-full prose dark:prose-invert prose-pre:p-0 prose-pre:border prose-pre:border-divider flex flex-col gap-4 p-4 transition-all",
+        )}
+      >
         <ReformatContent {...{ conversation, loading }} />
       </div>
     </ScrollArea>
@@ -122,6 +124,7 @@ function AIChatInput({
 }) {
   const [input, setInput] = useState("");
   const dispatch = useDispatch();
+  const { showTost } = useTost();
 
   const { conversation, model } = props;
   const setContent = (conversation: Content[]) =>
@@ -129,7 +132,7 @@ function AIChatInput({
       currentSpaceEditWidget({
         type: "gemini",
         values: { ...props, conversation },
-      })
+      }),
     );
 
   const expand = input.trim() !== "";
@@ -147,6 +150,10 @@ function AIChatInput({
       setContent(history);
     } catch (error) {
       console.log("Error during API call:", error);
+      showTost({
+        children: "Error During API call check console for more info",
+        severity: "error",
+      });
     } finally {
       setLoading(false);
     }
@@ -196,12 +203,11 @@ export function ReformatContent({
           {role === "user" && (
             <Paper
               variant="outlined"
-              className="flex flex-col gap-2 max-w-[80%] self-end p-4">
+              className="flex flex-col gap-2 max-w-[80%] self-end p-4"
+            >
               {parts.map(({ text }, i) => (
                 <Fragment key={i}>
-                  {text?.split("\n").map((t, i) => (
-                    <div key={i}>{t}</div>
-                  ))}
+                  {text?.split("\n").map((t, i) => <div key={i}>{t}</div>)}
                 </Fragment>
               ))}
             </Paper>
@@ -258,7 +264,8 @@ export function ReformatContent({
       {loading && (
         <Paper
           className={cn(cls, "flex flex-center gap-2 py-2")}
-          variant="outlined">
+          variant="outlined"
+        >
           <Icon icon="svg-spinners:3-dots-bounce" className="text-3xl" />
           <div className="text-xl">Gemini Is Typing</div>
         </Paper>
