@@ -80,7 +80,7 @@ function ContainerSidebar({
           "h-full border-r-2 border-r-divider",
           tabsProps?.className
         )}
-        //
+      //
       >
         {items.map(({ name, index }) => (
           <CustomTab
@@ -89,21 +89,25 @@ function ContainerSidebar({
             value={index}
             key={index}
             label={name}
-            //
+          //
           />
         ))}
       </CustomTabs>
+
       <ScrollArea
         className="size-full"
         viewPortProps={{
           ...panelProps,
+          children: null,
           className: cn(
-            "border-l-3 p-2 size-full relative",
+            "border-l-1 p-2 px-4 size-full relative",
             panelProps?.className
           ),
         }}
         children={crrComponent}
       />
+      {/* </ScrollArea> */}
+
     </Box>
   );
 }
