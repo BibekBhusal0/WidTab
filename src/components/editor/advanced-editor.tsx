@@ -35,7 +35,7 @@ const AdvancedEditor = ({
     <EditorRoot>
       <EditorContent
         autofocus={editable}
-        className="relative z-[1] "
+        className="relative z-1 "
         {...{ children, editable, extensions }}
         initialContent={value as JSONContent}
         editorProps={{
@@ -46,7 +46,7 @@ const AdvancedEditor = ({
           attributes: {
             class: cn(
               "prose dark:prose-invert prose-sm prose-headings:font-title",
-              "font-default focus:outline-none max-w-full",
+              "font-default focus:outline-hidden max-w-full",
               className
             ),
           },

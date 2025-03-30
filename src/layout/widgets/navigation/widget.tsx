@@ -11,9 +11,10 @@ export function Navigation(props: navigationProps) {
       viewPortProps={{
         className: cn("p-2 size-full relative", props.className),
         ...props,
-      }}>
+      }}
+    >
       <AllSpaces headerProps={{ className: "text-lg my-0 py-0" }} />
-      <div className="border-divider border-t-2 p-4">
+      <div className="border-t-2 p-4">
         <AddSpace />
       </div>
     </ScrollArea>

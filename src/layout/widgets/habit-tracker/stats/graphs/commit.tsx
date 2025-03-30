@@ -60,7 +60,7 @@ function CommitGraph({ trackers, startDate, endDate }: commitGraphProps) {
                       {progress >= 1 && (
                         <Icon
                           icon="pajamas:check-sm"
-                          className="size-full text-primary-contrastText"
+                          className="size-full text-primary-contrast-text"
                         />
                       )}
                     </div>

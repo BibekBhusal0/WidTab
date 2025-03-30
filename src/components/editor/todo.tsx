@@ -84,7 +84,7 @@ export const TodoList = ({ todos, onChange, filtered }: TodoListProps) => {
         editorProps={{
           attributes: {
             class:
-              "prose dark:prose-invert prose-xl focus:outline-none max-w-full min-h-[250px] todo-list",
+              "prose dark:prose-invert prose-xl focus:outline-hidden max-w-full min-h-[250px] todo-list",
           },
         }}>
         <SetContent {...{ todos, filtered }} />

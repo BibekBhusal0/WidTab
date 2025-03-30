@@ -11,7 +11,7 @@ import TodoList from "@/components/editor/todo";
 import { ScrollArea } from "@/components/scrollarea";
 
 export const transparentInput =
-  "border-transparent w-full bg-transparent resize-none focus:outline-none";
+  "border-transparent w-full bg-transparent resize-none focus:outline-hidden";
 
 function Todo({ id, title, todos, filtered, icon }: TaskType) {
   const dispatch = useDispatch();

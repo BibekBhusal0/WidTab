@@ -26,7 +26,7 @@ function TimerWidget(props: TimerWidgetType) {
       currentSpaceEditWidget({
         type: "timer",
         values: { ...props, running: v },
-      })
+      }),
     );
   const togglePlay = () => setIsPlaying(!isPlaying);
 
@@ -69,7 +69,7 @@ function TimerWidget(props: TimerWidgetType) {
 
   const formatTime = (seconds: number) =>
     `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(
-      seconds % 60
+      seconds % 60,
     ).padStart(2, "0")}`;
 
   const calculateProgress = () =>
@@ -100,8 +100,8 @@ function TimerWidget(props: TimerWidgetType) {
   const btn1Text: btnText = isPlaying
     ? "Pause"
     : totalDuration === remainingTime
-    ? "Start"
-    : "Resume";
+      ? "Start"
+      : "Resume";
 
   const commonButtonProps: ButtonProps = {
     size: sm ? "small" : md ? "medium" : "large",
@@ -128,8 +128,9 @@ function TimerWidget(props: TimerWidgetType) {
       <div
         className={cn(
           "w-full relative",
-          showMusic ? "h-4/6 pb-3 border-b-2 border-divider" : "h-full"
-        )}>
+          showMusic ? "h-4/6 pb-3 border-b-2" : "h-full",
+        )}
+      >
         <RadialBarChart data={[{ value: calculateProgress() }]} {...chart}>
           <PolarAngleAxis
             angleAxisId={0}
@@ -160,7 +161,8 @@ function TimerWidget(props: TimerWidgetType) {
           className="absolute-center flex-center gap-4"
           style={{
             transform: `translateX(-50%) translateY(${radius * 0.4}px)`,
-          }}>
+          }}
+        >
           {buttons.map((buttonProps, index) => (
             <Button
               key={index}
@@ -168,7 +170,7 @@ function TimerWidget(props: TimerWidgetType) {
               {...buttonProps}
               className={cn(
                 commonButtonProps?.className,
-                buttonProps?.className
+                buttonProps?.className,
               )}
             />
           ))}

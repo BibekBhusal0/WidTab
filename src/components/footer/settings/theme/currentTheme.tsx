@@ -19,7 +19,7 @@ function CurrentThemeSettings() {
   const theme = useCurrentTheme();
   const dispatch = useDispatch();
   const { delete_ } = useCurrentIcons();
-  const numValues: numericalThemeValues[] = ["blur", "opacity", "roundness"];
+  const numValues: numericalThemeValues[] = ["blur-sm", "opacity", "roundness"];
   const toggle: MenuSwitchProps["items"] = [
     {
       onChange: () => dispatch(toggleCurrentMode()),

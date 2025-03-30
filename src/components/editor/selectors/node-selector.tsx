@@ -97,10 +97,12 @@ export const NodeSelector = () => {
           <div className="text-sm">{activeItem.name}</div>
           <Icon2RN icon="ri:arrow-down-s-line" className="size-4" />
         </div>
-      }>
+      }
+    >
       <ScrollArea
         viewPortProps={{ className: "h-auto max-h-[200px]" }}
-        scrollBarProps={{ className: "w-2" }}>
+        scrollBarProps={{ className: "w-2" }}
+      >
         {items.map((i) => {
           return (
             <MenuItem
@@ -110,11 +112,9 @@ export const NodeSelector = () => {
                 handleClose();
               }}
               selected={activeItem.name === i.name}
-              className="gap-2 px-3 py-2">
-              <Icon2RN
-                icon={i.icon}
-                className="size-6 border-divider border rounded-md p-1"
-              />
+              className="gap-2 px-3 py-2"
+            >
+              <Icon2RN icon={i.icon} className="size-6 border rounded-md p-1" />
 
               <div>{i.name}</div>
             </MenuItem>

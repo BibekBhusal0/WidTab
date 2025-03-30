@@ -51,7 +51,7 @@ function HabitTracker({
   return (
     <>
       <div aria-label="icon and title" className="full-between">
-        <div className="w-16 bg-primaryContainer-default rounded-full aspect-square p-2">
+        <div className="w-16 bg-primary-container-default rounded-full aspect-square p-2">
           <Icon icon={icon} className="size-full" />
         </div>
         <div className="text-4xl">{title}</div>
@@ -69,8 +69,9 @@ function HabitTracker({
                   {
                     "border-solid": completedToday,
                     "border-dashed": !completedToday,
-                  }
-                )}>
+                  },
+                )}
+              >
                 {completedToday && (
                   <Icon className="size-full" icon="heroicons:fire-16-solid" />
                 )}
@@ -100,7 +101,8 @@ function HabitTracker({
                 onClick={onClick}
                 sx={{ padding: "4px", margin: "2px", minWidth: "0" }}
                 variant="outlined"
-                disabled={disabled}>
+                disabled={disabled}
+              >
                 {
                   <Icon
                     icon={icon}

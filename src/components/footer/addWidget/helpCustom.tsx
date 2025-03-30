@@ -29,12 +29,12 @@ function HelpInCustomWidget() {
       <IconButton
         onClick={() => setOpen(true)}
         color="primary"
-        //
+      //
       >
         <Icon icon="material-symbols:help" />
       </IconButton>
       <Modal open={open} onClose={() => setOpen(false)}>
-        <div className="p-10 bg-primaryContainer-paper absolute-center flex flex-col gap-3">
+        <div className="p-10 bg-primary-container-paper absolute-center flex flex-col gap-3">
           <div className="text-xl">
             You can personalize your experience by adding custom widgets! Simply
             enter the URL of your desired widget.
@@ -65,7 +65,8 @@ function LinkList({ links }: { links: linkList }) {
           href={link.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-xl">
+          className="text-xl"
+        >
           {link.name}
         </Link>
       ))}

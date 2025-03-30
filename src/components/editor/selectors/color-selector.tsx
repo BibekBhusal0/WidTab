@@ -37,13 +37,13 @@ export const ColorSelector = () => {
 
   if (!editor) return null;
   const activeColorItem = TEXT_COLORS.find(({ color }) =>
-    editor.isActive("textStyle", { color })
+    editor.isActive("textStyle", { color }),
   );
 
   const activeHighlightItem = HIGHLIGHT_COLORS.find(({ color }) =>
-    editor.isActive("highlight", { color })
+    editor.isActive("highlight", { color }),
   );
-  const cls = "rounded-sm border border-divider px-[6px] py-0 font-medium";
+  const cls = "rounded-xs border px-[6px] py-0 font-medium";
 
   return (
     <MenuPopover
@@ -58,10 +58,12 @@ export const ColorSelector = () => {
         <div className="text-sm text-center w-full flex-center gap-2">
           A <Icon2RN icon="ri:arrow-down-s-line" className="size-4" />
         </div>
-      }>
+      }
+    >
       <ScrollArea
         viewPortProps={{ className: "h-auto max-h-[200px]" }}
-        scrollBarProps={{ className: "w-2" }}>
+        scrollBarProps={{ className: "w-2" }}
+      >
         <div className="flex flex-col">
           <div className="my-1 px-2 text-lg font-semibold">Color</div>
           {TEXT_COLORS.map(({ name, color }, i) => (
@@ -80,7 +82,8 @@ export const ColorSelector = () => {
                 handleClose();
               }}
               selected={name === activeColorItem?.name}
-              className="px-3 py-2 gap-3">
+              className="px-3 py-2 gap-3"
+            >
               <div className={cls} style={{ color }}>
                 A
               </div>
@@ -102,7 +105,8 @@ export const ColorSelector = () => {
                 handleClose();
               }}
               className="px-3 py-2 gap-3"
-              selected={name === activeHighlightItem?.name}>
+              selected={name === activeHighlightItem?.name}
+            >
               <div className={cls} style={{ backgroundColor: color }}>
                 A
               </div>

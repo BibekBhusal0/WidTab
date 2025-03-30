@@ -53,7 +53,7 @@ export const Dock = ({ items, position = "bottom" }: dockProps) => {
         onMouseMove={(e) => mousePosition.set(e[h ? "pageX" : "pageY"])}
         onMouseLeave={() => mousePosition.set(Infinity)}
         className={cn(
-          "flex justify-start rounded-2xl backdrop-blur-sm bg-secondaryContainer-paper",
+          "flex justify-start rounded-2xl backdrop-blur-xs bg-secondary-container-paper",
           h
             ? "flex-row mx-auto px-4 h-full max-w-full overflow-x-visible"
             : "flex-col my-auto py-4 w-full max-h-full overflow-y-visible"
