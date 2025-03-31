@@ -1,6 +1,6 @@
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
-import { crx, ManifestV3Export } from "@crxjs/vite-plugin";
+import { ManifestV3Export } from "@crxjs/vite-plugin";
 import { defineConfig, BuildOptions } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { stripDevIcons, crxI18n } from "./custom-vite-plugins";

@@ -1,10 +1,9 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   argbFromHex,
   themeFromSourceColor,
   hexFromArgb,
 } from "@material/material-color-utilities";
-import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import { ThemeItemType } from "@/types/slice/theme";
 import alphaColor from "@/utils/alpha";
 import useCurrentTheme from "@/hooks/useCurrentTheme";
