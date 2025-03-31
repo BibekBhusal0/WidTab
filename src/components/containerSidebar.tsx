@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { JSX, ReactNode, useState } from "react";
 import Box, { BoxProps } from "@mui/material/Box";
 import { cn } from "@/utils/cn";
 import Tab, { TabProps } from "@mui/material/Tab";
@@ -68,7 +68,8 @@ function ContainerSidebar({
   return (
     <Box
       {...mainProps}
-      className={cn("flex h-full relative", mainProps?.className)}>
+      className={cn("flex h-full relative", mainProps?.className)}
+    >
       <CustomTabs
         orientation="vertical"
         scrollButtons="auto"
@@ -78,9 +79,9 @@ function ContainerSidebar({
         {...tabsProps}
         className={cn(
           "h-full border-r-2 border-r-divider",
-          tabsProps?.className
+          tabsProps?.className,
         )}
-        //
+      //
       >
         {items.map(({ name, index }) => (
           <CustomTab
@@ -89,21 +90,24 @@ function ContainerSidebar({
             value={index}
             key={index}
             label={name}
-            //
+          //
           />
         ))}
       </CustomTabs>
+
       <ScrollArea
         className="size-full"
         viewPortProps={{
           ...panelProps,
+          children: null,
           className: cn(
-            "border-l-3 p-2 size-full relative",
-            panelProps?.className
+            "border-l-1 p-2 px-4 size-full relative",
+            panelProps?.className,
           ),
         }}
         children={crrComponent}
       />
+      {/* </ScrollArea> */}
     </Box>
   );
 }

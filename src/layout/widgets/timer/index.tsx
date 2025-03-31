@@ -1,7 +1,7 @@
 import { TimerWidgetType } from "@/types/slice/widgets";
 import { useState, useEffect } from "react";
 import dayjs from "@/dayjsConfig";
-import { FitText } from "../clock/digital";
+import FitText from "@/components/fittext";
 import { RadialBarChart, RadialBar, PolarAngleAxis } from "recharts";
 import Button, { ButtonProps } from "@mui/material/Button";
 import useFullSize from "@/hooks/useFullSize";
@@ -26,7 +26,7 @@ function TimerWidget(props: TimerWidgetType) {
       currentSpaceEditWidget({
         type: "timer",
         values: { ...props, running: v },
-      })
+      }),
     );
   const togglePlay = () => setIsPlaying(!isPlaying);
 
@@ -69,7 +69,7 @@ function TimerWidget(props: TimerWidgetType) {
 
   const formatTime = (seconds: number) =>
     `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(
-      seconds % 60
+      seconds % 60,
     ).padStart(2, "0")}`;
 
   const calculateProgress = () =>
@@ -100,8 +100,8 @@ function TimerWidget(props: TimerWidgetType) {
   const btn1Text: btnText = isPlaying
     ? "Pause"
     : totalDuration === remainingTime
-    ? "Start"
-    : "Resume";
+      ? "Start"
+      : "Resume";
 
   const commonButtonProps: ButtonProps = {
     size: sm ? "small" : md ? "medium" : "large",
@@ -128,8 +128,9 @@ function TimerWidget(props: TimerWidgetType) {
       <div
         className={cn(
           "w-full relative",
-          showMusic ? "h-4/6 pb-3 border-b-2 border-divider" : "h-full"
-        )}>
+          showMusic ? "h-4/6 pb-3 border-b-2" : "h-full",
+        )}
+      >
         <RadialBarChart data={[{ value: calculateProgress() }]} {...chart}>
           <PolarAngleAxis
             angleAxisId={0}
@@ -145,22 +146,24 @@ function TimerWidget(props: TimerWidgetType) {
             {...chart}
           />
         </RadialBarChart>
-        <FitText
+        <div
+          className= 'absolute-center h-full flex-center px-3'
+          style={{
+            width: `${dia * 0.75}px`,
+          }}
+        ><FitText
           aria-label="time"
           min={10}
           max={120}
-          containerProps={{
-            className: "p-2 absolute-center",
-            width: `${dia * 0.75}px`,
-          }}
           className="size-full flex-center"
           children={formatTime(remainingTime)}
-        />
+        /></div>
         <div
           className="absolute-center flex-center gap-4"
           style={{
             transform: `translateX(-50%) translateY(${radius * 0.4}px)`,
-          }}>
+          }}
+        >
           {buttons.map((buttonProps, index) => (
             <Button
               key={index}
@@ -168,7 +171,7 @@ function TimerWidget(props: TimerWidgetType) {
               {...buttonProps}
               className={cn(
                 commonButtonProps?.className,
-                buttonProps?.className
+                buttonProps?.className,
               )}
             />
           ))}

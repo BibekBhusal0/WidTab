@@ -22,7 +22,7 @@ import {
 
 function HabitTrackerPage() {
   const { pinned, trackers } = useSelector(
-    (state: StateType) => state.habitTracker
+    (state: StateType) => state.habitTracker,
   );
   const dispatch = useDispatch();
   const [showStats, setShowStats] = useState(false);
@@ -36,7 +36,8 @@ function HabitTrackerPage() {
             exit={{ y: "-100%", height: 0 }}
             animate={{ y: 0, height: "auto" }}
             transition={{ duration: 0.007, ease: "easeInOut" }}
-            className="w-full pb-4  border-b-2 border-divider overflow-hidden">
+            className="w-full pb-4  border-b-2 overflow-hidden"
+          >
             <HabitTrackerStatsAll />
           </motion.div>
         )}
@@ -46,7 +47,8 @@ function HabitTrackerPage() {
           onClick={() => setShowStats(!showStats)}
           variant="outlined"
           color="secondary"
-          className="px-4 py-2">
+          className="px-4 py-2"
+        >
           {showStats ? "Hide" : "Show"} Stats
         </Button>
       </div>
@@ -54,13 +56,15 @@ function HabitTrackerPage() {
         value={trackers}
         orientation="mixed"
         constraint={{ distance: 20, delay: 400 }}
-        onValueChange={(t) => dispatch(reorderTrackers(t))}>
+        onValueChange={(t) => dispatch(reorderTrackers(t))}
+      >
         <div className="grid gap-3 grid-cols-1 m-3 sm:grid-cols-2 md:grid-cols-3">
           {trackers.map((tracker) => (
             <SortableItem
               key={tracker.id}
               value={tracker.id}
-              className="relative">
+              className="relative"
+            >
               <Paper
                 sx={{
                   backgroundColor:
@@ -68,10 +72,12 @@ function HabitTrackerPage() {
                       ? "primaryContainer.paper"
                       : "secondaryContainer.paper",
                 }}
-                className="h-[150px] overflow-hidden relative">
+                className="h-[150px] overflow-hidden relative"
+              >
                 <Controls
                   {...getWidgetControlsProps("habit-tracker", tracker.id)}
-                  showOn="always">
+                  showOn="always"
+                >
                   <div className="size-full z-0">
                     <SortableDragHandle className="absolute size-full top-0 left-0 cursor-auto data-[state=dragging]:cursor-grabbing rounded-themed" />
                     <HabitTracker {...tracker} />
@@ -100,7 +106,8 @@ function AddNewHabitTracker() {
       className={cn("flex-center flex-col gap-4 w-full group", {
         "h-[150px]": !edit,
         "py-2 px-10": edit,
-      })}>
+      })}
+    >
       {edit ? (
         <>
           <HabitTrackerEdit
@@ -122,9 +129,7 @@ function AddNewHabitTracker() {
           />
         </>
       ) : (
-        <div className="group-hover:scale-6 scale-3 transition-all">
-          {add}
-        </div>
+        <div className="group-hover:scale-600 scale-300 transition-all">{add}</div>
       )}
     </Paper>
   );

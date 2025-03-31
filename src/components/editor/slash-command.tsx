@@ -1,4 +1,4 @@
-import { Command, renderItems, SuggestionItem } from "novel/extensions";
+import { Command, renderItems, SuggestionItem } from "novel";
 import { tost } from "../tost";
 import {
   EditorCommand,
@@ -124,7 +124,7 @@ export const suggestionItems: SuggestionItem[] = [
         const content = editor.storage.markdown.getMarkdown();
         const a = document.createElement("a");
         const url = URL.createObjectURL(
-          new Blob([content], { type: "text/markdown" })
+          new Blob([content], { type: "text/markdown" }),
         );
         a.href = url;
         a.download = "editor.md";
@@ -150,7 +150,8 @@ export const SlashCommand = () => {
     <EditorCommand className="z-50 w-[250px] px-1 py-3 bg-background-default rounded-themed">
       <ScrollArea
         viewPortProps={{ className: "h-auto max-h-[300px]" }}
-        scrollBarProps={{ className: "w-2" }}>
+        scrollBarProps={{ className: "w-2" }}
+      >
         <EditorCommandEmpty className="px-2 text-divider">
           No results
         </EditorCommandEmpty>
@@ -163,10 +164,11 @@ export const SlashCommand = () => {
               ].join(" ")}
               onCommand={(val) => item.command?.(val)}
               className="flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-sm aria-selected:bg-primary-selected"
-              key={item.title}>
+              key={item.title}
+            >
               <Icon2RN
                 icon={item.icon}
-                className="size-10 p-2 border-divider rounded-md border"
+                className="size-10 p-2 rounded-md border"
               />
               <div>
                 <p className="font-medium">{item.title}</p>

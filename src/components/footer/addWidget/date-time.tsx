@@ -9,7 +9,7 @@ function DateTime() {
     <div className="flex-center flex-col gap-4 size-full">
       <SimpleAddWidgetButton widget={{ type: "calendar", values: { id: 0 } }} />
       <SimpleAddWidgetButton widget={{ type: "clock", values: { id: 0 } }} />
-      <div className="w-full my-4 border-divider border-t-2 " />
+      <div className="w-full my-4 border-t-2 " />
       <div className="full-between">
         <div className="text-xl">Timer</div>
         <OutlinedInput

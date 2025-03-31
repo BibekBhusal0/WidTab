@@ -34,7 +34,7 @@ const Folder = ({ open = false, icon }: folderProps) => {
           "bg-primary-light rounded-[1.8px]",
           "transition-transform transform origin-bottom-left",
           border,
-          { "-skew-x-[25deg]": open }
+          { "-skew-x-[25deg]": open },
         )}
         children={
           <Icon2RN
@@ -57,7 +57,7 @@ export const HoverFolder = ({ empty = false, icon }: hoverFolderProps) => {
           "bg-primary-dark size-full origin-top rounded-2xl rounded-tl-none",
           "group-hover:shadow-[0_20px_40px_rgba(0,0,0,.2)]",
           "transition-all ease duration-300 relative",
-          "after:absolute after:content-[''] after:bottom-[99%] after:left-0 after:w-[33.33%] after:h-[10%] after:bg-primary-dark after:rounded-t-2xl"
+          "after:absolute after:content-[''] after:bottom-[99%] after:left-0 after:w-[33.33%] after:h-[10%] after:bg-primary-dark after:rounded-t-2xl",
         )}
       />
       {!empty && (
@@ -65,19 +65,19 @@ export const HoverFolder = ({ empty = false, icon }: hoverFolderProps) => {
           <div
             className={cn(
               paper,
-              "select-none group-hover:[transform:rotateX(-25deg)] bg-zinc-400"
+              "select-none group-hover:[transform:rotateX(-25deg)] bg-zinc-400",
             )}
           />
           <div
             className={cn(
               paper,
-              "group-hover:[transform:rotateX(-35deg)] bg-zinc-300"
+              "group-hover:[transform:rotateX(-35deg)] bg-zinc-300",
             )}
           />
           <div
             className={cn(
               paper,
-              "group-hover:[transform:rotateX(-42deg)] bg-zinc-200"
+              "group-hover:[transform:rotateX(-42deg)] bg-zinc-200",
             )}
           />
         </>
@@ -88,7 +88,7 @@ export const HoverFolder = ({ empty = false, icon }: hoverFolderProps) => {
           "bg-linear-to-t from-primary-main to-primary-light",
           "after:absolute after:content-[''] after:bottom-[99%] after:right-0 after:w-[48.67%] after:h-[10%] after:bg-primary-light after:rounded-t-2xl ",
           "transition-all ease duration-300 group-hover:[transform:rotateX(-48deg)_translateY(1px)]",
-          "origin-bottom flex items-end"
+          "origin-bottom flex items-end",
         )}
         children={
           <Icon2RN

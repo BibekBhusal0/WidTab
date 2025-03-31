@@ -1,6 +1,6 @@
 import { EditorRoot, JSONContent, EditorContent, useEditor } from "novel";
 import Document from "@tiptap/extension-document";
-import { Placeholder, TaskItem, TaskList } from "novel/extensions";
+import { Placeholder, TaskItem, TaskList } from "novel";
 import { starterKit } from "@/components/editor/extensions";
 import { todoType } from "@/types/slice/todo";
 import GlobalDragHandle from "./drag-handle";
@@ -86,7 +86,8 @@ export const TodoList = ({ todos, onChange, filtered }: TodoListProps) => {
             class:
               "prose dark:prose-invert prose-xl focus:outline-hidden max-w-full min-h-[250px] todo-list",
           },
-        }}>
+        }}
+      >
         <SetContent {...{ todos, filtered }} />
       </EditorContent>
     </EditorRoot>
@@ -99,7 +100,7 @@ const SetContent = ({ todos, filtered }: setContentProp) => {
   const { editor } = useEditor();
   const dynamicTasks = useMemo(
     () => (filtered ? todos.filter((t) => !t.checked) : [...todos]),
-    [filtered, todos]
+    [filtered, todos],
   );
   const prevHiddenLength = useRef(todos.length - dynamicTasks.length);
   const hiddenTasks = todos.length - dynamicTasks.length;

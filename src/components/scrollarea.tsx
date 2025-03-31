@@ -6,7 +6,6 @@ import {
   ScrollAreaThumb,
   ScrollAreaViewportProps,
   ScrollAreaCornerProps,
-  ScrollAreaProps,
   ScrollAreaScrollbarProps,
 } from "@radix-ui/react-scroll-area";
 import { cn } from "@/utils/cn";
@@ -24,7 +23,7 @@ const ScrollArea = ({
   cornerProps,
   scrollBarProps,
   ...props
-}: ScrollAreaProps & moreScrollAreaProps) => (
+}: React.ComponentProps<typeof Root> & moreScrollAreaProps) => (
   <Root {...props} className={cn("relative overflow-hidden", className)}>
     <Viewport
       {...viewPortProps}
@@ -49,9 +48,9 @@ const ScrollBar = ({
       className={cn(
         "flex touch-none select-none transition-colors p-[1px]",
         orientation === "vertical" &&
-          "h-full w-2.5 border-l border-l-transparent",
+        "h-full w-2.5 border-l border-l-transparent",
         orientation === "horizontal" &&
-          "h-2.5 flex-col border-t border-t-transparent",
+        "h-2.5 flex-col border-t border-t-transparent",
         className,
       )}
       {...props}

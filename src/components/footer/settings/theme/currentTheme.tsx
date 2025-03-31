@@ -19,7 +19,7 @@ function CurrentThemeSettings() {
   const theme = useCurrentTheme();
   const dispatch = useDispatch();
   const { delete_ } = useCurrentIcons();
-  const numValues: numericalThemeValues[] = ["blur-sm", "opacity", "roundness"];
+  const numValues: numericalThemeValues[] = ["blur", "opacity", "roundness"];
   const toggle: MenuSwitchProps["items"] = [
     {
       onChange: () => dispatch(toggleCurrentMode()),
@@ -48,7 +48,8 @@ function CurrentThemeSettings() {
           </div>
           <div
             aria-label="opacity/blur/roundness"
-            className="flex flex-col items-center gap-4">
+            className="flex flex-col items-center gap-4"
+          >
             {numValues.map((val) => (
               <ChangeSlider
                 valueLabelDisplay="auto"
@@ -69,7 +70,7 @@ function CurrentThemeSettings() {
             onClick={() => dispatch(deleteTheme(theme.id))}
             color="error"
             startIcon={delete_}
-            //
+          //
           >
             Delete This Theme
           </Button>

@@ -73,7 +73,7 @@ function NotesPage() {
             sx={{ backgroundColor: "secondaryContainer.paper" }}
             onClick={() => dispatch(addNoteWithTitle(""))}
             className={cn(commonCls, "flex-center group cursor-pointer")}>
-            <div className="group-hover:scale-6 scale-3 transition-all">
+            <div className="group-hover:scale-600 scale-300 transition-all">
               {add}
             </div>
           </Paper>

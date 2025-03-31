@@ -1,4 +1,4 @@
-/* eslint-disable react/no-children-prop */
+import browser from "webextension-polyfill";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import {
@@ -20,10 +20,9 @@ import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import InputLabel from "@mui/material/InputLabel";
 import { useEffect, useState } from "react";
-import { isValidUrl } from "novel/utils";
+import { isValidUrl } from "novel";
 import RenameItem from "../renameItem";
 import { SelectIconMenu } from "../select-icon";
-import browser from "webextension-polyfill";
 import { Icon2RN } from "@/theme/icons";
 
 type AddFavProps = { id: string } & contextMenuProps;

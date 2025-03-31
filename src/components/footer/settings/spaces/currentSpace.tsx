@@ -29,7 +29,7 @@ function CurrentSpaceSetting() {
 
   if (!layout)
     return (
-      <div className="w-full p-2 border-divider border-t-2 pb-4">
+      <div className="w-full p-2 border-t-2 pb-4">
         <AddSpace />
       </div>
     );
@@ -39,7 +39,8 @@ function CurrentSpaceSetting() {
       <SettingHeader>Current Space</SettingHeader>
       <div
         aria-label="Current Space Settings"
-        className="w-full flex flex-col items-center gap-5 pb-4">
+        className="w-full flex flex-col items-center gap-5 pb-4"
+      >
         {/* Lock */}
         <MenuSwitch plain items={toggle} />
         <div aria-label="rename" className="full-between">

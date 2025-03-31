@@ -24,7 +24,7 @@ import MenuPopover, { MenuPopoverProps } from "@/components/popoverMenu";
 import TextField from "@mui/material/TextField";
 import { ReactNode, useState } from "react";
 import { addFolder, addLink } from "@/utils/bookmark";
-import { isValidUrl } from "novel/utils";
+import { isValidUrl } from "novel";
 
 function BookmarkManager() {
   return (
