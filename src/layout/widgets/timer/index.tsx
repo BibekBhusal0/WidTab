@@ -1,7 +1,7 @@
 import { TimerWidgetType } from "@/types/slice/widgets";
 import { useState, useEffect } from "react";
 import dayjs from "@/dayjsConfig";
-import { FitText } from "../clock/digital";
+import FitText from "@/components/fittext";
 import { RadialBarChart, RadialBar, PolarAngleAxis } from "recharts";
 import Button, { ButtonProps } from "@mui/material/Button";
 import useFullSize from "@/hooks/useFullSize";
@@ -146,17 +146,18 @@ function TimerWidget(props: TimerWidgetType) {
             {...chart}
           />
         </RadialBarChart>
-        <FitText
+        <div
+          className= 'absolute-center h-full flex-center px-3'
+          style={{
+            width: `${dia * 0.75}px`,
+          }}
+        ><FitText
           aria-label="time"
           min={10}
           max={120}
-          containerProps={{
-            className: "p-2 absolute-center",
-            width: `${dia * 0.75}px`,
-          }}
           className="size-full flex-center"
           children={formatTime(remainingTime)}
-        />
+        /></div>
         <div
           className="absolute-center flex-center gap-4"
           style={{

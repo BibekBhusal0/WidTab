@@ -21,7 +21,7 @@ import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import InputLabel from "@mui/material/InputLabel";
 import { useEffect, useState } from "react";
-import { isValidUrl } from "novel/utils";
+import { isValidUrl } from "novel";
 import RenameItem from "../renameItem";
 import { SelectIconMenu } from "../select-icon";
 import { Icon2RN } from "@/theme/icons";
@@ -46,13 +46,13 @@ export function LinkContextMenu({ id, ...props }: AddFavProps) {
   }, []);
 
   const handleUrlChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setUrl(e.target.value);
     if (urlHelperText) setUrlHelperText("");
   };
   const handleNameChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setName(e.target.value);
     if (nameHelperText) setNameHelperText("");
@@ -176,7 +176,8 @@ export function FolderContextMenu({ id, ...props }: AddFavProps) {
                   onClick={() => dispatch(removeFolderIcon({ fodler: id }))}
                   variant="outlined"
                   color="error"
-                  startIcon={<Icon2RN icon={delete_} />}>
+                  startIcon={<Icon2RN icon={delete_} />}
+                >
                   Remove
                 </Button>
               />

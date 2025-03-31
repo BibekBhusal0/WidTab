@@ -1,4 +1,4 @@
-import { Command, renderItems, SuggestionItem } from "novel/extensions";
+import { Command, renderItems, SuggestionItem } from "novel";
 import { tost } from "../tost";
 import {
   EditorCommand,

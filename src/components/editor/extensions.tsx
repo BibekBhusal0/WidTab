@@ -9,11 +9,11 @@ import {
   TextStyle,
   HighlightExtension,
   Mathematics,
-  MarkdownExtension,
   CustomKeymap,
   CodeBlockLowlight,
   TiptapImage,
-} from "novel/extensions";
+} from "novel";
+import { Markdown as MarkdownExtension } from "tiptap-markdown";
 import GlobalDragHandle from "./drag-handle";
 import {
   NodeViewContent,
@@ -62,8 +62,8 @@ export const CodeBlockComponent = ({
             MenuProps={{ sx: { maxHeight: "300px" } }}
             sx={{
               ".MuiSelect-select": {
-                padding: "8px",
-                paddingBottom: "6px",
+                padding: "7px",
+                paddingBottom: "2px",
               },
               fontSize: "12px",
             }}
@@ -114,7 +114,7 @@ export const CodeBlockComponent = ({
         >
           {showPreview && currentLanguage === "markdown" ? (
             <div
-              className="pointer-events-none cursor-auto "
+              className="pointer-events-none cursor-auto"
               dangerouslySetInnerHTML={{ __html: getMarkdownHTML() }}
               contentEditable={false}
             />

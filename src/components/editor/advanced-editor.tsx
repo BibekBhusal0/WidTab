@@ -1,6 +1,6 @@
 import { EditorRoot, EditorContent, JSONContent } from "novel";
-import { ImageResizer } from "novel/extensions";
-import { handleCommandNavigation } from "novel/extensions";
+import { ImageResizer } from "novel";
+import { handleCommandNavigation } from "novel";
 import { defaultExtensions } from "./extensions";
 import { SlashCommand, slashCommand } from "./slash-command";
 import { ReactNode } from "react";
@@ -45,9 +45,9 @@ const AdvancedEditor = ({
 
           attributes: {
             class: cn(
-              "prose dark:prose-invert prose-sm prose-headings:font-title",
+              "prose dark:prose-invert prose-sm prose-headings:font-title prose-pre:m-0",
               "font-default focus:outline-hidden max-w-full",
-              className
+              className,
             ),
           },
         }}
@@ -56,7 +56,7 @@ const AdvancedEditor = ({
 
           if (typeof value === "string") {
             (onChange as (value: string) => void)(
-              editor.storage.markdown.getMarkdown()
+              editor.storage.markdown.getMarkdown(),
             );
           } else {
             (onChange as (value: JSONContent) => void)(editor.getJSON());
