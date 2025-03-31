@@ -12,7 +12,7 @@ function useBookmarksUpdate(callback: Function, dependencies: any[] = []) {
       browser.bookmarks.onCreated,
       browser.bookmarks.onChanged,
       browser.bookmarks.onRemoved,
-      browser.bookmarks.onMoved
+      browser.bookmarks.onMoved,
     ];
 
     listeners.map((event) => event.addListener(() => callback()));
@@ -50,9 +50,7 @@ export const useFavoriteBookmarks = (dependencies: any[] = []) => {
     const bookmarkPromises = favorites.map((id) => browser.bookmarks.get(id));
 
     Promise.all(bookmarkPromises).then((results) => {
-      const bookmarks = results
-        .flat()
-        .filter((bookmark): bookmark is treeNode => !!bookmark);
+      const bookmarks = results.flat().filter((bookmark): bookmark is treeNode => !!bookmark);
 
       setBookmark(bookmarks);
     });
@@ -61,19 +59,12 @@ export const useFavoriteBookmarks = (dependencies: any[] = []) => {
   return bookmark;
 };
 
-export const useBookmarkFolder = (
-  folderID: string,
-  dependencies: any[] = []
-) => {
+export const useBookmarkFolder = (folderID: string, dependencies: any[] = []) => {
   const [bookmark, setBookmark] = useState<treeNodeArray>([]);
   const getBookmarks = () => {
     browser.bookmarks.getSubTree(folderID).then((data) => {
       setBookmark(
-        Array.isArray(data)
-          ? data[0] && data[0].children
-            ? data[0].children
-            : data
-          : []
+        Array.isArray(data) ? (data[0] && data[0].children ? data[0].children : data) : []
       );
     });
   };

@@ -17,9 +17,7 @@ import SimpleAddWidgetButton from "./simpleAddWidget";
 
 function AddHabitTracer() {
   const dispatch = useDispatch();
-  const { trackers, pinned } = useSelector(
-    (state: StateType) => state.habitTracker
-  );
+  const { trackers, pinned } = useSelector((state: StateType) => state.habitTracker);
   const dimensions = widgetDimensions["habit-tracker"];
   const { minH, minW } = dimensions;
   const statsDimensions = widgetDimensions["habit-tracker-stats-single"];
@@ -88,9 +86,7 @@ function AddHabitTracer() {
             pinned={pinned}
           />
           {!availablePosition && (
-            <div className="text-lg text-error-main pt-3">
-              Not Enough Space For Habit Tacker
-            </div>
+            <div className="text-lg text-error-main pt-3">Not Enough Space For Habit Tacker</div>
           )}
           <SettingHeader>Habit Tracker Stats </SettingHeader>
           <AllItemsList
@@ -108,10 +104,7 @@ function AddHabitTracer() {
         </>
       )}
       <AddHabitTracerStatsAll />
-      <AddNewHabitTracker
-        addHabitTracker={handleNewHabitTracker}
-        disabled={!availablePosition}
-      />
+      <AddNewHabitTracker addHabitTracker={handleNewHabitTracker} disabled={!availablePosition} />
       <div className="py-2"></div>
     </div>
   );
@@ -120,9 +113,7 @@ function AddHabitTracer() {
 function AddHabitTracerStatsAll() {
   return (
     <div className="flex-center w-full my-5">
-      <SimpleAddWidgetButton
-        widget={{ type: "habit-tracker-stats-all", values: { id: 0 } }}
-      />
+      <SimpleAddWidgetButton widget={{ type: "habit-tracker-stats-all", values: { id: 0 } }} />
     </div>
   );
 }
@@ -150,9 +141,7 @@ function AddNewHabitTracker({
         onClick={() => setShow(!show)}
         variant="outlined"
         color={show ? "error" : "primary"}
-        startIcon={
-          <Icon icon={`material-symbols:${show ? "arrow-back" : "add"}`} />
-        }
+        startIcon={<Icon icon={`material-symbols:${show ? "arrow-back" : "add"}`} />}
         children={show ? "Back" : "Add New Habit Tracker"}
         disabled={disabled}
       />

@@ -56,9 +56,7 @@ export default function MusicWidget({ play_ = false }: { play_?: boolean }) {
   };
 
   const handlePrev = () => {
-    setCurrentSong(
-      (prevValue) => (prevValue - 1 + allMusic.length) % allMusic.length,
-    );
+    setCurrentSong((prevValue) => (prevValue - 1 + allMusic.length) % allMusic.length);
   };
 
   const Buttons = [
@@ -70,8 +68,7 @@ export default function MusicWidget({ play_ = false }: { play_?: boolean }) {
   const { title, artist, path } = allMusic[currentSong];
   const animatedMusicCls = cn("text-white transition-all", {
     hidden: !play,
-    "duration-1000 animate-in zoom-in direction-alternate-reverse repeat-infinite":
-      play,
+    "duration-1000 animate-in zoom-in direction-alternate-reverse repeat-infinite": play,
   });
   const animatedMusicIcons = [
     { className: "delay-500", icon: "lucide-music" },
@@ -91,25 +88,18 @@ export default function MusicWidget({ play_ = false }: { play_?: boolean }) {
       <div className="flex size-full flex-col p-4 gap-4">
         <div
           aria-label="title-and-music-icons"
-          className="relative flex flex-1 flex-col justify-between"
-        >
+          className="relative flex flex-1 flex-col justify-between">
           <div className="full-between gap-3">
             <div className="flex flex-col gap-2">
               <p className="line-clamp-1 w-full text-2xl font-bold leading-none truncate">
                 {title}
               </p>
-              <p className="line-clamp-1 text-sm font-semibold leading-none truncate">
-                {artist}
-              </p>
+              <p className="line-clamp-1 text-sm font-semibold leading-none truncate">{artist}</p>
             </div>
 
             <div className="flex-center h-fit w-12 flex-wrap gap-1 text-lg">
               {animatedMusicIcons.map(({ icon, className }, index) => (
-                <Icon
-                  key={index}
-                  icon={icon}
-                  className={cn(animatedMusicCls, className)}
-                />
+                <Icon key={index} icon={icon} className={cn(animatedMusicCls, className)} />
               ))}
             </div>
           </div>

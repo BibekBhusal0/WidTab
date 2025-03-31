@@ -1,11 +1,7 @@
 import { StateType } from "@/redux/store";
 import { useSelector } from "react-redux";
 import { Icon } from "@iconify/react";
-import {
-  ExtraBookmarkProps,
-  folderSizeMapping,
-  TakeBookmarksProps,
-} from "@/types/slice/bookmark";
+import { ExtraBookmarkProps, folderSizeMapping, TakeBookmarksProps } from "@/types/slice/bookmark";
 import useFullSize from "@/hooks/useFullSize";
 import { FolderContextMenu, LinkContextMenu } from "./contextMenu";
 import Card from "@mui/material/Card";
@@ -13,11 +9,7 @@ import CardActionArea from "@mui/material/CardActionArea";
 import Favicon from "@/utils/faviconURL";
 import { HoverFolder } from "./folder";
 import { bookmarkTreeNodeArray } from "@/types/slice/bookmark";
-import {
-  Sortable,
-  SortableDragHandle,
-  SortableItem,
-} from "@/components/sortable";
+import { Sortable, SortableDragHandle, SortableItem } from "@/components/sortable";
 import { openLink } from "@/utils/bookmark";
 
 type l = { contextMenu?: boolean };
@@ -63,17 +55,10 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
   const { favorites, linkInNewTab, folderIcons } = useSelector(
     (state: StateType) => state.bookmarks
   );
-  const {
-    bookmarks,
-    folderSize = "small",
-    onFolderChange = () => {},
-    contextMenu = true,
-  } = props;
+  const { bookmarks, folderSize = "small", onFolderChange = () => {}, contextMenu = true } = props;
 
   if (Array.isArray(bookmarks)) {
-    return bookmarks.map((child) => (
-      <Bookmarks key={child.id} {...props} bookmarks={child} />
-    ));
+    return bookmarks.map((child) => <Bookmarks key={child.id} {...props} bookmarks={child} />);
   }
   const linkAndContextMenu = bookmarks.url && contextMenu;
   const size = folderSizeMapping[folderSize];
@@ -82,9 +67,7 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
     <Card
       variant="elevation"
       onClick={(e) => {
-        bookmarks.url
-          ? openLink(bookmarks.url, linkInNewTab, e)
-          : onFolderChange(bookmarks.id);
+        bookmarks.url ? openLink(bookmarks.url, linkInNewTab, e) : onFolderChange(bookmarks.id);
       }}
       className="group"
       sx={{
@@ -111,18 +94,13 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
         <SortableDragHandle className="flex-center flex-col gap-1 size-full cursor-pointer data-[state=dragging]:cursor-grabbing">
           {!bookmarks.url ? (
             <div className="w-[70%] h-[50%] relative">
-              <HoverFolder
-                empty={!bookmarks.children?.length}
-                icon={folderIcons?.[bookmarks.id]}
-              />
+              <HoverFolder empty={!bookmarks.children?.length} icon={folderIcons?.[bookmarks.id]} />
             </div>
           ) : (
             <Favicon src={bookmarks.url} className="size-1/2 aspect-square" />
           )}
           <div className="flex-center w-full px-1 py-0.5 gap-[2px]">
-            {fav && linkAndContextMenu && (
-              <Icon style={{ fontSize: size / 5 }} icon="mdi:heart" />
-            )}
+            {fav && linkAndContextMenu && <Icon style={{ fontSize: size / 5 }} icon="mdi:heart" />}
             <div className="truncate w-full text-center">{bookmarks.title}</div>
           </div>
         </SortableDragHandle>
@@ -130,9 +108,7 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
     </Card>
   );
 
-  const ContextMenuWrapper = bookmarks.url
-    ? LinkContextMenu
-    : FolderContextMenu;
+  const ContextMenuWrapper = bookmarks.url ? LinkContextMenu : FolderContextMenu;
 
   return (
     <SortableItem value={bookmarks.id}>

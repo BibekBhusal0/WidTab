@@ -1,12 +1,6 @@
 import { Icon2RN } from "@/theme/icons";
 import { cn } from "@/utils/cn";
-import {
-  type PanInfo,
-  motion,
-  useAnimation,
-  useMotionValue,
-  useTransform,
-} from "framer-motion";
+import { type PanInfo, motion, useAnimation, useMotionValue, useTransform } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import Button from "@mui/material/Button";
@@ -71,9 +65,7 @@ export function CylindricalNavigation() {
   });
 
   return (
-    <div
-      className="size-full flex items-center justify-evenly flex-col p-2 gap-3"
-      ref={ref}>
+    <div className="size-full flex items-center justify-evenly flex-col p-2 gap-3" ref={ref}>
       <div
         style={{
           height: Math.min(100, height - 20),
@@ -106,9 +98,7 @@ export function CylindricalNavigation() {
                   style={{
                     width: `${faceWidth}px`,
                     paddingLeft: `${faceWidth / 20}px`,
-                    transform: `rotateY(${
-                      index * (360 / faceCount)
-                    }deg) translateZ(${radius}px)`,
+                    transform: `rotateY(${index * (360 / faceCount)}deg) translateZ(${radius}px)`,
                   }}>
                   <div
                     style={{
@@ -134,10 +124,7 @@ export function CylindricalNavigation() {
         </div>
       </div>
 
-      <Button
-        variant="outlined"
-        className="text-xl text-center"
-        onClick={changeSpace}>
+      <Button variant="outlined" className="text-xl text-center" onClick={changeSpace}>
         Go to {selected?.name || "Space"}
       </Button>
     </div>

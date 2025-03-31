@@ -27,7 +27,7 @@ function GeminiWidget(props: geminiWidgetType) {
   useEffect(() => {
     const onStorageChange = (
       changes: { [key: string]: chrome.storage.StorageChange },
-      namespace: string,
+      namespace: string
     ) => {
       if (namespace === "local" && changes.gemini) {
         setKey(changes.gemini.newValue);
@@ -63,8 +63,7 @@ function GeminiWidget(props: geminiWidgetType) {
             onClick={handleClick}
             size="large"
             variant="outlined"
-            disabled={input.trim() === ""}
-          >
+            disabled={input.trim() === ""}>
             Set API KEY
           </Button>
           <Link href={APIkeyURL.gemini} target="_blank">
@@ -88,10 +87,7 @@ export function AIChat({ ...props }: aiChatProp) {
   );
 }
 
-function AIChatContent({
-  loading,
-  conversation,
-}: aiChatProp & { loading: boolean }) {
+function AIChatContent({ loading, conversation }: aiChatProp & { loading: boolean }) {
   const mainRef = useRef<HTMLDivElement>(null);
   useEffect(() => scrollBottom(), [loading]);
 
@@ -105,9 +101,8 @@ function AIChatContent({
     <ScrollArea ref={mainRef}>
       <div
         className={cn(
-          "size-full max-w-full prose dark:prose-invert prose-pre:p-0 prose-pre:border prose-pre:border-divider flex flex-col gap-4 p-4 transition-all",
-        )}
-      >
+          "size-full max-w-full prose dark:prose-invert prose-pre:p-0 prose-pre:border prose-pre:border-divider flex flex-col gap-4 p-4 transition-all"
+        )}>
         <ReformatContent {...{ conversation, loading }} />
       </div>
     </ScrollArea>
@@ -132,7 +127,7 @@ function AIChatInput({
       currentSpaceEditWidget({
         type: "gemini",
         values: { ...props, conversation },
-      }),
+      })
     );
 
   const expand = input.trim() !== "";
@@ -143,9 +138,7 @@ function AIChatInput({
     try {
       const genAI = new GoogleGenerativeAI(APIkey);
       const history = [...conversation];
-      const chatSession = genAI
-        .getGenerativeModel({ model })
-        .startChat({ history });
+      const chatSession = genAI.getGenerativeModel({ model }).startChat({ history });
       await chatSession.sendMessage(input.trim());
       setContent(history);
     } catch (error) {
@@ -191,20 +184,14 @@ type reformatContentProps = {
   conversation: Content[];
   loading?: boolean;
 };
-export function ReformatContent({
-  conversation,
-  loading,
-}: reformatContentProps) {
+export function ReformatContent({ conversation, loading }: reformatContentProps) {
   const cls = "px-4 self-start";
   return (
     <>
       {conversation.map(({ parts, role }, index) => (
         <Fragment key={index}>
           {role === "user" && (
-            <Paper
-              variant="outlined"
-              className="flex flex-col gap-2 max-w-[80%] self-end p-4"
-            >
+            <Paper variant="outlined" className="flex flex-col gap-2 max-w-[80%] self-end p-4">
               {parts.map(({ text }, i) => (
                 <Fragment key={i}>
                   {text?.split("\n").map((t, i) => <div key={i}>{t}</div>)}
@@ -254,18 +241,13 @@ export function ReformatContent({
                   },
                 }}>
               </ReactMarkdown> */}
-              <MarkdownPreview
-                value={parts.map(({ text }) => text || "").join("\n")}
-              />
+              <MarkdownPreview value={parts.map(({ text }) => text || "").join("\n")} />
             </Paper>
           )}
         </Fragment>
       ))}
       {loading && (
-        <Paper
-          className={cn(cls, "flex flex-center gap-2 py-2")}
-          variant="outlined"
-        >
+        <Paper className={cn(cls, "flex flex-center gap-2 py-2")} variant="outlined">
           <Icon icon="svg-spinners:3-dots-bounce" className="text-3xl" />
           <div className="text-xl">Gemini Is Typing</div>
         </Paper>

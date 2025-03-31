@@ -6,10 +6,7 @@ type SettingHeaderProps = {
   first?: boolean;
 } & BoxProps;
 
-const SettingHeader: FunctionComponent<SettingHeaderProps> = ({
-  first = false,
-  ...props
-}) => {
+const SettingHeader: FunctionComponent<SettingHeaderProps> = ({ first = false, ...props }) => {
   return (
     <Box
       {...props}

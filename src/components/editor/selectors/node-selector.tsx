@@ -25,57 +25,49 @@ const items: SelectorItem[] = [
   {
     name: "Heading 1",
     icon: "gravity-ui:heading-1",
-    command: (editor) =>
-      editor.chain().focus().clearNodes().toggleHeading({ level: 1 }).run(),
+    command: (editor) => editor.chain().focus().clearNodes().toggleHeading({ level: 1 }).run(),
     isActive: (editor) => editor.isActive("heading", { level: 1 }),
   },
   {
     name: "Heading 2",
     icon: "gravity-ui:heading-2",
-    command: (editor) =>
-      editor.chain().focus().clearNodes().toggleHeading({ level: 2 }).run(),
+    command: (editor) => editor.chain().focus().clearNodes().toggleHeading({ level: 2 }).run(),
     isActive: (editor) => editor.isActive("heading", { level: 2 }),
   },
   {
     name: "Heading 3",
     icon: "gravity-ui:heading-3",
-    command: (editor) =>
-      editor.chain().focus().clearNodes().toggleHeading({ level: 3 }).run(),
+    command: (editor) => editor.chain().focus().clearNodes().toggleHeading({ level: 3 }).run(),
     isActive: (editor) => editor.isActive("heading", { level: 3 }),
   },
   {
     name: "To-do List",
     icon: "gravity-ui:square-check",
-    command: (editor) =>
-      editor.chain().focus().clearNodes().toggleTaskList().run(),
+    command: (editor) => editor.chain().focus().clearNodes().toggleTaskList().run(),
     isActive: (editor) => editor.isActive("taskItem"),
   },
   {
     name: "Bullet List",
     icon: "gravity-ui:list-ul",
-    command: (editor) =>
-      editor.chain().focus().clearNodes().toggleBulletList().run(),
+    command: (editor) => editor.chain().focus().clearNodes().toggleBulletList().run(),
     isActive: (editor) => editor.isActive("bulletList"),
   },
   {
     name: "Numbered List",
     icon: "gravity-ui:list-ol",
-    command: (editor) =>
-      editor.chain().focus().clearNodes().toggleOrderedList().run(),
+    command: (editor) => editor.chain().focus().clearNodes().toggleOrderedList().run(),
     isActive: (editor) => editor.isActive("orderedList"),
   },
   {
     name: "Quote",
     icon: "gravity-ui:quote-open",
-    command: (editor) =>
-      editor.chain().focus().clearNodes().toggleBlockquote().run(),
+    command: (editor) => editor.chain().focus().clearNodes().toggleBlockquote().run(),
     isActive: (editor) => editor.isActive("blockquote"),
   },
   {
     name: "Code",
     icon: "gravity-ui:code",
-    command: (editor) =>
-      editor.chain().focus().clearNodes().toggleCodeBlock().run(),
+    command: (editor) => editor.chain().focus().clearNodes().toggleCodeBlock().run(),
     isActive: (editor) => editor.isActive("codeBlock"),
   },
 ];
@@ -97,12 +89,10 @@ export const NodeSelector = () => {
           <div className="text-sm">{activeItem.name}</div>
           <Icon2RN icon="ri:arrow-down-s-line" className="size-4" />
         </div>
-      }
-    >
+      }>
       <ScrollArea
         viewPortProps={{ className: "h-auto max-h-[200px]" }}
-        scrollBarProps={{ className: "w-2" }}
-      >
+        scrollBarProps={{ className: "w-2" }}>
         {items.map((i) => {
           return (
             <MenuItem
@@ -112,8 +102,7 @@ export const NodeSelector = () => {
                 handleClose();
               }}
               selected={activeItem.name === i.name}
-              className="gap-2 px-3 py-2"
-            >
+              className="gap-2 px-3 py-2">
               <Icon2RN icon={i.icon} className="size-6 border rounded-md p-1" />
 
               <div>{i.name}</div>

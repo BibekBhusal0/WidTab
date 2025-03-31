@@ -1,9 +1,5 @@
 import useCurrentTheme from "@/hooks/useCurrentTheme";
-import {
-  changeTheme,
-  deleteTheme,
-  toggleCurrentMode,
-} from "@/redux/slice/theme";
+import { changeTheme, deleteTheme, toggleCurrentMode } from "@/redux/slice/theme";
 import { numericalThemeValues } from "@/types/slice/theme";
 import Button from "@mui/material/Button";
 import Slider, { SliderProps } from "@mui/material/Slider";
@@ -40,16 +36,11 @@ function CurrentThemeSettings() {
             <div className="w-36">
               <HexPicker
                 color={theme.primaryColor}
-                setColor={(color) =>
-                  dispatch(changeTheme({ ...theme, primaryColor: color }))
-                }
+                setColor={(color) => dispatch(changeTheme({ ...theme, primaryColor: color }))}
               />
             </div>
           </div>
-          <div
-            aria-label="opacity/blur/roundness"
-            className="flex flex-col items-center gap-4"
-          >
+          <div aria-label="opacity/blur/roundness" className="flex flex-col items-center gap-4">
             {numValues.map((val) => (
               <ChangeSlider
                 valueLabelDisplay="auto"
@@ -70,15 +61,15 @@ function CurrentThemeSettings() {
             onClick={() => dispatch(deleteTheme(theme.id))}
             color="error"
             startIcon={delete_}
-          //
+            //
           >
             Delete This Theme
           </Button>
         </>
       ) : (
         <div>
-          Theme is not editable, You can click on add Theme which will duplicate
-          this theme and edit the duplicate.
+          Theme is not editable, You can click on add Theme which will duplicate this theme and edit
+          the duplicate.
         </div>
       )}
     </div>

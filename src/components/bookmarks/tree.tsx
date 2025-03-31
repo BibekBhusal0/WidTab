@@ -31,9 +31,7 @@ type defaultOpen = { paths?: string[] };
 function BookmarkTree() {
   const { bookmarks } = useAllBookmarks();
   const [path, setPath] = useState<string[]>([]);
-  const { currentFolderID } = useSelector(
-    (state: StateType) => state.bookmarks
-  );
+  const { currentFolderID } = useSelector((state: StateType) => state.bookmarks);
   useEffect(() => {
     findPath(currentFolderID).then((data) => {
       setPath(data.map((item) => item.id));
@@ -92,21 +90,17 @@ function BookmarkItem({ bookmarks, paths }: TakeBookmarksProps & defaultOpen) {
       <BookmarkItem key={child.id} bookmarks={child} paths={paths} />
     ));
   }
-  if (bookmarks.children)
-    return <BookmarkFolder bookmarks={bookmarks} paths={paths} />;
+  if (bookmarks.children) return <BookmarkFolder bookmarks={bookmarks} paths={paths} />;
   return <BookmarkTreeLink bookmarks={bookmarks} />;
 }
 
 function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
-  const { favorites, linkInNewTab } = useSelector(
-    (state: StateType) => state.bookmarks
-  );
+  const { favorites, linkInNewTab } = useSelector((state: StateType) => state.bookmarks);
   const fav = favorites.includes(bookmarks.id);
 
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({
-      id: bookmarks.id,
-    });
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id: bookmarks.id,
+  });
 
   const style: React.CSSProperties = {
     opacity: isDragging ? 0.8 : 1,
@@ -121,10 +115,7 @@ function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
         {...listeners}
         style={style}
         onClick={(e) => openLink(bookmarks.url || "", linkInNewTab, e)}
-        className={cn(
-          "w-full flex items-center gap-4 pl-2 ml-2",
-          isDragging && "cursor-grabbing"
-        )}>
+        className={cn("w-full flex items-center gap-4 pl-2 ml-2", isDragging && "cursor-grabbing")}>
         <div className="py-1 my-1 w-full">
           <div className="flex items-center gap-4 w-full">
             <Favicon src={bookmarks.url} className="size-10 aspect-square" />
@@ -140,9 +131,7 @@ function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
 function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
   const [open, setOpen] = useState(false);
   const folderRef = useRef<HTMLDivElement>(null);
-  const { currentFolderID, folderIcons } = useSelector(
-    (state: StateType) => state.bookmarks
-  );
+  const { currentFolderID, folderIcons } = useSelector((state: StateType) => state.bookmarks);
   const isCurrentFolder = currentFolderID === bookmarks.id;
 
   useEffect(() => {

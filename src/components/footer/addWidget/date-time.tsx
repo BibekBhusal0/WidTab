@@ -19,12 +19,8 @@ function DateTime() {
           type="number"
         />
       </div>
-      <SimpleAddWidgetButton
-        widget={{ type: "timer", values: { id: 0, time } }}
-      />
-      <SimpleAddWidgetButton
-        widget={{ type: "timer-stats", values: { id: 0 } }}
-      />
+      <SimpleAddWidgetButton widget={{ type: "timer", values: { id: 0, time } }} />
+      <SimpleAddWidgetButton widget={{ type: "timer-stats", values: { id: 0 } }} />
     </div>
   );
 }

@@ -47,8 +47,7 @@ function FooterPopover({
         {...props}
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
-      >
+        onClose={handleClose}>
         {children}
       </Popover>
     </>

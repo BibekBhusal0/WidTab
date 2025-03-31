@@ -72,9 +72,7 @@ function AddCustomWidget() {
         <div className="text-xl">
           Position: ({cols}, {rows})
         </div>
-        {!available_widgets && (
-          <div className="text-error-main">No space available</div>
-        )}
+        {!available_widgets && <div className="text-error-main">No space available</div>}
       </div>
 
       <Button

@@ -22,9 +22,7 @@ function AddSearch() {
         value={engine}
         onChange={changeSearchEngine}
       />
-      <SimpleAddWidgetButton
-        widget={{ type: "search", values: { id: 0, engine } }}
-      />
+      <SimpleAddWidgetButton widget={{ type: "search", values: { id: 0, engine } }} />
     </div>
   );
 }

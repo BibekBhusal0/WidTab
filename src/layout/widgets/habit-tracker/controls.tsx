@@ -30,9 +30,7 @@ function HabitTrackerControls({ id }: { id: number }) {
   const { delete_, reset, pin, edit } = useCurrentIcons();
 
   const dispatch = useDispatch();
-  const { pinned, trackers } = useSelector(
-    (state: StateType) => state.habitTracker
-  );
+  const { pinned, trackers } = useSelector((state: StateType) => state.habitTracker);
   const { currentSpace } = useSelector((state: StateType) => state.layout);
   const handlePin = () => dispatch(changePinnedHabitTracker(id));
 

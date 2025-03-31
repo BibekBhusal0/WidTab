@@ -27,10 +27,7 @@ const StaticLayout: FunctionComponent<StaticLayoutProps> = ({ widgetType }) => {
     <Box
       {...mainComponentProps}
       sx={{ ...mainComponentProps?.sx }}
-      className={cn(
-        "relative w-full overflow-auto",
-        mainComponentProps?.className
-      )}
+      className={cn("relative w-full overflow-auto", mainComponentProps?.className)}
       //
     >
       {layoutMapping[widgetType]}

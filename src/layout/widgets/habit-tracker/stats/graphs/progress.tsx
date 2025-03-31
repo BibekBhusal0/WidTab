@@ -36,9 +36,7 @@ function ProgressGraph({ type = "daily", trackers }: ProgressGraphProps) {
           const formattedDate = currentDate.format("YYYY-MM-DD");
           const value = tracker.history[formattedDate] || 0;
           const completion =
-            tracker.target === 0
-              ? 0
-              : Math.min((value / tracker.target) * 100, 100);
+            tracker.target === 0 ? 0 : Math.min((value / tracker.target) * 100, 100);
           completionPercentages.push(completion);
         } else completionPercentages.push(0);
       });
@@ -66,12 +64,7 @@ function ProgressGraph({ type = "daily", trackers }: ProgressGraphProps) {
   return (
     <div className="relative size-[100px]">
       <RadialBarChart data={[{ value: completionPercentage }]} {...chart}>
-        <PolarAngleAxis
-          angleAxisId={0}
-          domain={[0, 100]}
-          tick={false}
-          type="number"
-        />
+        <PolarAngleAxis angleAxisId={0} domain={[0, 100]} tick={false} type="number" />
         <RadialBar
           dataKey="value"
           fill="var(--mui-palette-primary-main)"
@@ -82,9 +75,7 @@ function ProgressGraph({ type = "daily", trackers }: ProgressGraphProps) {
         />
       </RadialBarChart>
 
-      <div className="text-center absolute-center text-lg">
-        {completionString}
-      </div>
+      <div className="text-center absolute-center text-lg">{completionString}</div>
     </div>
   );
 }

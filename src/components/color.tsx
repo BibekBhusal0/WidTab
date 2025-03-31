@@ -22,25 +22,17 @@ function ColorSwatch({
   const s = (
     <div
       style={{ backgroundColor: color, ...style }}
-      className={cn(
-        "size-8 rounded-md border-2 border-text-primary cursor-pointer",
-        className
-      )}
+      className={cn("size-8 rounded-md border-2 border-text-primary cursor-pointer", className)}
       {...props}
     />
   );
   if (!showHex) return s;
   return (
     <div
-      className={cn(
-        "flex flex-center gap-2 p-2 cursor-pointer",
-        containerProps?.className
-      )}
+      className={cn("flex flex-center gap-2 p-2 cursor-pointer", containerProps?.className)}
       {...containerProps}>
       {s}
-      <div
-        className={cn("text-lg uppercase", textProps?.className)}
-        {...textProps}>
+      <div className={cn("text-lg uppercase", textProps?.className)} {...textProps}>
         {color}
       </div>
     </div>
@@ -73,9 +65,7 @@ export function HexPicker({ color, setColor }: HexPickerProps) {
       }>
       <div className="flex flex-center flex-col gap-2 p-3">
         <HexColorPicker color={_color} onChange={_setColor} />
-        <div
-          aria-label="color swatches"
-          className="w-[192px] flex flex-center flex-wrap gap-2">
+        <div aria-label="color swatches" className="w-[192px] flex flex-center flex-wrap gap-2">
           {colors.map((color) => (
             <ColorSwatch
               color={color}

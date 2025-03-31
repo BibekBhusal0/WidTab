@@ -54,9 +54,7 @@ function Sites({ iconSize }: FavoritesWidgetType) {
     });
   }, []);
 
-  return (
-    <BookmarkGrid bookmarks={sites} folderSize={iconSize} contextMenu={false} />
-  );
+  return <BookmarkGrid bookmarks={sites} folderSize={iconSize} contextMenu={false} />;
 }
 
 export default TopSites;

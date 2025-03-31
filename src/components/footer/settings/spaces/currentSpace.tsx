@@ -5,11 +5,7 @@ import DeleteThisSpace from "./deleteSpace";
 import AddSpace from "./addSpace";
 import RenameItem from "@/components/renameItem";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  currentSpaceChangeIcon,
-  currentSpaceRename,
-  toggleLocked,
-} from "@/redux/slice/layout";
+import { currentSpaceChangeIcon, currentSpaceRename, toggleLocked } from "@/redux/slice/layout";
 import { SelectIconMenu } from "@/components/select-icon";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
 import { StateType } from "@/redux/store";
@@ -39,8 +35,7 @@ function CurrentSpaceSetting() {
       <SettingHeader>Current Space</SettingHeader>
       <div
         aria-label="Current Space Settings"
-        className="w-full flex flex-col items-center gap-5 pb-4"
-      >
+        className="w-full flex flex-col items-center gap-5 pb-4">
         {/* Lock */}
         <MenuSwitch plain items={toggle} />
         <div aria-label="rename" className="full-between">

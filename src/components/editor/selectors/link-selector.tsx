@@ -66,10 +66,7 @@ export const LinkSelector = () => {
             color={l ? "error" : "success"}
             onClick={l ? allLink : removeLink}
             startIcon={
-              <Icon2RN
-                icon={l ? delete_ : "material-symbols:check-rounded"}
-                className="size-4"
-              />
+              <Icon2RN icon={l ? delete_ : "material-symbols:check-rounded"} className="size-4" />
             }
             children={l ? "Remove Link" : "Add Link"}
           />

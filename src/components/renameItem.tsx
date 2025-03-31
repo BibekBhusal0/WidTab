@@ -24,8 +24,7 @@ function RenameItem({
   realTime = false,
 }: RenameItemProps) {
   const [text, setText] = useState(initialText);
-  const hitsWordLimit: boolean =
-    wordLimit !== undefined && text.length >= wordLimit;
+  const hitsWordLimit: boolean = wordLimit !== undefined && text.length >= wordLimit;
   const trimmedText = text.trim();
   const isEmpty = trimmedText.length === 0;
 
@@ -71,9 +70,7 @@ function RenameItem({
         onChange={handleInputChange}
       />
 
-      <FormHelperText error>
-        {hitsWordLimit ? "Word limit exceeded." : null}
-      </FormHelperText>
+      <FormHelperText error>{hitsWordLimit ? "Word limit exceeded." : null}</FormHelperText>
     </FormControl>
   );
 }

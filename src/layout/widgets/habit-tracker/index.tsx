@@ -6,14 +6,7 @@ import { Icon } from "@iconify/react";
 import { cn } from "@/utils/cn";
 import dayjs from "dayjs";
 
-function HabitTracker({
-  id,
-  target,
-  title,
-  icon,
-  unit,
-  history = {},
-}: HabitTrackerItemType) {
+function HabitTracker({ id, target, title, icon, unit, history = {} }: HabitTrackerItemType) {
   const value = history[dayjs().format("YYYY-MM-DD")] || 0;
   const dispatch = useDispatch();
 
@@ -69,12 +62,9 @@ function HabitTracker({
                   {
                     "border-solid": completedToday,
                     "border-dashed": !completedToday,
-                  },
-                )}
-              >
-                {completedToday && (
-                  <Icon className="size-full" icon="heroicons:fire-16-solid" />
-                )}
+                  }
+                )}>
+                {completedToday && <Icon className="size-full" icon="heroicons:fire-16-solid" />}
               </div>
               {streak}
             </div>
@@ -101,14 +91,8 @@ function HabitTracker({
                 onClick={onClick}
                 sx={{ padding: "4px", margin: "2px", minWidth: "0" }}
                 variant="outlined"
-                disabled={disabled}
-              >
-                {
-                  <Icon
-                    icon={icon}
-                    className={cn({ "text-4xl": add, "text-2xl": !add })}
-                  />
-                }
+                disabled={disabled}>
+                {<Icon icon={icon} className={cn({ "text-4xl": add, "text-2xl": !add })} />}
               </Button>
             );
           })}

@@ -24,8 +24,7 @@ function Popup() {
       )}>
       {contentEmpty && (
         <div className="grow text-xl text-center">
-          You have not Pinned any todo or habit tracker and you don't have any
-          favorites.
+          You have not Pinned any todo or habit tracker and you don't have any favorites.
         </div>
       )}
       {showFavorites && <Favorites />}
@@ -41,9 +40,7 @@ function Popup() {
 }
 
 const Favorites = () => (
-  <Paper
-    className="h-full w-[350px] relative"
-    sx={{ backgroundColor: "primaryContainer.paper" }}>
+  <Paper className="h-full w-[350px] relative" sx={{ backgroundColor: "primaryContainer.paper" }}>
     <FavoritesWidget id={0} iconSize="small" />
   </Paper>
 );
@@ -64,16 +61,12 @@ function PinnedTodo() {
 }
 
 function PinnedHabitTracker() {
-  const { trackers, pinned } = useSelector(
-    (state: StateType) => state.habitTracker
-  );
+  const { trackers, pinned } = useSelector((state: StateType) => state.habitTracker);
   if (!pinned) return null;
   const t = trackers.find((p) => p.id === pinned);
   if (!t) return null;
   return (
-    <Paper
-      sx={{ backgroundColor: "primaryContainer.paper" }}
-      className="w-[380px] h-[150px] p-2">
+    <Paper sx={{ backgroundColor: "primaryContainer.paper" }} className="w-[380px] h-[150px] p-2">
       <HabitTracker {...t} />
     </Paper>
   );

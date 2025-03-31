@@ -34,8 +34,7 @@ function ClockWidget({ ...props }: ClockWidgetType) {
         "h-[85%]": showTimeZone,
         "h-[75%]": showTimeZone && size.height < 100,
       })}
-      ref={ref}
-    >
+      ref={ref}>
       {clockType === "digital" ? (
         <DigitalClock time={time} {...props} />
       ) : (
@@ -45,8 +44,7 @@ function ClockWidget({ ...props }: ClockWidgetType) {
         <div
           className={cn("h-[20%]", {
             "-mt-2": showTimeZone && size.height < 100,
-          })}
-        >
+          })}>
           <FitText min={2} className="text-center">
             {timeZone}
           </FitText>

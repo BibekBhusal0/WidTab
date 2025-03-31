@@ -1,10 +1,7 @@
 import MenuPopover from "@/components/popoverMenu";
 import Divider from "@mui/material/Divider";
 import { useDispatch } from "react-redux";
-import {
-  currentSpaceDeleteWidget,
-  currentSpaceEditWidget,
-} from "@/redux/slice/layout";
+import { currentSpaceDeleteWidget, currentSpaceEditWidget } from "@/redux/slice/layout";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import { SelectChangeEvent } from "@mui/material/Select";
 import IconMenu from "@/components/menuWithIcon";
@@ -36,8 +33,7 @@ function GeminiControls({ id }: { id: number }) {
     }
   };
 
-  const deleteThis = () =>
-    dispatch(currentSpaceDeleteWidget({ type: "gemini", id }));
+  const deleteThis = () => dispatch(currentSpaceDeleteWidget({ type: "gemini", id }));
 
   const menuItems = [
     {

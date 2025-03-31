@@ -28,15 +28,7 @@ const UW = [
   "gemini",
 ] as const;
 
-const SE = [
-  "Google",
-  "Bing",
-  "YouTube",
-  "Brave",
-  "DuckDuckGo",
-  "Perplexity",
-  "ChatGPT",
-] as const;
+const SE = ["Google", "Bing", "YouTube", "Brave", "DuckDuckGo", "Perplexity", "ChatGPT"] as const;
 
 export type StaticPagesType = (typeof SP)[number];
 export type controlledWidgetsType = (typeof CW)[number];
@@ -95,11 +87,7 @@ export type WidgetMappingUncontrolled =
   | { type: "clock"; values: ClockWidgetType }
   | { type: "search"; values: SearchWidgetType }
   | {
-      type:
-        | "calendar"
-        | "navigation"
-        | "timer-stats"
-        | "cylindrical-navigation";
+      type: "calendar" | "navigation" | "timer-stats" | "cylindrical-navigation";
       values: controlledWidgetValues;
     }
   | { type: "bookmark"; values: BookmarkWidgetType }
@@ -108,9 +96,7 @@ export type WidgetMappingUncontrolled =
   | { type: "gemini"; values: geminiWidgetType }
   | { type: "timer"; values: TimerWidgetType };
 
-export type WidgetMappingAll =
-  | WidgetMappingControlled
-  | WidgetMappingUncontrolled;
+export type WidgetMappingAll = WidgetMappingControlled | WidgetMappingUncontrolled;
 
 export type AllWidgetPropsMapping<T extends allWidgetsType> = Extract<
   WidgetMappingAll,

@@ -1,9 +1,6 @@
 import Divider from "@mui/material/Divider";
 import { useDispatch } from "react-redux";
-import {
-  currentSpaceDeleteWidget,
-  currentSpaceEditWidget,
-} from "@/redux/slice/layout";
+import { currentSpaceDeleteWidget, currentSpaceEditWidget } from "@/redux/slice/layout";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import IconMenu, { IconMenuType } from "@/components/menuWithIcon";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
@@ -57,8 +54,7 @@ function TimerControls({ id }: { id: number }) {
     { onChange: toggleMusic, title: "Music", checked: music },
   ];
 
-  const deleteThis = () =>
-    dispatch(currentSpaceDeleteWidget({ type: "timer", id }));
+  const deleteThis = () => dispatch(currentSpaceDeleteWidget({ type: "timer", id }));
 
   const stats = {
     name: "Stats",

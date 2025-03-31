@@ -30,8 +30,7 @@ export const addLink = (parentId: string, url: string, title: string) =>
   browser.bookmarks.create({ parentId, url, title });
 export const editLink = (id: string, url: string, title: string) =>
   browser.bookmarks.update(id, { url, title });
-export const editFolder = (id: string, title: string) =>
-  browser.bookmarks.update(id, { title });
+export const editFolder = (id: string, title: string) => browser.bookmarks.update(id, { title });
 
 export const openLink = (
   url: string,
@@ -40,8 +39,7 @@ export const openLink = (
 ) => {
   event?.preventDefault();
   if (event?.shiftKey) browser.windows.create({ url, type: "normal" });
-  else if (event?.metaKey || event?.ctrlKey)
-    browser.tabs.create({ url, active: false });
+  else if (event?.metaKey || event?.ctrlKey) browser.tabs.create({ url, active: false });
   else if (newTab) browser.tabs.create({ url, active: true });
   else browser.tabs.update({ url });
 };

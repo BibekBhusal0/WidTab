@@ -26,8 +26,7 @@ function AddItem({
 }: AddItemProps) {
   const [inp, setInp] = useState(false);
   const [text, setText] = useState("");
-  const reached_word_limit =
-    word_limit === undefined ? false : text.length >= word_limit;
+  const reached_word_limit = word_limit === undefined ? false : text.length >= word_limit;
 
   const handleClick = () => {
     const usefulText = text.trim();
@@ -40,12 +39,7 @@ function AddItem({
     }
   };
   return (
-    <Box
-      {...mainProps}
-      className={cn(
-        "flex gap-2 flex-col justify-center",
-        mainProps?.className
-      )}>
+    <Box {...mainProps} className={cn("flex gap-2 flex-col justify-center", mainProps?.className)}>
       {inp && (
         <TextField
           label="Name"

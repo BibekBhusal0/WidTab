@@ -27,9 +27,7 @@ function CommitGraph({ trackers, startDate, endDate }: commitGraphProps) {
         <tr>
           <th style={{ width: "100px" }}></th>
           {dates.map((date) => (
-            <th
-              style={{ width: `${100 / dates.length}%` }}
-              key={date.format("YYYY-MM-DD")}>
+            <th style={{ width: `${100 / dates.length}%` }} key={date.format("YYYY-MM-DD")}>
               {date.format(weekly ? "ddd" : "MMM DD")}
             </th>
           ))}
@@ -37,11 +35,7 @@ function CommitGraph({ trackers, startDate, endDate }: commitGraphProps) {
       </thead>
       <tbody>
         {trackers.map((tracker) => {
-          const completeData = generateCompleteData(
-            tracker.history,
-            startDate,
-            endDate
-          );
+          const completeData = generateCompleteData(tracker.history, startDate, endDate);
           return (
             <tr key={tracker.id}>
               <th className="truncate">{tracker.title}</th>
@@ -52,10 +46,7 @@ function CommitGraph({ trackers, startDate, endDate }: commitGraphProps) {
                     <div
                       className="h-full aspect-square p-1 rounded-md"
                       style={{
-                        backgroundColor: alphaColor(
-                          main,
-                          Math.max(0.05, progress)
-                        ),
+                        backgroundColor: alphaColor(main, Math.max(0.05, progress)),
                       }}>
                       {progress >= 1 && (
                         <Icon

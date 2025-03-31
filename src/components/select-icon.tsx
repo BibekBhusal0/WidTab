@@ -13,10 +13,7 @@ import { cn } from "@/utils/cn";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import { Icon2RN } from "@/theme/icons";
 
-const getIcons = async (
-  mode: "Loaded" | string,
-  searchTerm = ""
-): Promise<string[]> => {
+const getIcons = async (mode: "Loaded" | string, searchTerm = ""): Promise<string[]> => {
   if (mode === "Loaded") {
     const icons = listIcons();
     return icons;
@@ -35,9 +32,7 @@ const getIcons = async (
     }
   } else {
     try {
-      const response = await fetch(
-        `https://api.iconify.design/collection?prefix=${mode}`
-      );
+      const response = await fetch(`https://api.iconify.design/collection?prefix=${mode}`);
 
       if (!response.ok || !response || response.status !== 200) return [];
 
@@ -48,21 +43,15 @@ const getIcons = async (
       if (data.categories) {
         for (const category in data.categories) {
           formattedIcons.push(
-            ...data.categories[category].map(
-              (iconName) => `${data.prefix}:${iconName}`
-            )
+            ...data.categories[category].map((iconName) => `${data.prefix}:${iconName}`)
           );
         }
       }
       if (data.uncategorized) {
-        formattedIcons.push(
-          ...data.uncategorized.map((iconName) => `${data.prefix}:${iconName}`)
-        );
+        formattedIcons.push(...data.uncategorized.map((iconName) => `${data.prefix}:${iconName}`));
       }
       if (data.hidden) {
-        formattedIcons.push(
-          ...data.hidden.map((iconName) => `${data.prefix}:${iconName}`)
-        );
+        formattedIcons.push(...data.hidden.map((iconName) => `${data.prefix}:${iconName}`));
       }
 
       return formattedIcons;
@@ -95,10 +84,7 @@ const SelectIcon = ({
 
   return (
     <div className="size-full flex flex-col items-center gap-3">
-      <SelectIconType
-        currentMode={currentMode}
-        setCurrentMode={setCurrentMode}
-      />
+      <SelectIconType currentMode={currentMode} setCurrentMode={setCurrentMode} />
       {currentMode === "Search" && (
         <OutlinedInput
           autoFocus

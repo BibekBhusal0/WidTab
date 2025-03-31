@@ -20,12 +20,7 @@ const Task2JSON = (todos: todoType[]): JSONContent => {
 
 const JSON2Task = (json: JSONContent): todoType[] => {
   const taskListNode = json.content?.[0];
-  if (
-    !taskListNode ||
-    taskListNode.type !== "taskList" ||
-    !taskListNode.content
-  )
-    return [];
+  if (!taskListNode || taskListNode.type !== "taskList" || !taskListNode.content) return [];
   const tasks = taskListNode.content.map((taskItem: any) => ({
     id: taskItem.attrs?.id,
     task: taskItem.content?.[0]?.text || "",
@@ -85,8 +80,7 @@ export const TodoList = ({ todos, onChange, filtered }: TodoListProps) => {
             class:
               "prose dark:prose-invert prose-xl focus:outline-hidden max-w-full min-h-[250px] todo-list",
           },
-        }}
-      >
+        }}>
         <SetContent {...{ todos, filtered }} />
       </EditorContent>
     </EditorRoot>
@@ -99,15 +93,14 @@ const SetContent = ({ todos, filtered }: setContentProp) => {
   const { editor } = useEditor();
   const dynamicTasks = useMemo(
     () => (filtered ? todos.filter((t) => !t.checked) : [...todos]),
-    [filtered, todos],
+    [filtered, todos]
   );
   const prevHiddenLength = useRef(todos.length - dynamicTasks.length);
   const hiddenTasks = todos.length - dynamicTasks.length;
   const firstRender = useRef(true);
 
   useEffect(() => {
-    const change = () =>
-      editor && editor.commands.setContent(Task2JSON(dynamicTasks));
+    const change = () => editor && editor.commands.setContent(Task2JSON(dynamicTasks));
     if (firstRender.current) {
       change();
       firstRender.current = false;

@@ -9,8 +9,7 @@ import { useDispatch } from "react-redux";
 function Favorites({ iconSize }: FavoritesWidgetType) {
   const favorites = useFavoriteBookmarks();
   const dispatch = useDispatch();
-  if (favorites.length === 0)
-    return <div className="text-center text-xl p-2">No Favorites</div>;
+  if (favorites.length === 0) return <div className="text-center text-xl p-2">No Favorites</div>;
   return (
     <ScrollArea className="size-full">
       <div className="py-2">

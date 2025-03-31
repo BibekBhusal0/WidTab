@@ -7,8 +7,7 @@ import RenameItem from "@/components/renameItem";
 function RenameTheme() {
   const theme = useCurrentTheme();
   const dispatch = useDispatch();
-  const handleChange = (e: string) =>
-    dispatch(changeTheme({ ...theme, name: e }));
+  const handleChange = (e: string) => dispatch(changeTheme({ ...theme, name: e }));
 
   return (
     <div className="full-between">

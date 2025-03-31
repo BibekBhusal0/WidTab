@@ -1,20 +1,11 @@
 import browser from "webextension-polyfill";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
-import {
-  removeFolderIcon,
-  setFolderIcon,
-  toggleFavorites,
-} from "@/redux/slice/bookmark";
+import { removeFolderIcon, setFolderIcon, toggleFavorites } from "@/redux/slice/bookmark";
 import ContextMenu, { contextMenuProps } from "@/components/contextMenu";
 import IconMenu from "@/components/menuWithIcon";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
-import {
-  deleteFolder,
-  deleteLink,
-  editFolder,
-  editLink,
-} from "@/utils/bookmark";
+import { deleteFolder, deleteLink, editFolder, editLink } from "@/utils/bookmark";
 import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
@@ -50,15 +41,11 @@ export function LinkContextMenu({ id, ...props }: AddFavProps) {
       .catch();
   }, []);
 
-  const handleUrlChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setUrl(e.target.value);
     if (urlHelperText) setUrlHelperText("");
   };
-  const handleNameChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setName(e.target.value);
     if (nameHelperText) setNameHelperText("");
   };
@@ -176,16 +163,12 @@ export function FolderContextMenu({ id, ...props }: AddFavProps) {
               Icon
               <SelectIconMenu
                 icon={folderIcons?.[id] || emptyIcon}
-                setIcon={(a) =>
-                  a !== emptyIcon &&
-                  dispatch(setFolderIcon({ fodler: id, icon: a }))
-                }
+                setIcon={(a) => a !== emptyIcon && dispatch(setFolderIcon({ fodler: id, icon: a }))}
                 children=<Button
                   onClick={() => dispatch(removeFolderIcon({ fodler: id }))}
                   variant="outlined"
                   color="error"
-                  startIcon={<Icon2RN icon={delete_} />}
-                >
+                  startIcon={<Icon2RN icon={delete_} />}>
                   Remove
                 </Button>
               />

@@ -1,10 +1,6 @@
 import { TaskType, todoType } from "@/types/slice/todo";
 import { useDispatch } from "react-redux";
-import {
-  changeTaskIcon,
-  changeTaskTitle,
-  changeTaskTodos,
-} from "@/redux/slice/todo";
+import { changeTaskIcon, changeTaskTitle, changeTaskTodos } from "@/redux/slice/todo";
 import { cn } from "@/utils/cn";
 import { SelectIconMenu } from "@/components/select-icon";
 import TodoList from "@/components/editor/todo";

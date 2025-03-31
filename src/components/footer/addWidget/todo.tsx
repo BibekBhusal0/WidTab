@@ -63,9 +63,7 @@ function AddTodo() {
         word_limit={undefined}
       />
       {!availablePosition && (
-        <div className="text-lg text-error-main pt-3">
-          Not Enough Space For Todo
-        </div>
+        <div className="text-lg text-error-main pt-3">Not Enough Space For Todo</div>
       )}
     </div>
   );

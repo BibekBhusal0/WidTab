@@ -13,7 +13,7 @@ import useFullSize from "@/hooks/useFullSize";
 
 function DynamicLayout() {
   const { n_cols, n_rows, currentSpace, toolBarPosition, locked } = useSelector(
-    (state: StateType) => state.layout,
+    (state: StateType) => state.layout
   );
   const { mainComponentProps } = positionProps[toolBarPosition];
   const space = useCurrentLayout();
@@ -36,10 +36,7 @@ function DynamicLayout() {
     <Box
       ref={ref}
       {...mainComponentProps}
-      className={cn(
-        "relative w-full overflow-hidden widgets",
-        mainComponentProps?.className,
-      )}
+      className={cn("relative w-full overflow-hidden widgets", mainComponentProps?.className)}
       sx={{ ...mainComponentProps?.sx, marginBottom: `${gap}px` }}
       //
     >
@@ -67,8 +64,7 @@ function DynamicLayout() {
           <Paper
             sx={{ backgroundColor: "primaryContainer.paper" }}
             key={w.gridProps.i}
-            className="relative overflow-hidden"
-          >
+            className="relative overflow-hidden">
             {!locked && (
               <>
                 <div className="size-full cursor-grab focus:cursor-grabbing drag-handle absolute z-10 bg-primary-2 rounded-themed" />

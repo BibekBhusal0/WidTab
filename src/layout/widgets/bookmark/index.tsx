@@ -20,11 +20,10 @@ function BookmarkWidget(props: BookmarkWidgetType) {
       currentSpaceEditWidget({
         type: "bookmark",
         values: { ...props, folderId: id },
-      }),
+      })
     );
   };
-  const header_height =
-    (Number(breadcrumb) + Number(tabs)) * 28 + Number(breadcrumb || tabs) * 16;
+  const header_height = (Number(breadcrumb) + Number(tabs)) * 28 + Number(breadcrumb || tabs) * 16;
 
   return (
     <>
@@ -34,23 +33,16 @@ function BookmarkWidget(props: BookmarkWidgetType) {
           sx={{
             height: `${header_height}px`,
             "& .text-xl": { fontSize: "13px" },
-          }}
-        >
+          }}>
           {breadcrumb && (
-            <BookmarkBreadcrumb
-              currentFolderID={folderId}
-              onFolderChange={onFolderChange}
-            />
+            <BookmarkBreadcrumb currentFolderID={folderId} onFolderChange={onFolderChange} />
           )}
-          {tabs && (
-            <BookmarkTabs folderId={folderId} onFolderChange={onFolderChange} />
-          )}
+          {tabs && <BookmarkTabs folderId={folderId} onFolderChange={onFolderChange} />}
         </Box>
       )}
       <ScrollArea
         style={{ height: `calc(100% - ${header_height + 4}px)` }}
-        className="px-2 size-full"
-      >
+        className="px-2 size-full">
         <div className="py-2">
           <BookmarkGrid
             contextMenu={false}
@@ -85,8 +77,7 @@ function BookmarkTabs({
       variant="scrollable"
       scrollButtons="auto"
       onChange={handleChange}
-      sx={{ height: "30px", minHeight: "30px", maxHeight: "30px" }}
-    >
+      sx={{ height: "30px", minHeight: "30px", maxHeight: "30px" }}>
       {bookmark.map((b, index) => (
         <Tab
           key={index}

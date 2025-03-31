@@ -23,9 +23,7 @@ function HabitTrackerStatsAll() {
     else if (monthly) return 30;
     else {
       const scaledCount = Math.round(
-        7 +
-          ((size.width - weekThreshold) / (monthThreshold - weekThreshold)) *
-            (30 - 7)
+        7 + ((size.width - weekThreshold) / (monthThreshold - weekThreshold)) * (30 - 7)
       );
       return Math.max(7, Math.min(scaledCount, 30));
     }
@@ -78,8 +76,7 @@ function HabitTrackerStatsAll() {
                 Previous
               </Button>
               <div>
-                {startDate.format("MMM D, YYYY")} -{" "}
-                {endDate.format("MMM D, YYYY")}
+                {startDate.format("MMM D, YYYY")} - {endDate.format("MMM D, YYYY")}
               </div>
               <Button
                 {...btnProps}

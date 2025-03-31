@@ -1,7 +1,4 @@
-import {
-  HabitTrackerEditProps,
-  HabitTrackerItemType,
-} from "@/types/slice/habit-tracker";
+import { HabitTrackerEditProps, HabitTrackerItemType } from "@/types/slice/habit-tracker";
 import TextField from "@mui/material/TextField";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Button from "@mui/material/Button";
@@ -97,10 +94,7 @@ const HabitTrackerEdit: FunctionComponent<HabitTrackerEditProps> = ({
     ),
     Icon: (
       <div className="icon-xl">
-        <SelectIconMenu
-          icon={state.icon}
-          setIcon={(icon: string) => handleChange("icon", icon)}
-        />
+        <SelectIconMenu icon={state.icon} setIcon={(icon: string) => handleChange("icon", icon)} />
       </div>
     ),
   };
@@ -113,16 +107,9 @@ const HabitTrackerEdit: FunctionComponent<HabitTrackerEditProps> = ({
           {value}
         </div>
       ))}
-      {errorMessage !== "" && (
-        <div className="text-error-main">{errorMessage}</div>
-      )}
+      {errorMessage !== "" && <div className="text-error-main">{errorMessage}</div>}
       <div className="w-full flex-center">
-        <Button
-          variant="contained"
-          children="Done"
-          {...buttonProps}
-          onClick={handleClick}
-        />
+        <Button variant="contained" children="Done" {...buttonProps} onClick={handleClick} />
       </div>
     </div>
   );

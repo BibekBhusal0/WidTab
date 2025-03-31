@@ -92,9 +92,7 @@ export const TextButtons = () => {
             onClick={() => command(editor)}
             sx={{
               color: isActive(editor) ? "primary.main" : "text.primary",
-              backgroundColor: isActive(editor)
-                ? "var(--primary-3)"
-                : "transparent",
+              backgroundColor: isActive(editor) ? "var(--primary-3)" : "transparent",
               paddingX: "0",
             }}
             variant="outlined">

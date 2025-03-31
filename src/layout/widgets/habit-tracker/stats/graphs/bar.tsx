@@ -1,12 +1,4 @@
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  ResponsiveContainer,
-  ReferenceLine,
-  Cell,
-} from "recharts";
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, ReferenceLine, Cell } from "recharts";
 import dayjs from "@/dayjsConfig";
 import { useTheme } from "@mui/material/styles";
 
@@ -19,13 +11,7 @@ export type BarGraphProps = {
   target?: number;
 };
 
-function BarGraph({
-  unit,
-  target,
-  data,
-  size,
-  showTarget = true,
-}: BarGraphProps) {
+function BarGraph({ unit, target, data, size, showTarget = true }: BarGraphProps) {
   const {
     palette: { error, success, text },
   } = useTheme();
@@ -65,20 +51,12 @@ function BarGraph({
 
           <Bar dataKey="value" radius={[10, 10, 0, 0]} fill={success.main}>
             {data.map((entry, index) => (
-              <Cell
-                key={index}
-                fill={entry.value >= (target || 0) ? success.main : error.main}
-              />
+              <Cell key={index} fill={entry.value >= (target || 0) ? success.main : error.main} />
             ))}
           </Bar>
 
           {showTarget && target && (
-            <ReferenceLine
-              y={target}
-              label="Target"
-              stroke={error.main}
-              strokeDasharray="5 5"
-            />
+            <ReferenceLine y={target} label="Target" stroke={error.main} strokeDasharray="5 5" />
           )}
         </BarChart>
       </ResponsiveContainer>

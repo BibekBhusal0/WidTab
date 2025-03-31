@@ -27,8 +27,7 @@ const ScrollArea = ({
   <Root {...props} className={cn("relative overflow-hidden", className)}>
     <Viewport
       {...viewPortProps}
-      className={cn("size-full rounded-[inherit]", viewPortProps?.className)}
-    >
+      className={cn("size-full rounded-[inherit]", viewPortProps?.className)}>
       {children}
     </Viewport>
     <ScrollBar {...scrollBarProps} />
@@ -37,24 +36,17 @@ const ScrollArea = ({
 );
 ScrollArea.displayName = Root.displayName;
 
-const ScrollBar = ({
-  className,
-  orientation = "vertical",
-  ...props
-}: ScrollAreaScrollbarProps) => {
+const ScrollBar = ({ className, orientation = "vertical", ...props }: ScrollAreaScrollbarProps) => {
   return (
     <ScrollAreaScrollbar
       orientation={orientation}
       className={cn(
         "flex touch-none select-none transition-colors p-[1px]",
-        orientation === "vertical" &&
-        "h-full w-2.5 border-l border-l-transparent",
-        orientation === "horizontal" &&
-        "h-2.5 flex-col border-t border-t-transparent",
-        className,
+        orientation === "vertical" && "h-full w-2.5 border-l border-l-transparent",
+        orientation === "horizontal" && "h-2.5 flex-col border-t border-t-transparent",
+        className
       )}
-      {...props}
-    >
+      {...props}>
       <ScrollAreaThumb className="relative flex-1 rounded-full bg-divider" />
     </ScrollAreaScrollbar>
   );

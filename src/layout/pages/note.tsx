@@ -9,11 +9,7 @@ import { ScrollArea } from "@/components/scrollarea";
 import Controls from "../widgets/controls";
 import IconButton from "@mui/material/IconButton";
 import IconMenu from "@/components/menuWithIcon";
-import {
-  Sortable,
-  SortableDragHandle,
-  SortableItem,
-} from "@/components/sortable";
+import { Sortable, SortableDragHandle, SortableItem } from "@/components/sortable";
 
 function NotesPage() {
   const { add } = useCurrentIcons();
@@ -34,9 +30,7 @@ function NotesPage() {
             const handleDelete = () => dispatch(deleteNote(p.id));
             return (
               <SortableItem key={p.id} value={p.id}>
-                <Paper
-                  className={commonCls}
-                  sx={{ backgroundColor: "secondaryContainer.paper" }}>
+                <Paper className={commonCls} sx={{ backgroundColor: "secondaryContainer.paper" }}>
                   <Controls
                     className="pt-1"
                     deleteButton={false}
@@ -73,9 +67,7 @@ function NotesPage() {
             sx={{ backgroundColor: "secondaryContainer.paper" }}
             onClick={() => dispatch(addNoteWithTitle(""))}
             className={cn(commonCls, "flex-center group cursor-pointer")}>
-            <div className="group-hover:scale-600 scale-300 transition-all">
-              {add}
-            </div>
+            <div className="group-hover:scale-600 scale-300 transition-all">{add}</div>
           </Paper>
         </div>
       </Sortable>

@@ -66,9 +66,7 @@ function AddBookmark() {
   };
   return (
     <div className="w-full h-[330px] relative">
-      <ScrollArea className="w-full h-[80%]">
-        {getBookmarkFolders(bookmarks)}
-      </ScrollArea>
+      <ScrollArea className="w-full h-[80%]">{getBookmarkFolders(bookmarks)}</ScrollArea>
       <div className="p-2 h-[10%] bottom-2 horizontal-center w-full flex-center gap-4">
         <SimpleAddWidgetButton
           widget={{ type: "favorites", values: { id: 0 } }}

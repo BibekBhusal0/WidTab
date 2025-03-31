@@ -4,10 +4,7 @@ import { useDispatch } from "react-redux";
 import { setBackgroundImage } from "@/redux/slice/theme";
 import Button from "@mui/material/Button";
 import { useEffect, useRef, useState } from "react";
-import useBackgroundImage, {
-  getImagesFromStorage,
-  saveImageToStorage,
-} from "@/utils/image";
+import useBackgroundImage, { getImagesFromStorage, saveImageToStorage } from "@/utils/image";
 import { v4 as uuidv4 } from "uuid";
 
 import abstract from "@/assets/img/abstract.jpg";
@@ -43,14 +40,7 @@ function SelectBackgroundImage() {
           anchorOrigin: { vertical: "bottom", horizontal: "right" },
           transformOrigin: { vertical: "bottom", horizontal: "left" },
         }}
-        icon={
-          image ? (
-            img
-          ) : (
-            <div className="flex w-full flex-center">No Image Selected</div>
-          )
-        }
-      >
+        icon={image ? img : <div className="flex w-full flex-center">No Image Selected</div>}>
         <PopoverContent />
       </MenuPopover>
     </div>
@@ -58,9 +48,7 @@ function SelectBackgroundImage() {
 }
 
 function PopoverContent() {
-  const [images, setImages] = useState<{ id: string; data: string }[]>([
-    ...defaultImages,
-  ]);
+  const [images, setImages] = useState<{ id: string; data: string }[]>([...defaultImages]);
   const dispatch = useDispatch();
   const inpRef = useRef<HTMLInputElement>(null);
 
@@ -104,20 +92,13 @@ function PopoverContent() {
   return (
     <div className={dim}>
       <div className="flex flex-center flex-col gap-3 p-2">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-          hidden
-          ref={inpRef}
-        />
+        <input type="file" accept="image/*" onChange={handleImageUpload} hidden ref={inpRef} />
         <div className="flex flex-wrap gap-2">
           {images.map(({ data, id }) => (
             <div
               key={id}
               onClick={() => handleClick(id)}
-              className="size-20 object-cover cursor-pointer"
-            >
+              className="size-20 object-cover cursor-pointer">
               <img src={data} className="w-full h-full object-cover" />
             </div>
           ))}
@@ -128,8 +109,7 @@ function PopoverContent() {
         <Button
           variant="outlined"
           onClick={() => dispatch(setBackgroundImage(undefined))}
-          color="error"
-        >
+          color="error">
           Remove Image
         </Button>
       </div>

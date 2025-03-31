@@ -4,15 +4,10 @@ import { StateType } from "@/redux/store";
 import dayjs from "@/dayjsConfig";
 
 function TimerStats() {
-  const { timerHistory = {} } = useSelector(
-    (state: StateType) => state.habitTracker
-  );
+  const { timerHistory = {} } = useSelector((state: StateType) => state.habitTracker);
   const today = dayjs().format("YYYY-MM-DD");
   const todayTime = timerHistory?.[today] || 0;
-  const totalTime = Object.values(timerHistory || {}).reduce(
-    (a, b) => a + b,
-    0
-  );
+  const totalTime = Object.values(timerHistory || {}).reduce((a, b) => a + b, 0);
 
   return (
     <div className="size-full flex flex-col">
@@ -27,12 +22,7 @@ function TimerStats() {
         </div>
       </div>
 
-      <HabitTrackerStatsSingle
-        unit="min"
-        target={0}
-        title="Timer"
-        history={timerHistory}
-      />
+      <HabitTrackerStatsSingle unit="min" target={0} title="Timer" history={timerHistory} />
     </div>
   );
 }

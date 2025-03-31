@@ -80,9 +80,7 @@ export function useFavicon() {
 
   useEffect(() => {
     const favicon = document.getElementById("favicon") as HTMLLinkElement;
-    const newHref = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
-      svg
-    )}`;
+    const newHref = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
     if (favicon) {
       if (favicon.href !== newHref) {
         favicon.href = newHref;

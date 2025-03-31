@@ -1,8 +1,4 @@
-import {
-  AllWidgetPropsMapping,
-  allWidgetsType,
-  WidgetMappingAll,
-} from "@/types/slice/widgets";
+import { AllWidgetPropsMapping, allWidgetsType, WidgetMappingAll } from "@/types/slice/widgets";
 import { Layout } from "react-grid-layout";
 import { ControlsProps } from "@/layout/widgets/controls";
 import HabitTrackerControls from "@/layout/widgets/habit-tracker/controls";
@@ -52,10 +48,7 @@ export const widgetDimensions: Record<allWidgetsType, Partial<Layout>> = {
   gemini: { minW: 4, minH: 5 },
 };
 
-export const getWidgetControlsProps = (
-  widgetType: allWidgetsType,
-  id: number
-): ControlsProps => {
+export const getWidgetControlsProps = (widgetType: allWidgetsType, id: number): ControlsProps => {
   const widgetInfo = { id: id, type: widgetType };
   const controlsProps: Partial<Record<allWidgetsType, ControlsProps>> = {
     custom: {

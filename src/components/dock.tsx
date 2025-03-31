@@ -1,20 +1,10 @@
 import { Icon2RN, iconAsProp } from "@/theme/icons";
 import { cn } from "@/utils/cn";
 import Tooltip from "@mui/material/Tooltip";
-import {
-  MotionValue,
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { MotionValue, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useDeferredValue, useRef, useState } from "react";
 import Zoom from "@mui/material/Zoom";
-import {
-  isToolbarHorizontal,
-  oppositePosition,
-  ToolBarPositions,
-} from "@/types/slice/layout";
+import { isToolbarHorizontal, oppositePosition, ToolBarPositions } from "@/types/slice/layout";
 import IconButton from "@mui/material/IconButton";
 import { Icon } from "@iconify/react";
 import useFullSize from "@/hooks/useFullSize";
@@ -34,9 +24,7 @@ export const Dock = ({ items, position = "bottom" }: dockProps) => {
   const mousePosition = useMotionValue(Infinity);
   const h = isToolbarHorizontal(position);
   const { ref, size } = useFullSize();
-  const width = useDeferredValue(
-    size[h ? "width" : "height"] - (h ? 200 : 100)
-  );
+  const width = useDeferredValue(size[h ? "width" : "height"] - (h ? 200 : 100));
   const numItemsToShow = Math.floor(width / 60);
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -67,18 +55,11 @@ export const Dock = ({ items, position = "bottom" }: dockProps) => {
           </IconButton>
         )}
         {currentItems.map((item, index) => (
-          <DockIcon
-            mouse={mousePosition}
-            position={position}
-            key={index}
-            {...item}
-          />
+          <DockIcon mouse={mousePosition} position={position} key={index} {...item} />
         ))}
         {currentPage !== totalPages - 1 && items.length !== 0 && (
           <IconButton
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))
-            }
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))}
             className={h ? "rotate-0" : "rotate-90"}
             disabled={currentPage === totalPages - 1}>
             <Icon icon="mdi:chevron-right" />
@@ -94,13 +75,7 @@ type DockIconProps = {
   position?: ToolBarPositions;
 } & dockItemProps;
 
-function DockIcon({
-  mouse,
-  name,
-  icon,
-  onClick,
-  position = "bottom",
-}: DockIconProps) {
+function DockIcon({ mouse, name, icon, onClick, position = "bottom" }: DockIconProps) {
   const ref = useRef<HTMLDivElement>(null);
   const h = isToolbarHorizontal(position);
 

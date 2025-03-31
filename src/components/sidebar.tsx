@@ -33,9 +33,7 @@ export default function Sidebar({
   };
 
   return (
-    <Box
-      {...containerProps}
-      className={cn("flex size-full sidebar", containerProps?.className)}>
+    <Box {...containerProps} className={cn("flex size-full sidebar", containerProps?.className)}>
       <ResizableBox
         width={open ? drawerWidth : 0}
         height={Infinity}
@@ -69,11 +67,7 @@ export default function Sidebar({
           {showButton && (
             <IconButton onClick={toggleOpen}>
               <Icon
-                icon={
-                  open
-                    ? "material-symbols:menu-open-rounded"
-                    : "material-symbols:menu-rounded"
-                }
+                icon={open ? "material-symbols:menu-open-rounded" : "material-symbols:menu-rounded"}
               />
             </IconButton>
           )}

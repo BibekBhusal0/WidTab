@@ -26,7 +26,7 @@ function TimerWidget(props: TimerWidgetType) {
       currentSpaceEditWidget({
         type: "timer",
         values: { ...props, running: v },
-      }),
+      })
     );
   const togglePlay = () => setIsPlaying(!isPlaying);
 
@@ -68,12 +68,9 @@ function TimerWidget(props: TimerWidgetType) {
   };
 
   const formatTime = (seconds: number) =>
-    `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(
-      seconds % 60,
-    ).padStart(2, "0")}`;
+    `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
 
-  const calculateProgress = () =>
-    ((totalDuration - remainingTime) / totalDuration) * 100;
+  const calculateProgress = () => ((totalDuration - remainingTime) / totalDuration) * 100;
 
   const showMusic = music && height > 400;
   const h = showMusic ? (height * 4) / 6 : height;
@@ -125,19 +122,9 @@ function TimerWidget(props: TimerWidgetType) {
   ];
   return (
     <div key={id} ref={ref} className="size-full">
-      <div
-        className={cn(
-          "w-full relative",
-          showMusic ? "h-4/6 pb-3 border-b-2" : "h-full",
-        )}
-      >
+      <div className={cn("w-full relative", showMusic ? "h-4/6 pb-3 border-b-2" : "h-full")}>
         <RadialBarChart data={[{ value: calculateProgress() }]} {...chart}>
-          <PolarAngleAxis
-            angleAxisId={0}
-            domain={[0, 100]}
-            tick={false}
-            type="number"
-          />
+          <PolarAngleAxis angleAxisId={0} domain={[0, 100]} tick={false} type="number" />
           <RadialBar
             dataKey="value"
             fill="var(--mui-palette-primary-main)"
@@ -148,8 +135,7 @@ function TimerWidget(props: TimerWidgetType) {
         </RadialBarChart>
         <div
           className="absolute-center h-full flex-center px-3"
-          style={{ width: `${dia * 0.75}px` }}
-        >
+          style={{ width: `${dia * 0.75}px` }}>
           <FitText
             aria-label="time"
             min={10}
@@ -162,17 +148,13 @@ function TimerWidget(props: TimerWidgetType) {
           className="absolute-center flex-center gap-4"
           style={{
             transform: `translateY(${radius * 0.4}px)`,
-          }}
-        >
+          }}>
           {buttons.map((buttonProps, index) => (
             <Button
               key={index}
               {...commonButtonProps}
               {...buttonProps}
-              className={cn(
-                commonButtonProps?.className,
-                buttonProps?.className,
-              )}
+              className={cn(commonButtonProps?.className, buttonProps?.className)}
             />
           ))}
         </div>

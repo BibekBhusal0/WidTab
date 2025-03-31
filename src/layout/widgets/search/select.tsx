@@ -5,10 +5,7 @@ import TextField, { TextFieldProps } from "@mui/material/TextField";
 import { cn } from "@/utils/cn";
 import { Icon } from "@iconify/react";
 
-export type SearchEngineMapping = Record<
-  AllSearchEngines,
-  { icon: string; link: string }
->;
+export type SearchEngineMapping = Record<AllSearchEngines, { icon: string; link: string }>;
 
 export const searchEngineLogoAndLink: SearchEngineMapping = {
   Google: { icon: "cib:google", link: "https://www.google.com/search?q=%s" },
@@ -34,12 +31,8 @@ function SearchEngineSelect({ showName, ...props }: SearchEngineSelectProps) {
   const renderValue = (selected: unknown) => {
     return (
       <div className={cn("flex-center p-1", { "gap-4 p-2": showName })}>
-        <Icon
-          icon={searchEngineLogoAndLink[selected as AllSearchEngines].icon}
-        />
-        {showName && (
-          <div className="text-xl">{selected as AllSearchEngines}</div>
-        )}
+        <Icon icon={searchEngineLogoAndLink[selected as AllSearchEngines].icon} />
+        {showName && <div className="text-xl">{selected as AllSearchEngines}</div>}
       </div>
     );
   };
@@ -63,10 +56,7 @@ function SearchEngineSelect({ showName, ...props }: SearchEngineSelectProps) {
         ...props.sx,
       }}>
       {Object.entries(searchEngineLogoAndLink).map(([key, { icon }]) => (
-        <MenuItem
-          className="gap-4 text-xl"
-          key={key}
-          value={key as AllSearchEngines}>
+        <MenuItem className="gap-4 text-xl" key={key} value={key as AllSearchEngines}>
           <ListItemIcon className="icon-xl">
             <Icon icon={icon} />
           </ListItemIcon>

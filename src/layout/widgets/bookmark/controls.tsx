@@ -1,10 +1,7 @@
 import Divider from "@mui/material/Divider";
 import MenuItem from "@mui/material/MenuItem";
 import { useDispatch } from "react-redux";
-import {
-  currentSpaceDeleteWidget,
-  currentSpaceEditWidget,
-} from "@/redux/slice/layout";
+import { currentSpaceDeleteWidget, currentSpaceEditWidget } from "@/redux/slice/layout";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import IconMenu from "@/components/menuWithIcon";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
@@ -18,9 +15,7 @@ function BookmarkControls({ id }: { id: number }) {
   const { delete_ } = useCurrentIcons();
   if (!layout) return null;
   const { widgets } = layout;
-  const widget = widgets.find(
-    (w) => w.type === "bookmark" && w.values.id === id
-  );
+  const widget = widgets.find((w) => w.type === "bookmark" && w.values.id === id);
   if (!widget || widget.type !== "bookmark") return null;
   const props = widget.values;
   const { breadcrumb, iconSize, tabs } = props;
@@ -55,19 +50,13 @@ function BookmarkControls({ id }: { id: number }) {
     }
   };
 
-  const deleteThis = () =>
-    dispatch(currentSpaceDeleteWidget({ type: "bookmark", id }));
+  const deleteThis = () => dispatch(currentSpaceDeleteWidget({ type: "bookmark", id }));
 
   return (
     <>
       <MenuItem sx={{ justifyContent: "space-between" }} className="gap-2">
         <div className="text-2xl">Size</div>
-        <SelectSize
-          value={iconSize}
-          onChange={handleSizeChange}
-          fullWidth
-          size="small"
-        />
+        <SelectSize value={iconSize} onChange={handleSizeChange} fullWidth size="small" />
       </MenuItem>
       <Divider />
 

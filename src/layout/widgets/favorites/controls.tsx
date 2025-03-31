@@ -1,23 +1,14 @@
 import Divider from "@mui/material/Divider";
 import MenuItem from "@mui/material/MenuItem";
 import { useDispatch } from "react-redux";
-import {
-  currentSpaceDeleteWidget,
-  currentSpaceEditWidget,
-} from "@/redux/slice/layout";
+import { currentSpaceDeleteWidget, currentSpaceEditWidget } from "@/redux/slice/layout";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import IconMenu from "@/components/menuWithIcon";
 import useCurrentLayout from "@/hooks/useCurrentLayout";
 import SelectSize from "@/components/bookmarks/size";
 import { allFolderSizes, folderSizes } from "@/types/slice/bookmark";
 
-function Controls({
-  id,
-  type,
-}: {
-  id: number;
-  type: "favorites" | "top-sites";
-}) {
+function Controls({ id, type }: { id: number; type: "favorites" | "top-sites" }) {
   const layout = useCurrentLayout();
   const dispatch = useDispatch();
   const { delete_ } = useCurrentIcons();
@@ -46,12 +37,7 @@ function Controls({
     <>
       <MenuItem sx={{ justifyContent: "space-between" }} className="gap-2">
         <div className="text-2xl">Size</div>
-        <SelectSize
-          value={iconSize}
-          onChange={handleSizeChange}
-          fullWidth
-          size="small"
-        />
+        <SelectSize value={iconSize} onChange={handleSizeChange} fullWidth size="small" />
       </MenuItem>
       <Divider />
 

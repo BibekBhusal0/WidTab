@@ -10,9 +10,7 @@ import { ScrollArea } from "@/components/scrollarea";
 function Note({ id, title, text, icon }: noteType) {
   const dispatch = useDispatch();
   const titleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      changeNoteContent({ content: "title", id, value: e.target.value })
-    );
+    dispatch(changeNoteContent({ content: "title", id, value: e.target.value }));
   };
   const iconChangeHandler = (icon: string) => {
     dispatch(changeNoteContent({ id, content: "icon", value: icon }));

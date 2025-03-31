@@ -1,10 +1,6 @@
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import IconMenu, { IconMenuType } from "@/components/menuWithIcon";
-import {
-  changePinnedTodo,
-  deleteTask,
-  toggleFiltered,
-} from "@/redux/slice/todo";
+import { changePinnedTodo, deleteTask, toggleFiltered } from "@/redux/slice/todo";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import { currentSpaceDeleteWidget } from "@/redux/slice/layout";

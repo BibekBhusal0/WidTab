@@ -66,16 +66,10 @@ export const CodeBlockComponent = ({
                 paddingBottom: "2px",
               },
               fontSize: "12px",
-            }}
-          >
+            }}>
             <MenuItem value="auto">Auto</MenuItem>
             {languages.map((lang: string) => (
-              <MenuItem
-                key={lang}
-                value={lang}
-                children={lang}
-                className="uppercase"
-              />
+              <MenuItem key={lang} value={lang} children={lang} className="uppercase" />
             ))}
           </Select>
         ) : (
@@ -91,10 +85,7 @@ export const CodeBlockComponent = ({
             onClick={() => setShowPreview(!showPreview)}
             variant={showPreview ? "outlined" : "contained"}
             className="text-sm uppercase font-medium"
-            startIcon={
-              <Icon2RN icon="mdi:language-markdown" className="size-6" />
-            }
-          >
+            startIcon={<Icon2RN icon="mdi:language-markdown" className="size-6" />}>
             {showPreview ? "Code" : "Preview"}
           </Button>
         )}
@@ -106,12 +97,10 @@ export const CodeBlockComponent = ({
         scrollBarProps={{
           orientation: "horizontal",
           className: "h-2 cursor-default",
-        }}
-      >
+        }}>
         <pre
           spellCheck={"false"}
-          className="m-0 border-none w-max min-w-full text-base hljs rounded-none"
-        >
+          className="m-0 border-none w-max min-w-full text-base hljs rounded-none">
           {showPreview && currentLanguage === "markdown" ? (
             <div
               className="pointer-events-none cursor-auto"
