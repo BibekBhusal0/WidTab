@@ -73,8 +73,8 @@ const Link = ({ link }: LinkProps) => {
       <div className="text-xl truncate">{title}</div>
       {favorites.includes(id) && (
         <>
-          <div className="flex-grow"></div>
-          <Icon className="text-2xl flex-shrink-0" icon="mdi:heart" />
+          <div className="grow"></div>
+          <Icon className="text-2xl shrink-0" icon="mdi:heart" />
         </>
       )}
     </div>

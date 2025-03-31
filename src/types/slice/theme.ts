@@ -1,5 +1,5 @@
 export type ModeType = "light" | "dark";
-export type numericalThemeValues = "blur" | "opacity" | "roundness";
+export type numericalThemeValues = "blur-sm" | "opacity" | "roundness";
 
 export type ThemeItemType = {
   name: string;

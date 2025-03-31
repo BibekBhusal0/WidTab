@@ -23,7 +23,7 @@ function Popup() {
         showRightPanel && showFavorites ? "w-[750px]" : "w-[400px] flex-center"
       )}>
       {contentEmpty && (
-        <div className="flex-grow text-xl text-center">
+        <div className="grow text-xl text-center">
           You have not Pinned any todo or habit tracker and you don't have any
           favorites.
         </div>

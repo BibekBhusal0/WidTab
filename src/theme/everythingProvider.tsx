@@ -6,7 +6,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import "@/assets/styles/tailwind.css";
 import "@/assets/styles/icons.css";
 import "@/assets/styles/index.css";
-import "@/assets/styles/editor.css";
 import { setInitialStateFromLocalStorage } from "@/utils/redux";
 import { Icon } from "@iconify/react";
 import { TostProvider } from "@/components/tost";

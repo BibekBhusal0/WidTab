@@ -122,7 +122,7 @@ function AddNewHabitTracker() {
           />
         </>
       ) : (
-        <div className="group-hover:scale-[6] scale-[3] transition-all">
+        <div className="group-hover:scale-6 scale-3 transition-all">
           {add}
         </div>
       )}

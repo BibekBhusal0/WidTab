@@ -52,7 +52,7 @@ export const Bubble = () => {
           <ListItemButton
             sx={{ padding: "0", margin: "0" }}
             onClick={() => setAiOpen(true)}>
-            <div className="flex-center flex-col px-2 text-transparent bg-gradient-to-l from-[#7A69F9] to-[#F5833F] via-[#F26378] bg-clip-text">
+            <div className="flex-center flex-col px-2 text-transparent bg-linear-to-l from-[#7A69F9] to-[#F5833F] via-[#F26378] bg-clip-text">
               <AIIcon className="size-8" />
               <div className="font-semibold">Ask AI</div>
             </div>

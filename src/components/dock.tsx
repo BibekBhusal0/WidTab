@@ -35,7 +35,7 @@ export const Dock = ({ items, position = "bottom" }: dockProps) => {
   const h = isToolbarHorizontal(position);
   const { ref, size } = useFullSize();
   const width = useDeferredValue(
-    size[h ? "width" : "height"] - (h ? 200 : 100)
+    size[h ? "width" : "height"] - (h ? 200 : 100),
   );
   const numItemsToShow = Math.floor(width / 60);
 
@@ -44,7 +44,7 @@ export const Dock = ({ items, position = "bottom" }: dockProps) => {
 
   const currentItems = items.slice(
     currentPage * numItemsToShow,
-    (currentPage + 1) * numItemsToShow
+    (currentPage + 1) * numItemsToShow,
   );
 
   return (
@@ -53,16 +53,18 @@ export const Dock = ({ items, position = "bottom" }: dockProps) => {
         onMouseMove={(e) => mousePosition.set(e[h ? "pageX" : "pageY"])}
         onMouseLeave={() => mousePosition.set(Infinity)}
         className={cn(
-          "flex justify-start rounded-2xl backdrop-blur-sm bg-secondaryContainer-paper",
+          "flex justify-start rounded-2xl backdrop-blur-xs bg-secondary-container-paper",
           h
             ? "flex-row mx-auto px-4 h-full max-w-full overflow-x-visible"
-            : "flex-col my-auto py-4 w-full max-h-full overflow-y-visible"
-        )}>
+            : "flex-col my-auto py-4 w-full max-h-full overflow-y-visible",
+        )}
+      >
         {currentPage !== 0 && items.length !== 0 && (
           <IconButton
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
             className={h ? "rotate-0" : "rotate-90"}
-            disabled={currentPage === 0}>
+            disabled={currentPage === 0}
+          >
             <Icon icon="mdi:chevron-left" />
           </IconButton>
         )}
@@ -80,7 +82,8 @@ export const Dock = ({ items, position = "bottom" }: dockProps) => {
               setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))
             }
             className={h ? "rotate-0" : "rotate-90"}
-            disabled={currentPage === totalPages - 1}>
+            disabled={currentPage === totalPages - 1}
+          >
             <Icon icon="mdi:chevron-right" />
           </IconButton>
         )}
@@ -120,13 +123,13 @@ function DockIcon({
   const scaleTransform = useTransform(
     distanceFromMouse,
     [-maxDistance, 0, maxDistance],
-    [minScale, maxScale, minScale]
+    [minScale, maxScale, minScale],
   );
 
   const marginTransform = useTransform(
     distanceFromMouse,
     [-maxDistance, 0, maxDistance],
-    [minMargin, maxMargin, minMargin]
+    [minMargin, maxMargin, minMargin],
   );
   const margin = useSpring(marginTransform, springConfig);
   const marginTop = h ? 0 : margin;
@@ -142,19 +145,22 @@ function DockIcon({
         marginBottom: marginTop,
       }}
       className="cursor-pointer relative"
-      onClick={onClick}>
+      onClick={onClick}
+    >
       <Tooltip
         TransitionComponent={Zoom}
         title={name}
         enterDelay={0}
-        placement={oppositePosition[position]}>
+        placement={oppositePosition[position]}
+      >
         <motion.div
           ref={ref}
           style={{ scale, transformOrigin: position, width: "40px" }}
           className={cn(
             "relative flex-center aspect-square rounded-full icon-full p-[20%]",
-            "shadow-lg backdrop-blur-md bg-primary-2 shadow-[#00000022] dark:shadow-[#ffffff22]"
-          )}>
+            "shadow-lg backdrop-blur-md bg-primary-2 shadow-[#00000022] dark:shadow-[#ffffff22]",
+          )}
+        >
           <Icon2RN icon={icon} />
         </motion.div>
       </Tooltip>

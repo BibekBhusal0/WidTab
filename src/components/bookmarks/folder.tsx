@@ -39,7 +39,7 @@ const Folder = ({ open = false, icon }: folderProps) => {
         children={
           <Icon2RN
             icon={icon}
-            className="flex-center size-full px-[20%] py-[5%] text-primary-contrastText"
+            className="flex-center size-full px-[20%] py-[5%] text-primary-contrast-text"
           />
         }
       />
@@ -85,7 +85,7 @@ export const HoverFolder = ({ empty = false, icon }: hoverFolderProps) => {
       <div
         className={cn(
           "absolute bottom-0 rounded-2xl rounded-tr-none w-full h-[94%]",
-          "bg-gradient-to-t from-primary-main to-primary-light",
+          "bg-linear-to-t from-primary-main to-primary-light",
           "after:absolute after:content-[''] after:bottom-[99%] after:right-0 after:w-[48.67%] after:h-[10%] after:bg-primary-light after:rounded-t-2xl ",
           "transition-all ease duration-300 group-hover:[transform:rotateX(-48deg)_translateY(1px)]",
           "origin-bottom flex items-end"
@@ -93,7 +93,7 @@ export const HoverFolder = ({ empty = false, icon }: hoverFolderProps) => {
         children={
           <Icon2RN
             icon={icon}
-            className="flex-center size-full px-[20%] py-[5%] text-primary-contrastText"
+            className="flex-center size-full px-[20%] py-[5%] text-primary-contrast-text"
           />
         }
       />

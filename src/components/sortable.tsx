@@ -34,7 +34,6 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { Slot, type SlotProps } from "@radix-ui/react-slot";
 
-import { composeRefs } from "@/utils/compose-refs";
 import { cn } from "@/utils/cn";
 
 const orientationConfig = {
@@ -187,31 +186,26 @@ const dropAnimationOpts: DropAnimation = {
 };
 
 interface SortableOverlayProps
-  extends React.ComponentPropsWithRef<typeof DragOverlay> {
+  extends React.ComponentProps<typeof DragOverlay> {
   activeId?: UniqueIdentifier | null;
 }
 
-const SortableOverlay = React.forwardRef<HTMLDivElement, SortableOverlayProps>(
-  (
-    { activeId, dropAnimation = dropAnimationOpts, children, ...props },
-    ref,
-  ) => {
-    return (
-      <DragOverlay dropAnimation={dropAnimation} {...props}>
-        {activeId ? (
-          <SortableItem
-            ref={ref}
-            value={activeId}
-            className="cursor-grabbing"
-            asChild
-          >
-            {children}
-          </SortableItem>
-        ) : null}
-      </DragOverlay>
-    );
-  },
-);
+const SortableOverlay = ({
+  activeId,
+  dropAnimation = dropAnimationOpts,
+  children,
+  ...props
+}: SortableOverlayProps) => {
+  return (
+    <DragOverlay dropAnimation={dropAnimation} {...props}>
+      {activeId ? (
+        <SortableItem value={activeId} className="cursor-grabbing" asChild>
+          {children}
+        </SortableItem>
+      ) : null}
+    </DragOverlay>
+  );
+};
 SortableOverlay.displayName = "SortableOverlay";
 
 interface SortableItemContextProps {
@@ -242,70 +236,73 @@ interface SortableItemProps extends SlotProps {
   asChild?: boolean;
 }
 
-const SortableItem = React.forwardRef<HTMLDivElement, SortableItemProps>(
-  ({ value, asTrigger, asChild, className, ...props }, ref) => {
-    const animateLayoutChanges: AnimateLayoutChanges = (args) =>
-      defaultAnimateLayoutChanges({ ...args, wasDragging: true });
-    const {
+const SortableItem = ({
+  value,
+  asTrigger,
+  asChild,
+  className,
+  ...props
+}: SortableItemProps) => {
+  const animateLayoutChanges: AnimateLayoutChanges = (args) =>
+    defaultAnimateLayoutChanges({ ...args, wasDragging: true });
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: value, animateLayoutChanges });
+
+  const context = React.useMemo<SortableItemContextProps>(
+    () => ({
       attributes,
       listeners,
-      setNodeRef,
-      transform,
-      transition,
       isDragging,
-    } = useSortable({ id: value, animateLayoutChanges });
+    }),
+    [attributes, listeners, isDragging],
+  );
+  const style: React.CSSProperties = {
+    opacity: isDragging ? 0.8 : 1,
+    zIndex: isDragging ? 1000 : "auto",
+    transform: CSS.Translate.toString(transform),
+    transition,
+  };
 
-    const context = React.useMemo<SortableItemContextProps>(
-      () => ({
-        attributes,
-        listeners,
-        isDragging,
-      }),
-      [attributes, listeners, isDragging],
-    );
-    const style: React.CSSProperties = {
-      opacity: isDragging ? 0.8 : 1,
-      zIndex: isDragging ? 1000 : "auto",
-      transform: CSS.Translate.toString(transform),
-      transition,
-    };
+  const Comp = asChild ? Slot : "div";
 
-    const Comp = asChild ? Slot : "div";
-
-    return (
-      <SortableItemContext.Provider value={context}>
-        <Comp
-          data-state={isDragging ? "dragging" : undefined}
-          className={cn(
-            "data-[state=dragging]:cursor-grabbing",
-            { "cursor-grab": !isDragging && asTrigger },
-            className,
-          )}
-          ref={composeRefs(ref, setNodeRef as React.Ref<HTMLDivElement>)}
-          style={style}
-          {...(asTrigger ? attributes : {})}
-          {...(asTrigger ? listeners : {})}
-          {...props}
-        />
-      </SortableItemContext.Provider>
-    );
-  },
-);
+  return (
+    <SortableItemContext.Provider value={context}>
+      <Comp
+        data-state={isDragging ? "dragging" : undefined}
+        className={cn(
+          "data-[state=dragging]:cursor-grabbing",
+          { "cursor-grab": !isDragging && asTrigger },
+          className,
+        )}
+        ref={setNodeRef}
+        style={style}
+        {...(asTrigger ? attributes : {})}
+        {...(asTrigger ? listeners : {})}
+        {...props}
+      />
+    </SortableItemContext.Provider>
+  );
+};
 SortableItem.displayName = "SortableItem";
 
 interface SortableDragHandleProps extends React.HTMLAttributes<HTMLDivElement> {
   withHandle?: boolean;
 }
 
-const SortableDragHandle = React.forwardRef<
-  HTMLDivElement,
-  SortableDragHandleProps
->(({ className, ...props }, ref) => {
+const SortableDragHandle = ({
+  className,
+  ...props
+}: SortableDragHandleProps) => {
   const { attributes, listeners, isDragging } = useSortableItem();
 
   return (
     <div
-      ref={composeRefs(ref)}
       data-state={isDragging ? "dragging" : undefined}
       className={cn(
         "cursor-grab data-[state=dragging]:cursor-grabbing",
@@ -316,7 +313,7 @@ const SortableDragHandle = React.forwardRef<
       {...props}
     />
   );
-});
+};
 SortableDragHandle.displayName = "SortableDragHandle";
 
 export { Sortable, SortableDragHandle, SortableItem, SortableOverlay };

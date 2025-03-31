@@ -43,7 +43,7 @@ export const ColorSelector = () => {
   const activeHighlightItem = HIGHLIGHT_COLORS.find(({ color }) =>
     editor.isActive("highlight", { color })
   );
-  const cls = "rounded-sm border border-divider px-[6px] py-0 font-medium";
+  const cls = "rounded-xs border border-divider px-[6px] py-0 font-medium";
 
   return (
     <MenuPopover
