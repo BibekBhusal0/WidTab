@@ -1,4 +1,5 @@
 
+import { cn } from "@/utils/cn";
 import React, { useState, useRef, useCallback, useEffect } from "react";
 
 type FitTextProps = {
@@ -13,6 +14,7 @@ const FitText: React.FC<FitTextProps> = ({
   min = 10,
   max = 100,
   style,
+  className,
   ...props
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -40,7 +42,7 @@ const FitText: React.FC<FitTextProps> = ({
     tempText.style.position = "absolute";
     tempText.style.visibility = "hidden";
     tempText.textContent = text.textContent;
-    tempText.className = text.className;
+    // if (className) tempText.className = className;
 
     document.body.appendChild(tempText);
 
@@ -95,12 +97,7 @@ const FitText: React.FC<FitTextProps> = ({
   return (
     <div
       ref={containerRef}
-      style={{
-        ...style,
-        overflow: "hidden",
-        width: "100%",
-        height: "100%",
-      }}
+      className={cn('size-full', className)}
       {...props}
     >
       <span

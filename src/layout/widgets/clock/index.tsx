@@ -5,11 +5,13 @@ import AnalogClock from "./analog";
 import { cn } from "@/utils/cn";
 import dayjs from "@/dayjsConfig";
 import FitText from "@/components/fittext";
+import useFullSize from "@/hooks/useFullSize";
 
 export type DigitalClockProps = { time: dayjs.Dayjs } & ClockWidgetType;
 
 function ClockWidget({ ...props }: ClockWidgetType) {
   const [time, setTime] = useState<dayjs.Dayjs>(dayjs());
+  const { ref, size } = useFullSize()
 
   useEffect(() => {
     const updateTime = () => setTime(dayjs());
@@ -29,8 +31,10 @@ function ClockWidget({ ...props }: ClockWidgetType) {
     <div
       className={cn("relative w-full flex-col items-center", {
         "h-full": !showTimeZone,
-        "h-[90%]": showTimeZone,
+        "h-[85%]": showTimeZone,
+        "h-[75%]": showTimeZone && size.height < 100,
       })}
+      ref={ref}
     >
       {clockType === "digital" ? (
         <DigitalClock time={time} {...props} />
@@ -38,8 +42,8 @@ function ClockWidget({ ...props }: ClockWidgetType) {
         <AnalogClock time={time} {...props} />
       )}
       {showTimeZone && (
-        <div className="h-[10%]">
-          <FitText className="text-center">{timeZone}</FitText>
+        <div className={cn("h-[20%]", { '-mt-2': showTimeZone && size.height < 100 })}>
+          <FitText min={2} className="text-center">{timeZone}</FitText>
         </div>
       )}
     </div>
