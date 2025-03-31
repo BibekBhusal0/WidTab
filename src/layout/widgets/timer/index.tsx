@@ -147,21 +147,21 @@ function TimerWidget(props: TimerWidgetType) {
           />
         </RadialBarChart>
         <div
-          className= 'absolute-center h-full flex-center px-3'
-          style={{
-            width: `${dia * 0.75}px`,
-          }}
-        ><FitText
-          aria-label="time"
-          min={10}
-          max={120}
-          className="size-full flex-center"
-          children={formatTime(remainingTime)}
-        /></div>
+          className="absolute-center h-full flex-center px-3"
+          style={{ width: `${dia * 0.75}px` }}
+        >
+          <FitText
+            aria-label="time"
+            min={10}
+            max={120}
+            className="size-full flex-center"
+            children={formatTime(remainingTime)}
+          />
+        </div>
         <div
           className="absolute-center flex-center gap-4"
           style={{
-            transform: `translateX(-50%) translateY(${radius * 0.4}px)`,
+            transform: `translateY(${radius * 0.4}px)`,
           }}
         >
           {buttons.map((buttonProps, index) => (

@@ -1,6 +1,6 @@
 import { EditorRoot, JSONContent, EditorContent, useEditor } from "novel";
 import Document from "@tiptap/extension-document";
-import { Placeholder, TaskItem, TaskList } from "novel";
+import { TaskItem, TaskList } from "novel";
 import { starterKit } from "@/components/editor/extensions";
 import { todoType } from "@/types/slice/todo";
 import GlobalDragHandle from "./drag-handle";
@@ -40,7 +40,6 @@ const CustomTaskItem = TaskItem.extend({ content: "inline*" });
 const extensions = [
   TaskList,
   GlobalDragHandle.configure({ yOffset: 55 }),
-  Placeholder.configure({ placeholder: "Add a task..." }),
   starterKit.configure({
     horizontalRule: false,
     listItem: false,
