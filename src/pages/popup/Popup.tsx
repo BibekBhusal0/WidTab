@@ -51,7 +51,7 @@ function Favorites() {
       sx={{ backgroundColor: "secondaryContainer.paper" }}>
       <ScrollArea className="size-full">
         <div className="py-4 px-1">
-          <BookmarkGrid bookmarks={favorites} openLinkInNewTab={true} />
+          <BookmarkGrid bookmarks={favorites} />
         </div>
       </ScrollArea>
     </Paper>

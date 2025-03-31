@@ -3,6 +3,7 @@ import AllSpaces from "@/components/footer/settings/spaces/allSpaces";
 import AddSpace from "@/components/footer/settings/spaces/addSpace";
 import { cn } from "@/utils/cn";
 import useFullSize from "@/hooks/useFullSize";
+import { JSX } from "react";
 
 type navigationProps = JSX.IntrinsicElements["div"];
 export function Navigation(props: navigationProps) {

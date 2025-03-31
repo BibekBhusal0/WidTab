@@ -20,7 +20,7 @@ export const findBookmarkById = (
 
 export const findPath = async (id: string): Promise<treeNodeArray> => {
   const path: treeNodeArray = [];
-  const bookmarks = await loadBookmarksFromJson();
+  const bookmarks = loadBookmarksFromJson();
 
   const getPathRecursive = (nodeId: string) => {
     const node = findBookmarkById(bookmarks, nodeId);
@@ -36,18 +36,26 @@ export const findPath = async (id: string): Promise<treeNodeArray> => {
   return path;
 };
 
-export const deleteLink = (id: string) => {};
-export const deleteFolder = (id: string) => {};
+export const deleteLink = (id: string) => {
+  console.log({ id });
+};
+export const deleteFolder = (id: string) => {
+  console.log({ id });
+};
 export const addFolder = (parentId: string, folderName: string) => {
+  console.log({ parentId, folderName });
   alert(`${folderName} Added`);
 };
 export const addLink = (parentId: string, url: string, title: string) => {
+  console.log({ parentId, url, title });
   alert(`${title} Added`);
 };
 export const editLink = (id: string, url: string, title: string) => {
+  console.log({ id, url, title });
   alert(`${title} Edited`);
 };
 export const editFolder = (id: string, title: string) => {
+  console.log({ id, title });
   alert(`${title} Edited`);
 };
 

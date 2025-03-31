@@ -12,6 +12,7 @@ const googleFaviconAPI = (url: string) => {
   return `https://s2.googleusercontent.com/s2/favicons?domain_url=https://${hostName}&sz=${size}`;
 };
 const chromeFaviconApi = (url: string) => {
+  console.log(url)
   //   const faviconUrl = new URL(browser.runtime.getURL("/_favicon/"));
   //   faviconUrl.searchParams.set("pageUrl", url);
   //   faviconUrl.searchParams.set("size", `${size}`);

@@ -1,10 +1,9 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   argbFromHex,
   themeFromSourceColor,
   hexFromArgb,
 } from "@material/material-color-utilities";
-import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import { ThemeItemType } from "@/types/slice/theme";
 import alphaColor from "@/utils/alpha";
 import useCurrentTheme from "@/hooks/useCurrentTheme";
@@ -43,12 +42,14 @@ function ThemeBackground({
       className={cn(full, image && "bg-cover bg-center bg-no-repeat", mode)}
       style={
         backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {}
-      }>
+      }
+    >
       <div
         className={cn(full, image && "backdrop-blur-half")}
         style={{
           backgroundColor: alphaColor(main, opacity / 5),
-        }}>
+        }}
+      >
         {children}
       </div>
     </div>
@@ -68,13 +69,13 @@ export const getTheme = (theme: ThemeItemType) => {
   CSSv.setProperty("--custom-blur", b);
   CSSv.setProperty(
     "--color-divider-transparent",
-    alphaColor(hexFromArgb(crrPrimary.outline), 0.5)
+    alphaColor(hexFromArgb(crrPrimary.outline), 0.5),
   );
   for (let i = 1; i <= 9; i++) {
     const opacityValue = i / 10;
     CSSv.setProperty(
       `--primary-${i}`,
-      alphaColor(hexFromArgb(crrPrimary.primary), opacityValue)
+      alphaColor(hexFromArgb(crrPrimary.primary), opacityValue),
     );
   }
 
