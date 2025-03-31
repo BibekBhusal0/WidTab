@@ -118,25 +118,7 @@
 
 /* editor styles apparently tailwind v4 don't allow to put this in new file*/
 
-.child-full>div {
-  @apply size-full;
-}
-
 .todo-list {
-
-  .is-editor-empty:first-child::before,
-  .is-empty::before {
-    display: none;
-  }
-
-  .is-editor-empty:first-child::after,
-  .is-empty::after {
-    @apply h-0 float-left pointer-events-none text-divider;
-    content: attr(data-placeholder);
-    pointer-events: none;
-    margin-left: -9px;
-  }
-
   ul[data-type="taskList"] li[data-checked="true"]>div {
     @apply line-through text-text-disabled;
     text-decoration-thickness: 2px;
@@ -144,6 +126,16 @@
 
   ul[data-type="taskList"] li>div {
     @apply text-text-primary;
+
+    &::before {
+      @apply h-0 float-left pointer-events-none text-divider;
+      content: "Add a task...";
+      pointer-events: none;
+    }
+
+    &:not(:has(*))::before {
+      content: "";
+    }
   }
 
   ul[data-type="taskList"] li>label {
