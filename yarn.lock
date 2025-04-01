@@ -1385,10 +1385,10 @@
   "resolved" "https://registry.npmjs.org/@types/ms/-/ms-0.7.34.tgz"
   "version" "0.7.34"
 
-"@types/node@*", "@types/node@^18.0.0 || ^20.0.0 || >=22.0.0", "@types/node@^22.10.6", "@types/node@^22.13.14":
-  "integrity" "sha512-Zs/Ollc1SJ8nKUAgc7ivOEdIBM8JAKgrqqUYi2J997JuKO7/tpQC+WCetQ1sypiKCQWHdvdg9wBNpUPEWZae7w=="
-  "resolved" "https://registry.npmjs.org/@types/node/-/node-22.13.14.tgz"
-  "version" "22.13.14"
+"@types/node@*", "@types/node@^18.0.0 || ^20.0.0 || >=22.0.0", "@types/node@^22.10.6", "@types/node@^22.13.16":
+  "integrity" "sha512-15tM+qA4Ypml/N7kyRdvfRjBQT2RL461uF1Bldn06K0Nzn1lY3nAPgHlsVrJxdZ9WhZiW0Fmc1lOYMtDsAuB3w=="
+  "resolved" "https://registry.npmjs.org/@types/node/-/node-22.13.16.tgz"
+  "version" "22.13.16"
   dependencies:
     "undici-types" "~6.20.0"
 
