@@ -46,10 +46,7 @@ export const useFavoriteBookmarks = (dependencies: any[] = []) => {
   return favoriteBookmarks;
 };
 
-export const useBookmarkFolder = (
-  folderID: string,
-  dependencies: any[] = []
-) => {
+export const useBookmarkFolder = (folderID: string, dependencies: any[] = []) => {
   const [bookmark, setBookmark] = useState<treeNodeArray>([]);
 
   const getBookmarks = async () => {
@@ -83,9 +80,7 @@ export function useBookmarkSearch(searchTerm: string) {
           const searchInBookmarks = (bookmarks: treeNodeArray) => {
             for (const bookmark of bookmarks) {
               if (
-                bookmark.title
-                  .toLocaleLowerCase()
-                  .includes(deferredSearchTerm) &&
+                bookmark.title.toLocaleLowerCase().includes(deferredSearchTerm) &&
                 bookmark.url?.toLowerCase()?.includes(deferredSearchTerm)
               ) {
                 results.push(bookmark);

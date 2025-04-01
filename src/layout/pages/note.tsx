@@ -9,11 +9,7 @@ import { ScrollArea } from "@/components/scrollarea";
 import Controls from "../widgets/controls";
 import IconButton from "@mui/material/IconButton";
 import IconMenu from "@/components/menuWithIcon";
-import {
-  Sortable,
-  SortableDragHandle,
-  SortableItem,
-} from "@/components/sortable";
+import { Sortable, SortableDragHandle, SortableItem } from "@/components/sortable";
 
 function NotesPage() {
   const { add } = useCurrentIcons();
@@ -29,14 +25,12 @@ function NotesPage() {
         value={allNotes}
         onValueChange={(n) => dispatch(reorderNotes(n))}
         orientation="mixed">
-        <div className="grid gap-2 grid-cols-1 p-3 sm:grid-cols-2 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-2 p-3 sm:grid-cols-2 md:grid-cols-3">
           {allNotes.map((p) => {
             const handleDelete = () => dispatch(deleteNote(p.id));
             return (
               <SortableItem key={p.id} value={p.id}>
-                <Paper
-                  className={commonCls}
-                  sx={{ backgroundColor: "secondaryContainer.paper" }}>
+                <Paper className={commonCls} sx={{ backgroundColor: "secondaryContainer.paper" }}>
                   <Controls
                     className="pt-1"
                     deleteButton={false}
@@ -61,7 +55,7 @@ function NotesPage() {
                         ]}
                       />
                     }>
-                    <SortableDragHandle className="absolute w-full h-3 bg-primary-2 top-0 z-10" />
+                    <SortableDragHandle className="bg-primary-2 absolute top-0 z-10 h-3 w-full" />
 
                     <Note {...p} />
                   </Controls>
@@ -73,9 +67,7 @@ function NotesPage() {
             sx={{ backgroundColor: "secondaryContainer.paper" }}
             onClick={() => dispatch(addNoteWithTitle(""))}
             className={cn(commonCls, "flex-center group cursor-pointer")}>
-            <div className="group-hover:scale-600 scale-300 transition-all">
-              {add}
-            </div>
+            <div className="scale-300 transition-all group-hover:scale-600">{add}</div>
           </Paper>
         </div>
       </Sortable>

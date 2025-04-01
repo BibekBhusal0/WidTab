@@ -51,8 +51,7 @@ const orientationConfig = {
   },
 };
 
-interface SortableProps<TData extends { id: UniqueIdentifier }>
-  extends DndContextProps {
+interface SortableProps<TData extends { id: UniqueIdentifier }> extends DndContextProps {
   /**
    * An array of data items that the sortable component will render.
    * @example
@@ -144,7 +143,7 @@ function Sortable<TData extends { id: UniqueIdentifier }>({
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint }),
     useSensor(TouchSensor, { activationConstraint }),
-    useSensor(KeyboardSensor),
+    useSensor(KeyboardSensor)
   );
 
   const config = orientationConfig[orientation];
@@ -167,14 +166,11 @@ function Sortable<TData extends { id: UniqueIdentifier }>({
       }}
       onDragCancel={() => setActiveId(null)}
       collisionDetection={collisionDetection}
-      {...props}
-    >
+      {...props}>
       <SortableContext items={value} strategy={strategy ?? config.strategy}>
         {children}
       </SortableContext>
-      {overlay ? (
-        <SortableOverlay activeId={activeId}>{overlay}</SortableOverlay>
-      ) : null}
+      {overlay ? <SortableOverlay activeId={activeId}>{overlay}</SortableOverlay> : null}
     </DndContext>
   );
 }
@@ -185,8 +181,7 @@ const dropAnimationOpts: DropAnimation = {
   }),
 };
 
-interface SortableOverlayProps
-  extends React.ComponentProps<typeof DragOverlay> {
+interface SortableOverlayProps extends React.ComponentProps<typeof DragOverlay> {
   activeId?: UniqueIdentifier | null;
 }
 
@@ -236,23 +231,13 @@ interface SortableItemProps extends SlotProps {
   asChild?: boolean;
 }
 
-const SortableItem = ({
-  value,
-  asTrigger,
-  asChild,
-  className,
-  ...props
-}: SortableItemProps) => {
+const SortableItem = ({ value, asTrigger, asChild, className, ...props }: SortableItemProps) => {
   const animateLayoutChanges: AnimateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({ ...args, wasDragging: true });
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: value, animateLayoutChanges });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: value,
+    animateLayoutChanges,
+  });
 
   const context = React.useMemo<SortableItemContextProps>(
     () => ({
@@ -260,7 +245,7 @@ const SortableItem = ({
       listeners,
       isDragging,
     }),
-    [attributes, listeners, isDragging],
+    [attributes, listeners, isDragging]
   );
   const style: React.CSSProperties = {
     opacity: isDragging ? 0.8 : 1,
@@ -278,7 +263,7 @@ const SortableItem = ({
         className={cn(
           "data-[state=dragging]:cursor-grabbing",
           { "cursor-grab": !isDragging && asTrigger },
-          className,
+          className
         )}
         ref={setNodeRef}
         style={style}
@@ -295,19 +280,13 @@ interface SortableDragHandleProps extends React.HTMLAttributes<HTMLDivElement> {
   withHandle?: boolean;
 }
 
-const SortableDragHandle = ({
-  className,
-  ...props
-}: SortableDragHandleProps) => {
+const SortableDragHandle = ({ className, ...props }: SortableDragHandleProps) => {
   const { attributes, listeners, isDragging } = useSortableItem();
 
   return (
     <div
       data-state={isDragging ? "dragging" : undefined}
-      className={cn(
-        "cursor-grab data-[state=dragging]:cursor-grabbing",
-        className,
-      )}
+      className={cn("cursor-grab data-[state=dragging]:cursor-grabbing", className)}
       {...attributes}
       {...listeners}
       {...props}

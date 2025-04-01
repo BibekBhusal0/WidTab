@@ -23,7 +23,7 @@ export const Bubble = () => {
 
   return (
     <EditorBubble
-      className="w-fit max-w-[90vw] overflow-hidden bg-background-default"
+      className="bg-background-default w-fit max-w-[90vw] overflow-hidden"
       //   tippyOptions={{
       //     placement: aiOpen ? "bottom-start" : "top",
       //     onHidden: () => {
@@ -35,8 +35,8 @@ export const Bubble = () => {
       {/* {aiOpen ? (
         <AISelector onOpenChange={setAiOpen} open={aiOpen} />
       ) : ( */}
-      <div className="flex ">
-        <div className="flex-center flex-col ">
+      <div className="flex">
+        <div className="flex-center flex-col">
           <TextButtons />
           <Divider orientation="horizontal" flexItem />
           <div className="flex-center w-full">

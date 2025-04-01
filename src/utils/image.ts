@@ -28,10 +28,7 @@ const openDB = (): Promise<IDBDatabase> => {
   });
 };
 
-export const saveImageToStorage = async (
-  imageId: string,
-  imageData: string
-): Promise<void> => {
+export const saveImageToStorage = async (imageId: string, imageData: string): Promise<void> => {
   const db = await openDB();
   const transaction = db.transaction(STORE_NAME, "readwrite");
   const store = transaction.objectStore(STORE_NAME);
@@ -52,10 +49,13 @@ export const getImagesFromStorage = async (): Promise<{
     };
   });
 
-  return images.reduce((acc, { id, data }) => {
-    acc[id] = data;
-    return acc;
-  }, {} as { [key: string]: string });
+  return images.reduce(
+    (acc, { id, data }) => {
+      acc[id] = data;
+      return acc;
+    },
+    {} as { [key: string]: string }
+  );
 };
 
 export const removeAllImagesFromStorage = async (): Promise<void> => {
@@ -65,9 +65,7 @@ export const removeAllImagesFromStorage = async (): Promise<void> => {
   await store.clear();
 };
 
-export const getImageById = async (
-  imageId: string
-): Promise<string | undefined> => {
+export const getImageById = async (imageId: string): Promise<string | undefined> => {
   const db = await openDB();
   const transaction = db.transaction(STORE_NAME, "readonly");
   const store = transaction.objectStore(STORE_NAME);
@@ -99,9 +97,7 @@ export const getImageBlob = async (imageId: string): Promise<Blob | null> => {
 
 function useBackgroundImage(dependencyArray: any[] = []): string | undefined {
   const { image } = useCurrentTheme();
-  const [backgroundImage, setBackgroundImage] = useState<string | undefined>(
-    image
-  );
+  const [backgroundImage, setBackgroundImage] = useState<string | undefined>(image);
 
   useEffect(() => {
     let newUrl: string | undefined;

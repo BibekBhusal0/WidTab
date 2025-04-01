@@ -1,4 +1,3 @@
-
 import { cn } from "@/utils/cn";
 import React, { useState, useRef, useCallback, useEffect } from "react";
 
@@ -30,8 +29,7 @@ const FitText: React.FC<FitTextProps> = ({
     const styles = window.getComputedStyle(text);
 
     const initialFontSize = parseFloat(styles.fontSize) || 16;
-    const initialLineHeight =
-      parseFloat(styles.lineHeight) || initialFontSize * 1.2;
+    const initialLineHeight = parseFloat(styles.lineHeight) || initialFontSize * 1.2;
     const lineHeightRatio = initialLineHeight / initialFontSize;
 
     tempText.style.fontFamily = styles.fontFamily;
@@ -95,18 +93,13 @@ const FitText: React.FC<FitTextProps> = ({
   }, [calculateFontSize]);
 
   return (
-    <div
-      ref={containerRef}
-      className={cn('size-full', className)}
-      {...props}
-    >
+    <div ref={containerRef} className={cn("size-full", className)} {...props}>
       <span
         ref={textRef}
         style={{
           fontSize: `${fontSize}px`,
           whiteSpace: "nowrap",
-        }}
-      >
+        }}>
         {children}
       </span>
     </div>

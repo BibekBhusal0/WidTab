@@ -1,7 +1,5 @@
 import { useState } from "react";
-import ListItemButton, {
-  ListItemButtonProps,
-} from "@mui/material/ListItemButton";
+import ListItemButton, { ListItemButtonProps } from "@mui/material/ListItemButton";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import Box from "@mui/material/Box";
 import { Icon2RN, iconAsProp } from "@/theme/icons";

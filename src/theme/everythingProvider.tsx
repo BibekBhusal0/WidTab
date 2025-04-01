@@ -18,7 +18,7 @@ const ReduxStorage = ({ children }: EPprovider) => {
     setInitialStateFromLocalStorage().then(() => setLoading(false));
   }, []);
   return loading ? (
-    <div className="flex-center text-8xl gap-2 size-full">
+    <div className="flex-center size-full gap-2 text-8xl">
       Loading
       <div className="pt-8">
         <Icon icon="svg-spinners:3-dots-scale" />

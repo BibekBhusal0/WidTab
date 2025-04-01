@@ -40,7 +40,7 @@ function AddCustomWidget() {
     setHelperText("");
   };
   return (
-    <div className="size-full relative flex flex-col gap-3 pt-3">
+    <div className="relative flex size-full flex-col gap-3 pt-3">
       <TextField
         helperText={helperText}
         error={!!helperText}
@@ -50,8 +50,8 @@ function AddCustomWidget() {
         label="Widget URL"
         placeholder="Widget URL"
       />
-      <div className="flex items-center px-3 gap-2 flex-col">
-        <div className="flex justify-start gap-5 w-full">
+      <div className="flex flex-col items-center gap-2 px-3">
+        <div className="flex w-full justify-start gap-5">
           <div className="text-xl">X:</div>
           <Slider
             value={cols}
@@ -60,7 +60,7 @@ function AddCustomWidget() {
             max={n_cols}
           />
         </div>
-        <div className="flex justify-start gap-5 w-full">
+        <div className="flex w-full justify-start gap-5">
           <div className="text-xl">Y:</div>
           <Slider
             value={rows}
@@ -72,9 +72,7 @@ function AddCustomWidget() {
         <div className="text-xl">
           Position: ({cols}, {rows})
         </div>
-        {!available_widgets && (
-          <div className="text-error-main">No space available</div>
-        )}
+        {!available_widgets && <div className="text-error-main">No space available</div>}
       </div>
 
       <Button

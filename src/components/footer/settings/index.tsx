@@ -1,7 +1,5 @@
 import ThemeSettings from "./theme";
-import ContainerSidebar, {
-  SidebarComponent,
-} from "@/components/containerSidebar";
+import ContainerSidebar, { SidebarComponent } from "@/components/containerSidebar";
 import SpaceSettings from "./spaces";
 import GeneralSettings from "./general";
 import FooterPopover from "@/components/footerPopover";

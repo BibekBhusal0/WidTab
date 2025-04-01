@@ -30,9 +30,7 @@ type defaultOpen = { paths?: string[] };
 function BookmarkTree() {
   const { bookmarks } = useAllBookmarks();
   const [path, setPath] = useState<string[]>([]);
-  const { currentFolderID } = useSelector(
-    (state: StateType) => state.bookmarks
-  );
+  const { currentFolderID } = useSelector((state: StateType) => state.bookmarks);
   useEffect(() => {
     findPath(currentFolderID).then((data) => {
       setPath(data.map((item) => item.id));
@@ -76,21 +74,17 @@ function BookmarkItem({ bookmarks, paths }: TakeBookmarksProps & defaultOpen) {
       <BookmarkItem key={child.id} bookmarks={child} paths={paths} />
     ));
   }
-  if (bookmarks.children)
-    return <BookmarkFolder bookmarks={bookmarks} paths={paths} />;
+  if (bookmarks.children) return <BookmarkFolder bookmarks={bookmarks} paths={paths} />;
   return <BookmarkTreeLink bookmarks={bookmarks} />;
 }
 
 function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
-  const { favorites, linkInNewTab } = useSelector(
-    (state: StateType) => state.bookmarks
-  );
+  const { favorites, linkInNewTab } = useSelector((state: StateType) => state.bookmarks);
   const fav = favorites.includes(bookmarks.id);
 
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({
-      id: bookmarks.id,
-    });
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id: bookmarks.id,
+  });
 
   const style: React.CSSProperties = {
     opacity: isDragging ? 0.8 : 1,
@@ -105,14 +99,11 @@ function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
         {...listeners}
         style={style}
         onClick={(e) => openLink(bookmarks.url || "", linkInNewTab, e)}
-        className={cn(
-          "w-full flex items-center gap-4 pl-2 ml-2",
-          isDragging && "cursor-grabbing"
-        )}>
-        <div className="py-1 my-1 w-full">
-          <div className="flex items-center gap-4 w-full">
-            <Favicon src={bookmarks.url} className="size-10 aspect-square" />
-            <div className="text-xl truncate">{bookmarks.title}</div>
+        className={cn("ml-2 flex w-full items-center gap-4 pl-2", isDragging && "cursor-grabbing")}>
+        <div className="my-1 w-full py-1">
+          <div className="flex w-full items-center gap-4">
+            <Favicon src={bookmarks.url} className="aspect-square size-10" />
+            <div className="truncate text-xl">{bookmarks.title}</div>
           </div>
         </div>
         {fav && <Icon className="text-3xl" icon="mdi:heart" />}
@@ -124,9 +115,7 @@ function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
 function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
   const [open, setOpen] = useState(false);
   const folderRef = useRef<HTMLDivElement>(null);
-  const { currentFolderID, folderIcons } = useSelector(
-    (state: StateType) => state.bookmarks
-  );
+  const { currentFolderID, folderIcons } = useSelector((state: StateType) => state.bookmarks);
   const isCurrentFolder = currentFolderID === bookmarks.id;
 
   useEffect(() => {
@@ -169,7 +158,7 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
       <div
         ref={droppableRef}
         className={cn(
-          "relative py-1 my-1 ml-1 pl-2  border-2 border-transparent",
+          "relative my-1 ml-1 border-2 border-transparent py-1 pl-2",
           isOver && "border-primary-5",
           isCurrentFolder && "bg-primary-2"
         )}>
@@ -178,7 +167,7 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
             {...listeners}
             ref={folderRef}
             className={cn(
-              "flex w-full items-center gap-4 cursor-pointer",
+              "flex w-full cursor-pointer items-center gap-4",
               isDragging && "cursor-grabbing"
             )}
             onClick={() => {
@@ -188,7 +177,7 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
             <div className="aspect-square h-full shrink-0">
               <Folder {...{ open }} icon={folderIcons?.[bookmarks.id]} />
             </div>
-            <div className="text-2xl truncate">{bookmarks.title}</div>
+            <div className="truncate text-2xl">{bookmarks.title}</div>
           </div>
         </FolderContextMenu>
 

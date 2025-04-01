@@ -12,11 +12,7 @@ import BookmarkBreadcrumb from "@/components/bookmarks/breadcrumb";
 import BookmarkGrid from "@/components/bookmarks/grid";
 import { changeCurrentFolder } from "@/redux/slice/bookmark";
 import { changeFolderSize } from "@/redux/slice/bookmark";
-import {
-  allFolderSizes,
-  bookmarkTreeNodeArray,
-  folderSizes,
-} from "@/types/slice/bookmark";
+import { allFolderSizes, bookmarkTreeNodeArray, folderSizes } from "@/types/slice/bookmark";
 import { ScrollArea } from "@/components/scrollarea";
 import Favorites from "../widgets/favorites";
 import MenuPopover, { MenuPopoverProps } from "@/components/popoverMenu";
@@ -31,7 +27,7 @@ function BookmarkManager() {
       showButton
       resizableBoxProps={{
         children: (
-          <div className="flex flex-col h-full">
+          <div className="flex h-full flex-col">
             <BookmarkButtons />
             <ScrollArea>
               <BookmarkTree />
@@ -63,13 +59,7 @@ function BookmarkSizeSelect() {
       dispatch(changeFolderSize(val));
     }
   };
-  return (
-    <SelectSize
-      sx={{ width: "150px" }}
-      value={folderSize}
-      onChange={handleChange}
-    />
-  );
+  return <SelectSize sx={{ width: "150px" }} value={folderSize} onChange={handleChange} />;
 }
 
 const addIcon = <Icon icon="material-symbols:add-rounded" />;
@@ -80,14 +70,7 @@ function BookmarkButtons() {
 
   const getMenuProps = (c: ReactNode): Partial<MenuPopoverProps> => {
     return {
-      icon: (
-        <Button
-          children={c}
-          startIcon={addIcon}
-          sx={{ width: "100%" }}
-          variant="contained"
-        />
-      ),
+      icon: <Button children={c} startIcon={addIcon} sx={{ width: "100%" }} variant="contained" />,
       buttonProps: { sx: { width } },
       button: false,
       menuProps: {
@@ -100,7 +83,7 @@ function BookmarkButtons() {
   const { showFavorites } = useSelector((state: StateType) => state.bookmarks);
 
   return (
-    <div style={{ gap }} className="flex-center w-full my-3 flex-wrap">
+    <div style={{ gap }} className="flex-center my-3 w-full flex-wrap">
       <FavButton sx={{ width: `${btnW}%` }} />
       {!showFavorites && (
         <>
@@ -113,9 +96,7 @@ function BookmarkButtons() {
 }
 
 function AddFolderButton(props: Partial<MenuPopoverProps>) {
-  const { currentFolderID } = useSelector(
-    (state: StateType) => state.bookmarks,
-  );
+  const { currentFolderID } = useSelector((state: StateType) => state.bookmarks);
   const [key, setKey] = useState(1);
   const [name, setName] = useState("");
   const [helperText, setHelperText] = useState("");
@@ -124,9 +105,7 @@ function AddFolderButton(props: Partial<MenuPopoverProps>) {
     setName("");
     setHelperText("");
   };
-  const handleTextChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setName(e.target.value);
     if (helperText) setHelperText("");
   };
@@ -140,7 +119,7 @@ function AddFolderButton(props: Partial<MenuPopoverProps>) {
   };
   return (
     <MenuPopover key={key} icon={<>Add Folder </>} button={false} {...props}>
-      <div className="px-5 py-3 gap-3 flex-center flex-col">
+      <div className="flex-center flex-col gap-3 px-5 py-3">
         <TextField
           autoFocus
           size="small"
@@ -158,9 +137,7 @@ function AddFolderButton(props: Partial<MenuPopoverProps>) {
   );
 }
 function AddLinkButton(props: Partial<MenuPopoverProps>) {
-  const { currentFolderID } = useSelector(
-    (state: StateType) => state.bookmarks,
-  );
+  const { currentFolderID } = useSelector((state: StateType) => state.bookmarks);
   const [key, setKey] = useState(1);
   const [url, setUrl] = useState("");
   const [name, setName] = useState("");
@@ -174,15 +151,11 @@ function AddLinkButton(props: Partial<MenuPopoverProps>) {
     if (nameHelperText) setNameHelperText("");
     if (urlHelperText) setUrlHelperText("");
   };
-  const handleUrlChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setUrl(e.target.value);
     if (urlHelperText) setUrlHelperText("");
   };
-  const handleNameChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setName(e.target.value);
     if (nameHelperText) setNameHelperText("");
   };
@@ -206,7 +179,7 @@ function AddLinkButton(props: Partial<MenuPopoverProps>) {
 
   return (
     <MenuPopover key={key} icon={<>Add Link </>} button={false} {...props}>
-      <div className="px-5 py-3 gap-3 flex-center flex-col">
+      <div className="flex-center flex-col gap-3 px-5 py-3">
         <TextField
           autoFocus
           size="small"
@@ -249,7 +222,7 @@ function FavButton(props: ButtonProps) {
 
 function MainBookmarks() {
   const { currentFolderID, showFavorites, folderSize } = useSelector(
-    (state: StateType) => state.bookmarks,
+    (state: StateType) => state.bookmarks
   );
   const dispatch = useDispatch();
   const onFolderChange = (id: string) => dispatch(changeCurrentFolder(id));
@@ -257,9 +230,7 @@ function MainBookmarks() {
 
   return (
     <>
-      <div className="p-4">
-        {showFavorites ? "Favorites" : <BookmarkBreadcrumb {...props} />}
-      </div>
+      <div className="p-4">{showFavorites ? "Favorites" : <BookmarkBreadcrumb {...props} />}</div>
       {showFavorites ? (
         <Favorites {...props} id={1} iconSize={folderSize} />
       ) : (
@@ -274,9 +245,7 @@ function MainBookmarks() {
 }
 
 function BookmarksFolder() {
-  const { currentFolderID } = useSelector(
-    (state: StateType) => state.bookmarks,
-  );
+  const { currentFolderID } = useSelector((state: StateType) => state.bookmarks);
   const bookmarks = useBookmarkFolder(currentFolderID);
   return <OnlyBookmarks bookmarks={bookmarks} />;
 }

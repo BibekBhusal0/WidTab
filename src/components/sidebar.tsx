@@ -33,9 +33,7 @@ export default function Sidebar({
   };
 
   return (
-    <Box
-      {...containerProps}
-      className={cn("flex size-full sidebar", containerProps?.className)}>
+    <Box {...containerProps} className={cn("sidebar flex size-full", containerProps?.className)}>
       <ResizableBox
         width={open ? drawerWidth : 0}
         height={Infinity}
@@ -57,23 +55,19 @@ export default function Sidebar({
       <Box
         {...contentContainerProps}
         className={cn(
-          "flex flex-col gap-4 w-full transition-all",
+          "flex w-full flex-col gap-4 transition-all",
           contentContainerProps?.className
         )}>
         <Box
           {...headerProps}
           className={cn(
-            "flex w-full items-center justify-between gap-4 p-4 relative",
+            "relative flex w-full items-center justify-between gap-4 p-4",
             headerProps?.className
           )}>
           {showButton && (
             <IconButton onClick={toggleOpen}>
               <Icon
-                icon={
-                  open
-                    ? "material-symbols:menu-open-rounded"
-                    : "material-symbols:menu-rounded"
-                }
+                icon={open ? "material-symbols:menu-open-rounded" : "material-symbols:menu-rounded"}
               />
             </IconButton>
           )}

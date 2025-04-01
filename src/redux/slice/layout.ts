@@ -34,8 +34,7 @@ export const layoutSlice = createSlice({
   initialState: { ...initialLayoutState },
   reducers: {
     changeCurrentSpace: (state, action: PayloadAction<CurrentSpaceType>) => {
-      if (JSON.stringify(state.currentSpace) === JSON.stringify(action.payload))
-        return;
+      if (JSON.stringify(state.currentSpace) === JSON.stringify(action.payload)) return;
       if (action.payload.type === "dynamic") {
         if (!state.allSpaces.find((p) => p.id === action.payload.id)) return;
       }
@@ -88,9 +87,7 @@ export const layoutSlice = createSlice({
     },
     toggleIcon: (state, action: PayloadAction<RemovableToolbarIcons>) => {
       if (state.toolBarIcons.includes(action.payload)) {
-        state.toolBarIcons = state.toolBarIcons.filter(
-          (p) => p !== action.payload
-        );
+        state.toolBarIcons = state.toolBarIcons.filter((p) => p !== action.payload);
       } else {
         state.toolBarIcons.push(action.payload);
       }
@@ -99,9 +96,7 @@ export const layoutSlice = createSlice({
     deleteSpace: (state, action: PayloadAction<number>) => {
       const space = state.allSpaces.find((p) => p.id === action.payload);
       if (space && space.delete_able) {
-        state.allSpaces = state.allSpaces.filter(
-          (p) => p.id !== action.payload
-        );
+        state.allSpaces = state.allSpaces.filter((p) => p.id !== action.payload);
       }
     },
     duplicateSpace: (state, action: PayloadAction<number>) => {
@@ -119,11 +114,7 @@ export const layoutSlice = createSlice({
       if (space && state.currentSpace.type === "dynamic") {
         const newWidget = action.payload;
         var id = newWidget.values.id;
-        if (
-          uncontrolledWidgets.includes(
-            action.payload.type as uncontrolledWidgetsType
-          )
-        ) {
+        if (uncontrolledWidgets.includes(action.payload.type as uncontrolledWidgetsType)) {
           id = getNextId(space.widgets.map(({ values: { id } }) => id));
           newWidget.values.id = id;
         }
@@ -131,32 +122,20 @@ export const layoutSlice = createSlice({
         space.widgets.push(newWidget);
       }
     },
-    currentSpaceEditWidget: (
-      state,
-      action: PayloadAction<WidgetMappingUncontrolled>
-    ) => {
+    currentSpaceEditWidget: (state, action: PayloadAction<WidgetMappingUncontrolled>) => {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
       if (space && state.currentSpace.type === "dynamic") {
-        const widget = space.widgets.find(
-          (p) => p.values.id === action.payload.values.id
-        );
+        const widget = space.widgets.find((p) => p.values.id === action.payload.values.id);
         if (widget) {
           widget.values = action.payload.values;
         }
       }
     },
-    currentSpaceDeleteWidget(
-      state,
-      action: PayloadAction<DeleteWidgetParameters>
-    ) {
+    currentSpaceDeleteWidget(state, action: PayloadAction<DeleteWidgetParameters>) {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
       if (space && state.currentSpace.type === "dynamic") {
         space.widgets = space.widgets.filter(
-          (p) =>
-            !(
-              p.values.id === action.payload.id &&
-              p.type === action.payload.type
-            )
+          (p) => !(p.values.id === action.payload.id && p.type === action.payload.type)
         );
       }
     },
@@ -164,9 +143,7 @@ export const layoutSlice = createSlice({
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
       if (space && state.currentSpace.type === "dynamic") {
         space.widgets = space.widgets.map((widget) => {
-          const newWidget = action.payload.find(
-            (w) => w.i === widget.gridProps.i
-          );
+          const newWidget = action.payload.find((w) => w.i === widget.gridProps.i);
           return {
             ...widget,
             gridProps: { ...widget.gridProps, ...newWidget },
@@ -188,10 +165,7 @@ export const layoutSlice = createSlice({
     },
 
     resetLayoutState: (state) => Object.assign(state, initialLayoutState),
-    setState: (
-      state,
-      action: PayloadAction<{ value: LayoutSliceType; check?: boolean }>
-    ) => {
+    setState: (state, action: PayloadAction<{ value: LayoutSliceType; check?: boolean }>) => {
       const { value, check = true } = action.payload;
       const val = value;
       if (!val || !val.allSpaces) return;
@@ -210,12 +184,10 @@ export const layoutSlice = createSlice({
 
       for (const space of val.allSpaces) {
         const s = allSpaces.find((p) => p.id === space.id);
-        if (s && (!space.delete_able || space.name === s.name))
-          Object.assign(s, space);
+        if (s && (!space.delete_able || space.name === s.name)) Object.assign(s, space);
         else {
           const id = getNextId(allSpaces.map(({ id }) => id));
-          if (space.id === val.currentSpace?.id)
-            state.currentSpace = { type: "dynamic", id };
+          if (space.id === val.currentSpace?.id) state.currentSpace = { type: "dynamic", id };
           allSpaces.push({ ...space, id, delete_able: true });
         }
       }

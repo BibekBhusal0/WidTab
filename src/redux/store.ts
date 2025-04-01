@@ -15,14 +15,7 @@ export const middleware: Middleware = (store) => (next) => (action: any) => {
   }
   return val;
 };
-const r = [
-  "bookmarks",
-  "todo",
-  "layout",
-  "theme",
-  "habitTracker",
-  "note",
-] as const;
+const r = ["bookmarks", "todo", "layout", "theme", "habitTracker", "note"] as const;
 export type reducers = (typeof r)[number];
 export const reducerNames: reducers[] = [...r];
 

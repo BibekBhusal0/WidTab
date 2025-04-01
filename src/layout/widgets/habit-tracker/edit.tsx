@@ -1,7 +1,4 @@
-import {
-  HabitTrackerEditProps,
-  HabitTrackerItemType,
-} from "@/types/slice/habit-tracker";
+import { HabitTrackerEditProps, HabitTrackerItemType } from "@/types/slice/habit-tracker";
 import TextField from "@mui/material/TextField";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Button from "@mui/material/Button";
@@ -97,32 +94,22 @@ const HabitTrackerEdit: FunctionComponent<HabitTrackerEditProps> = ({
     ),
     Icon: (
       <div className="icon-xl">
-        <SelectIconMenu
-          icon={state.icon}
-          setIcon={(icon: string) => handleChange("icon", icon)}
-        />
+        <SelectIconMenu icon={state.icon} setIcon={(icon: string) => handleChange("icon", icon)} />
       </div>
     ),
   };
 
   return (
-    <div className="flex-center flex-col w-full gap-4">
+    <div className="flex-center w-full flex-col gap-4">
       {Object.entries(items).map(([key, value]) => (
         <div key={key} className="full-between">
           <div className="text-xl">{key}</div>
           {value}
         </div>
       ))}
-      {errorMessage !== "" && (
-        <div className="text-error-main">{errorMessage}</div>
-      )}
-      <div className="w-full flex-center">
-        <Button
-          variant="contained"
-          children="Done"
-          {...buttonProps}
-          onClick={handleClick}
-        />
+      {errorMessage !== "" && <div className="text-error-main">{errorMessage}</div>}
+      <div className="flex-center w-full">
+        <Button variant="contained" children="Done" {...buttonProps} onClick={handleClick} />
       </div>
     </div>
   );

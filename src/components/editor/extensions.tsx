@@ -49,8 +49,8 @@ export const CodeBlockComponent = ({
   const [showPreview, setShowPreview] = useState(false);
 
   return (
-    <NodeViewWrapper className="my-4 mx-2 border bg-secondary-container-default rounded-lg">
-      <div className="full-between px-4 py-1 bg-secondary-container-default sticky top-0 z-10 rounded-t-lg">
+    <NodeViewWrapper className="bg-secondary-container-default mx-2 my-4 rounded-lg border">
+      <div className="full-between bg-secondary-container-default sticky top-0 z-10 rounded-t-lg px-4 py-1">
         {editor.isEditable ? (
           <Select
             value={currentLanguage || "auto"}
@@ -66,16 +66,10 @@ export const CodeBlockComponent = ({
                 paddingBottom: "2px",
               },
               fontSize: "12px",
-            }}
-          >
+            }}>
             <MenuItem value="auto">Auto</MenuItem>
             {languages.map((lang: string) => (
-              <MenuItem
-                key={lang}
-                value={lang}
-                children={lang}
-                className="uppercase"
-              />
+              <MenuItem key={lang} value={lang} children={lang} className="uppercase" />
             ))}
           </Select>
         ) : (
@@ -90,11 +84,8 @@ export const CodeBlockComponent = ({
             sx={{ paddingY: "2px", paddingX: "14px" }}
             onClick={() => setShowPreview(!showPreview)}
             variant={showPreview ? "outlined" : "contained"}
-            className="text-sm uppercase font-medium"
-            startIcon={
-              <Icon2RN icon="mdi:language-markdown" className="size-6" />
-            }
-          >
+            className="text-sm font-medium uppercase"
+            startIcon={<Icon2RN icon="mdi:language-markdown" className="size-6" />}>
             {showPreview ? "Code" : "Preview"}
           </Button>
         )}
@@ -102,16 +93,14 @@ export const CodeBlockComponent = ({
         <CopyButton children={codeContent} />
       </div>
       <ScrollArea
-        className="rounded-b-lg rounded-t-0"
+        className="rounded-t-0 rounded-b-lg"
         scrollBarProps={{
           orientation: "horizontal",
           className: "h-2 cursor-default",
-        }}
-      >
+        }}>
         <pre
           spellCheck={"false"}
-          className="m-0 border-none w-max min-w-full text-base hljs rounded-none"
-        >
+          className="hljs m-0 w-max min-w-full rounded-none border-none text-base">
           {showPreview && currentLanguage === "markdown" ? (
             <div
               className="pointer-events-none cursor-auto"

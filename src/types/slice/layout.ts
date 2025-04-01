@@ -47,10 +47,7 @@ export type LayoutSliceType = {
 
 const height = 94;
 const width = 97;
-export type positionPropsType = Record<
-  ToolBarPositions,
-  Record<majorComponentsProps, BoxProps>
->;
+export type positionPropsType = Record<ToolBarPositions, Record<majorComponentsProps, BoxProps>>;
 type majorComponentsProps = "appProps" | "footerProps" | "mainComponentProps";
 
 export const positionProps: positionPropsType = {

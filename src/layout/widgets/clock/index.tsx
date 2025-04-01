@@ -11,7 +11,7 @@ export type DigitalClockProps = { time: dayjs.Dayjs } & ClockWidgetType;
 
 function ClockWidget({ ...props }: ClockWidgetType) {
   const [time, setTime] = useState<dayjs.Dayjs>(dayjs());
-  const { ref, size } = useFullSize()
+  const { ref, size } = useFullSize();
 
   useEffect(() => {
     const updateTime = () => setTime(dayjs());
@@ -34,16 +34,17 @@ function ClockWidget({ ...props }: ClockWidgetType) {
         "h-[85%]": showTimeZone,
         "h-[75%]": showTimeZone && size.height < 100,
       })}
-      ref={ref}
-    >
+      ref={ref}>
       {clockType === "digital" ? (
         <DigitalClock time={time} {...props} />
       ) : (
         <AnalogClock time={time} {...props} />
       )}
       {showTimeZone && (
-        <div className={cn("h-[20%]", { '-mt-2': showTimeZone && size.height < 100 })}>
-          <FitText min={2} className="text-center">{timeZone}</FitText>
+        <div className={cn("h-[20%]", { "-mt-2": showTimeZone && size.height < 100 })}>
+          <FitText min={2} className="text-center">
+            {timeZone}
+          </FitText>
         </div>
       )}
     </div>

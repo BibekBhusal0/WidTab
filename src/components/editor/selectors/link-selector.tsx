@@ -41,18 +41,18 @@ export const LinkSelector = () => {
       <MenuPopover
         key={key}
         icon={
-          <div className="size-full icon-sm flex-center gap-2">
+          <div className="icon-sm flex-center size-full gap-2">
             <Icon2RN icon="gravity-ui:link" />
             <div
               className={cn(
-                "underline decoration-stone-400 underline-offset-4 text-sm",
+                "text-sm underline decoration-stone-400 underline-offset-4",
                 editor.isActive("link") && "text-blue-500"
               )}>
               Link
             </div>
           </div>
         }>
-        <div className="flex-center py-1 px-2 gap-2 flex-col">
+        <div className="flex-center flex-col gap-2 px-2 py-1">
           <TextField
             size="small"
             label="Link"
@@ -66,10 +66,7 @@ export const LinkSelector = () => {
             color={l ? "error" : "success"}
             onClick={l ? allLink : removeLink}
             startIcon={
-              <Icon2RN
-                icon={l ? delete_ : "material-symbols:check-rounded"}
-                className="size-4"
-              />
+              <Icon2RN icon={l ? delete_ : "material-symbols:check-rounded"} className="size-4" />
             }
             children={l ? "Remove Link" : "Add Link"}
           />

@@ -1,9 +1,5 @@
 import { currentSpaceEditWidget } from "@/redux/slice/layout";
-import {
-  AllSearchEngines,
-  searchEngines,
-  SearchWidgetType,
-} from "@/types/slice/widgets";
+import { AllSearchEngines, searchEngines, SearchWidgetType } from "@/types/slice/widgets";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -26,10 +22,7 @@ function SearchWidget({ id, engine }: SearchWidgetType) {
   const handleSearch = () => {
     if (text.trim().length !== 0) {
       const searchEngineLink = searchEngineLogoAndLink[engine].link;
-      const searchUrl = searchEngineLink.replace(
-        "%s",
-        encodeURIComponent(text)
-      );
+      const searchUrl = searchEngineLink.replace("%s", encodeURIComponent(text));
       openLink(searchUrl, linkInNewTab);
     }
   };
@@ -37,9 +30,7 @@ function SearchWidget({ id, engine }: SearchWidgetType) {
   const changeSearchEngine = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value as AllSearchEngines;
     if (!searchEngines.includes(val)) return;
-    dispatch(
-      currentSpaceEditWidget({ type: "search", values: { id, engine: val } })
-    );
+    dispatch(currentSpaceEditWidget({ type: "search", values: { id, engine: val } }));
   };
 
   return (

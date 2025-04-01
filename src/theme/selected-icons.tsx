@@ -443,24 +443,9 @@ export const SelectedIconPacks: Record<string, iconData> = {
     ...transformIcons(solar_bold, "solar", "bold", "linear"),
   },
   "Google Material Two Tone": transformIcons(googleMaterialDuotone, "ic"),
-  "Google Material Baseline": transformIcons(
-    googleMaterialDuotone,
-    "ic",
-    "towtone",
-    "baseline"
-  ),
-  "Google Material Rounded": transformIcons(
-    googleMaterialDuotone,
-    "ic",
-    "twotone",
-    "round"
-  ),
-  "Google Material Sharp": transformIcons(
-    googleMaterialDuotone,
-    "ic",
-    "towtone",
-    "sharp"
-  ),
+  "Google Material Baseline": transformIcons(googleMaterialDuotone, "ic", "towtone", "baseline"),
+  "Google Material Rounded": transformIcons(googleMaterialDuotone, "ic", "twotone", "round"),
+  "Google Material Sharp": transformIcons(googleMaterialDuotone, "ic", "towtone", "sharp"),
   Phosphor: { ...ri_line, ...transformIcons(phDuotone, "ph", "-duotone", "") },
   "Phosphor Fill": {
     ...ri_fill,

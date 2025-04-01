@@ -3,10 +3,7 @@ import bookmark from "@/assets/bookmarks.json";
 
 export const loadBookmarksFromJson = () => bookmark as treeNodeArray;
 
-export const findBookmarkById = (
-  bookmarks: treeNodeArray,
-  id: string
-): treeNode | null => {
+export const findBookmarkById = (bookmarks: treeNodeArray, id: string): treeNode | null => {
   for (const bookmark of bookmarks) {
     if (bookmark.id === id) return bookmark;
 

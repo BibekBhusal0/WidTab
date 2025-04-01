@@ -1,8 +1,4 @@
-import {
-  allFolderSizes,
-  bookmarkSliceType,
-  folderSizes,
-} from "@/types/slice/bookmark";
+import { allFolderSizes, bookmarkSliceType, folderSizes } from "@/types/slice/bookmark";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialBookmarkState } from "./initialStates";
 
@@ -19,10 +15,7 @@ export const bookmarkSlice = createSlice({
     removeFavorete: (state, action: PayloadAction<string>) => {
       state.favorites = state.favorites.filter((id) => id !== action.payload);
     },
-    setFolderIcon: (
-      state,
-      action: PayloadAction<{ fodler: string; icon: string }>
-    ) => {
+    setFolderIcon: (state, action: PayloadAction<{ fodler: string; icon: string }>) => {
       const { fodler, icon } = action.payload;
       const icons = state.folderIcons || {};
       icons[fodler] = icon;
@@ -48,20 +41,14 @@ export const bookmarkSlice = createSlice({
     setFavorites: (state, action: PayloadAction<string[]>) => {
       state.favorites = action.payload;
     },
-    setState: (
-      state,
-      action: PayloadAction<{ value: bookmarkSliceType; check?: boolean }>
-    ) => {
+    setState: (state, action: PayloadAction<{ value: bookmarkSliceType; check?: boolean }>) => {
       const { value, check = true } = action.payload;
       const val = value;
       if (!val) return;
       if (!check) return Object.assign(state, val);
-      if (allFolderSizes.includes(val.folderSize))
-        state.folderSize = val.folderSize;
-      if (typeof val.showFavorites === "boolean")
-        state.showFavorites = val.showFavorites;
-      if (typeof val.linkInNewTab === "boolean")
-        state.linkInNewTab = val.linkInNewTab;
+      if (allFolderSizes.includes(val.folderSize)) state.folderSize = val.folderSize;
+      if (typeof val.showFavorites === "boolean") state.showFavorites = val.showFavorites;
+      if (typeof val.linkInNewTab === "boolean") state.linkInNewTab = val.linkInNewTab;
     },
 
     resetBookmarkState: (state) => Object.assign(state, initialBookmarkState),

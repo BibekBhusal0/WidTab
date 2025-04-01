@@ -1,11 +1,6 @@
 import { Command, renderItems, SuggestionItem } from "novel";
 import { tost } from "../tost";
-import {
-  EditorCommand,
-  EditorCommandItem,
-  EditorCommandEmpty,
-  EditorCommandList,
-} from "novel";
+import { EditorCommand, EditorCommandItem, EditorCommandEmpty, EditorCommandList } from "novel";
 import { Icon2RN } from "@/theme/icons";
 import { ScrollArea } from "../scrollarea";
 
@@ -16,12 +11,7 @@ export const suggestionItems: SuggestionItem[] = [
     searchTerms: ["p", "paragraph"],
     icon: "gravity-ui:text",
     command: ({ editor, range }) => {
-      editor
-        .chain()
-        .focus()
-        .deleteRange(range)
-        .toggleNode("paragraph", "paragraph")
-        .run();
+      editor.chain().focus().deleteRange(range).toggleNode("paragraph", "paragraph").run();
     },
   },
   {
@@ -39,12 +29,7 @@ export const suggestionItems: SuggestionItem[] = [
     searchTerms: ["title", "big", "large"],
     icon: "gravity-ui:heading-1",
     command: ({ editor, range }) => {
-      editor
-        .chain()
-        .focus()
-        .deleteRange(range)
-        .setNode("heading", { level: 1 })
-        .run();
+      editor.chain().focus().deleteRange(range).setNode("heading", { level: 1 }).run();
     },
   },
   {
@@ -53,12 +38,7 @@ export const suggestionItems: SuggestionItem[] = [
     searchTerms: ["subtitle", "medium"],
     icon: "gravity-ui:heading-2",
     command: ({ editor, range }) => {
-      editor
-        .chain()
-        .focus()
-        .deleteRange(range)
-        .setNode("heading", { level: 2 })
-        .run();
+      editor.chain().focus().deleteRange(range).setNode("heading", { level: 2 }).run();
     },
   },
   {
@@ -67,12 +47,7 @@ export const suggestionItems: SuggestionItem[] = [
     searchTerms: ["subtitle", "small"],
     icon: "gravity-ui:heading-3",
     command: ({ editor, range }) => {
-      editor
-        .chain()
-        .focus()
-        .deleteRange(range)
-        .setNode("heading", { level: 3 })
-        .run();
+      editor.chain().focus().deleteRange(range).setNode("heading", { level: 3 }).run();
     },
   },
   {
@@ -123,9 +98,7 @@ export const suggestionItems: SuggestionItem[] = [
       try {
         const content = editor.storage.markdown.getMarkdown();
         const a = document.createElement("a");
-        const url = URL.createObjectURL(
-          new Blob([content], { type: "text/markdown" }),
-        );
+        const url = URL.createObjectURL(new Blob([content], { type: "text/markdown" }));
         a.href = url;
         a.download = "editor.md";
         a.click();
@@ -147,29 +120,21 @@ export const suggestionItems: SuggestionItem[] = [
 
 export const SlashCommand = () => {
   return (
-    <EditorCommand className="z-50 w-[250px] px-1 py-3 bg-background-default rounded-themed">
+    <EditorCommand className="bg-background-default rounded-themed z-50 w-[250px] px-1 py-3">
       <ScrollArea
         viewPortProps={{ className: "h-auto max-h-[300px]" }}
-        scrollBarProps={{ className: "w-2" }}
-      >
-        <EditorCommandEmpty className="px-2 text-divider">
-          No results
-        </EditorCommandEmpty>
+        scrollBarProps={{ className: "w-2" }}>
+        <EditorCommandEmpty className="text-divider px-2">No results</EditorCommandEmpty>
         <EditorCommandList>
           {suggestionItems.map((item) => (
             <EditorCommandItem
-              value={[
-                item.title,
-                ...(item.searchTerms === undefined ? [] : item.searchTerms),
-              ].join(" ")}
+              value={[item.title, ...(item.searchTerms === undefined ? [] : item.searchTerms)].join(
+                " "
+              )}
               onCommand={(val) => item.command?.(val)}
-              className="flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-sm aria-selected:bg-primary-selected"
-              key={item.title}
-            >
-              <Icon2RN
-                icon={item.icon}
-                className="size-10 p-2 rounded-md border"
-              />
+              className="aria-selected:bg-primary-selected flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-sm"
+              key={item.title}>
+              <Icon2RN icon={item.icon} className="size-10 rounded-md border p-2" />
               <div>
                 <p className="font-medium">{item.title}</p>
                 <p className="text-xs">{item.description}</p>

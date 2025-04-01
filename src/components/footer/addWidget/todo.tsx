@@ -44,7 +44,7 @@ function AddTodo() {
   };
 
   return (
-    <div className="text-xl size-full">
+    <div className="size-full text-xl">
       <AllItemsList
         addWidget={addWidget}
         items={Tasks}
@@ -63,9 +63,7 @@ function AddTodo() {
         word_limit={undefined}
       />
       {!availablePosition && (
-        <div className="text-lg text-error-main pt-3">
-          Not Enough Space For Todo
-        </div>
+        <div className="text-error-main pt-3 text-lg">Not Enough Space For Todo</div>
       )}
     </div>
   );

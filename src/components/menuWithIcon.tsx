@@ -23,7 +23,7 @@ function IconMenu({ menuItems }: IconMenuProps) {
         <MenuItem
           selected={selected}
           sx={{ color: color }}
-          className="flex-center gap-3 icon-lg"
+          className="flex-center icon-lg gap-3"
           key={i}
           onClick={onClick}>
           <ListItemIcon sx={{ color: color }}>

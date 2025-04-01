@@ -34,7 +34,7 @@ export function useGetSpaceAndIcon(which: which = "all") {
     which === "dynamic"
       ? dynamicIcons
       : which === "static"
-      ? staticIcons
-      : [...dynamicIcons, ...staticIcons];
+        ? staticIcons
+        : [...dynamicIcons, ...staticIcons];
   return IconList;
 }

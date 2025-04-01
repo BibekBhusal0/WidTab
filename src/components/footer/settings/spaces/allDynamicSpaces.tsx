@@ -13,17 +13,11 @@ import { useDispatch, useSelector } from "react-redux";
 import ContextMenu from "@/components/contextMenu";
 import IconMenu, { IconMenuType } from "@/components/menuWithIcon";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
-import {
-  Sortable,
-  SortableDragHandle,
-  SortableItem,
-} from "@/components/sortable";
+import { Sortable, SortableDragHandle, SortableItem } from "@/components/sortable";
 
 function AllDynamicSpace() {
   const { delete_ } = useCurrentIcons();
-  const { allSpaces, currentSpace } = useSelector(
-    (state: StateType) => state.layout
-  );
+  const { allSpaces, currentSpace } = useSelector((state: StateType) => state.layout);
   const dispatch = useDispatch();
   return (
     <List>
@@ -51,12 +45,8 @@ function AllDynamicSpace() {
             <SortableItem value={s.id} key={s.id}>
               <ContextMenu menuContent={<IconMenu menuItems={menuItems} />}>
                 <ListItemButton
-                  selected={
-                    currentSpace.type === "dynamic" && currentSpace.id === s.id
-                  }
-                  onClick={() =>
-                    dispatch(changeCurrentSpace({ type: "dynamic", id: s.id }))
-                  }
+                  selected={currentSpace.type === "dynamic" && currentSpace.id === s.id}
+                  onClick={() => dispatch(changeCurrentSpace({ type: "dynamic", id: s.id }))}
                   sx={{ justifyContent: "space-between" }}
                   className="flex">
                   <div className="flex">
@@ -65,9 +55,7 @@ function AllDynamicSpace() {
                     </ListItemIcon>
                     <div className="text-md">{s.name}</div>
                   </div>
-                  <SortableDragHandle
-                    children={<Icon2RN icon="icon-park-outline:drag" />}
-                  />
+                  <SortableDragHandle children={<Icon2RN icon="icon-park-outline:drag" />} />
                 </ListItemButton>
               </ContextMenu>
             </SortableItem>

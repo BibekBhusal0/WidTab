@@ -35,7 +35,7 @@ const AdvancedEditor = ({
     <EditorRoot>
       <EditorContent
         autofocus={editable}
-        className="relative z-1 "
+        className="relative z-1"
         {...{ children, editable, extensions }}
         initialContent={value as JSONContent}
         editorProps={{
@@ -47,7 +47,7 @@ const AdvancedEditor = ({
             class: cn(
               "prose dark:prose-invert prose-sm prose-headings:font-title prose-pre:m-0",
               "font-default focus:outline-hidden max-w-full",
-              className,
+              className
             ),
           },
         }}
@@ -55,9 +55,7 @@ const AdvancedEditor = ({
           if (!editor || !onChange || typeof value === "undefined") return;
 
           if (typeof value === "string") {
-            (onChange as (value: string) => void)(
-              editor.storage.markdown.getMarkdown(),
-            );
+            (onChange as (value: string) => void)(editor.storage.markdown.getMarkdown());
           } else {
             (onChange as (value: JSONContent) => void)(editor.getJSON());
           }

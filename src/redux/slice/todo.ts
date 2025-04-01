@@ -24,31 +24,19 @@ export const todoSlice = createSlice({
       }
     },
 
-    changeTaskIcon(
-      state,
-      action: PayloadAction<{ task_id: number; icon: string }>
-    ) {
+    changeTaskIcon(state, action: PayloadAction<{ task_id: number; icon: string }>) {
       const task = state.Tasks.find((p) => p.id === action.payload.task_id);
       if (task) task.icon = action.payload.icon;
     },
-    changeTaskTitle(
-      state,
-      action: PayloadAction<{ task_id: number; title: string }>
-    ) {
+    changeTaskTitle(state, action: PayloadAction<{ task_id: number; title: string }>) {
       const task = state.Tasks.find((p) => p.id === action.payload.task_id);
       if (task) task.title = action.payload.title;
     },
-    changeTaskTodos(
-      state,
-      action: PayloadAction<{ task_id: number; todo: todoType[] }>
-    ) {
+    changeTaskTodos(state, action: PayloadAction<{ task_id: number; todo: todoType[] }>) {
       const task = state.Tasks.find((p) => p.id === action.payload.task_id);
       if (task) {
         if (task.filtered) {
-          task.todos = [
-            ...action.payload.todo,
-            ...task.todos.filter((a) => a.checked),
-          ];
+          task.todos = [...action.payload.todo, ...task.todos.filter((a) => a.checked)];
         } else task.todos = action.payload.todo;
       }
     },
@@ -67,10 +55,7 @@ export const todoSlice = createSlice({
       else state.pinnedTodo = action.payload;
     },
     resetTodoSlice: (state) => Object.assign(state, initialTodoState),
-    setState: (
-      state,
-      action: PayloadAction<{ value: todoStateType; check?: boolean }>
-    ) => {
+    setState: (state, action: PayloadAction<{ value: todoStateType; check?: boolean }>) => {
       const { value, check = true } = action.payload;
       const val = value;
       if (!val) return;

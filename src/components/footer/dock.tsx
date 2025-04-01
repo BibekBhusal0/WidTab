@@ -11,9 +11,7 @@ import Favicon from "@/utils/faviconURL";
 import { openLink } from "@/utils/bookmark";
 
 export const ToolbarDock = () => {
-  const { content } = useSelector(
-    (state: StateType) => state.layout.dockContent
-  );
+  const { content } = useSelector((state: StateType) => state.layout.dockContent);
 
   if (content === "spaces") return <DockSpace />;
 
@@ -32,11 +30,7 @@ const DockSpace = () => {
 
   const dockItems = items.map(({ icon, name, space }) => ({
     icon: (
-      <div
-        className={cn(
-          "size-full",
-          currentSpace.id === space.id && "text-primary-main"
-        )}>
+      <div className={cn("size-full", currentSpace.id === space.id && "text-primary-main")}>
         <Icon2RN icon={icon} />
       </div>
     ),
@@ -78,21 +72,15 @@ const DockBookmarkFav = () => {
   const { linkInNewTab } = useSelector((state: StateType) => state.bookmarks);
   const { toolBarPosition } = useSelector((state: StateType) => state.layout);
   const favoriteBookmarks = useFavoriteBookmarks();
-  const dockItems = getDockContentFromBookmarks(
-    favoriteBookmarks,
-    linkInNewTab
-  );
+  const dockItems = getDockContentFromBookmarks(favoriteBookmarks, linkInNewTab);
   return <Dock position={toolBarPosition} items={dockItems} />;
 };
 
 const DockBookmarkFolder = () => {
   const { linkInNewTab } = useSelector((state: StateType) => state.bookmarks);
-  const { toolBarPosition, dockContent } = useSelector(
-    (state: StateType) => state.layout
-  );
+  const { toolBarPosition, dockContent } = useSelector((state: StateType) => state.layout);
   const bookmark = useBookmarkFolder(dockContent.id);
-  if (dockContent.content !== "bookmark" || dockContent.id === "favorites")
-    return null;
+  if (dockContent.content !== "bookmark" || dockContent.id === "favorites") return null;
   const dockItems = getDockContentFromBookmarks(bookmark, linkInNewTab);
 
   return <Dock position={toolBarPosition} items={dockItems} />;

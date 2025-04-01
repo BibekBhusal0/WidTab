@@ -10,7 +10,7 @@ import useCurrentIcons from "@/hooks/useCurrentIcons";
 import { getUrlFromString } from "@/utils/url";
 
 function CustomWidget(props: CustomWidgetType) {
-  return <iframe src={props.url} className="size-full rounded-themed" />;
+  return <iframe src={props.url} className="rounded-themed size-full" />;
 }
 
 export function URLChange({ id }: { id: number }) {
@@ -65,7 +65,7 @@ export function ChangeURL({ url, id }: CustomWidgetType) {
   };
   return (
     <MenuPopover icon={edit}>
-      <div className="p-4 flex-center flex-col gap-4">
+      <div className="flex-center flex-col gap-4 p-4">
         <TextField
           error={!!helperText}
           helperText={helperText}

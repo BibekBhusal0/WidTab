@@ -10,9 +10,7 @@ import { ScrollArea } from "@/components/scrollarea";
 function Note({ id, title, text, icon }: noteType) {
   const dispatch = useDispatch();
   const titleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      changeNoteContent({ content: "title", id, value: e.target.value })
-    );
+    dispatch(changeNoteContent({ content: "title", id, value: e.target.value }));
   };
   const iconChangeHandler = (icon: string) => {
     dispatch(changeNoteContent({ id, content: "icon", value: icon }));
@@ -22,11 +20,11 @@ function Note({ id, title, text, icon }: noteType) {
   };
 
   return (
-    <div className="size-full flex flex-col gap-2 relative editor">
-      <div className="flex justify-start items-center gap-2 px-3 icon-xl">
+    <div className="editor relative flex size-full flex-col gap-2">
+      <div className="icon-xl flex items-center justify-start gap-2 px-3">
         <SelectIconMenu icon={icon} setIcon={iconChangeHandler} />
         <input
-          className={cn(transparentInput, "text-3xl w-[calc(100%-92px)]")}
+          className={cn(transparentInput, "w-[calc(100%-92px)] text-3xl")}
           type="text"
           autoFocus={title.trim() === ""}
           placeholder="Title Here"

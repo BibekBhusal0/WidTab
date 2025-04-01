@@ -78,7 +78,7 @@ export const TextButtons = () => {
           arrow
           title={
             <div className="flex-center flex-col gap-2">
-              <div className="capitalize text-md">{name}</div>
+              <div className="text-md capitalize">{name}</div>
               {shortcut && (
                 <div className="flex-center gap-1">
                   <Icon2RN icon="mingcute:command-line" className="size-4" />
@@ -92,9 +92,7 @@ export const TextButtons = () => {
             onClick={() => command(editor)}
             sx={{
               color: isActive(editor) ? "primary.main" : "text.primary",
-              backgroundColor: isActive(editor)
-                ? "var(--primary-3)"
-                : "transparent",
+              backgroundColor: isActive(editor) ? "var(--primary-3)" : "transparent",
               paddingX: "0",
             }}
             variant="outlined">

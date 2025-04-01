@@ -16,10 +16,7 @@ function BookmarkSearch() {
   const [searchTerm, setSearchTerm] = useState("");
   const searchedBookmarks = useBookmarkSearch(searchTerm);
 
-  const handleChange = (
-    _: React.SyntheticEvent<Element, Event>,
-    bookmark: treeNode | null
-  ) => {
+  const handleChange = (_: React.SyntheticEvent<Element, Event>, bookmark: treeNode | null) => {
     if (!bookmark) return;
     if (bookmark.url) openLink(bookmark.url, linkInNewTab);
     else dispatch(changeCurrentFolder(bookmark.id));
@@ -42,9 +39,7 @@ function BookmarkSearch() {
           </li>
         );
       }}
-      renderInput={(props) => (
-        <TextField {...props} placeholder="Search Bookmarks" />
-      )}
+      renderInput={(props) => <TextField {...props} placeholder="Search Bookmarks" />}
     />
   );
 }
@@ -54,9 +49,7 @@ interface LinkProps {
 }
 
 const Link = ({ link }: LinkProps) => {
-  const { favorites, folderIcons } = useSelector(
-    (state: StateType) => state.bookmarks
-  );
+  const { favorites, folderIcons } = useSelector((state: StateType) => state.bookmarks);
 
   const { title, url, id } = link;
   const cls = "w-12 aspect-square";
@@ -68,13 +61,13 @@ const Link = ({ link }: LinkProps) => {
   );
 
   return (
-    <div className="size-full flex gap-4 items-center text-xl icon-2xl">
+    <div className="icon-2xl flex size-full items-center gap-4 text-xl">
       {icon}
-      <div className="text-xl truncate">{title}</div>
+      <div className="truncate text-xl">{title}</div>
       {favorites.includes(id) && (
         <>
           <div className="grow"></div>
-          <Icon className="text-2xl shrink-0" icon="mdi:heart" />
+          <Icon className="shrink-0 text-2xl" icon="mdi:heart" />
         </>
       )}
     </div>

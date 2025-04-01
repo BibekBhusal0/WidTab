@@ -1,10 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
-import {
-  removeFolderIcon,
-  setFolderIcon,
-  toggleFavorites,
-} from "@/redux/slice/bookmark";
+import { removeFolderIcon, setFolderIcon, toggleFavorites } from "@/redux/slice/bookmark";
 import ContextMenu, { contextMenuProps } from "@/components/contextMenu";
 import IconMenu from "@/components/menuWithIcon";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
@@ -45,15 +41,11 @@ export function LinkContextMenu({ id, ...props }: AddFavProps) {
     link?.url && setUrl(link.url);
   }, []);
 
-  const handleUrlChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setUrl(e.target.value);
     if (urlHelperText) setUrlHelperText("");
   };
-  const handleNameChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setName(e.target.value);
     if (nameHelperText) setNameHelperText("");
   };
@@ -93,7 +85,7 @@ export function LinkContextMenu({ id, ...props }: AddFavProps) {
       {...props}
       menuContent={
         <div>
-          <div className="flex-center flex-col p-2 gap-2">
+          <div className="flex-center flex-col gap-2 p-2">
             <TextField
               sx={{ mb: "10px" }}
               autoFocus
@@ -153,7 +145,7 @@ export function FolderContextMenu({ id, ...props }: AddFavProps) {
       {...props}
       menuContent={
         <div>
-          <div className="flex-center flex-col p-2 w-40">
+          <div className="flex-center w-40 flex-col p-2">
             <RenameItem
               handleChange={(a) => editFolder(id, a)}
               initialText={name}
@@ -164,20 +156,16 @@ export function FolderContextMenu({ id, ...props }: AddFavProps) {
               }}
               children=<InputLabel children="Name" />
             />
-            <div className="full-between text-lg icon-lg px-1">
+            <div className="full-between icon-lg px-1 text-lg">
               Icon
               <SelectIconMenu
                 icon={folderIcons?.[id] || emptyIcon}
-                setIcon={(a) =>
-                  a !== emptyIcon &&
-                  dispatch(setFolderIcon({ fodler: id, icon: a }))
-                }
+                setIcon={(a) => a !== emptyIcon && dispatch(setFolderIcon({ fodler: id, icon: a }))}
                 children=<Button
                   onClick={() => dispatch(removeFolderIcon({ fodler: id }))}
                   variant="outlined"
                   color="error"
-                  startIcon={<Icon2RN icon={delete_} />}
-                >
+                  startIcon={<Icon2RN icon={delete_} />}>
                   Remove
                 </Button>
               />

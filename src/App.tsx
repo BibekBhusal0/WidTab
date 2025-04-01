@@ -12,27 +12,20 @@ import useCurrentTheme from "@/hooks/useCurrentTheme";
 import { useFavicon } from "./utils/faviconURL";
 
 function App() {
-  const { currentSpace, toolBarPosition } = useSelector(
-    (state: StateType) => state.layout
-  );
+  const { currentSpace, toolBarPosition } = useSelector((state: StateType) => state.layout);
   const { mode } = useCurrentTheme();
   const { appProps } = positionProps[toolBarPosition];
   const layout = useCurrentLayout();
   var crrLayout = <DynamicLayout />;
   useFavicon();
   if (!layout) {
-    const l: StaticPagesType =
-      typeof currentSpace.id === "number" ? "todo" : currentSpace.id;
+    const l: StaticPagesType = typeof currentSpace.id === "number" ? "todo" : currentSpace.id;
     crrLayout = <StaticLayout widgetType={l} />;
   }
   return (
     <Box
       {...appProps}
-      className={cn(
-        "size-full h-screen relative flex",
-        appProps?.className,
-        mode
-      )}>
+      className={cn("relative flex size-full h-screen", appProps?.className, mode)}>
       {crrLayout}
       <Footer />
     </Box>

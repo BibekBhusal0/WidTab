@@ -50,7 +50,7 @@ function AddBookmark() {
               <ListItemIcon>
                 <Icon2RN icon={folderIcons?.[bookmark.id]} />
               </ListItemIcon>
-              <div className="text-xl truncate">{bookmark.title}</div>
+              <div className="truncate text-xl">{bookmark.title}</div>
             </MenuItem>
           )}
           {bookmark.children.map((child: treeNodeOrArray, i) => (
@@ -63,11 +63,9 @@ function AddBookmark() {
   };
 
   return (
-    <div className="w-full h-[330px] relative">
-      <ScrollArea className="w-full h-[80%]">
-        {getBookmarkFolders(bookmarks)}
-      </ScrollArea>
-      <div className="p-2 h-[10%] bottom-2 horizontal-center w-full flex-center gap-4">
+    <div className="relative h-[330px] w-full">
+      <ScrollArea className="h-[80%] w-full">{getBookmarkFolders(bookmarks)}</ScrollArea>
+      <div className="horizontal-center flex-center bottom-2 h-[10%] w-full gap-4 p-2">
         <SimpleAddWidgetButton
           widget={{ type: "favorites", values: { id: 0 } }}
           buttonProps={{

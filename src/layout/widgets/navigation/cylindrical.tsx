@@ -1,12 +1,6 @@
 import { Icon2RN } from "@/theme/icons";
 import { cn } from "@/utils/cn";
-import {
-  type PanInfo,
-  motion,
-  useAnimation,
-  useMotionValue,
-  useTransform,
-} from "framer-motion";
+import { type PanInfo, motion, useAnimation, useMotionValue, useTransform } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import Button from "@mui/material/Button";
@@ -71,9 +65,7 @@ export function CylindricalNavigation() {
   });
 
   return (
-    <div
-      className="size-full flex items-center justify-evenly flex-col p-2 gap-3"
-      ref={ref}>
+    <div className="flex size-full flex-col items-center justify-evenly gap-3 p-2" ref={ref}>
       <div
         style={{
           height: Math.min(100, height - 20),
@@ -101,14 +93,12 @@ export function CylindricalNavigation() {
             {IconList.map((item, index) => {
               return (
                 <div
-                  className="absolute flex-center h-full origin-center py-2"
+                  className="flex-center absolute h-full origin-center py-2"
                   key={index}
                   style={{
                     width: `${faceWidth}px`,
                     paddingLeft: `${faceWidth / 20}px`,
-                    transform: `rotateY(${
-                      index * (360 / faceCount)
-                    }deg) translateZ(${radius}px)`,
+                    transform: `rotateY(${index * (360 / faceCount)}deg) translateZ(${radius}px)`,
                   }}>
                   <div
                     style={{
@@ -123,7 +113,7 @@ export function CylindricalNavigation() {
                       "mx-auto p-3",
                       "transition-transform hover:scale-110"
                     )}>
-                    <div className="size-full icon-full transition-transform group-hover:scale-150">
+                    <div className="icon-full size-full transition-transform group-hover:scale-150">
                       <Icon2RN icon={item.icon} />
                     </div>
                   </div>
@@ -134,10 +124,7 @@ export function CylindricalNavigation() {
         </div>
       </div>
 
-      <Button
-        variant="outlined"
-        className="text-xl text-center"
-        onClick={changeSpace}>
+      <Button variant="outlined" className="text-center text-xl" onClick={changeSpace}>
         Go to {selected?.name || "Space"}
       </Button>
     </div>
