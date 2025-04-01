@@ -17,7 +17,7 @@ const AnalogClock = ({
   const clockSize = Math.min(width, height) - 30;
   const fontSize = clockSize <= 150 ? 6 : Math.max(6, clockSize / 25);
   return (
-    <div ref={ref} className="size-full flex-center relative" style={{ fontSize }}>
+    <div ref={ref} className="flex-center relative size-full" style={{ fontSize }}>
       <Clock
         size={clockSize}
         renderSecondHand={showSeconds === true}

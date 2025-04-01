@@ -85,7 +85,7 @@ export const NodeSelector = () => {
     <MenuPopover
       key={key}
       icon={
-        <div className="size-full flex-center gap-2 icon-sm">
+        <div className="flex-center icon-sm size-full gap-2">
           <div className="text-sm">{activeItem.name}</div>
           <Icon2RN icon="ri:arrow-down-s-line" className="size-4" />
         </div>
@@ -103,7 +103,7 @@ export const NodeSelector = () => {
               }}
               selected={activeItem.name === i.name}
               className="gap-2 px-3 py-2">
-              <Icon2RN icon={i.icon} className="size-6 border rounded-md p-1" />
+              <Icon2RN icon={i.icon} className="size-6 rounded-md border p-1" />
 
               <div>{i.name}</div>
             </MenuItem>

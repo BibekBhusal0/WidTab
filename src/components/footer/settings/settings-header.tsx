@@ -11,8 +11,8 @@ const SettingHeader: FunctionComponent<SettingHeaderProps> = ({ first = false, .
     <Box
       {...props}
       className={cn(
-        "text-2xl pb-3",
-        { "pt-3 mt-2 border-t-2 border-t-divider": !first },
+        "pb-3 text-2xl",
+        { "border-t-divider mt-2 border-t-2 pt-3": !first },
         props.className
       )}
     />

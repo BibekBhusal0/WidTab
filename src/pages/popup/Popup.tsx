@@ -19,11 +19,11 @@ function Popup() {
   return (
     <div
       className={cn(
-        "flex gap-4 m-4 h-[500px]",
-        showRightPanel && showFavorites ? "w-[750px]" : "w-[400px] flex-center"
+        "m-4 flex h-[500px] gap-4",
+        showRightPanel && showFavorites ? "w-[750px]" : "flex-center w-[400px]"
       )}>
       {contentEmpty && (
-        <div className="grow text-xl text-center">
+        <div className="grow text-center text-xl">
           You have not Pinned any todo or habit tracker and you don't have any favorites.
         </div>
       )}
@@ -40,7 +40,7 @@ function Popup() {
 }
 
 const Favorites = () => (
-  <Paper className="h-full w-[350px] relative" sx={{ backgroundColor: "primaryContainer.paper" }}>
+  <Paper className="relative h-full w-[350px]" sx={{ backgroundColor: "primaryContainer.paper" }}>
     <FavoritesWidget id={0} iconSize="small" />
   </Paper>
 );
@@ -54,7 +54,7 @@ function PinnedTodo() {
   return (
     <Paper
       sx={{ backgroundColor: "primaryContainer.paper" }}
-      className="w-[380px] h-[350px] overflow-hidden">
+      className="h-[350px] w-[380px] overflow-hidden">
       <Todo {...p} />
     </Paper>
   );
@@ -66,7 +66,7 @@ function PinnedHabitTracker() {
   const t = trackers.find((p) => p.id === pinned);
   if (!t) return null;
   return (
-    <Paper sx={{ backgroundColor: "primaryContainer.paper" }} className="w-[380px] h-[150px] p-2">
+    <Paper sx={{ backgroundColor: "primaryContainer.paper" }} className="h-[150px] w-[380px] p-2">
       <HabitTracker {...t} />
     </Paper>
   );

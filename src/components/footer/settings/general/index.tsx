@@ -19,7 +19,7 @@ function GeneralSettings() {
   ];
 
   return (
-    <div className="w-full flex flex-col gap-4 pb-4">
+    <div className="flex w-full flex-col gap-4 pb-4">
       {/* Link in new tab */}
       <MenuSwitch plain items={toggle} />
 

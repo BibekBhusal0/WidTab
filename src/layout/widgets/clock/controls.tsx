@@ -99,7 +99,7 @@ function ClockControls({ id }: { id: number }) {
       </MenuItem>
       <Divider />
 
-      <MenuItem className="p-2 ">
+      <MenuItem className="p-2">
         <Autocomplete
           fullWidth
           disableClearable

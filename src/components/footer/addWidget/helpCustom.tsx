@@ -25,7 +25,7 @@ function HelpInCustomWidget() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="absolute bottom-0 right-0">
+    <div className="absolute right-0 bottom-0">
       <IconButton
         onClick={() => setOpen(true)}
         color="primary"
@@ -34,7 +34,7 @@ function HelpInCustomWidget() {
         <Icon icon="material-symbols:help" />
       </IconButton>
       <Modal open={open} onClose={() => setOpen(false)}>
-        <div className="p-10 bg-primary-container-paper absolute-center flex flex-col gap-3">
+        <div className="bg-primary-container-paper absolute-center flex flex-col gap-3 p-10">
           <div className="text-xl">
             You can personalize your experience by adding custom widgets! Simply enter the URL of
             your desired widget.

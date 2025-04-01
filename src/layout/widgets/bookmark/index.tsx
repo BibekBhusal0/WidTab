@@ -42,7 +42,7 @@ function BookmarkWidget(props: BookmarkWidgetType) {
       )}
       <ScrollArea
         style={{ height: `calc(100% - ${header_height + 4}px)` }}
-        className="px-2 size-full">
+        className="size-full px-2">
         <div className="py-2">
           <BookmarkGrid
             contextMenu={false}

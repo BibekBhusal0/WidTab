@@ -100,7 +100,7 @@ const HabitTrackerEdit: FunctionComponent<HabitTrackerEditProps> = ({
   };
 
   return (
-    <div className="flex-center flex-col w-full gap-4">
+    <div className="flex-center w-full flex-col gap-4">
       {Object.entries(items).map(([key, value]) => (
         <div key={key} className="full-between">
           <div className="text-xl">{key}</div>
@@ -108,7 +108,7 @@ const HabitTrackerEdit: FunctionComponent<HabitTrackerEditProps> = ({
         </div>
       ))}
       {errorMessage !== "" && <div className="text-error-main">{errorMessage}</div>}
-      <div className="w-full flex-center">
+      <div className="flex-center w-full">
         <Button variant="contained" children="Done" {...buttonProps} onClick={handleClick} />
       </div>
     </div>

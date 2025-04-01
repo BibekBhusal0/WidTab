@@ -53,7 +53,7 @@ export const ColorSelector = () => {
         },
       }}
       icon={
-        <div className="text-sm text-center w-full flex-center gap-2">
+        <div className="flex-center w-full gap-2 text-center text-sm">
           A <Icon2RN icon="ri:arrow-down-s-line" className="size-4" />
         </div>
       }>
@@ -78,7 +78,7 @@ export const ColorSelector = () => {
                 handleClose();
               }}
               selected={name === activeColorItem?.name}
-              className="px-3 py-2 gap-3">
+              className="gap-3 px-3 py-2">
               <div className={cls} style={{ color }}>
                 A
               </div>
@@ -87,7 +87,7 @@ export const ColorSelector = () => {
           ))}
         </div>
         <div>
-          <div className="my-1 pt-1 px-2 text-lg font-semibold border-t-border border-t-2">
+          <div className="border-t-border my-1 border-t-2 px-2 pt-1 text-lg font-semibold">
             Highlight
           </div>
           {HIGHLIGHT_COLORS.map(({ name, color }, i) => (
@@ -98,7 +98,7 @@ export const ColorSelector = () => {
                 name !== "Default" && editor.chain().focus().setHighlight({ color }).run();
                 handleClose();
               }}
-              className="px-3 py-2 gap-3"
+              className="gap-3 px-3 py-2"
               selected={name === activeHighlightItem?.name}>
               <div className={cls} style={{ backgroundColor: color }}>
                 A

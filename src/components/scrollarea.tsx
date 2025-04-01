@@ -41,13 +41,13 @@ const ScrollBar = ({ className, orientation = "vertical", ...props }: ScrollArea
     <ScrollAreaScrollbar
       orientation={orientation}
       className={cn(
-        "flex touch-none select-none transition-colors p-[1px]",
+        "flex touch-none p-[1px] transition-colors select-none",
         orientation === "vertical" && "h-full w-2.5 border-l border-l-transparent",
         orientation === "horizontal" && "h-2.5 flex-col border-t border-t-transparent",
         className
       )}
       {...props}>
-      <ScrollAreaThumb className="relative flex-1 rounded-full bg-divider" />
+      <ScrollAreaThumb className="bg-divider relative flex-1 rounded-full" />
     </ScrollAreaScrollbar>
   );
 };

@@ -104,11 +104,11 @@
 }
 
 @utility flex-center {
-  @apply flex justify-center items-center;
+  @apply flex items-center justify-center;
 }
 
 @utility between {
-  @apply flex justify-between items-center;
+  @apply flex items-center justify-between;
 }
 
 @utility full-between {
@@ -131,7 +131,7 @@
 
 .todo-list {
   ul[data-type="taskList"] li[data-checked="true"] > div {
-    @apply line-through text-text-disabled;
+    @apply text-text-disabled line-through;
     text-decoration-thickness: 2px;
   }
 
@@ -139,7 +139,7 @@
     @apply text-text-primary;
 
     &::before {
-      @apply h-0 float-left pointer-events-none text-divider;
+      @apply text-divider pointer-events-none float-left h-0;
       content: "Add a task...";
       pointer-events: none;
     }
@@ -173,7 +173,7 @@
 }
 
 .pre:not(.node-codeBlock)[data-placeholder]:not(:empty)::before {
-  @apply h-0 float-left pointer-events-none text-divider;
+  @apply text-divider pointer-events-none float-left h-0;
   content: attr(data-placeholder);
   pointer-events: none;
 }
@@ -190,19 +190,19 @@
   }
 
   hr {
-    @apply border-2 mt-4 mb-6;
+    @apply mt-4 mb-6 border-2;
   }
 
   li {
-    @apply leading-normal marker:text-divider;
+    @apply marker:text-divider leading-normal;
   }
 
   ol {
-    @apply list-decimal list-outside leading-3;
+    @apply list-outside list-decimal leading-3;
   }
 
   ul {
-    @apply list-disc list-outside leading-3;
+    @apply list-outside list-disc leading-3;
   }
 
   pre {
@@ -214,21 +214,21 @@
   }
 
   a {
-    @apply underline underline-offset-[3px] hover:text-primary-main transition-colors cursor-pointer;
+    @apply hover:text-primary-main cursor-pointer underline underline-offset-[3px] transition-colors;
   }
 
   ul[data-type="taskList"] {
     @apply pl-1;
 
     li {
-      @apply flex gap-2 items-start;
+      @apply flex items-start gap-2;
 
       > label {
         user-select: none;
 
         input[type="checkbox"] {
-          @apply appearance-none bg-transparent rounded-themed m-0 cursor-pointer size-5 relative border-primary-main border-2 grid place-content-center hover:bg-primary-3 active:bg-primary-5 checked:bg-primary-main checked:hover:bg-primary-main;
-          @apply before:content-[''] before:size-3 before:scale-0 before:transition-transform before:duration-100 before:ease-in-out before:origin-center checked:before:scale-100 text-primary-contrast-text;
+          @apply rounded-themed border-primary-main hover:bg-primary-3 active:bg-primary-5 checked:bg-primary-main checked:hover:bg-primary-main relative m-0 grid size-5 cursor-pointer appearance-none place-content-center border-2 bg-transparent;
+          @apply text-primary-contrast-text before:size-3 before:origin-center before:scale-0 before:transition-transform before:duration-100 before:ease-in-out before:content-[''] checked:before:scale-100;
 
           &::before {
             box-shadow: inset 1em 1em;
@@ -238,7 +238,7 @@
       }
 
       &[data-checked="true"] > div > p {
-        @apply line-through text-text-disabled;
+        @apply text-text-disabled line-through;
         text-decoration-thickness: 1px;
       }
 
@@ -268,11 +268,11 @@
 }
 
 .editor .drag-handle {
-  @apply fixed bg-no-repeat bg-center size-6 z-50 duration-200 cursor-grab transition-colors rounded-md;
-  @apply hover:bg-stone-100/10 active:bg-stone-200/5 active:cursor-grabbing;
+  @apply fixed z-50 size-6 cursor-grab rounded-md bg-center bg-no-repeat transition-colors duration-200;
+  @apply hover:bg-stone-100/10 active:cursor-grabbing active:bg-stone-200/5;
 
   &.hide {
-    @apply opacity-0 pointer-events-none;
+    @apply pointer-events-none opacity-0;
   }
 
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' style='fill: rgba(0, 0, 0, 0.5)'%3E%3Cpath d='M3,2 C2.44771525,2 2,1.55228475 2,1 C2,0.44771525 2.44771525,0 3,0 C3.55228475,0 4,0.44771525 4,1 C4,1.55228475 3.55228475,2 3,2 Z M3,6 C2.44771525,6 2,5.55228475 2,5 C2,4.44771525 2.44771525,4 3,4 C3.55228475,4 4,4.44771525 4,5 C4,5.55228475 3.55228475,6 3,6 Z M3,10 C2.44771525,10 2,9.55228475 2,9 C2,8.44771525 2.44771525,8 3,8 C3.55228475,8 4,8.44771525 4,9 C4,9.55228475 3.55228475,10 3,10 Z M7,2 C6.44771525,2 6,1.55228475 6,1 C6,0.44771525 6.44771525,0 7,0 C7.55228475,0 8,0.44771525 8,1 C8,1.55228475 7.55228475,2 7,2 Z M7,6 C6.44771525,6 6,5.55228475 6,5 C6,4.44771525 6.44771525,4 7,4 C7.55228475,4 8,4.44771525 8,5 C8,5.55228475 7.55228475,6 7,6 Z M7,10 C6.44771525,10 6,9.55228475 6,9 C6,8.44771525 6.44771525,8 7,8 C7.55228475,8 8,8.44771525 8,9 C8,9.55228475 7.55228475,10 7,10 Z'%3E%3C/path%3E%3C/svg%3E");

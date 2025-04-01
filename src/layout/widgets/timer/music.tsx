@@ -85,16 +85,16 @@ export default function MusicWidget({ play_ = false }: { play_?: boolean }) {
         onPlay={() => setPlay(true)}
         onPause={() => setPlay(false)}
       />
-      <div className="flex size-full flex-col p-4 gap-4">
+      <div className="flex size-full flex-col gap-4 p-4">
         <div
           aria-label="title-and-music-icons"
           className="relative flex flex-1 flex-col justify-between">
           <div className="full-between gap-3">
             <div className="flex flex-col gap-2">
-              <p className="line-clamp-1 w-full text-2xl font-bold leading-none truncate">
+              <p className="line-clamp-1 w-full truncate text-2xl leading-none font-bold">
                 {title}
               </p>
-              <p className="line-clamp-1 text-sm font-semibold leading-none truncate">{artist}</p>
+              <p className="line-clamp-1 truncate text-sm leading-none font-semibold">{artist}</p>
             </div>
 
             <div className="flex-center h-fit w-12 flex-wrap gap-1 text-lg">
@@ -104,7 +104,7 @@ export default function MusicWidget({ play_ = false }: { play_?: boolean }) {
             </div>
           </div>
         </div>
-        <div className="mt-2 flex items-center justify-evenly icon-2xl">
+        <div className="icon-2xl mt-2 flex items-center justify-evenly">
           {Buttons.map(({ onClick, icon }, index) => (
             <IconButton key={index} onClick={onClick}>
               <Icon icon={icon} />

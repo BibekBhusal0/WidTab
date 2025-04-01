@@ -24,11 +24,11 @@ function Todo({ id, title, todos, filtered, icon }: TaskType) {
   };
 
   return (
-    <div className="size-full relative flex flex-col gap-2 editor">
-      <div className="flex justify-start items-center gap-2 px-3 h-12 icon-xl">
+    <div className="editor relative flex size-full flex-col gap-2">
+      <div className="icon-xl flex h-12 items-center justify-start gap-2 px-3">
         <SelectIconMenu icon={icon} setIcon={iconChangeHandler} />
         <input
-          className={cn(transparentInput, "text-3xl w-[calc(100%-90px)] ")}
+          className={cn(transparentInput, "w-[calc(100%-90px)] text-3xl")}
           type="text"
           autoFocus={title.trim() === ""}
           placeholder="Title Here"

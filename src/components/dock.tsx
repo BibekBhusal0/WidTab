@@ -36,15 +36,15 @@ export const Dock = ({ items, position = "bottom" }: dockProps) => {
   );
 
   return (
-    <div className="size-full flex-center" ref={ref}>
+    <div className="flex-center size-full" ref={ref}>
       <motion.div
         onMouseMove={(e) => mousePosition.set(e[h ? "pageX" : "pageY"])}
         onMouseLeave={() => mousePosition.set(Infinity)}
         className={cn(
-          "flex justify-start rounded-2xl backdrop-blur-xs bg-secondary-container-paper",
+          "bg-secondary-container-paper flex justify-start rounded-2xl backdrop-blur-xs",
           h
-            ? "flex-row mx-auto px-4 h-full max-w-full overflow-x-visible"
-            : "flex-col my-auto py-4 w-full max-h-full overflow-y-visible"
+            ? "mx-auto h-full max-w-full flex-row overflow-x-visible px-4"
+            : "my-auto max-h-full w-full flex-col overflow-y-visible py-4"
         )}>
         {currentPage !== 0 && items.length !== 0 && (
           <IconButton
@@ -116,7 +116,7 @@ function DockIcon({ mouse, name, icon, onClick, position = "bottom" }: DockIconP
         marginRight: marginLeft,
         marginBottom: marginTop,
       }}
-      className="cursor-pointer relative"
+      className="relative cursor-pointer"
       onClick={onClick}>
       <Tooltip
         TransitionComponent={Zoom}
@@ -127,8 +127,8 @@ function DockIcon({ mouse, name, icon, onClick, position = "bottom" }: DockIconP
           ref={ref}
           style={{ scale, transformOrigin: position, width: "40px" }}
           className={cn(
-            "relative flex-center aspect-square rounded-full icon-full p-[20%]",
-            "shadow-lg backdrop-blur-md bg-primary-2 shadow-[#00000022] dark:shadow-[#ffffff22]"
+            "flex-center icon-full relative aspect-square rounded-full p-[20%]",
+            "bg-primary-2 shadow-lg shadow-[#00000022] backdrop-blur-md dark:shadow-[#ffffff22]"
           )}>
           <Icon2RN icon={icon} />
         </motion.div>

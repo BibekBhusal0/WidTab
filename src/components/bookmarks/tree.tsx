@@ -115,11 +115,11 @@ function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
         {...listeners}
         style={style}
         onClick={(e) => openLink(bookmarks.url || "", linkInNewTab, e)}
-        className={cn("w-full flex items-center gap-4 pl-2 ml-2", isDragging && "cursor-grabbing")}>
-        <div className="py-1 my-1 w-full">
-          <div className="flex items-center gap-4 w-full">
-            <Favicon src={bookmarks.url} className="size-10 aspect-square" />
-            <div className="text-xl truncate">{bookmarks.title}</div>
+        className={cn("ml-2 flex w-full items-center gap-4 pl-2", isDragging && "cursor-grabbing")}>
+        <div className="my-1 w-full py-1">
+          <div className="flex w-full items-center gap-4">
+            <Favicon src={bookmarks.url} className="aspect-square size-10" />
+            <div className="truncate text-xl">{bookmarks.title}</div>
           </div>
         </div>
         {fav && <Icon className="text-3xl" icon="mdi:heart" />}
@@ -174,7 +174,7 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
       <div
         ref={droppableRef}
         className={cn(
-          "relative py-1 my-1 ml-1 pl-2  border-2 border-transparent",
+          "relative my-1 ml-1 border-2 border-transparent py-1 pl-2",
           isOver && "border-primary-5",
           isCurrentFolder && "bg-primary-2"
         )}>
@@ -183,7 +183,7 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
             {...listeners}
             ref={folderRef}
             className={cn(
-              "flex w-full items-center gap-4 cursor-pointer",
+              "flex w-full cursor-pointer items-center gap-4",
               isDragging && "cursor-grabbing"
             )}
             onClick={() => {
@@ -193,7 +193,7 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
             <div className="aspect-square h-full shrink-0">
               <Folder {...{ open }} icon={folderIcons?.[bookmarks.id]} />
             </div>
-            <div className="text-2xl truncate">{bookmarks.title}</div>
+            <div className="truncate text-2xl">{bookmarks.title}</div>
           </div>
         </FolderContextMenu>
 

@@ -51,7 +51,7 @@ function GeminiWidget(props: geminiWidgetType) {
       {hasKey ? (
         <AIChat APIkey={key} {...props} />
       ) : (
-        <div className="size-full flex-center flex-col gap-4 text-xl">
+        <div className="flex-center size-full flex-col gap-4 text-xl">
           <TextField
             label="API KEY"
             placeholder="API KEY"
@@ -80,7 +80,7 @@ export function AIChat({ ...props }: aiChatProp) {
   const [loading, setLoading] = useState(false);
 
   return (
-    <div className="size-full flex justify-between flex-col gap-2 relative">
+    <div className="relative flex size-full flex-col justify-between gap-2">
       <AIChatContent {...{ loading }} {...props} />
       <AIChatInput {...{ loading, setLoading }} {...props} />
     </div>
@@ -101,7 +101,7 @@ function AIChatContent({ loading, conversation }: aiChatProp & { loading: boolea
     <ScrollArea ref={mainRef}>
       <div
         className={cn(
-          "size-full max-w-full prose dark:prose-invert prose-pre:p-0 prose-pre:border prose-pre:border-divider flex flex-col gap-4 p-4 transition-all"
+          "prose dark:prose-invert prose-pre:p-0 prose-pre:border prose-pre:border-divider flex size-full max-w-full flex-col gap-4 p-4 transition-all"
         )}>
         <ReformatContent {...{ conversation, loading }} />
       </div>
@@ -191,7 +191,7 @@ export function ReformatContent({ conversation, loading }: reformatContentProps)
       {conversation.map(({ parts, role }, index) => (
         <Fragment key={index}>
           {role === "user" && (
-            <Paper variant="outlined" className="flex flex-col gap-2 max-w-[80%] self-end p-4">
+            <Paper variant="outlined" className="flex max-w-[80%] flex-col gap-2 self-end p-4">
               {parts.map(({ text }, i) => (
                 <Fragment key={i}>
                   {text?.split("\n").map((t, i) => <div key={i}>{t}</div>)}
@@ -247,7 +247,7 @@ export function ReformatContent({ conversation, loading }: reformatContentProps)
         </Fragment>
       ))}
       {loading && (
-        <Paper className={cn(cls, "flex flex-center gap-2 py-2")} variant="outlined">
+        <Paper className={cn(cls, "flex-center flex gap-2 py-2")} variant="outlined">
           <Icon icon="svg-spinners:3-dots-bounce" className="text-3xl" />
           <div className="text-xl">Gemini Is Typing</div>
         </Paper>

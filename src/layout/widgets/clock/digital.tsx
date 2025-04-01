@@ -15,7 +15,7 @@ const DigitalClock = ({
   }, [time, timeZone, TwentyFourHour, showSeconds]);
 
   return (
-    <FitText max={300} className="size-full flex-center">
+    <FitText max={300} className="flex-center size-full">
       {formatTime()}
     </FitText>
   );

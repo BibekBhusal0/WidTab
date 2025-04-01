@@ -21,7 +21,7 @@ function App() {
     crrLayout = <StaticLayout widgetType={l} />;
   }
   return (
-    <Box {...appProps} className={cn("size-full h-screen relative flex", appProps?.className)}>
+    <Box {...appProps} className={cn("relative flex size-full h-screen", appProps?.className)}>
       {crrLayout}
       <Footer />
     </Box>

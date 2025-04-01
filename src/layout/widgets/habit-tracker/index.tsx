@@ -44,7 +44,7 @@ function HabitTracker({ id, target, title, icon, unit, history = {} }: HabitTrac
   return (
     <>
       <div aria-label="icon and title" className="full-between">
-        <div className="w-16 bg-primary-container-default rounded-full aspect-square p-2">
+        <div className="bg-primary-container-default aspect-square w-16 rounded-full p-2">
           <Icon icon={icon} className="size-full" />
         </div>
         <div className="text-4xl">{title}</div>
@@ -54,11 +54,11 @@ function HabitTracker({ id, target, title, icon, unit, history = {} }: HabitTrac
       <div aria-label="streak, progress and buttons" className="full-between">
         <div aria-label="streak" className="between gap-4">
           <div className="flex-center gap-4">
-            <div className="flex-center gap-2 p-1.5 rounded-xl border-text-primary border-2">
+            <div className="flex-center border-text-primary gap-2 rounded-xl border-2 p-1.5">
               <div
                 className={cn(
-                  "aspect-square w-10 relative p-0.5 transition-all",
-                  "rounded-full border-text-primary border-2",
+                  "relative aspect-square w-10 p-0.5 transition-all",
+                  "border-text-primary rounded-full border-2",
                   {
                     "border-solid": completedToday,
                     "border-dashed": !completedToday,

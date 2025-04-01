@@ -39,7 +39,7 @@ function HabitTrackerStatsSingle({ ...props }: HabitTrackerStatsSingleProps) {
   };
   return (
     <div className="size-full p-2">
-      <div className="size-full flex-center flex-col gap-2" ref={ref}>
+      <div className="flex-center size-full flex-col gap-2" ref={ref}>
         <div aria-label="title-and-buttons" className="full-between px-3">
           <Button startIcon={<Icon icon="bi:arrow-left" />} {...btnProps} onClick={handlePrevious}>
             Previous

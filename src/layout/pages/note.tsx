@@ -25,7 +25,7 @@ function NotesPage() {
         value={allNotes}
         onValueChange={(n) => dispatch(reorderNotes(n))}
         orientation="mixed">
-        <div className="grid gap-2 grid-cols-1 p-3 sm:grid-cols-2 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-2 p-3 sm:grid-cols-2 md:grid-cols-3">
           {allNotes.map((p) => {
             const handleDelete = () => dispatch(deleteNote(p.id));
             return (
@@ -55,7 +55,7 @@ function NotesPage() {
                         ]}
                       />
                     }>
-                    <SortableDragHandle className="absolute w-full h-3 bg-primary-2 top-0 z-10" />
+                    <SortableDragHandle className="bg-primary-2 absolute top-0 z-10 h-3 w-full" />
 
                     <Note {...p} />
                   </Controls>
@@ -67,7 +67,7 @@ function NotesPage() {
             sx={{ backgroundColor: "secondaryContainer.paper" }}
             onClick={() => dispatch(addNoteWithTitle(""))}
             className={cn(commonCls, "flex-center group cursor-pointer")}>
-            <div className="group-hover:scale-600 scale-300 transition-all">{add}</div>
+            <div className="scale-300 transition-all group-hover:scale-600">{add}</div>
           </Paper>
         </div>
       </Sortable>

@@ -69,7 +69,7 @@ export const DataSettings = () => {
     },
   ];
   return (
-    <div className="size-full flex-center flex-col gap-5 icon-xl">
+    <div className="flex-center icon-xl size-full flex-col gap-5">
       <input type="file" accept=".json" onChange={handleFileChange} hidden ref={fileRef} />
       {Buttons.map((props, index) => (
         <Button

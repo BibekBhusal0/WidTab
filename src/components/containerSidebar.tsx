@@ -65,7 +65,7 @@ function ContainerSidebar({
   };
 
   return (
-    <Box {...mainProps} className={cn("flex h-full relative", mainProps?.className)}>
+    <Box {...mainProps} className={cn("relative flex h-full", mainProps?.className)}>
       <CustomTabs
         orientation="vertical"
         scrollButtons="auto"
@@ -73,7 +73,7 @@ function ContainerSidebar({
         value={value}
         onChange={handleChange}
         {...tabsProps}
-        className={cn("h-full border-r-2 border-r-divider", tabsProps?.className)}
+        className={cn("border-r-divider h-full border-r-2", tabsProps?.className)}
         //
       >
         {items.map(({ name, index }) => (

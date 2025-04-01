@@ -22,14 +22,14 @@ function ColorSwatch({
   const s = (
     <div
       style={{ backgroundColor: color, ...style }}
-      className={cn("size-8 rounded-md border-2 border-text-primary cursor-pointer", className)}
+      className={cn("border-text-primary size-8 cursor-pointer rounded-md border-2", className)}
       {...props}
     />
   );
   if (!showHex) return s;
   return (
     <div
-      className={cn("flex flex-center gap-2 p-2 cursor-pointer", containerProps?.className)}
+      className={cn("flex-center flex cursor-pointer gap-2 p-2", containerProps?.className)}
       {...containerProps}>
       {s}
       <div className={cn("text-lg uppercase", textProps?.className)} {...textProps}>
@@ -59,13 +59,13 @@ export function HexPicker({ color, setColor }: HexPickerProps) {
   return (
     <MenuPopover
       icon={
-        <div className="flex flex-center gap-2">
+        <div className="flex-center flex gap-2">
           <ColorSwatch color={_color} showHex={true} />
         </div>
       }>
-      <div className="flex flex-center flex-col gap-2 p-3">
+      <div className="flex-center flex flex-col gap-2 p-3">
         <HexColorPicker color={_color} onChange={_setColor} />
-        <div aria-label="color swatches" className="w-[192px] flex flex-center flex-wrap gap-2">
+        <div aria-label="color swatches" className="flex-center flex w-[192px] flex-wrap gap-2">
           {colors.map((color) => (
             <ColorSwatch
               color={color}

@@ -122,7 +122,7 @@ function TimerWidget(props: TimerWidgetType) {
   ];
   return (
     <div key={id} ref={ref} className="size-full">
-      <div className={cn("w-full relative", showMusic ? "h-4/6 pb-3 border-b-2" : "h-full")}>
+      <div className={cn("relative w-full", showMusic ? "h-4/6 border-b-2 pb-3" : "h-full")}>
         <RadialBarChart data={[{ value: calculateProgress() }]} {...chart}>
           <PolarAngleAxis angleAxisId={0} domain={[0, 100]} tick={false} type="number" />
           <RadialBar
@@ -134,13 +134,13 @@ function TimerWidget(props: TimerWidgetType) {
           />
         </RadialBarChart>
         <div
-          className="absolute-center h-full flex-center px-3"
+          className="absolute-center flex-center h-full px-3"
           style={{ width: `${dia * 0.75}px` }}>
           <FitText
             aria-label="time"
             min={10}
             max={120}
-            className="size-full flex-center"
+            className="flex-center size-full"
             children={formatTime(remainingTime)}
           />
         </div>
@@ -160,7 +160,7 @@ function TimerWidget(props: TimerWidgetType) {
         </div>
       </div>
       {music && (
-        <div className={cn("w-full h-2/6", height <= 400 && "hidden")}>
+        <div className={cn("h-2/6 w-full", height <= 400 && "hidden")}>
           <MusicWidget play_={isPlaying} />
         </div>
       )}

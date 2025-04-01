@@ -10,8 +10,8 @@ function TimerStats() {
   const totalTime = Object.values(timerHistory || {}).reduce((a, b) => a + b, 0);
 
   return (
-    <div className="size-full flex flex-col">
-      <div className="full-between text-xl py-1 px-6 relative">
+    <div className="flex size-full flex-col">
+      <div className="full-between relative px-6 py-1 text-xl">
         <div>
           Today: {totalTime}
           <span className="text-xs"> Min</span>

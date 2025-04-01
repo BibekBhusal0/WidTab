@@ -7,11 +7,11 @@ import { cn } from "@/utils/cn";
 function AllSpaces({ headerProps = undefined }: { headerProps?: BoxProps }) {
   return (
     <>
-      <SettingHeader first {...headerProps} className={cn("text-xl mx-2", headerProps?.className)}>
+      <SettingHeader first {...headerProps} className={cn("mx-2 text-xl", headerProps?.className)}>
         Dynamic Spaces
       </SettingHeader>
       <AllDynamicSpace />
-      <SettingHeader {...headerProps} className={cn("text-xl mx-2", headerProps?.className)}>
+      <SettingHeader {...headerProps} className={cn("mx-2 text-xl", headerProps?.className)}>
         Static Spaces
       </SettingHeader>
       <AllStaticLayout />

@@ -19,7 +19,7 @@ function TodoPage() {
   return (
     <ScrollArea className="size-full">
       <Sortable value={Tasks} onValueChange={(n) => dispatch(reorderTodos(n))} orientation="mixed">
-        <div className="grid gap-3 grid-cols-1 p-3 sm:grid-cols-2 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 p-3 sm:grid-cols-2 md:grid-cols-3">
           {Tasks.map((task) => (
             <SortableItem key={task.id} value={task.id}>
               <Paper
@@ -32,7 +32,7 @@ function TodoPage() {
                   className="pt-1"
                   {...getWidgetControlsProps("todo", task.id)}
                   showOn="always">
-                  <SortableDragHandle className="absolute w-full h-3 bg-primary-2 top-0 z-10" />
+                  <SortableDragHandle className="bg-primary-2 absolute top-0 z-10 h-3 w-full" />
                   <Todo {...task} />
                 </Controls>
               </Paper>
@@ -44,7 +44,7 @@ function TodoPage() {
             }}
             onClick={() => dispatch(addTask(""))}
             className={cn(commonCls, "flex-center group cursor-pointer")}>
-            <div className="group-hover:scale-600 scale-300 transition-all">{add}</div>
+            <div className="scale-300 transition-all group-hover:scale-600">{add}</div>
           </Paper>
         </div>
       </Sortable>

@@ -62,9 +62,9 @@ function HabitTrackerStatsAll() {
   const gaugeHeight = 150;
 
   return (
-    <div ref={ref} className="size-full p-2 flex flex-col gap-2">
+    <div ref={ref} className="flex size-full flex-col gap-2 p-2">
       {trackers.length === 0 ? (
-        <div className="text-xl text-center">No Habit Tracker</div>
+        <div className="text-center text-xl">No Habit Tracker</div>
       ) : (
         <div className="flex size-full gap-2">
           <div>
@@ -89,9 +89,9 @@ function HabitTrackerStatsAll() {
             <CommitGraph {...{ trackers, startDate, endDate }} />{" "}
           </div>
           {monthly && size.height > gaugeHeight && (
-            <div className="border-l-2 border-l-divider flex items-center flex-col w-full px-[6px]">
+            <div className="border-l-divider flex w-full flex-col items-center border-l-2 px-[6px]">
               <div className="text-xl">Progress</div>
-              <div className="flex flex-col justify-around size-full">
+              <div className="flex size-full flex-col justify-around">
                 {allProgressGraphTypes.map((type, i) => {
                   if (size.height > gaugeHeight * (i + 1)) {
                     return (

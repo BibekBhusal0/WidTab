@@ -120,11 +120,11 @@ export const suggestionItems: SuggestionItem[] = [
 
 export const SlashCommand = () => {
   return (
-    <EditorCommand className="z-50 w-[250px] px-1 py-3 bg-background-default rounded-themed">
+    <EditorCommand className="bg-background-default rounded-themed z-50 w-[250px] px-1 py-3">
       <ScrollArea
         viewPortProps={{ className: "h-auto max-h-[300px]" }}
         scrollBarProps={{ className: "w-2" }}>
-        <EditorCommandEmpty className="px-2 text-divider">No results</EditorCommandEmpty>
+        <EditorCommandEmpty className="text-divider px-2">No results</EditorCommandEmpty>
         <EditorCommandList>
           {suggestionItems.map((item) => (
             <EditorCommandItem
@@ -132,9 +132,9 @@ export const SlashCommand = () => {
                 " "
               )}
               onCommand={(val) => item.command?.(val)}
-              className="flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-sm aria-selected:bg-primary-selected"
+              className="aria-selected:bg-primary-selected flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-sm"
               key={item.title}>
-              <Icon2RN icon={item.icon} className="size-10 p-2 rounded-md border" />
+              <Icon2RN icon={item.icon} className="size-10 rounded-md border p-2" />
               <div>
                 <p className="font-medium">{item.title}</p>
                 <p className="text-xs">{item.description}</p>

@@ -39,7 +39,7 @@ function AddItem({
     }
   };
   return (
-    <Box {...mainProps} className={cn("flex gap-2 flex-col justify-center", mainProps?.className)}>
+    <Box {...mainProps} className={cn("flex flex-col justify-center gap-2", mainProps?.className)}>
       {inp && (
         <TextField
           label="Name"

@@ -25,7 +25,7 @@ function CurrentSpaceSetting() {
 
   if (!layout)
     return (
-      <div className="w-full p-2 border-t-2 pb-4">
+      <div className="w-full border-t-2 p-2 pb-4">
         <AddSpace />
       </div>
     );
@@ -35,7 +35,7 @@ function CurrentSpaceSetting() {
       <SettingHeader>Current Space</SettingHeader>
       <div
         aria-label="Current Space Settings"
-        className="w-full flex flex-col items-center gap-5 pb-4">
+        className="flex w-full flex-col items-center gap-5 pb-4">
         {/* Lock */}
         <MenuSwitch plain items={toggle} />
         <div aria-label="rename" className="full-between">
@@ -52,7 +52,7 @@ function CurrentSpaceSetting() {
 
         <div aria-label="Icons" className="full-between icon-xl">
           <div className="text-xl">Change Icon</div>
-          <div className="w-14 flex-center">
+          <div className="flex-center w-14">
             <SelectIconMenu
               icon={layout.icon}
               setIcon={(icon: string) => dispatch(currentSpaceChangeIcon(icon))}

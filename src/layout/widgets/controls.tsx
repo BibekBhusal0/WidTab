@@ -51,12 +51,12 @@ function Controls({
       {...props}
       onMouseEnter={handleMouseIn}
       onMouseLeave={handleMouseOut}
-      className={cn("size-full relative", props.className)}>
+      className={cn("relative size-full", props.className)}>
       {show && (
         <Paper
           {...controlsContainerProps}
           className={cn(
-            "absolute right-0 top-0 px-2 py-1 z-20 widget-control icon-md flex-center",
+            "widget-control icon-md flex-center absolute top-0 right-0 z-20 px-2 py-1",
             controlsContainerProps?.className
           )}
           sx={{

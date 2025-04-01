@@ -36,7 +36,7 @@ function DynamicLayout() {
     <Box
       ref={ref}
       {...mainComponentProps}
-      className={cn("relative w-full overflow-hidden widgets", mainComponentProps?.className)}
+      className={cn("widgets relative w-full overflow-hidden", mainComponentProps?.className)}
       sx={{ ...mainComponentProps?.sx, marginBottom: `${gap}px` }}
       //
     >
@@ -67,8 +67,8 @@ function DynamicLayout() {
             className="relative overflow-hidden">
             {!locked && (
               <>
-                <div className="size-full cursor-grab focus:cursor-grabbing drag-handle absolute z-10 bg-primary-2 rounded-themed" />
-                <div className="size-full absolute z-30 rounded-themed border-2 pointer-events-none" />
+                <div className="drag-handle bg-primary-2 rounded-themed absolute z-10 size-full cursor-grab focus:cursor-grabbing" />
+                <div className="rounded-themed pointer-events-none absolute z-30 size-full border-2" />
               </>
             )}
             <Widget widget={w} />

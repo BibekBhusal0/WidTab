@@ -83,7 +83,7 @@ const SelectIcon = ({
   }, [currentMode, deferredSearchTerm]);
 
   return (
-    <div className="size-full flex flex-col items-center gap-3">
+    <div className="flex size-full flex-col items-center gap-3">
       <SelectIconType currentMode={currentMode} setCurrentMode={setCurrentMode} />
       {currentMode === "Search" && (
         <OutlinedInput
@@ -162,7 +162,7 @@ export function IconsGrid({ iconsList, selected, setSelected }: IconGridProps) {
 
         return (
           <div
-            className={cn("p-2 hover:bg-primary-6", {
+            className={cn("hover:bg-primary-6 p-2", {
               "bg-primary-selected": selected === icon,
             })}
             onClick={() => setSelected(icon)}

@@ -35,7 +35,7 @@ const AdvancedEditor = ({
     <EditorRoot>
       <EditorContent
         autofocus={editable}
-        className="relative z-1 "
+        className="relative z-1"
         {...{ children, editable, extensions }}
         initialContent={value as JSONContent}
         editorProps={{

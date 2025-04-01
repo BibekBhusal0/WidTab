@@ -27,7 +27,7 @@ function BookmarkGrid(props: ExtraBookmarkProps & bookmarkTreeNodeArray & l) {
 
   const content =
     !bookmarks || bookmarks.length === 0 ? (
-      <div className="text-center text-3xl pt-4">No bookmarks Found Here</div>
+      <div className="pt-4 text-center text-3xl">No bookmarks Found Here</div>
     ) : (
       <Sortable
         orientation="mixed"
@@ -36,7 +36,7 @@ function BookmarkGrid(props: ExtraBookmarkProps & bookmarkTreeNodeArray & l) {
         constraint={{ distance: 10, delay: 400 }}
         //
       >
-        <div className="flex flex-wrap mx-auto w-full" style={{ gap }}>
+        <div className="mx-auto flex w-full flex-wrap" style={{ gap }}>
           <Bookmarks {...props} />
         </div>
       </Sortable>
@@ -91,17 +91,17 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
         },
       }}>
       <CardActionArea className="size-full p-1" sx={{ cursor: "unset" }}>
-        <SortableDragHandle className="flex-center flex-col gap-1 size-full cursor-pointer data-[state=dragging]:cursor-grabbing">
+        <SortableDragHandle className="flex-center size-full cursor-pointer flex-col gap-1 data-[state=dragging]:cursor-grabbing">
           {!bookmarks.url ? (
-            <div className="w-[70%] h-[50%] relative">
+            <div className="relative h-[50%] w-[70%]">
               <HoverFolder empty={!bookmarks.children?.length} icon={folderIcons?.[bookmarks.id]} />
             </div>
           ) : (
-            <Favicon src={bookmarks.url} className="size-1/2 aspect-square" />
+            <Favicon src={bookmarks.url} className="aspect-square size-1/2" />
           )}
-          <div className="flex-center w-full px-1 py-0.5 gap-[2px]">
+          <div className="flex-center w-full gap-[2px] px-1 py-0.5">
             {fav && linkAndContextMenu && <Icon style={{ fontSize: size / 5 }} icon="mdi:heart" />}
-            <div className="truncate w-full text-center">{bookmarks.title}</div>
+            <div className="w-full truncate text-center">{bookmarks.title}</div>
           </div>
         </SortableDragHandle>
       </CardActionArea>

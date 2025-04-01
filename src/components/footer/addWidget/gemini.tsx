@@ -14,7 +14,7 @@ function AddGemini() {
   };
 
   return (
-    <div className="flex-center flex-col size-full gap-5">
+    <div className="flex-center size-full flex-col gap-5">
       <SelectModel value={model} onChange={handleModelChange} />
       <SimpleAddWidgetButton
         buttonProps={{ startIcon: <Icon2RN icon="ri:gemini-fill" /> }}

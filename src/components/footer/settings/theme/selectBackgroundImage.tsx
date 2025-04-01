@@ -33,14 +33,14 @@ function SelectBackgroundImage() {
   const image = useBackgroundImage();
   const img = <img src={image} className="size-20 object-cover" />;
   return (
-    <div className={cn("flex flex-center gap-3", image && "flex-col")}>
+    <div className={cn("flex-center flex gap-3", image && "flex-col")}>
       <div className="text-xl">Background Image</div>
       <MenuPopover
         menuProps={{
           anchorOrigin: { vertical: "bottom", horizontal: "right" },
           transformOrigin: { vertical: "bottom", horizontal: "left" },
         }}
-        icon={image ? img : <div className="flex w-full flex-center">No Image Selected</div>}>
+        icon={image ? img : <div className="flex-center flex w-full">No Image Selected</div>}>
         <PopoverContent />
       </MenuPopover>
     </div>
@@ -91,15 +91,15 @@ function PopoverContent() {
   const dim = "w-96 max-h-96";
   return (
     <div className={dim}>
-      <div className="flex flex-center flex-col gap-3 p-2">
+      <div className="flex-center flex flex-col gap-3 p-2">
         <input type="file" accept="image/*" onChange={handleImageUpload} hidden ref={inpRef} />
         <div className="flex flex-wrap gap-2">
           {images.map(({ data, id }) => (
             <div
               key={id}
               onClick={() => handleClick(id)}
-              className="size-20 object-cover cursor-pointer">
-              <img src={data} className="w-full h-full object-cover" />
+              className="size-20 cursor-pointer object-cover">
+              <img src={data} className="h-full w-full object-cover" />
             </div>
           ))}
         </div>

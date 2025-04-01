@@ -74,7 +74,7 @@ function AddHabitTracer() {
   };
 
   return (
-    <div className="text-lg p-2 size-full">
+    <div className="size-full p-2 text-lg">
       {!!trackers.length && (
         <>
           <SettingHeader first>Habit Tracker</SettingHeader>
@@ -86,7 +86,7 @@ function AddHabitTracer() {
             pinned={pinned}
           />
           {!availablePosition && (
-            <div className="text-lg text-error-main pt-3">Not Enough Space For Habit Tacker</div>
+            <div className="text-error-main pt-3 text-lg">Not Enough Space For Habit Tacker</div>
           )}
           <SettingHeader>Habit Tracker Stats </SettingHeader>
           <AllItemsList
@@ -97,7 +97,7 @@ function AddHabitTracer() {
             pinned={pinned}
           />
           {!availablePositionForStats && (
-            <div className="text-lg text-error-main pt-3">
+            <div className="text-error-main pt-3 text-lg">
               Not Enough Space For Habit Tacker Stats
             </div>
           )}
@@ -112,7 +112,7 @@ function AddHabitTracer() {
 
 function AddHabitTracerStatsAll() {
   return (
-    <div className="flex-center w-full my-5">
+    <div className="flex-center my-5 w-full">
       <SimpleAddWidgetButton widget={{ type: "habit-tracker-stats-all", values: { id: 0 } }} />
     </div>
   );
@@ -127,7 +127,7 @@ function AddNewHabitTracker({
 }) {
   const [show, setShow] = useState(false);
   return (
-    <div className="flex-center flex-col gap-4 w-full mt-5">
+    <div className="flex-center mt-5 w-full flex-col gap-4">
       {show && (
         <HabitTrackerEdit
           onChange={(tracker) => {

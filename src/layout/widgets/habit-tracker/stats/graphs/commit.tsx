@@ -44,14 +44,14 @@ function CommitGraph({ trackers, startDate, endDate }: commitGraphProps) {
                 return (
                   <td key={data.date}>
                     <div
-                      className="h-full aspect-square p-1 rounded-md"
+                      className="aspect-square h-full rounded-md p-1"
                       style={{
                         backgroundColor: alphaColor(main, Math.max(0.05, progress)),
                       }}>
                       {progress >= 1 && (
                         <Icon
                           icon="pajamas:check-sm"
-                          className="size-full text-primary-contrast-text"
+                          className="text-primary-contrast-text size-full"
                         />
                       )}
                     </div>

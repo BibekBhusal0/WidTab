@@ -41,7 +41,7 @@ export function CopyButton({
         ...props.sx,
       }}
       {...props}>
-      <div className="size-full relative px-0 py-2">
+      <div className="relative size-full px-0 py-2">
         <Icon2RN icon={copyIcon} className={cn(cls, copied ? "scale-0" : "scale-100", iconCls)} />
         <Icon2RN icon={copiedIcon} className={cn(cls, copied ? "scale-100" : "scale-0", iconCls)} />
       </div>

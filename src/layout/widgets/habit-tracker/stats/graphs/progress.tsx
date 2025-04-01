@@ -75,7 +75,7 @@ function ProgressGraph({ type = "daily", trackers }: ProgressGraphProps) {
         />
       </RadialBarChart>
 
-      <div className="text-center absolute-center text-lg">{completionString}</div>
+      <div className="absolute-center text-center text-lg">{completionString}</div>
     </div>
   );
 }

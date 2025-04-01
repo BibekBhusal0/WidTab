@@ -28,7 +28,7 @@ function BookmarkManager() {
       showButton
       resizableBoxProps={{
         children: (
-          <div className="flex flex-col h-full">
+          <div className="flex h-full flex-col">
             <BookmarkButtons />
             <ScrollArea>
               <BookmarkTree />
@@ -84,7 +84,7 @@ function BookmarkButtons() {
   const { showFavorites } = useSelector((state: StateType) => state.bookmarks);
 
   return (
-    <div style={{ gap }} className="flex-center w-full my-3 flex-wrap">
+    <div style={{ gap }} className="flex-center my-3 w-full flex-wrap">
       <FavButton sx={{ width: `${btnW}%` }} />
       {!showFavorites && (
         <>
@@ -120,7 +120,7 @@ function AddFolderButton(props: Partial<MenuPopoverProps>) {
   };
   return (
     <MenuPopover key={key} icon={<>Add Folder </>} button={false} {...props}>
-      <div className="px-5 py-3 gap-3 flex-center flex-col">
+      <div className="flex-center flex-col gap-3 px-5 py-3">
         <TextField
           autoFocus
           size="small"
@@ -180,7 +180,7 @@ function AddLinkButton(props: Partial<MenuPopoverProps>) {
 
   return (
     <MenuPopover key={key} icon={<>Add Link </>} button={false} {...props}>
-      <div className="px-5 py-3 gap-3 flex-center flex-col">
+      <div className="flex-center flex-col gap-3 px-5 py-3">
         <TextField
           autoFocus
           size="small"

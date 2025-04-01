@@ -86,7 +86,7 @@ function ChangeSlider({ val, ...props }: changeSliderProps) {
 
   return (
     <div className="full-between">
-      <div className="text-xl w-40 capitalize">{val}</div>
+      <div className="w-40 text-xl capitalize">{val}</div>
       <Slider
         value={theme[val]}
         onChange={(_, value) => {
