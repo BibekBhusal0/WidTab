@@ -10,15 +10,16 @@ import Widget from "./widgets";
 import { positionProps } from "@/types/slice/layout";
 import { cn } from "@/utils/cn";
 import useFullSize from "@/hooks/useFullSize";
+import useCurrentTheme from "@/hooks/useCurrentTheme";
 
 function DynamicLayout() {
   const { n_cols, n_rows, currentSpace, toolBarPosition, locked } = useSelector(
     (state: StateType) => state.layout
   );
+  const { gap = 10 } = useCurrentTheme();
   const { mainComponentProps } = positionProps[toolBarPosition];
   const space = useCurrentLayout();
   const dispatch = useDispatch();
-  const gap = 10;
   const {
     ref,
     size: { width, height },
@@ -37,9 +38,7 @@ function DynamicLayout() {
       ref={ref}
       {...mainComponentProps}
       className={cn("widgets relative w-full overflow-hidden", mainComponentProps?.className)}
-      sx={{ ...mainComponentProps?.sx, marginBottom: `${gap}px` }}
-      //
-    >
+      sx={{ ...mainComponentProps?.sx, marginBottom: `${gap}px` }}>
       <GridLayout
         layout={layout}
         cols={n_cols}

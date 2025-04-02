@@ -1,5 +1,5 @@
 export type ModeType = "light" | "dark";
-export type numericalThemeValues = "blur" | "opacity" | "roundness";
+export type numericalThemeValues = "blur" | "opacity" | "roundness" | "gap";
 
 export type ThemeItemType = {
   name: string;
@@ -9,6 +9,7 @@ export type ThemeItemType = {
   blur: number;
   roundness: number;
   opacity: number;
+  gap: number;
   iconPack: string;
   editAble?: boolean;
   image?: string;
