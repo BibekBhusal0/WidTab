@@ -207,7 +207,7 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-              //
+                //
               >
                 <BookmarkItem bookmarks={child} paths={paths} />
               </motion.div>
