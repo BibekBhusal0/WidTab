@@ -21,7 +21,7 @@ import {
   PointerActivationConstraint,
 } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { cn } from "@/utils/cn";
 import { findPath } from "@/utils/bookmark";
 import { openLink } from "@/utils/bookmark";
@@ -207,7 +207,7 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-                //
+              //
               >
                 <BookmarkItem bookmarks={child} paths={paths} />
               </motion.div>

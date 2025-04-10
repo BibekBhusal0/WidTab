@@ -7,7 +7,6 @@ import { APIkeyURL, getAPIKey, setAPIKey } from "@/utils/api";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-// import Tooltip from "@mui/material/Tooltip";
 import Link from "@mui/material/Link";
 import { cn } from "@/utils/cn";
 import { useDispatch } from "react-redux";
@@ -201,46 +200,6 @@ export function ReformatContent({ conversation, loading }: reformatContentProps)
           )}
           {role === "model" && (
             <Paper className={cn(cls, "max-w-[90%]")} variant="outlined">
-              {/* <ReactMarkdown
-                className="w-full"
-                components={{
-                  a: ({ node, ...props }) => {
-                    if (!props.title) {
-                      return <a {...props} />;
-                    }
-                    return (
-                      <Tooltip title={props.title} arrow>
-                        <a
-                          {...props}
-                          className={cn(
-                            props?.className,
-                            "transition-all hover:text-primary-main"
-                          )}
-                          title={undefined}
-                        />
-                      </Tooltip>
-                    );
-                  },
-                  code: ({ node, className, children, ...props }) => {
-                    const inline =
-                      typeof children === "boolean" ||
-                      typeof children === "number" ||
-                      (typeof children === "string" &&
-                        !children.includes("\n"));
-
-                    if (inline) {
-                      return (
-                        <code className={className} {...props}>
-                          {children}
-                        </code>
-                      );
-                    }
-                    return (
-                      <CustomCode className={className}>{children}</CustomCode>
-                    );
-                  },
-                }}>
-              </ReactMarkdown> */}
               <MarkdownPreview value={parts.map(({ text }) => text || "").join("\n")} />
             </Paper>
           )}

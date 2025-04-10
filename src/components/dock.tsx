@@ -1,7 +1,7 @@
 import { Icon2RN, iconAsProp } from "@/theme/icons";
 import { cn } from "@/utils/cn";
 import Tooltip from "@mui/material/Tooltip";
-import { MotionValue, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { MotionValue, motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { useDeferredValue, useRef, useState } from "react";
 import Zoom from "@mui/material/Zoom";
 import { isToolbarHorizontal, oppositePosition, ToolBarPositions } from "@/types/slice/layout";

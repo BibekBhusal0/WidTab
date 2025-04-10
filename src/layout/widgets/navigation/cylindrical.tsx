@@ -1,6 +1,6 @@
 import { Icon2RN } from "@/theme/icons";
 import { cn } from "@/utils/cn";
-import { type PanInfo, motion, useAnimation, useMotionValue, useTransform } from "framer-motion";
+import { type PanInfo, motion, useAnimation, useMotionValue, useTransform } from "motion/react";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import Button from "@mui/material/Button";
