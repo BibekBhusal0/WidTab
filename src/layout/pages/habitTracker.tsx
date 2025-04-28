@@ -4,7 +4,7 @@ import Paper from "@mui/material/Paper";
 import HabitTracker from "../widgets/habit-tracker";
 import HabitTrackerStatsAll from "../widgets/habit-tracker/stats/all";
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import Button from "@mui/material/Button";
 import HabitTrackerEdit from "../widgets/habit-tracker/edit";
 import { Icon } from "@iconify/react";

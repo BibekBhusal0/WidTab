@@ -21,7 +21,7 @@ import {
   PointerActivationConstraint,
 } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { cn } from "@/utils/cn";
 import { findPath } from "@/utils/bookmark";
 import { openLink } from "@/utils/bookmark";
