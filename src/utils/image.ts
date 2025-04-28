@@ -32,9 +32,7 @@ export const removeAllImagesFromStorage = () => {
   });
 };
 
-export const getImageById = async (
-  imageId: string
-): Promise<string | undefined> => {
+export const getImageById = async (imageId: string): Promise<string | undefined> => {
   return new Promise((resolve, reject) => {
     browser.storage.local.get(["userImages"]).then((result) => {
       const storedImages = (result.userImages as storageDataType) || {};
@@ -50,8 +48,7 @@ export const getImageBlob = async (imageId: string): Promise<Blob | null> => {
         return reject(browser.runtime.lastError);
       }
 
-      const storedImages =
-        (result.userImages as { [key: string]: string }) || {};
+      const storedImages = (result.userImages as { [key: string]: string }) || {};
       const imageData = storedImages[imageId];
       if (!imageData) return resolve(null);
 

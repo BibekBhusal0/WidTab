@@ -28,11 +28,7 @@ const MenuSwitch = ({ items, plain = false }: MenuSwitchProps) => {
           ),
         };
 
-        return plain ? (
-          <Box key={i} {...commonProps} />
-        ) : (
-          <MenuItem key={i} {...commonProps} />
-        );
+        return plain ? <Box key={i} {...commonProps} /> : <MenuItem key={i} {...commonProps} />;
       })}
     </>
   );

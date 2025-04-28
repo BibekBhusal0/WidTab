@@ -1,17 +1,15 @@
 import BookmarkBreadcrumb from "@/components/bookmarks/breadcrumb";
 import BookmarkGrid from "@/components/bookmarks/grid";
 import { ScrollArea } from "@/components/scrollarea";
-import useBookmarksUpdate, { useBookmarkFolder } from "@/hooks/useBookmarks";
-import { treeNodeArray } from "@/types/slice/bookmark";
+import { useBookmarkFolder, useBookmarkSiblings } from "@/hooks/useBookmarks";
 import { currentSpaceEditWidget } from "@/redux/slice/layout";
 import { BookmarkWidgetType } from "@/types/slice/bookmark";
 import { cn } from "@/utils/cn";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import { useState } from "react";
+import { reorderBookmarks } from "@/utils/bookmark";
 import { useDispatch } from "react-redux";
-import browser from "webextension-polyfill";
 
 function BookmarkWidget(props: BookmarkWidgetType) {
   const { folderId, iconSize, breadcrumb, tabs } = props;
@@ -25,38 +23,33 @@ function BookmarkWidget(props: BookmarkWidgetType) {
       })
     );
   };
-  const header_height =
-    (Number(breadcrumb) + Number(tabs)) * 28 + Number(breadcrumb || tabs) * 16;
+  const header_height = (Number(breadcrumb) + Number(tabs)) * 28 + Number(breadcrumb || tabs) * 16;
 
   return (
     <>
       {(breadcrumb || tabs) && (
         <Box
-          className={cn("bg-tertiaryContainer-default p-2 pb-4")}
+          className={cn("bg-tertiary-container-default p-2 pb-4")}
           sx={{
             height: `${header_height}px`,
             "& .text-xl": { fontSize: "13px" },
           }}>
           {breadcrumb && (
-            <BookmarkBreadcrumb
-              currentFolderID={folderId}
-              onFolderChange={onFolderChange}
-            />
+            <BookmarkBreadcrumb currentFolderID={folderId} onFolderChange={onFolderChange} />
           )}
-          {tabs && (
-            <BookmarkTabs folderId={folderId} onFolderChange={onFolderChange} />
-          )}
+          {tabs && <BookmarkTabs folderId={folderId} onFolderChange={onFolderChange} />}
         </Box>
       )}
       <ScrollArea
         style={{ height: `calc(100% - ${header_height + 4}px)` }}
-        className="px-2 size-full">
+        className="size-full px-2">
         <div className="py-2">
           <BookmarkGrid
             contextMenu={false}
             bookmarks={bookmark}
             folderSize={iconSize}
             onFolderChange={onFolderChange}
+            onReorder={reorderBookmarks}
           />
         </div>
       </ScrollArea>
@@ -71,22 +64,7 @@ function BookmarkTabs({
   folderId: string;
   onFolderChange: (id: string) => any;
 }) {
-  const [bookmark, setBookmark] = useState<treeNodeArray>([]);
-
-  const getBookmarks = () => {
-    browser.bookmarks.get(folderId).then((data) => {
-      if (Array.isArray(data)) {
-        if (data[0]?.parentId) {
-          browser.bookmarks.getChildren(data[0].parentId).then((data) => {
-            if (Array.isArray(data)) {
-              setBookmark(data.filter((bookmark) => !bookmark.url));
-            }
-          });
-        }
-      }
-    });
-  };
-  useBookmarksUpdate(getBookmarks, [folderId]);
+  const bookmark = useBookmarkSiblings(folderId);
 
   const tabIndex = bookmark.findIndex((b) => b.id === folderId);
   const handleChange = (_: any, newValue: number) => {

@@ -1,24 +1,21 @@
 import { StateType } from "@/redux/store";
 import { useSelector } from "react-redux";
 import { Icon } from "@iconify/react";
-import { cn } from "@/utils/cn";
-import {
-  ExtraBookmarkProps,
-  folderSizeMapping,
-  TakeBookmarksProps,
-} from "@/types/slice/bookmark";
+import { ExtraBookmarkProps, folderSizeMapping, TakeBookmarksProps } from "@/types/slice/bookmark";
 import useFullSize from "@/hooks/useFullSize";
-import { LinkContextMenu } from "./contextMenu";
+import { FolderContextMenu, LinkContextMenu } from "./contextMenu";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import Favicon from "@/utils/faviconURL";
 import { HoverFolder } from "./folder";
-import { bookmarkTreeNodeArray, treeNode } from "@/types/slice/bookmark";
+import { bookmarkTreeNodeArray } from "@/types/slice/bookmark";
+import { Sortable, SortableDragHandle, SortableItem } from "@/components/sortable";
+import { openLink } from "@/utils/bookmark";
 
-type l = { openLinkInNewTab?: boolean; contextMenu?: boolean };
+type l = { contextMenu?: boolean };
 
 function BookmarkGrid(props: ExtraBookmarkProps & bookmarkTreeNodeArray & l) {
-  const { folderSize = "small", bookmarks } = props;
+  const { folderSize = "small", bookmarks, onReorder } = props;
   const itemWidth = folderSizeMapping[folderSize];
   const gap = 16;
   const {
@@ -30,11 +27,19 @@ function BookmarkGrid(props: ExtraBookmarkProps & bookmarkTreeNodeArray & l) {
 
   const content =
     !bookmarks || bookmarks.length === 0 ? (
-      <div className="text-center text-3xl pt-4">No bookmarks Found Here</div>
+      <div className="pt-4 text-center text-3xl">No bookmarks Found Here</div>
     ) : (
-      <div className="flex flex-wrap mx-auto w-full" style={{ gap }}>
-        <Bookmarks {...props} />
-      </div>
+      <Sortable
+        orientation="mixed"
+        value={bookmarks}
+        onValueChange={onReorder}
+        constraint={{ distance: 10, delay: 400 }}
+        //
+      >
+        <div className="mx-auto flex w-full flex-wrap" style={{ gap }}>
+          <Bookmarks {...props} />
+        </div>
+      </Sortable>
     );
 
   return (
@@ -47,62 +52,23 @@ function BookmarkGrid(props: ExtraBookmarkProps & bookmarkTreeNodeArray & l) {
 }
 
 function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
-  const { favorites, linkInNewTab } = useSelector(
+  const { favorites, linkInNewTab, folderIcons } = useSelector(
     (state: StateType) => state.bookmarks
   );
-  const {
-    bookmarks,
-    folderSize = "small",
-    onFolderChange = () => {},
-    contextMenu = true,
-    openLinkInNewTab = linkInNewTab,
-  } = props;
+  const { bookmarks, folderSize = "small", onFolderChange = () => {}, contextMenu = true } = props;
 
   if (Array.isArray(bookmarks)) {
-    return bookmarks.map((child) => (
-      <Bookmarks key={child.id} {...props} bookmarks={child} />
-    ));
+    return bookmarks.map((child) => <Bookmarks key={child.id} {...props} bookmarks={child} />);
   }
+  const linkAndContextMenu = bookmarks.url && contextMenu;
   const size = folderSizeMapping[folderSize];
-  const cls = "flex-center flex-col gap-2 size-full relative p-1";
-  const textCls = "px-2 truncate w-full text-center";
   const fav = favorites.includes(bookmarks.id);
-  const link = (bookmarks: treeNode) => {
-    return (
-      <a
-        className={cn(cls)}
-        href={bookmarks.url}
-        target={openLinkInNewTab ? "_blank" : "_self"}>
-        <Favicon src={bookmarks.url} className="size-1/2 aspect-square" />
-
-        <div className="flex items-center justify-between w-full">
-          {fav && contextMenu && <Icon className="text-2xl" icon="mdi:heart" />}
-          <div className={cn(textCls)}>{bookmarks.title}</div>
-        </div>
-      </a>
-    );
-  };
-
-  const content = !bookmarks.url ? (
-    <div
-      onClick={() => onFolderChange(bookmarks.id)}
-      className={cn(cls, "gap-2")}>
-      <div className="w-[70%] h-[50%] relative">
-        <HoverFolder
-          empty={!bookmarks.children || bookmarks.children.length === 0}
-        />
-      </div>
-      <div className={cn(textCls)}>{bookmarks.title}</div>
-    </div>
-  ) : contextMenu ? (
-    <LinkContextMenu id={bookmarks.id}>{link(bookmarks)}</LinkContextMenu>
-  ) : (
-    link(bookmarks)
-  );
-
-  return (
+  const content = (
     <Card
-      variant="outlined"
+      variant="elevation"
+      onClick={(e) => {
+        bookmarks.url ? openLink(bookmarks.url, linkInNewTab, e) : onFolderChange(bookmarks.id);
+      }}
       className="group"
       sx={{
         backgroundColor: "secondaryContainer.paper",
@@ -124,8 +90,38 @@ function Bookmarks(props: ExtraBookmarkProps & TakeBookmarksProps & l) {
           },
         },
       }}>
-      <CardActionArea className="size-full">{content}</CardActionArea>
+      <CardActionArea className="size-full p-1" sx={{ cursor: "unset" }}>
+        <SortableDragHandle className="flex-center size-full cursor-pointer flex-col gap-1 data-[state=dragging]:cursor-grabbing">
+          {!bookmarks.url ? (
+            <div className="relative h-[50%] w-[70%]">
+              <HoverFolder empty={!bookmarks.children?.length} icon={folderIcons?.[bookmarks.id]} />
+            </div>
+          ) : (
+            <Favicon src={bookmarks.url} className="aspect-square size-1/2" />
+          )}
+          <div className="flex-center w-full gap-[2px] px-1 py-0.5">
+            {fav && linkAndContextMenu && <Icon style={{ fontSize: size / 5 }} icon="mdi:heart" />}
+            <div className="w-full truncate text-center">{bookmarks.title}</div>
+          </div>
+        </SortableDragHandle>
+      </CardActionArea>
     </Card>
+  );
+
+  const ContextMenuWrapper = bookmarks.url ? LinkContextMenu : FolderContextMenu;
+
+  return (
+    <SortableItem value={bookmarks.id}>
+      {contextMenu ? (
+        <ContextMenuWrapper
+          id={bookmarks.id}
+          containerProps={{ sx: { width: size, height: size } }}
+          children={content}
+        />
+      ) : (
+        content
+      )}
+    </SortableItem>
   );
 }
 

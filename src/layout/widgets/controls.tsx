@@ -12,10 +12,6 @@ import ContextMenu from "@/components/contextMenu";
 import MenuPopover from "@/components/popoverMenu";
 import IconMenu from "@/components/menuWithIcon";
 
-export type ControlPropsDifferentForContextMenu = {
-  id: number;
-  contextMenu?: boolean;
-};
 export type ControlsProps = {
   widgetInfo?: DeleteWidgetParameters;
   controls?: ReactNode;
@@ -40,8 +36,7 @@ function Controls({
 }: ControlsProps) {
   const [isHovered, setIsHovered] = useState(false);
   const { locked } = useSelector((state: StateType) => state.layout);
-  const show =
-    showOn === "always" || (showOn === "hover" && isHovered) || !locked;
+  const show = showOn === "always" || (showOn === "hover" && isHovered) || !locked;
   const showDelete = deleteButton && widgetInfo;
   const handleMouseIn = () => {
     if (showOn === "hover") setIsHovered(true);
@@ -50,22 +45,18 @@ function Controls({
     if (showOn === "hover") setIsHovered(false);
   };
   const newControls =
-    controls === null ? null : includePopover ? (
-      <MenuPopover>{controls}</MenuPopover>
-    ) : (
-      controls
-    );
+    controls === null ? null : includePopover ? <MenuPopover>{controls}</MenuPopover> : controls;
   const component = (
     <Box
       {...props}
       onMouseEnter={handleMouseIn}
       onMouseLeave={handleMouseOut}
-      className={cn("size-full relative", props.className)}>
+      className={cn("relative size-full", props.className)}>
       {show && (
         <Paper
           {...controlsContainerProps}
           className={cn(
-            "absolute right-0 top-0 px-2 py-1 z-20 widget-control icon-md flex-center",
+            "widget-control icon-md flex-center absolute top-0 right-0 z-20 px-2 py-1",
             controlsContainerProps?.className
           )}
           sx={{
@@ -87,34 +78,25 @@ function Controls({
 
   if (showDelete) {
     menuContent = (
-      <>
+      <div>
         {menuContent} <DeleteWidgetButton {...widgetInfo} buttonType="menu" />
-      </>
+      </div>
     );
   }
-  return <ContextMenu menuContent={menuContent}>{component}</ContextMenu>;
+  return <ContextMenu menuContent={menuContent} closeOnClick={false} children={component} />;
 }
 
 type deleteWidgetButtonProps = {
   buttonType?: "icon" | "menu";
 } & DeleteWidgetParameters;
-export function DeleteWidgetButton({
-  buttonType = "icon",
-  ...props
-}: deleteWidgetButtonProps) {
+export function DeleteWidgetButton({ buttonType = "icon", ...props }: deleteWidgetButtonProps) {
   const { delete_ } = useCurrentIcons();
   const dispatch = useDispatch();
   const onClick = () => dispatch(currentSpaceDeleteWidget(props));
 
   if (buttonType === "icon")
     return <IconButton color="error" onClick={onClick} children={delete_} />;
-  return (
-    <IconMenu
-      menuItems={[
-        { icon: delete_, name: "Delete", onClick, color: "error.main" },
-      ]}
-    />
-  );
+  return <IconMenu menuItems={[{ icon: delete_, name: "Delete", onClick, color: "error.main" }]} />;
 }
 
 export default Controls;

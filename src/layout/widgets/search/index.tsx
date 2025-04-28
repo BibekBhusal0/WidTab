@@ -1,18 +1,14 @@
 import { currentSpaceEditWidget } from "@/redux/slice/layout";
-import {
-  AllSearchEngines,
-  searchEngines,
-  SearchWidgetType,
-} from "@/types/slice/widgets";
+import { AllSearchEngines, searchEngines, SearchWidgetType } from "@/types/slice/widgets";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import { SelectChangeEvent } from "@mui/material/Select";
 import { ChangeEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import SearchEngineSelect, { searchEngineLogoAndLink } from "./select";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
+import { openLink } from "@/utils/bookmark";
 
 function SearchWidget({ id, engine }: SearchWidgetType) {
   const [text, setText] = useState("");
@@ -26,25 +22,15 @@ function SearchWidget({ id, engine }: SearchWidgetType) {
   const handleSearch = () => {
     if (text.trim().length !== 0) {
       const searchEngineLink = searchEngineLogoAndLink[engine].link;
-      const searchUrl = searchEngineLink.replace(
-        "%s",
-        encodeURIComponent(text)
-      );
-
-      if (linkInNewTab) {
-        window.open(searchUrl, "_blank");
-      } else {
-        window.location.href = searchUrl;
-      }
+      const searchUrl = searchEngineLink.replace("%s", encodeURIComponent(text));
+      openLink(searchUrl, linkInNewTab);
     }
   };
 
-  const changeSearchEngine = (e: SelectChangeEvent<unknown>) => {
+  const changeSearchEngine = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value as AllSearchEngines;
     if (!searchEngines.includes(val)) return;
-    dispatch(
-      currentSpaceEditWidget({ type: "search", values: { id, engine: val } })
-    );
+    dispatch(currentSpaceEditWidget({ type: "search", values: { id, engine: val } }));
   };
 
   return (
@@ -58,15 +44,15 @@ function SearchWidget({ id, engine }: SearchWidgetType) {
           handleSearch();
         }
       }}
-      startAdornment={
-        <InputAdornment position="start">
+      endAdornment={
+        <InputAdornment position="end">
           <IconButton className="icon-2xl" onClick={handleSearch}>
             {search}
           </IconButton>
         </InputAdornment>
       }
-      endAdornment={
-        <InputAdornment position="end">
+      startAdornment={
+        <InputAdornment position="start">
           <SearchEngineSelect value={engine} onChange={changeSearchEngine} />
         </InputAdornment>
       }
