@@ -1,7 +1,9 @@
 import ContainerSidebar from "@/components/containerSidebar";
 import { allSettings } from "@/components/footer/settings";
+import { useFavicon } from "@/utils/faviconURL";
 
 function Options() {
+  useFavicon();
   return (
     <ContainerSidebar
       items={allSettings}

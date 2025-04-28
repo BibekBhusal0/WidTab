@@ -15,13 +15,9 @@ export const themeSlice = createSlice({
       state.currentThemeID = newID;
     },
     deleteTheme: (state, action: PayloadAction<number>) => {
-      const themeToDelete = state.allThemes.find(
-        (p) => p.id === action.payload
-      );
+      const themeToDelete = state.allThemes.find((p) => p.id === action.payload);
       if (themeToDelete?.editAble) {
-        state.allThemes = state.allThemes.filter(
-          (p) => p.id !== action.payload
-        );
+        state.allThemes = state.allThemes.filter((p) => p.id !== action.payload);
         if (state.currentThemeID === action.payload) {
           state.currentThemeID = state.allThemes[0].id;
         }
@@ -61,19 +57,18 @@ export const themeSlice = createSlice({
       }
     },
     resetThemeSlice: (state) => Object.assign(state, initialThemeState),
-    setThemeState: (state, action: PayloadAction<ThemeSliceType>) => {
-      const val = action.payload;
-      if (!val) return;
-      if (typeof val.currentThemeID === "number")
-        state.currentThemeID = val.currentThemeID;
-      if (!val.allThemes) return;
+    setState: (state, action: PayloadAction<{ value: ThemeSliceType; check?: boolean }>) => {
+      const { value, check = true } = action.payload;
+      const val = value;
+      if (!val || !val.allThemes) return;
       if (!Array.isArray(val.allThemes)) return;
+      if (!check) return Object.assign(state, val);
+      if (typeof val.currentThemeID === "number") state.currentThemeID = val.currentThemeID;
       const allThemes = [...state.allThemes];
 
       for (const theme of val.allThemes) {
         const th = allThemes.find((p) => p.id === theme.id);
-        if (theme.image && theme.image.startsWith("storageId/"))
-          theme.image = undefined;
+        if (theme.image && theme.image.startsWith("storageId/")) theme.image = undefined;
         if (th && (theme.editAble === false || th.name === theme.name)) {
           Object.assign(th, theme);
         } else {
@@ -101,6 +96,6 @@ export const {
   duplicateTheme,
   resetThemeSlice,
   setBackgroundImage,
-  setThemeState,
+  setState,
 } = themeSlice.actions;
 export default themeSlice.reducer;

@@ -1,12 +1,13 @@
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
-import { crx, ManifestV3Export } from "@crxjs/vite-plugin";
+import { ManifestV3Export } from "@crxjs/vite-plugin";
 import { defineConfig, BuildOptions } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { stripDevIcons, crxI18n } from "./custom-vite-plugins";
 import manifest from "./manifest.json";
 import devManifest from "./manifest.dev.json";
 import pkg from "./package.json";
+import tailwindcss from "@tailwindcss/vite";
 
 const isDev = process.env.__DEV__ === "true";
 // set this flag to true, if you want localization support
@@ -35,6 +36,7 @@ export default defineConfig({
   plugins: [
     tsconfigPaths(),
     react(),
+    tailwindcss(),
     stripDevIcons(isDev),
     crxI18n({ localize, src: "./src/locales" }),
   ],

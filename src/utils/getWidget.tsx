@@ -1,13 +1,9 @@
-import {
-  AllWidgetPropsMapping,
-  allWidgetsType,
-  WidgetMappingAll,
-} from "@/types/slice/widgets";
+import { AllWidgetPropsMapping, allWidgetsType, WidgetMappingAll } from "@/types/slice/widgets";
 import { Layout } from "react-grid-layout";
 import { ControlsProps } from "@/layout/widgets/controls";
 import HabitTrackerControls from "@/layout/widgets/habit-tracker/controls";
 import ClockControls from "@/layout/widgets/clock/controls";
-import TodoControls, { TodoMenu } from "@/layout/widgets/todo/todo-controls";
+import TodoControls from "@/layout/widgets/todo/todo-controls";
 import CustomWidget, { URLChange } from "@/layout/widgets/custom";
 import TimerControls from "@/layout/widgets/timer/controls";
 import BookmarkControls from "@/layout/widgets/bookmark/controls";
@@ -52,10 +48,7 @@ export const widgetDimensions: Record<allWidgetsType, Partial<Layout>> = {
   gemini: { minW: 4, minH: 5 },
 };
 
-export const getWidgetControlsProps = (
-  widgetType: allWidgetsType,
-  id: number
-): ControlsProps => {
+export const getWidgetControlsProps = (widgetType: allWidgetsType, id: number): ControlsProps => {
   const widgetInfo = { id: id, type: widgetType };
   const controlsProps: Partial<Record<allWidgetsType, ControlsProps>> = {
     custom: {
@@ -69,7 +62,6 @@ export const getWidgetControlsProps = (
       deleteButton: false,
       showOn: "hover",
       controls: <HabitTrackerControls id={id} />,
-      contextMenu: <HabitTrackerControls id={id} contextMenu />,
       className: "flex-center flex-col gap-4 p-2 ",
       widgetInfo,
     },
@@ -77,24 +69,19 @@ export const getWidgetControlsProps = (
       deleteButton: false,
       showOn: "hover",
       controls: <ClockControls id={id} />,
-      contextMenu: <ClockControls id={id} contextMenu />,
       widgetInfo,
     },
     todo: {
       deleteButton: false,
       showOn: "hover",
       controls: <TodoControls id={id} />,
-      includePopover: false,
-      controlsContainerProps: {},
       widgetInfo,
-      contextMenu: <TodoMenu id={id} />,
     },
     timer: {
       deleteButton: false,
       showOn: "hover",
       widgetInfo,
       controls: <TimerControls id={id} />,
-      contextMenu: <TimerControls id={id} contextMenu />,
     },
     bookmark: {
       deleteButton: false,

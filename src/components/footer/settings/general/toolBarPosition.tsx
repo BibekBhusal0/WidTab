@@ -15,9 +15,7 @@ function SelectToolBarPosition() {
       className="w-full capitalize"
       value={toolBarPosition}
       size="small"
-      onChange={(e) =>
-        dispatch(changeToolBarPosition(e.target.value as ToolBarPositions))
-      }>
+      onChange={(e) => dispatch(changeToolBarPosition(e.target.value as ToolBarPositions))}>
       {sides.map((c) => (
         <MenuItem className="capitalize" key={c} value={c}>
           {c}

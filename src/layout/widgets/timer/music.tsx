@@ -4,8 +4,6 @@ import { cn } from "@/utils/cn";
 import IconButton from "@mui/material/IconButton";
 import calmAcoustic from "@/assets/music/calm-acoustic-quiet-quest-251658.mp3";
 import calmNightPiano from "@/assets/music/calm-night-piano-music-249235.mp3";
-import himalayanVillage from "@/assets/music/himalayan-village-flute-251427.mp3";
-import lofiSongRoom from "@/assets/music/lofi-song-room-by-lofium-242714.mp3";
 import relaxingPiano from "@/assets/music/relaxing-piano-music-248868.mp3";
 
 export type MusicObjectType = {
@@ -25,8 +23,6 @@ export const allMusic: MusicObjectType[] = [
     artist: "CalvinClavier",
     path: calmNightPiano,
   },
-  { title: "Himalayan Village Flute", artist: "Oqu", path: himalayanVillage },
-  { title: "Lofi Song Room", artist: "Lofium", path: lofiSongRoom },
   {
     title: "Relaxing Piano Music",
     artist: "CalvinClavier",
@@ -42,8 +38,8 @@ export default function MusicWidget({ play_ = false }: { play_?: boolean }) {
   useEffect(() => setPlay(play_), [play_]);
 
   useEffect(() => {
-    if (play) audioRef.current?.play();
-    else audioRef.current?.pause();
+    if (play && audioRef.current?.paused) audioRef.current?.play();
+    else if (!play && audioRef.current?.played) audioRef.current?.pause();
   }, [play]);
 
   useEffect(() => {
@@ -60,9 +56,7 @@ export default function MusicWidget({ play_ = false }: { play_?: boolean }) {
   };
 
   const handlePrev = () => {
-    setCurrentSong(
-      (prevValue) => (prevValue - 1 + allMusic.length) % allMusic.length
-    );
+    setCurrentSong((prevValue) => (prevValue - 1 + allMusic.length) % allMusic.length);
   };
 
   const Buttons = [
@@ -74,8 +68,7 @@ export default function MusicWidget({ play_ = false }: { play_?: boolean }) {
   const { title, artist, path } = allMusic[currentSong];
   const animatedMusicCls = cn("text-white transition-all", {
     hidden: !play,
-    "duration-1000 animate-in zoom-in direction-alternate-reverse repeat-infinite":
-      play,
+    "duration-1000 animate-in zoom-in direction-alternate-reverse repeat-infinite": play,
   });
   const animatedMusicIcons = [
     { className: "delay-500", icon: "lucide-music" },
@@ -85,33 +78,33 @@ export default function MusicWidget({ play_ = false }: { play_?: boolean }) {
 
   return (
     <>
-      <audio ref={audioRef} src={path} loop />
-      <div className="flex size-full flex-col p-4 gap-4">
+      <audio
+        ref={audioRef}
+        src={path}
+        loop
+        onPlay={() => setPlay(true)}
+        onPause={() => setPlay(false)}
+      />
+      <div className="flex size-full flex-col gap-4 p-4">
         <div
           aria-label="title-and-music-icons"
           className="relative flex flex-1 flex-col justify-between">
           <div className="full-between gap-3">
             <div className="flex flex-col gap-2">
-              <p className="line-clamp-1 w-full text-2xl font-bold leading-none truncate">
+              <p className="line-clamp-1 w-full truncate text-2xl leading-none font-bold">
                 {title}
               </p>
-              <p className="line-clamp-1 text-sm font-semibold leading-none truncate">
-                {artist}
-              </p>
+              <p className="line-clamp-1 truncate text-sm leading-none font-semibold">{artist}</p>
             </div>
 
             <div className="flex-center h-fit w-12 flex-wrap gap-1 text-lg">
               {animatedMusicIcons.map(({ icon, className }, index) => (
-                <Icon
-                  key={index}
-                  icon={icon}
-                  className={cn(animatedMusicCls, className)}
-                />
+                <Icon key={index} icon={icon} className={cn(animatedMusicCls, className)} />
               ))}
             </div>
           </div>
         </div>
-        <div className="mt-2 flex items-center justify-evenly icon-2xl">
+        <div className="icon-2xl mt-2 flex items-center justify-evenly">
           {Buttons.map(({ onClick, icon }, index) => (
             <IconButton key={index} onClick={onClick}>
               <Icon icon={icon} />

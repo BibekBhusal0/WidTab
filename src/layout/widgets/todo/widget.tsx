@@ -7,8 +7,7 @@ import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
 function TodoWidget({ id }: controlledWidgetValues) {
   const dispatch = useDispatch();
   const { Tasks } = useSelector((state: StateType) => state.todo);
-  const deleteAction = () =>
-    dispatch(currentSpaceDeleteWidget({ id, type: "todo" }));
+  const deleteAction = () => dispatch(currentSpaceDeleteWidget({ id, type: "todo" }));
 
   const task = Tasks.find((p) => p.id === id);
   if (!task) {

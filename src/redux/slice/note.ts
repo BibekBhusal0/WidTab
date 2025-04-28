@@ -16,7 +16,7 @@ export const noteSlice = createSlice({
       state.allNotes.push({
         title: action.payload,
         id,
-        text: "",
+        text: "<p></p>",
         icon: "mage:note-text",
       });
     },
@@ -36,11 +36,17 @@ export const noteSlice = createSlice({
     deleteNote: (state, action: PayloadAction<number>) => {
       state.allNotes = state.allNotes.filter((p) => p.id !== action.payload);
     },
+    reorderNotes: (state, action: PayloadAction<noteType[]>) => {
+      state.allNotes = action.payload;
+    },
     resetNoteState: (state) => Object.assign(state, initialNoteState),
-    setNoteState: (state, action: PayloadAction<noteStateType>) => {
-      const val = action.payload;
+    setState: (state, action: PayloadAction<{ value: noteStateType; check?: boolean }>) => {
+      const { value, check = true } = action.payload;
+      const val = value;
       if (!val) return;
       if (!val.allNotes) return;
+      if (!check) return Object.assign(state, value);
+
       const { allNotes } = val;
       if (!Array.isArray(allNotes)) return;
       const notes = [...state.allNotes];
@@ -62,6 +68,7 @@ export const {
   changeNoteContent,
   deleteNote,
   resetNoteState,
-  setNoteState,
+  setState,
+  reorderNotes,
 } = noteSlice.actions;
 export default noteSlice.reducer;

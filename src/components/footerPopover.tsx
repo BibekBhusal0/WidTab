@@ -4,7 +4,7 @@ import { oppositePosition } from "@/types/slice/layout";
 import IconButton from "@mui/material/IconButton";
 import Popover, { PopoverProps } from "@mui/material/Popover";
 import Tooltip from "@mui/material/Tooltip";
-import { useState } from "react";
+import { JSX, useState } from "react";
 import { useSelector } from "react-redux";
 
 function FooterPopover({
@@ -28,7 +28,7 @@ function FooterPopover({
     setAnchorEl(null);
   };
   const btn = (
-    <IconButton className="text-center overflow-visible" onClick={handleOpen}>
+    <IconButton className="overflow-visible text-center" onClick={handleOpen}>
       <Icon2RN icon={icon} />
     </IconButton>
   );
