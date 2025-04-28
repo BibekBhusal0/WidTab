@@ -17,9 +17,7 @@ import SimpleAddWidgetButton from "./simpleAddWidget";
 
 function AddHabitTracer() {
   const dispatch = useDispatch();
-  const { trackers, pinned } = useSelector(
-    (state: StateType) => state.habitTracker
-  );
+  const { trackers, pinned } = useSelector((state: StateType) => state.habitTracker);
   const dimensions = widgetDimensions["habit-tracker"];
   const { minH, minW } = dimensions;
   const statsDimensions = widgetDimensions["habit-tracker-stats-single"];
@@ -76,7 +74,7 @@ function AddHabitTracer() {
   };
 
   return (
-    <div className="text-lg mb-6">
+    <div className="size-full p-2 text-lg">
       {!!trackers.length && (
         <>
           <SettingHeader first>Habit Tracker</SettingHeader>
@@ -88,9 +86,7 @@ function AddHabitTracer() {
             pinned={pinned}
           />
           {!availablePosition && (
-            <div className="text-lg text-error-main pt-3">
-              Not Enough Space For Habit Tacker
-            </div>
+            <div className="text-error-main pt-3 text-lg">Not Enough Space For Habit Tacker</div>
           )}
           <SettingHeader>Habit Tracker Stats </SettingHeader>
           <AllItemsList
@@ -101,28 +97,23 @@ function AddHabitTracer() {
             pinned={pinned}
           />
           {!availablePositionForStats && (
-            <div className="text-lg text-error-main pt-3">
+            <div className="text-error-main pt-3 text-lg">
               Not Enough Space For Habit Tacker Stats
             </div>
           )}
         </>
       )}
       <AddHabitTracerStatsAll />
-      <AddNewHabitTracker
-        addHabitTracker={handleNewHabitTracker}
-        disabled={!availablePosition}
-      />
+      <AddNewHabitTracker addHabitTracker={handleNewHabitTracker} disabled={!availablePosition} />
+      <div className="py-2"></div>
     </div>
   );
 }
 
 function AddHabitTracerStatsAll() {
   return (
-    <div className="flex-center w-full my-5">
-      {" "}
-      <SimpleAddWidgetButton
-        widget={{ type: "habit-tracker-stats-all", values: { id: 0 } }}
-      />{" "}
+    <div className="flex-center my-5 w-full">
+      <SimpleAddWidgetButton widget={{ type: "habit-tracker-stats-all", values: { id: 0 } }} />
     </div>
   );
 }
@@ -136,7 +127,7 @@ function AddNewHabitTracker({
 }) {
   const [show, setShow] = useState(false);
   return (
-    <div className="flex-center flex-col gap-4 w-full mt-5">
+    <div className="flex-center mt-5 w-full flex-col gap-4">
       {show && (
         <HabitTrackerEdit
           onChange={(tracker) => {
@@ -150,9 +141,7 @@ function AddNewHabitTracker({
         onClick={() => setShow(!show)}
         variant="outlined"
         color={show ? "error" : "primary"}
-        startIcon={
-          <Icon icon={`material-symbols:${show ? "arrow-back" : "add"}`} />
-        }
+        startIcon={<Icon icon={`material-symbols:${show ? "arrow-back" : "add"}`} />}
         children={show ? "Back" : "Add New Habit Tracker"}
         disabled={disabled}
       />

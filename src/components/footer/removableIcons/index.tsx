@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import { RemovableToolbarIcons } from "@/types/slice/layout";
-import TodoButton from "./todoButton";
 import Spaces from "./spaces";
 import { Fragment, ReactNode } from "react";
 import Lock from "./lock";
@@ -11,7 +10,6 @@ function RemovableButtons() {
   const { toolBarIcons } = useSelector((state: StateType) => state.layout);
   const iconsMapping: Record<RemovableToolbarIcons, ReactNode> = {
     spaces: <Spaces />,
-    todo: <TodoButton />,
     theme: <ThemeSwitch />,
     lock: <Lock />,
   };

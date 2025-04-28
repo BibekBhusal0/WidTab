@@ -17,8 +17,7 @@ function ThemeSwitch() {
   }, []);
 
   if (!mode) return null;
-  const startIcon =
-    mode === "dark" ? "line-md:moon-filled-loop" : "line-md:sunny-filled-loop";
+  const startIcon = mode === "dark" ? "line-md:moon-filled-loop" : "line-md:sunny-filled-loop";
   const transitionIcon =
     mode === "light"
       ? "line-md:moon-filled-to-sunny-filled-loop-transition"
@@ -28,10 +27,7 @@ function ThemeSwitch() {
 
   return (
     <IconButton onClick={handleClick}>
-      <Icon
-        key={mode}
-        icon={firstRender.current ? startIcon : transitionIcon}
-      />
+      <Icon key={mode} icon={firstRender.current ? startIcon : transitionIcon} />
     </IconButton>
   );
 }

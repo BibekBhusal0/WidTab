@@ -11,10 +11,7 @@ export type HabitTrackerItemType = {
   history?: HabitTrackerHistoryType;
 };
 
-export type HabitTrackerStatsSingleProps = Omit<
-  HabitTrackerItemType,
-  "icon" | "increment" | "id"
->;
+export type HabitTrackerStatsSingleProps = Omit<HabitTrackerItemType, "icon" | "increment" | "id">;
 
 export interface HabitTrackerEditProps {
   initialState?: HabitTrackerItemType;

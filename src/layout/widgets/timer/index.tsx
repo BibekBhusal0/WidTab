@@ -1,8 +1,8 @@
 import { TimerWidgetType } from "@/types/slice/widgets";
 import { useState, useEffect } from "react";
 import dayjs from "@/dayjsConfig";
-import { FitText } from "../clock/digital";
-import { PieChart, Pie, Cell } from "recharts";
+import FitText from "@/components/fittext";
+import { RadialBarChart, RadialBar, PolarAngleAxis } from "recharts";
 import Button, { ButtonProps } from "@mui/material/Button";
 import useFullSize from "@/hooks/useFullSize";
 import { cn } from "@/utils/cn";
@@ -12,6 +12,7 @@ import { currentSpaceEditWidget } from "@/redux/slice/layout";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import { Icon2RN } from "@/theme/icons";
 import { updateTimerHistory } from "@/redux/slice/habit-tracker";
+import { tost } from "@/components/tost";
 
 function TimerWidget(props: TimerWidgetType) {
   const { id, time, music = false, running = false } = props;
@@ -36,6 +37,7 @@ function TimerWidget(props: TimerWidgetType) {
         setRemainingTime((prev) => {
           if (prev === 1) {
             dispatch(updateTimerHistory(time));
+            tost({ severity: "success", children: "Timer Finished" });
             setIsPlaying(false);
             return totalDuration;
           }
@@ -66,23 +68,16 @@ function TimerWidget(props: TimerWidgetType) {
   };
 
   const formatTime = (seconds: number) =>
-    `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(
-      seconds % 60
-    ).padStart(2, "0")}`;
+    `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
 
-  const calculateProgress = () =>
-    ((totalDuration - remainingTime) / totalDuration) * 100;
+  const calculateProgress = () => ((totalDuration - remainingTime) / totalDuration) * 100;
 
   const showMusic = music && height > 400;
-  const data = [
-    { name: "completed", value: calculateProgress() },
-    { name: "remaining", value: 100 - calculateProgress() },
-  ];
   const h = showMusic ? (height * 4) / 6 : height;
   const radius = Math.min(width, h) / 2 - 10;
   const dia = radius * 2;
   const angle = 45;
-  const pieProps = {
+  const chart = {
     width,
     height: h,
     innerRadius: radius * 0.78,
@@ -102,22 +97,23 @@ function TimerWidget(props: TimerWidgetType) {
   const btn1Text: btnText = isPlaying
     ? "Pause"
     : totalDuration === remainingTime
-    ? "Start"
-    : "Resume";
+      ? "Start"
+      : "Resume";
 
   const commonButtonProps: ButtonProps = {
     size: sm ? "small" : md ? "medium" : "large",
     className: "icon-lg",
+    sx: sm ? { width: "42px", minWidth: "42px" } : {},
   };
   const buttons: ButtonProps[] = [
     {
-      variant: isPlaying ? "outlined" : "contained",
+      variant: "contained",
       onClick: togglePlay,
       children: sm ? <Icon2RN icon={icon[btn1Text]} /> : btn1Text,
       startIcon: sm ? null : <Icon2RN icon={icon[btn1Text]} />,
     },
     {
-      variant: "text",
+      variant: "outlined",
       onClick: resetTimer,
       children: sm ? <Icon2RN icon={reset} /> : "Reset",
       color: "error",
@@ -126,62 +122,45 @@ function TimerWidget(props: TimerWidgetType) {
   ];
   return (
     <div key={id} ref={ref} className="size-full">
-      <div
-        className={cn(
-          "w-full relative",
-          showMusic ? "h-4/6 pb-3 border-b-2 border-divider" : "h-full"
-        )}>
-        <PieChart {...pieProps}>
-          <Pie
-            data={data}
-            dataKey={"value"}
-            fill="var(--mui-palette-success-main)"
+      <div className={cn("relative w-full", showMusic ? "h-4/6 border-b-2 pb-3" : "h-full")}>
+        <RadialBarChart data={[{ value: calculateProgress() }]} {...chart}>
+          <PolarAngleAxis angleAxisId={0} domain={[0, 100]} tick={false} type="number" />
+          <RadialBar
+            dataKey="value"
+            fill="var(--mui-palette-primary-main)"
+            background={{ fill: "var(--mui-palette-divider)" }}
             isAnimationActive={false}
-            {...pieProps}>
-            {data.map((_, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={
-                  index === 0
-                    ? "var(--mui-palette-success-main)"
-                    : "var(--mui-palette-divider)"
-                }
-                stroke="none"
-              />
-            ))}
-          </Pie>
-        </PieChart>
-        <FitText
-          aria-label="time"
-          min={10}
-          max={120}
-          containerProps={{
-            className: "p-2 absolute-center",
-            width: `${dia * 0.75}px`,
-          }}
-          className="size-full flex-center"
-          children={formatTime(remainingTime)}
-        />
+            {...chart}
+          />
+        </RadialBarChart>
+        <div
+          className="absolute-center flex-center h-full px-3"
+          style={{ width: `${dia * 0.75}px` }}>
+          <FitText
+            aria-label="time"
+            min={10}
+            max={120}
+            className="flex-center size-full"
+            children={formatTime(remainingTime)}
+          />
+        </div>
         <div
           className="absolute-center flex-center gap-4"
           style={{
-            transform: `translateX(-50%) translateY(${radius * 0.4}px)`,
+            transform: `translateY(${radius * 0.4}px)`,
           }}>
           {buttons.map((buttonProps, index) => (
             <Button
               key={index}
               {...commonButtonProps}
               {...buttonProps}
-              className={cn(
-                commonButtonProps?.className,
-                buttonProps?.className
-              )}
+              className={cn(commonButtonProps?.className, buttonProps?.className)}
             />
           ))}
         </div>
       </div>
       {music && (
-        <div className={cn("w-full h-2/6", height <= 400 && "hidden")}>
+        <div className={cn("h-2/6 w-full", height <= 400 && "hidden")}>
           <MusicWidget play_={isPlaying} />
         </div>
       )}

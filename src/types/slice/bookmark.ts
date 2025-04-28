@@ -5,6 +5,7 @@ export const allFolderSizes: folderSizes[] = [...s];
 
 export type bookmarkSliceType = {
   favorites: string[];
+  folderIcons?: { [key: string]: string };
 
   currentFolderID: string;
   linkInNewTab: boolean;
@@ -39,6 +40,7 @@ export interface TakeBookmarksProps {
 export type ExtraBookmarkProps = {
   folderSize?: folderSizes;
   onFolderChange?: (id: string) => any;
+  onReorder?: (bookmark: treeNodeArray) => any;
 };
 
 export const folderSizeMapping: Record<folderSizes, number> = {

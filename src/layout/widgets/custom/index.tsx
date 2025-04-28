@@ -6,11 +6,11 @@ import { useDispatch } from "react-redux";
 import { currentSpaceEditWidget } from "@/redux/slice/layout";
 import { useEffect, useState } from "react";
 import MenuPopover from "@/components/popoverMenu";
-import { urlPattern } from "@/components/footer/addWidget/custom";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
+import { getUrlFromString } from "@/utils/url";
 
 function CustomWidget(props: CustomWidgetType) {
-  return <iframe src={props.url} className="size-full rounded-themed" />;
+  return <iframe src={props.url} className="rounded-themed size-full" />;
 }
 
 export function URLChange({ id }: { id: number }) {
@@ -27,36 +27,48 @@ export function ChangeURL({ url, id }: CustomWidgetType) {
   const dispatch = useDispatch();
   const { edit } = useCurrentIcons();
   const [text, setText] = useState(url);
-  const [extractedUrl, setExtractedUrl] = useState(url);
+  const [helperText, setHelperText] = useState("");
   useEffect(() => {
     setText(url);
   }, [url]);
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value;
-    setText(inputValue);
-
-    const matchedUrl = inputValue.match(urlPattern);
-    setExtractedUrl(matchedUrl ? matchedUrl[0] : "");
+    setText(e.target.value);
+    if (helperText) setHelperText("");
   };
 
-  const valid = extractedUrl !== "";
   const add = () => {
-    if (valid && extractedUrl !== url) {
-      dispatch(
-        currentSpaceEditWidget({
-          type: "custom",
-          values: { id: id, url: extractedUrl },
-        })
-      );
+    if (!text || text.trim().length === 0) {
+      setHelperText("URL is required");
+      return;
     }
+    if (text === url) {
+      setHelperText("URL not changed");
+      return;
+    }
+    const extractedUrl = getUrlFromString(text);
+    if (!extractedUrl) {
+      setHelperText("Invalid URL");
+      return;
+    }
+    if (extractedUrl === url) {
+      setHelperText("URL not changed");
+      return;
+    }
+
+    dispatch(
+      currentSpaceEditWidget({
+        type: "custom",
+        values: { id: id, url: extractedUrl },
+      })
+    );
   };
   return (
     <MenuPopover icon={edit}>
-      <div className="p-4 flex-center flex-col gap-4">
+      <div className="flex-center flex-col gap-4 p-4">
         <TextField
-          error={!valid}
-          helperText={!valid ? "URL not valid" : ""}
+          error={!!helperText}
+          helperText={helperText}
           autoFocus
           placeholder="Widget URL"
           label="Widget URL"
@@ -64,11 +76,7 @@ export function ChangeURL({ url, id }: CustomWidgetType) {
           onChange={handleTextChange}
         />
 
-        <Button
-          disabled={extractedUrl === "" || extractedUrl === url}
-          onClick={add}>
-          Done
-        </Button>
+        <Button onClick={add}>Done</Button>
       </div>
     </MenuPopover>
   );

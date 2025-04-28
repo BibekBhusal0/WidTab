@@ -8,6 +8,7 @@ function Calendar({ id }: controlledWidgetValues) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateCalendar
+        reduceAnimations={false}
         key={id}
         value={dayjs()}
         onChange={() => null}

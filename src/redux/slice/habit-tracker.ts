@@ -1,14 +1,11 @@
-import {
-  HabitTrackerItemType,
-  HabitTrackerSliceType,
-} from "@/types/slice/habit-tracker";
+import { HabitTrackerItemType, HabitTrackerSliceType } from "@/types/slice/habit-tracker";
 import { getNextId } from "@/utils/next_id";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialHabitTrackerState } from "./initialStates";
 import dayjs from "@/dayjsConfig";
 
 const habitTrackerSlice = createSlice({
-  name: "habit-tracker",
+  name: "habitTracker",
   initialState: { ...initialHabitTrackerState },
   reducers: {
     addItem: (state, action: PayloadAction<HabitTrackerItemType>) => {
@@ -48,18 +45,19 @@ const habitTrackerSlice = createSlice({
       if (state.pinned === action.payload) state.pinned = null;
       else state.pinned = action.payload;
     },
-    setTrackerState: (state, action: PayloadAction<HabitTrackerSliceType>) => {
-      const val = action.payload;
-      if (!val) return;
-      if (val.timerHistory) state.timerHistory = val.timerHistory;
-      if (!val.trackers) return;
+    reorderTrackers: (state, action: PayloadAction<HabitTrackerItemType[]>) => {
+      state.trackers = action.payload;
+    },
+    setState: (state, action: PayloadAction<{ value: HabitTrackerSliceType; check?: boolean }>) => {
+      const { value, check = true } = action.payload;
+      const val = value;
+      if (!val || !val.trackers) return;
       if (!Array.isArray(val.trackers)) return;
-
+      if (!check) return Object.assign(state, val);
+      if (val.timerHistory) state.timerHistory = val.timerHistory;
       const trackers = [...state.trackers];
       val.trackers.forEach((tracker) => {
-        const crr = trackers.find(
-          ({ title, id }) => title === tracker.title && id === tracker.id
-        );
+        const crr = trackers.find(({ title, id }) => title === tracker.title && id === tracker.id);
         if (crr) Object.assign(crr, tracker);
         else {
           const id = getNextId(trackers.map(({ id }) => id));
@@ -72,8 +70,7 @@ const habitTrackerSlice = createSlice({
       });
       state.trackers = trackers;
     },
-    resetHabitTrackerState: (state) =>
-      Object.assign(state, initialHabitTrackerState),
+    resetHabitTrackerState: (state) => Object.assign(state, initialHabitTrackerState),
     updateTimerHistory: (state, action: PayloadAction<number>) => {
       const today = dayjs().format("YYYY-MM-DD");
       if (!state.timerHistory) state.timerHistory = {};
@@ -91,6 +88,7 @@ export const {
   changePinnedHabitTracker,
   resetHabitTrackerState,
   updateTimerHistory,
-  setTrackerState,
+  setState,
+  reorderTrackers,
 } = habitTrackerSlice.actions;
 export default habitTrackerSlice.reducer;

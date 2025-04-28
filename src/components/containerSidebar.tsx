@@ -1,12 +1,11 @@
-import { ReactNode, useState } from "react";
+import { JSX, ReactNode, useState } from "react";
 import Box, { BoxProps } from "@mui/material/Box";
 import { cn } from "@/utils/cn";
 import Tab, { TabProps } from "@mui/material/Tab";
 import Tabs, { TabsProps } from "@mui/material/Tabs";
 import { styled } from "@mui/material/styles";
 import alphaColor from "@/utils/alpha";
-import { ScrollBar } from "./scrollarea";
-import { Root, Viewport } from "@radix-ui/react-scroll-area";
+import { ScrollArea } from "./scrollarea";
 
 export type SidebarComponent = {
   index: number;
@@ -60,16 +59,13 @@ function ContainerSidebar({
   tabProps = undefined,
 }: ContainerSidebarProps) {
   const [value, setValue] = useState(items[0].index);
-  const crrComponent =
-    items.find((p) => p.index === value)?.component || items[0].component;
+  const crrComponent = items.find((p) => p.index === value)?.component || items[0].component;
   const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
   return (
-    <Box
-      {...mainProps}
-      className={cn("flex h-full relative", mainProps?.className)}>
+    <Box {...mainProps} className={cn("relative flex h-full", mainProps?.className)}>
       <CustomTabs
         orientation="vertical"
         scrollButtons="auto"
@@ -77,10 +73,7 @@ function ContainerSidebar({
         value={value}
         onChange={handleChange}
         {...tabsProps}
-        className={cn(
-          "h-full border-r-2 border-r-divider",
-          tabsProps?.className
-        )}
+        className={cn("border-r-divider h-full border-r-2", tabsProps?.className)}
         //
       >
         {items.map(({ name, index }) => (
@@ -94,17 +87,17 @@ function ContainerSidebar({
           />
         ))}
       </CustomTabs>
-      <Root className="overflow-hidden size-full">
-        <Viewport
-          {...panelProps}
-          className={cn(
-            "border-l-3 p-4 size-full relative",
-            panelProps?.className
-          )}>
-          {crrComponent}
-        </Viewport>
-        <ScrollBar />
-      </Root>
+
+      <ScrollArea
+        className="size-full"
+        viewPortProps={{
+          ...panelProps,
+          children: null,
+          className: cn("border-l-1 p-2 px-4 size-full relative", panelProps?.className),
+        }}
+        children={crrComponent}
+      />
+      {/* </ScrollArea> */}
     </Box>
   );
 }

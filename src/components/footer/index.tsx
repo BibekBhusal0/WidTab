@@ -11,9 +11,7 @@ import { ToolbarDock } from "./dock";
 
 function Footer() {
   const l = useCurrentLayout();
-  const { toolBarPosition, dock } = useSelector(
-    (state: StateType) => state.layout
-  );
+  const { toolBarPosition, dock } = useSelector((state: StateType) => state.layout);
   const { footerProps } = positionProps[toolBarPosition];
 
   return (

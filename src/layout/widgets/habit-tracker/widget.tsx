@@ -9,27 +9,20 @@ type HabitTrackerOrStatsWidgetProps = controlledWidgetValues & {
   type: "tracker" | "stats";
 };
 
-export function HabitTrackerOrStatsWidget({
-  id,
-  type,
-}: HabitTrackerOrStatsWidgetProps) {
+export function HabitTrackerOrStatsWidget({ id, type }: HabitTrackerOrStatsWidgetProps) {
   const habitTracker = useSelector((state: StateType) => state.habitTracker);
-  const currentHabitTracker = habitTracker.trackers.find(
-    (tracker) => tracker.id === id
-  );
+  const currentHabitTracker = habitTracker.trackers.find((tracker) => tracker.id === id);
   const dispatch = useDispatch();
   if (!currentHabitTracker) {
     dispatch(
       currentSpaceDeleteWidget({
         id,
-        type:
-          type === "tracker" ? "habit-tracker" : "habit-tracker-stats-single",
+        type: type === "tracker" ? "habit-tracker" : "habit-tracker-stats-single",
       })
     );
     return null;
   }
-  if (type === "stats")
-    return <HabitTrackerStatsSingle {...currentHabitTracker} />;
+  if (type === "stats") return <HabitTrackerStatsSingle {...currentHabitTracker} />;
   return <HabitTracker {...currentHabitTracker} />;
 }
 export function HabitTrackerWidget({ id }: controlledWidgetValues) {

@@ -25,7 +25,7 @@ function HelpInCustomWidget() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="absolute bottom-0 right-0">
+    <div className="absolute right-0 bottom-0">
       <IconButton
         onClick={() => setOpen(true)}
         color="primary"
@@ -34,19 +34,16 @@ function HelpInCustomWidget() {
         <Icon icon="material-symbols:help" />
       </IconButton>
       <Modal open={open} onClose={() => setOpen(false)}>
-        <div className="p-10 bg-primaryContainer-paper absolute-center flex flex-col gap-3">
+        <div className="bg-primary-container-paper absolute-center flex flex-col gap-3 p-10">
           <div className="text-xl">
-            You can personalize your experience by adding custom widgets! Simply
-            enter the URL of your desired widget.
+            You can personalize your experience by adding custom widgets! Simply enter the URL of
+            your desired widget.
           </div>
           <div className="text-xl">Where To get Widgets?</div>
-          <div className="text-xl">
-            Here are some sources you can get free widgets from:
-          </div>
+          <div className="text-xl">Here are some sources you can get free widgets from:</div>
           <LinkList links={links} />
           <div className="text-xl">
-            You can also add Music or Video Widget, you have to go to share and
-            copy Embed Link
+            You can also add Music or Video Widget, you have to go to share and copy Embed Link
           </div>
           <div className="text-xl">Here are some Sites for music Widgets </div>
           <LinkList links={musicLinks} />

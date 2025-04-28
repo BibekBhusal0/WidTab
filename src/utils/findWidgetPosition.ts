@@ -9,9 +9,7 @@ export function fits(
   maxCols: number = 12,
   maxRows: number = 6
 ): boolean {
-  const positions = Array.from({ length: maxRows }, () =>
-    Array(maxCols).fill(false)
-  );
+  const positions = Array.from({ length: maxRows }, () => Array(maxCols).fill(false));
 
   widgets.forEach((widget) => {
     const { x, y, w: widgetW, h: widgetH } = widget.gridProps;

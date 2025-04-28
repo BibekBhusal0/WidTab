@@ -1,8 +1,4 @@
-import {
-  changeDockContentType,
-  changeDockSelected,
-  toggleDock,
-} from "@/redux/slice/layout";
+import { changeDockContentType, changeDockSelected, toggleDock } from "@/redux/slice/layout";
 import { StateType } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
@@ -27,16 +23,12 @@ function DockSettings() {
     },
   ];
 
-  const onDockTypeChange = (
-    _: React.MouseEvent<HTMLElement>,
-    dockContentType: string | null
-  ) => {
-    if (typeof dockContentType === "string")
-      dispatch(changeDockContentType(dockContentType));
+  const onDockTypeChange = (_: React.MouseEvent<HTMLElement>, dockContentType: string | null) => {
+    if (typeof dockContentType === "string") dispatch(changeDockContentType(dockContentType));
   };
 
   return (
-    <div className="w-full flex flex-col gap-4">
+    <div className="flex w-full flex-col gap-4">
       <MenuSwitch plain items={toggle} />
       {dock && (
         <>
@@ -58,11 +50,7 @@ function DockSettings() {
 
           <div className="full-between">
             <div className="text-xl capitalize">{dockContent.content}</div>
-            {dockContent.content === "spaces" ? (
-              <DockSpaceSelect />
-            ) : (
-              <DockBookmarkSelect />
-            )}
+            {dockContent.content === "spaces" ? <DockSpaceSelect /> : <DockBookmarkSelect />}
           </div>
         </>
       )}
@@ -89,17 +77,12 @@ function DockBookmarkSelect() {
       const items = [];
       if (bookmark.title && bookmark.title.trim() !== "") {
         items.push(
-          <MenuItem
-            key={bookmark.id}
-            className="text-xl capitalize"
-            value={bookmark.id}>
+          <MenuItem key={bookmark.id} className="text-xl capitalize" value={bookmark.id}>
             {bookmark.title}
           </MenuItem>
         );
       }
-      items.push(
-        ...bookmark.children.flatMap((child) => getBookmarkFolders(child))
-      );
+      items.push(...bookmark.children.flatMap((child) => getBookmarkFolders(child)));
       return items;
     }
     return [];

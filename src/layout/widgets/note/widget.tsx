@@ -7,8 +7,7 @@ import { currentSpaceDeleteWidget } from "@/redux/slice/layout";
 function NoteWidget({ id }: controlledWidgetValues) {
   const dispatch = useDispatch();
   const { allNotes } = useSelector((state: StateType) => state.note);
-  const deleteAction = () =>
-    dispatch(currentSpaceDeleteWidget({ id, type: "note" }));
+  const deleteAction = () => dispatch(currentSpaceDeleteWidget({ id, type: "note" }));
 
   const task = allNotes.find((p) => p.id === id);
   if (!task) {
