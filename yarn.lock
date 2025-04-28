@@ -1265,10 +1265,10 @@
   dependencies:
     "@babel/types" "^7.20.7"
 
-"@types/chrome@^0.0.313":
-  "integrity" "sha512-9R5T7gTaYZhkxlu+Ho4wk9FL+y/werWQY2yjGWSqCuiTsqS7nL/BE5UMTP6rU7J+oIG2FRKqrEycHhJATeltVA=="
-  "resolved" "https://registry.npmjs.org/@types/chrome/-/chrome-0.0.313.tgz"
-  "version" "0.0.313"
+"@types/chrome@^0.0.317":
+  "integrity" "sha512-ibKycbXX8ZZToFshjgWg98BTvFUSvQht8m53Xc+87ye3Z6ZoHJubLjoiDsil8rtW+noWE+Z0+7y0nwLxArU+CQ=="
+  "resolved" "https://registry.npmjs.org/@types/chrome/-/chrome-0.0.317.tgz"
+  "version" "0.0.317"
   dependencies:
     "@types/filesystem" "*"
     "@types/har-format" "*"
