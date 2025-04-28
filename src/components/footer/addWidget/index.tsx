@@ -1,6 +1,4 @@
-import ContainerSidebar, {
-  SidebarComponent,
-} from "@/components/containerSidebar";
+import ContainerSidebar, { SidebarComponent } from "@/components/containerSidebar";
 import AddCustomWidget from "./custom";
 import AddTodo from "./todo";
 import FooterPopover from "@/components/footerPopover";

@@ -1,6 +1,7 @@
 import dayjs from "@/dayjsConfig";
+import useCurrentTheme from "@/hooks/useCurrentTheme";
 import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
-import { PieChart, Pie, Cell } from "recharts";
+import { RadialBarChart, RadialBar, PolarAngleAxis } from "recharts";
 
 const pgt = ["daily", "weekly", "monthly"] as const;
 export type progressGraphType = (typeof pgt)[number];
@@ -12,6 +13,7 @@ export type ProgressGraphProps = {
 };
 
 function ProgressGraph({ type = "daily", trackers }: ProgressGraphProps) {
+  const { roundness } = useCurrentTheme();
   const calculateCompletionPercentage = () => {
     const entryDate = dayjs();
     let startDate = entryDate.clone();
@@ -34,9 +36,7 @@ function ProgressGraph({ type = "daily", trackers }: ProgressGraphProps) {
           const formattedDate = currentDate.format("YYYY-MM-DD");
           const value = tracker.history[formattedDate] || 0;
           const completion =
-            tracker.target === 0
-              ? 0
-              : Math.min((value / tracker.target) * 100, 100);
+            tracker.target === 0 ? 0 : Math.min((value / tracker.target) * 100, 100);
           completionPercentages.push(completion);
         } else completionPercentages.push(0);
       });
@@ -52,43 +52,30 @@ function ProgressGraph({ type = "daily", trackers }: ProgressGraphProps) {
   };
 
   const completionPercentage = calculateCompletionPercentage();
-  const data = [
-    { name: "completed", value: completionPercentage },
-    { name: "remaining", value: 100 - completionPercentage },
-  ];
-  const pieProps = {
+  const completionString = `${Math.round(completionPercentage)}%`;
+  const chart = {
     width: 100,
     height: 100,
-    innerRadius: 35,
-    outerRadius: 43,
+    innerRadius: 34,
+    outerRadius: 47,
     startAngle: 90,
     endAngle: -270,
   };
-
   return (
     <div className="relative size-[100px]">
-      <PieChart {...pieProps}>
-        <Pie
-          data={data}
-          dataKey={"value"}
-          fill="var(--mui-palette-success-main)"
-          {...pieProps}>
-          {data.map((entry, index) => (
-            <Cell
-              key={`cell-${index}`}
-              fill={
-                index === 0
-                  ? "var(--mui-palette-success-main)"
-                  : "var(--mui-palette-divider)"
-              }
-              stroke="none"
-            />
-          ))}
-        </Pie>
-      </PieChart>
-      <div className="text-center flex-center absolute-center text-lg">{`${Math.round(
-        completionPercentage
-      )}%`}</div>
+      <RadialBarChart data={[{ value: completionPercentage }]} {...chart}>
+        <PolarAngleAxis angleAxisId={0} domain={[0, 100]} tick={false} type="number" />
+        <RadialBar
+          dataKey="value"
+          fill="var(--mui-palette-primary-main)"
+          background={{ fill: "var(--mui-palette-divider)" }}
+          cornerRadius={roundness * 10}
+          isAnimationActive={false}
+          {...chart}
+        />
+      </RadialBarChart>
+
+      <div className="absolute-center text-center text-lg">{completionString}</div>
     </div>
   );
 }

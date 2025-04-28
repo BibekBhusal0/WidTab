@@ -4,10 +4,7 @@ import MenuItem from "@mui/material/MenuItem";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { useDispatch } from "react-redux";
-import {
-  currentSpaceDeleteWidget,
-  currentSpaceEditWidget,
-} from "@/redux/slice/layout";
+import { currentSpaceDeleteWidget, currentSpaceEditWidget } from "@/redux/slice/layout";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
@@ -15,12 +12,8 @@ import IconMenu from "@/components/menuWithIcon";
 import MenuSwitch, { MenuSwitchProps } from "@/components/menuSwitch";
 import moment from "moment-timezone";
 import useCurrentLayout from "@/hooks/useCurrentLayout";
-import { ControlPropsDifferentForContextMenu } from "../controls";
 
-function ClockControls({
-  id,
-  contextMenu = false,
-}: ControlPropsDifferentForContextMenu) {
+function ClockControls({ id }: { id: number }) {
   const layout = useCurrentLayout();
   const dispatch = useDispatch();
   const { delete_ } = useCurrentIcons();
@@ -37,9 +30,7 @@ function ClockControls({
     showTimeZone,
   } = props;
 
-  const toggleValue = (
-    type: "TwentyFourHour" | "showSeconds" | "showTimeZone"
-  ) => {
+  const toggleValue = (type: "TwentyFourHour" | "showSeconds" | "showTimeZone") => {
     dispatch(
       currentSpaceEditWidget({
         type: "clock",
@@ -75,10 +66,7 @@ function ClockControls({
     },
   ];
 
-  const onClockTypeChange = (
-    _: React.MouseEvent<HTMLElement>,
-    newClockType: string | null
-  ) => {
+  const onClockTypeChange = (_: React.MouseEvent<HTMLElement>, newClockType: string | null) => {
     if (!newClockType) return;
     if (!["analog", "digital"].includes(newClockType)) return;
     dispatch(
@@ -92,8 +80,7 @@ function ClockControls({
     );
   };
 
-  const deleteThis = () =>
-    dispatch(currentSpaceDeleteWidget({ type: "clock", id }));
+  const deleteThis = () => dispatch(currentSpaceDeleteWidget({ type: "clock", id }));
   const allTimezones = moment.tz.names();
 
   return (
@@ -111,24 +98,18 @@ function ClockControls({
         </ToggleButtonGroup>
       </MenuItem>
       <Divider />
-      {!contextMenu && (
-        <>
-          {" "}
-          <MenuItem className="p-2 ">
-            <Autocomplete
-              fullWidth
-              disableClearable
-              value={timeZone}
-              onChange={changeTimezone}
-              options={allTimezones}
-              renderInput={(params) => (
-                <TextField {...params} label="Timezone" />
-              )}
-            />
-          </MenuItem>
-          <Divider />{" "}
-        </>
-      )}
+
+      <MenuItem className="p-2">
+        <Autocomplete
+          fullWidth
+          disableClearable
+          value={timeZone}
+          onChange={changeTimezone}
+          options={allTimezones}
+          renderInput={(params) => <TextField {...params} label="Timezone" />}
+        />
+      </MenuItem>
+      <Divider />
       <MenuSwitch items={switches} />
       <Divider />
       <IconMenu

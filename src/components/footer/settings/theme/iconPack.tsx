@@ -20,7 +20,7 @@ function SelectIconPack({ showLabel = true }: { showLabel?: boolean }) {
 
   const selectItem = (
     <Select
-      className="w-full capitalize icon-xl"
+      className="icon-xl w-full capitalize"
       MenuProps={{ style: { maxHeight: 350 } }}
       size="small"
       renderValue={(selected) => (
@@ -32,10 +32,7 @@ function SelectIconPack({ showLabel = true }: { showLabel?: boolean }) {
       value={iconPack}
       onChange={(e) => dispatch(changeIconPack(e.target.value))}>
       {Object.keys(SelectedIconPacks).map((c) => (
-        <MenuItem
-          className="capitalize icon-xl flex-center gap-3"
-          key={c}
-          value={c}>
+        <MenuItem className="icon-xl flex-center gap-3 capitalize" key={c} value={c}>
           <ListItemIcon>{getSampleIcon(c)}</ListItemIcon>
           {reformatName(c)}
         </MenuItem>

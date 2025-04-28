@@ -1,42 +1,25 @@
 import Autocomplete from "@mui/material/Autocomplete";
-import {
-  FunctionComponent,
-  useDeferredValue,
-  useEffect,
-  useState,
-} from "react";
+import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@/redux/store";
 import { Icon } from "@iconify/react";
 import { changeCurrentFolder } from "@/redux/slice/bookmark";
 import Favicon from "@/utils/faviconURL";
-import { treeNode, treeNodeArray } from "@/types/slice/bookmark";
-import browser from "webextension-polyfill";
+import { treeNode } from "@/types/slice/bookmark";
+import { useBookmarkSearch } from "@/hooks/useBookmarks";
+import { openLink } from "@/utils/bookmark";
 
 function BookmarkSearch() {
   const dispatch = useDispatch();
   const { linkInNewTab } = useSelector((state: StateType) => state.bookmarks);
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchedBookmarks, SetSearchedBookmarks] = useState<treeNodeArray>([]);
-  const deferredSearchTerm = useDeferredValue(searchTerm);
+  const searchedBookmarks = useBookmarkSearch(searchTerm);
 
-  useEffect(() => {
-    browser.bookmarks.search(deferredSearchTerm).then((bookmarks) => {
-      SetSearchedBookmarks(bookmarks);
-    });
-  }, [deferredSearchTerm]);
-
-  const handleChange = (
-    _: React.SyntheticEvent<Element, Event>,
-    bookmark: treeNode | null
-  ) => {
+  const handleChange = (_: React.SyntheticEvent<Element, Event>, bookmark: treeNode | null) => {
     if (!bookmark) return;
-    if (bookmark.url) {
-      window.open(bookmark.url, linkInNewTab ? "_blank" : "_self");
-    } else {
-      dispatch(changeCurrentFolder(bookmark.id));
-    }
+    if (bookmark.url) openLink(bookmark.url, linkInNewTab);
+    else dispatch(changeCurrentFolder(bookmark.id));
     setSearchTerm("");
   };
 
@@ -56,9 +39,7 @@ function BookmarkSearch() {
           </li>
         );
       }}
-      renderInput={(props) => (
-        <TextField {...props} placeholder="Search Bookmarks" />
-      )}
+      renderInput={(props) => <TextField {...props} placeholder="Search Bookmarks" />}
     />
   );
 }
@@ -67,25 +48,26 @@ interface LinkProps {
   link: treeNode;
 }
 
-const Link: FunctionComponent<LinkProps> = ({ link }) => {
-  const { favorites } = useSelector((state: StateType) => state.bookmarks);
+const Link = ({ link }: LinkProps) => {
+  const { favorites, folderIcons } = useSelector((state: StateType) => state.bookmarks);
 
   const { title, url, id } = link;
-  const cls = "w-10 aspect-square";
+  const cls = "w-12 aspect-square";
+
   const icon = url ? (
     <Favicon src={url} className={cls} />
   ) : (
-    <Icon className={cls} icon="ic:round-folder" />
+    <Icon className={cls} icon={folderIcons?.[id] || "ic:round-folder"} />
   );
 
   return (
-    <div className="size-full flex gap-4 items-center text-xl">
+    <div className="icon-2xl flex size-full items-center gap-4 text-xl">
       {icon}
-      <div className="text-xl truncate">{title}</div>
+      <div className="truncate text-xl">{title}</div>
       {favorites.includes(id) && (
         <>
-          <div className="flex-grow"></div>
-          <Icon className="text-2xl flex-shrink-0" icon="mdi:heart" />
+          <div className="grow"></div>
+          <Icon className="shrink-0 text-2xl" icon="mdi:heart" />
         </>
       )}
     </div>

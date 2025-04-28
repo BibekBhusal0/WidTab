@@ -8,22 +8,23 @@ import { Icon } from "@iconify/react";
 
 type RenameItemProps = {
   initialText: string;
-  handleChange: (item: string) => void;
+  handleChange: (item: string) => any;
   realTime?: boolean;
   wordLimit?: number;
   inputProps?: OutlinedInputProps;
+  children?: React.ReactNode;
 };
 
 function RenameItem({
   initialText,
   handleChange,
-  inputProps = undefined,
+  inputProps,
+  wordLimit,
+  children,
   realTime = false,
-  wordLimit = undefined,
 }: RenameItemProps) {
   const [text, setText] = useState(initialText);
-  const hitsWordLimit: boolean =
-    wordLimit !== undefined && text.length >= wordLimit;
+  const hitsWordLimit: boolean = wordLimit !== undefined && text.length >= wordLimit;
   const trimmedText = text.trim();
   const isEmpty = trimmedText.length === 0;
 
@@ -43,8 +44,13 @@ function RenameItem({
     }
   };
   return (
-    <FormControl variant="outlined" fullWidth>
+    <FormControl fullWidth>
+      {children}
+
       <OutlinedInput
+        onKeyDown={(e) => {
+          if (e.key === "Enter") handleClick();
+        }}
         endAdornment={
           !realTime && (
             <InputAdornment position="end">
@@ -59,12 +65,12 @@ function RenameItem({
         size="small"
         error={hitsWordLimit}
         {...inputProps}
+        sx={{ paddingRight: "0", ...inputProps?.sx }}
         value={text}
         onChange={handleInputChange}
       />
-      <FormHelperText error>
-        {hitsWordLimit ? "Word limit exceeded." : null}
-      </FormHelperText>
+
+      <FormHelperText error>{hitsWordLimit ? "Word limit exceeded." : null}</FormHelperText>
     </FormControl>
   );
 }

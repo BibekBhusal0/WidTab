@@ -5,41 +5,85 @@ import { todoStateType } from "@/types/slice/todo";
 import { noteStateType } from "@/types/slice/notes";
 import { bookmarkSliceType } from "@/types/slice/bookmark";
 
+import autumn from "@/assets/img/autumn.jpg";
+import bananas from "@/assets/img/bananas.jpg";
+import ocean from "@/assets/img/ocean.jpg";
+import rose from "@/assets/img/rose.jpg";
+import space from "@/assets/img/space.jpg";
+
 export const initialThemeState: ThemeSliceType = {
-  currentThemeID: 2,
+  currentThemeID: 5,
   allThemes: [
     {
-      name: "red",
+      name: "Under Water",
+      mode: "light",
+      id: 0,
+      editAble: false,
+      primaryColor: "#4870e8",
+      blur: 0.71,
+      roundness: 0.87,
+      opacity: 0.6,
+      iconPack: "Remix Icon Filled",
+      image: ocean,
+    },
+    {
+      name: "Autumn",
       mode: "light",
       id: 1,
       editAble: false,
-      primaryColor: "#ff0000",
-      blur: 1,
-      roundness: 0.7,
-      opacity: 0.4,
-      iconPack: "Remix Icon Line",
+      primaryColor: "#ee6011",
+      blur: 0.68,
+      roundness: 0.03,
+      opacity: 0.6,
+      iconPack: "Teeny Icons Solid",
+      image: autumn,
     },
     {
-      name: "green",
+      name: "Monkey",
       mode: "dark",
       id: 2,
       editAble: true,
-      primaryColor: "#00ff00",
-      blur: 0.5,
-      roundness: 0.3,
-      opacity: 0.7,
-      iconPack: "hugeicons",
+      primaryColor: "#f2ff00",
+      blur: 0.67,
+      roundness: 0.65,
+      opacity: 0.65,
+      iconPack: "line-md",
+      image: bananas,
     },
     {
-      name: "blue",
-      mode: "light",
-      id: 0,
+      name: "Depp Space",
+      mode: "dark",
+      id: 3,
+      editAble: false,
+      primaryColor: "#8f00ff",
+      blur: 0.54,
+      roundness: 0.36,
+      opacity: 0.55,
+      iconPack: "Solar Bold Duotone",
+      image: space,
+    },
+    {
+      name: "Rose",
+      mode: "dark",
+      id: 4,
+      editAble: false,
+      primaryColor: "#ef4d9b",
+      blur: 1,
+      roundness: 0.24,
+      opacity: 0.75,
+      iconPack: "MingCute Fill",
+      image: rose,
+    },
+    {
+      name: "Simple",
+      mode: "dark",
+      id: 5,
       editAble: true,
-      primaryColor: "#0000ff",
-      blur: 0,
-      roundness: 0.2,
-      opacity: 1,
-      iconPack: "line-md",
+      primaryColor: "#00ff00",
+      blur: 0.55,
+      roundness: 0.24,
+      opacity: 0.85,
+      iconPack: "Bootstrap Fill",
     },
   ],
 };
@@ -50,7 +94,6 @@ export const initialTodoState: todoStateType = {
     {
       filtered: false,
       id: 1,
-      sorted: false,
       icon: "fluent:sparkle-16-filled",
       title: "Customize new tab",
       todos: [
@@ -126,4 +169,5 @@ export const initialBookmarkState: bookmarkSliceType = {
   linkInNewTab: true,
   currentFolderID: "1",
   folderSize: "medium",
+  folderIcons: {},
 };

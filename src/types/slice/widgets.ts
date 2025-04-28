@@ -1,6 +1,6 @@
 import { Layout } from "react-grid-layout";
 import { TaskType } from "./todo";
-import { HabitTrackerHistoryType, HabitTrackerItemType } from "./habit-tracker";
+import { HabitTrackerItemType } from "./habit-tracker";
 import { BookmarkWidgetType, FavoritesWidgetType } from "./bookmark";
 import { Content } from "@google/generative-ai";
 
@@ -12,6 +12,7 @@ const CW = [
   "habit-tracker-stats-all",
   "note",
 ] as const;
+
 const UW = [
   "custom",
   "clock",
@@ -26,7 +27,8 @@ const UW = [
   "top-sites",
   "gemini",
 ] as const;
-const SE = ["Google", "Bing", "YouTube", "Brave", "DuckDuckGo"] as const;
+
+const SE = ["Google", "Bing", "YouTube", "Brave", "DuckDuckGo", "Perplexity", "ChatGPT"] as const;
 
 export type StaticPagesType = (typeof SP)[number];
 export type controlledWidgetsType = (typeof CW)[number];
@@ -42,6 +44,8 @@ export const searchEngines: AllSearchEngines[] = [...SE];
 export type CustomWidgetType = { id: number; url: string };
 
 const am = [
+  "gemini-2.0-flash",
+  "gemini-2.0-flash-lite",
   "gemini-1.5-flash",
   "gemini-1.5-flash-8b",
   "gemini-1.5-pro",
@@ -83,11 +87,7 @@ export type WidgetMappingUncontrolled =
   | { type: "clock"; values: ClockWidgetType }
   | { type: "search"; values: SearchWidgetType }
   | {
-      type:
-        | "calendar"
-        | "navigation"
-        | "timer-stats"
-        | "cylindrical-navigation";
+      type: "calendar" | "navigation" | "timer-stats" | "cylindrical-navigation";
       values: controlledWidgetValues;
     }
   | { type: "bookmark"; values: BookmarkWidgetType }
@@ -96,9 +96,7 @@ export type WidgetMappingUncontrolled =
   | { type: "gemini"; values: geminiWidgetType }
   | { type: "timer"; values: TimerWidgetType };
 
-export type WidgetMappingAll =
-  | WidgetMappingControlled
-  | WidgetMappingUncontrolled;
+export type WidgetMappingAll = WidgetMappingControlled | WidgetMappingUncontrolled;
 
 export type AllWidgetPropsMapping<T extends allWidgetsType> = Extract<
   WidgetMappingAll,

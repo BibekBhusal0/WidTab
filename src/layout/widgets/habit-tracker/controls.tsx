@@ -15,12 +15,8 @@ import HabitTrackerEdit from "./edit";
 import { HabitTrackerItemType } from "@/types/slice/habit-tracker";
 import Popover from "@mui/material/Popover";
 import HabitTrackerStatsSingle from "./stats/single";
-import { ControlPropsDifferentForContextMenu } from "../controls";
 
-function HabitTrackerControls({
-  id,
-  contextMenu = false,
-}: ControlPropsDifferentForContextMenu) {
+function HabitTrackerControls({ id }: { id: number }) {
   const [editing, setEditing] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const statsOpen = !!anchorEl;
@@ -34,9 +30,7 @@ function HabitTrackerControls({
   const { delete_, reset, pin, edit } = useCurrentIcons();
 
   const dispatch = useDispatch();
-  const { pinned, trackers } = useSelector(
-    (state: StateType) => state.habitTracker
-  );
+  const { pinned, trackers } = useSelector((state: StateType) => state.habitTracker);
   const { currentSpace } = useSelector((state: StateType) => state.layout);
   const handlePin = () => dispatch(changePinnedHabitTracker(id));
 
@@ -54,25 +48,20 @@ function HabitTrackerControls({
     setEditing(false);
   };
 
-  const Pinned: IconMenuType[] = [
+  const items: IconMenuType[] = [
     {
       name: pinned === id ? "Unpin" : "Pin",
       icon: pin,
       onClick: handlePin,
       color: pinned === id ? "primary.main" : "action.main",
     },
-  ];
-  const StatsEdit: IconMenuType[] = [
     {
       name: "Stats",
       icon: "proicons:graph",
       onClick: handleStatsOpen,
       color: statsOpen ? "primary.main" : "action.main",
     },
-
     { name: "Edit", icon: edit, onClick: () => setEditing(true) },
-  ];
-  const resetDelete: IconMenuType[] = [
     { name: "Reset", icon: reset, onClick: handleReset },
     {
       name: "Delete",
@@ -81,38 +70,33 @@ function HabitTrackerControls({
       color: "error.main",
     },
   ];
-  const items: IconMenuType[] = [...Pinned];
-  if (!contextMenu) items.push(...StatsEdit);
-  items.push(...resetDelete);
 
   return (
     <>
-      {editing && !contextMenu ? (
+      {editing ? (
         <div className="p-4">
           <HabitTrackerEdit
             initialState={trackers.find((tracker) => tracker.id === id)}
             onChange={handleChange}
           />
-          <div className="w-full flex-center mt-5">
+          <div className="flex-center mt-5 w-full">
             <Button onClick={() => setEditing(false)}>Back</Button>
           </div>
         </div>
       ) : (
         <div>
           <IconMenu menuItems={items} />
-          {!contextMenu && (
-            <Popover
-              anchorEl={anchorEl}
-              marginThreshold={30}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              open={statsOpen}
-              onClose={handleStatsClose}>
-              <Stats id={id} />
-            </Popover>
-          )}
+          <Popover
+            anchorEl={anchorEl}
+            marginThreshold={30}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            open={statsOpen}
+            onClose={handleStatsClose}>
+            <Stats id={id} />
+          </Popover>
         </div>
       )}
     </>
