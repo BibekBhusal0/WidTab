@@ -8,10 +8,7 @@ export type SimpleAddWidgetButtonProps = {
   buttonProps?: ButtonProps;
 };
 
-function SimpleAddWidgetButton({
-  widget,
-  buttonProps,
-}: SimpleAddWidgetButtonProps) {
+function SimpleAddWidgetButton({ widget, buttonProps }: SimpleAddWidgetButtonProps) {
   const { add, availablePosition } = useAddWidget(widget);
 
   return (

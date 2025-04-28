@@ -19,7 +19,7 @@ function BookmarkBreadcrumb({
       {path.map((item, index) => (
         <div
           key={index}
-          className="hover:underline cursor-pointer text-xl"
+          className="cursor-pointer text-xl hover:underline"
           onClick={() => onFolderChange(item.id)}>
           {item.title}
         </div>

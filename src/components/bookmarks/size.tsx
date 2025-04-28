@@ -1,29 +1,14 @@
-import Box, { BoxProps } from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectProps } from "@mui/material/Select";
-import { useId } from "react";
+import TextField, { TextFieldProps } from "@mui/material/TextField";
 import { allFolderSizes } from "@/types/slice/bookmark";
+import { cn } from "@/utils/cn";
 
-export default function SelectSize({
-  boxProps,
-  ...props
-}: { boxProps?: BoxProps } & SelectProps) {
-  const id = useId();
-
+export default function SelectSize({ ...props }: TextFieldProps) {
   return (
-    <Box {...boxProps} sx={{ minWidth: 120, ...boxProps?.sx }}>
-      <FormControl fullWidth>
-        <InputLabel id={id}>Size</InputLabel>
-        <Select labelId={id} label="Size" {...props}>
-          {allFolderSizes.map((s) => (
-            <MenuItem className="capitalize" key={s} value={s}>
-              {s}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </Box>
+    <TextField select label="Size" className={cn("capitalize", props.className)} {...props}>
+      {allFolderSizes.map((s) => (
+        <MenuItem className="capitalize" key={s} value={s} children={s} />
+      ))}
+    </TextField>
   );
 }

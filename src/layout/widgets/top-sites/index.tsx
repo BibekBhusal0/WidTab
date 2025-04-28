@@ -24,15 +24,15 @@ function TopSites(props: FavoritesWidgetType) {
   if (!hasPermissions)
     return (
       <div className="flex-center flex-col gap-4">
-        <div className="text-xl text-error-main"></div>
+        <div className="text-error-main text-xl"></div>
         Extension has no permission for Top Sites
         <Button onClick={askPermission}>Grant Permission</Button>
       </div>
     );
 
   return (
-    <ScrollArea className="size-full my-auto">
-      <div className="py-2 my-auto">
+    <ScrollArea className="my-auto size-full">
+      <div className="my-auto py-2">
         <Sites {...props} />
       </div>
     </ScrollArea>
@@ -44,7 +44,6 @@ function Sites({ iconSize }: FavoritesWidgetType) {
 
   useEffect(() => {
     browser.topSites.get().then((sites) => {
-      console.log(sites);
       setSites(
         sites.map((s, index) => ({
           id: `${index}`,
@@ -55,9 +54,7 @@ function Sites({ iconSize }: FavoritesWidgetType) {
     });
   }, []);
 
-  return (
-    <BookmarkGrid bookmarks={sites} folderSize={iconSize} contextMenu={false} />
-  );
+  return <BookmarkGrid bookmarks={sites} folderSize={iconSize} contextMenu={false} />;
 }
 
 export default TopSites;

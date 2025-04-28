@@ -1,20 +1,10 @@
 import { Icon2RN, iconAsProp } from "@/theme/icons";
 import { cn } from "@/utils/cn";
 import Tooltip from "@mui/material/Tooltip";
-import {
-  MotionValue,
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { MotionValue, motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { useDeferredValue, useRef, useState } from "react";
 import Zoom from "@mui/material/Zoom";
-import {
-  isToolbarHorizontal,
-  oppositePosition,
-  ToolBarPositions,
-} from "@/types/slice/layout";
+import { isToolbarHorizontal, oppositePosition, ToolBarPositions } from "@/types/slice/layout";
 import IconButton from "@mui/material/IconButton";
 import { Icon } from "@iconify/react";
 import useFullSize from "@/hooks/useFullSize";
@@ -34,9 +24,7 @@ export const Dock = ({ items, position = "bottom" }: dockProps) => {
   const mousePosition = useMotionValue(Infinity);
   const h = isToolbarHorizontal(position);
   const { ref, size } = useFullSize();
-  const width = useDeferredValue(
-    size[h ? "width" : "height"] - (h ? 200 : 100)
-  );
+  const width = useDeferredValue(size[h ? "width" : "height"] - (h ? 200 : 100));
   const numItemsToShow = Math.floor(width / 60);
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -48,15 +36,15 @@ export const Dock = ({ items, position = "bottom" }: dockProps) => {
   );
 
   return (
-    <div className="size-full flex-center" ref={ref}>
+    <div className="flex-center size-full" ref={ref}>
       <motion.div
         onMouseMove={(e) => mousePosition.set(e[h ? "pageX" : "pageY"])}
         onMouseLeave={() => mousePosition.set(Infinity)}
         className={cn(
-          "flex justify-start rounded-2xl backdrop-blur-sm bg-secondaryContainer-paper",
+          "bg-secondary-container-paper flex justify-start rounded-2xl backdrop-blur-xs",
           h
-            ? "flex-row mx-auto px-4 h-full max-w-full overflow-x-visible"
-            : "flex-col my-auto py-4 w-full max-h-full overflow-y-visible"
+            ? "mx-auto h-full max-w-full flex-row overflow-x-visible px-4"
+            : "my-auto max-h-full w-full flex-col overflow-y-visible py-4"
         )}>
         {currentPage !== 0 && items.length !== 0 && (
           <IconButton
@@ -67,18 +55,11 @@ export const Dock = ({ items, position = "bottom" }: dockProps) => {
           </IconButton>
         )}
         {currentItems.map((item, index) => (
-          <DockIcon
-            mouse={mousePosition}
-            position={position}
-            key={index}
-            {...item}
-          />
+          <DockIcon mouse={mousePosition} position={position} key={index} {...item} />
         ))}
         {currentPage !== totalPages - 1 && items.length !== 0 && (
           <IconButton
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))
-            }
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))}
             className={h ? "rotate-0" : "rotate-90"}
             disabled={currentPage === totalPages - 1}>
             <Icon icon="mdi:chevron-right" />
@@ -94,13 +75,7 @@ type DockIconProps = {
   position?: ToolBarPositions;
 } & dockItemProps;
 
-function DockIcon({
-  mouse,
-  name,
-  icon,
-  onClick,
-  position = "bottom",
-}: DockIconProps) {
+function DockIcon({ mouse, name, icon, onClick, position = "bottom" }: DockIconProps) {
   const ref = useRef<HTMLDivElement>(null);
   const h = isToolbarHorizontal(position);
 
@@ -141,7 +116,7 @@ function DockIcon({
         marginRight: marginLeft,
         marginBottom: marginTop,
       }}
-      className="cursor-pointer relative"
+      className="relative cursor-pointer"
       onClick={onClick}>
       <Tooltip
         TransitionComponent={Zoom}
@@ -152,8 +127,8 @@ function DockIcon({
           ref={ref}
           style={{ scale, transformOrigin: position, width: "40px" }}
           className={cn(
-            "relative flex-center aspect-square rounded-full icon-full p-[20%]",
-            "shadow-lg backdrop-blur-md bg-primary-2 shadow-[#00000022] dark:shadow-[#ffffff22]"
+            "flex-center icon-full relative aspect-square rounded-full p-[20%]",
+            "bg-primary-2 shadow-lg shadow-[#00000022] backdrop-blur-md dark:shadow-[#ffffff22]"
           )}>
           <Icon2RN icon={icon} />
         </motion.div>

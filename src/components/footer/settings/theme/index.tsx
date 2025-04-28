@@ -9,6 +9,7 @@ function ThemeSettings() {
       <CurrentThemeSettings />
       <SettingHeader>All Themes</SettingHeader>
       <AllThemes />
+      <div className="py-2" />
     </>
   );
 }

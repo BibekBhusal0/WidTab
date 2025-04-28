@@ -9,9 +9,7 @@ import IconMenu, { IconMenuType } from "@/components/menuWithIcon";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
 
 function AllThemes() {
-  const { allThemes, currentThemeID } = useSelector(
-    (state: StateType) => state.theme
-  );
+  const { allThemes, currentThemeID } = useSelector((state: StateType) => state.theme);
   const { delete_ } = useCurrentIcons();
   const dispatch = useDispatch();
   return (
@@ -34,9 +32,7 @@ function AllThemes() {
             });
           }
           return (
-            <ContextMenu
-              menuContent={<IconMenu menuItems={menuItems} />}
-              key={theme.id}>
+            <ContextMenu menuContent={<IconMenu menuItems={menuItems} />} key={theme.id}>
               <ListItemButton
                 selected={theme.id === currentThemeID}
                 onClick={() => dispatch(switchTheme(theme.id))}

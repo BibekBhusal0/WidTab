@@ -36,10 +36,7 @@ function DynamicLayout() {
     <Box
       ref={ref}
       {...mainComponentProps}
-      className={cn(
-        "relative w-full overflow-hidden widgets",
-        mainComponentProps?.className
-      )}
+      className={cn("widgets relative w-full overflow-hidden", mainComponentProps?.className)}
       sx={{ ...mainComponentProps?.sx, marginBottom: `${gap}px` }}
       //
     >
@@ -65,11 +62,14 @@ function DynamicLayout() {
       >
         {widgets.map((w) => (
           <Paper
-            sx={{ backgroundColor: "secondaryContainer.paper" }}
+            sx={{ backgroundColor: "primaryContainer.paper" }}
             key={w.gridProps.i}
             className="relative overflow-hidden">
             {!locked && (
-              <div className="w-full drag-handle h-full absolute z-10 bg-primary-1 rounded-themed" />
+              <>
+                <div className="drag-handle bg-primary-2 rounded-themed absolute z-10 size-full cursor-grab focus:cursor-grabbing" />
+                <div className="rounded-themed pointer-events-none absolute z-30 size-full border-2" />
+              </>
             )}
             <Widget widget={w} />
           </Paper>

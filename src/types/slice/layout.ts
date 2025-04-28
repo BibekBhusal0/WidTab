@@ -24,7 +24,7 @@ export const oppositePosition: Record<ToolBarPositions, ToolBarPositions> = {
   bottom: "top",
 };
 
-const RTBI = ["spaces", "todo", "lock", "theme"] as const;
+const RTBI = ["spaces", "lock", "theme"] as const;
 
 export type RemovableToolbarIcons = (typeof RTBI)[number];
 export const allRemovableToolbarIcons: RemovableToolbarIcons[] = [...RTBI];
@@ -47,10 +47,7 @@ export type LayoutSliceType = {
 
 const height = 94;
 const width = 97;
-export type positionPropsType = Record<
-  ToolBarPositions,
-  Record<majorComponentsProps, BoxProps>
->;
+export type positionPropsType = Record<ToolBarPositions, Record<majorComponentsProps, BoxProps>>;
 type majorComponentsProps = "appProps" | "footerProps" | "mainComponentProps";
 
 export const positionProps: positionPropsType = {

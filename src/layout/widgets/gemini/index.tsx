@@ -4,7 +4,6 @@ import { Icon } from "@iconify/react";
 import IconButton from "@mui/material/IconButton";
 import { GoogleGenerativeAI, Content } from "@google/generative-ai";
 import { APIkeyURL, getAPIKey, setAPIKey } from "@/utils/api";
-import ReactMarkdown from "react-markdown";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -13,9 +12,11 @@ import { cn } from "@/utils/cn";
 import { useDispatch } from "react-redux";
 import { currentSpaceEditWidget } from "@/redux/slice/layout";
 import { ScrollArea } from "@/components/scrollarea";
-import { TextareaAutosize } from "@mui/base/TextareaAutosize";
-import useCurrentTheme from "@/hooks/useCurrentTheme";
 import browser from "webextension-polyfill";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
+import { MarkdownPreview } from "@/components/editor/advanced-editor";
+import { useTost } from "@/components/tost";
 
 function GeminiWidget(props: geminiWidgetType) {
   const [input, setInput] = useState("");
@@ -45,11 +46,11 @@ function GeminiWidget(props: geminiWidgetType) {
   };
 
   return (
-    <div className="size-full p-2">
+    <div className="size-full p-2 pt-0">
       {hasKey ? (
         <AIChat APIkey={key} {...props} />
       ) : (
-        <div className="size-full flex-center flex-col gap-4 text-xl">
+        <div className="flex-center size-full flex-col gap-4 text-xl">
           <TextField
             label="API KEY"
             placeholder="API KEY"
@@ -73,38 +74,20 @@ function GeminiWidget(props: geminiWidgetType) {
   );
 }
 
-export function AIChat({
-  APIkey,
-  ...props
-}: { APIkey: string } & geminiWidgetType) {
-  const { conversation, model } = props;
-  const [input, setInput] = useState("");
-  const dispatch = useDispatch();
-  const { mode } = useCurrentTheme();
-  const setContent = (conversation: Content[]) =>
-    dispatch(
-      currentSpaceEditWidget({
-        type: "gemini",
-        values: { ...props, conversation },
-      })
-    );
-
-  const [focus, setFocus] = useState(false);
+type aiChatProp = { APIkey: string } & geminiWidgetType;
+export function AIChat({ ...props }: aiChatProp) {
   const [loading, setLoading] = useState(false);
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  return (
+    <div className="relative flex size-full flex-col justify-between gap-2">
+      <AIChatContent {...{ loading }} {...props} />
+      <AIChatInput {...{ loading, setLoading }} {...props} />
+    </div>
+  );
+}
+
+function AIChatContent({ loading, conversation }: aiChatProp & { loading: boolean }) {
   const mainRef = useRef<HTMLDivElement>(null);
-  const textAreaParentRef = useRef<HTMLDivElement>(null);
-  const textEmpty = input.trim() === "";
-  const [height, setHeight] = useState(60);
-
-  useEffect(() => {
-    const h = textAreaParentRef.current?.scrollHeight;
-    if (!h) return;
-    if (h === height) return;
-    setHeight(h);
-  }, [textAreaParentRef.current?.scrollHeight, input]);
-
-  useEffect(() => scrollBottom(), []);
   useEffect(() => scrollBottom(), [loading]);
 
   const scrollBottom = () =>
@@ -113,69 +96,86 @@ export function AIChat({
       behavior: "smooth",
     });
 
-  const handelModelResponse = async () => {
+  return (
+    <ScrollArea ref={mainRef}>
+      <div
+        className={cn(
+          "prose dark:prose-invert prose-pre:p-0 prose-pre:border prose-pre:border-divider flex size-full max-w-full flex-col gap-4 p-4 transition-all"
+        )}>
+        <ReformatContent {...{ conversation, loading }} />
+      </div>
+    </ScrollArea>
+  );
+}
+function AIChatInput({
+  setLoading,
+  loading,
+  APIkey,
+  ...props
+}: aiChatProp & {
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
+  const [input, setInput] = useState("");
+  const dispatch = useDispatch();
+  const { showTost } = useTost();
+
+  const { conversation, model } = props;
+  const setContent = (conversation: Content[]) =>
+    dispatch(
+      currentSpaceEditWidget({
+        type: "gemini",
+        values: { ...props, conversation },
+      })
+    );
+
+  const expand = input.trim() !== "";
+  const handleModelResponse = async () => {
     if (input.trim() === "" || loading) return;
+    setInput("");
     setLoading(true);
     try {
       const genAI = new GoogleGenerativeAI(APIkey);
       const history = [...conversation];
-      const chatSession = genAI
-        .getGenerativeModel({ model })
-        .startChat({ history });
-      setInput("");
+      const chatSession = genAI.getGenerativeModel({ model }).startChat({ history });
       await chatSession.sendMessage(input.trim());
       setContent(history);
     } catch (error) {
-      console.error("Error during API call:", error);
+      console.log("Error during API call:", error);
+      showTost({
+        children: "Error During API call check console for more info",
+        severity: "error",
+      });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="size-full dark relative">
-      <ScrollArea
-        ref={mainRef}
-        style={{ height: `calc(100% - ${height + 20}px)` }}>
-        <div
-          className={cn(
-            "size-full max-w-full prose prose-orange flex flex-col gap-4 p-4 transition-all",
-            mode === "dark" && "dark:prose-invert"
-          )}>
-          <ReformatContent {...{ conversation, loading }} />
-        </div>
-      </ScrollArea>
-      <div
-        ref={textAreaParentRef}
-        className={cn(
-          "p-1 bottom-1 horizontal-center w-80 flex-center rounded-themed",
-          "ring-1 ring-divider transition-all hover:ring-text-primary",
-          (focus || !textEmpty) &&
-            "ring-2 ring-primary-main hover:ring-primary-main w-[80%]"
-        )}
-        onClick={() => textAreaRef.current?.focus()}>
-        <TextareaAutosize
-          autoFocus
-          maxRows={5}
-          minRows={1}
-          onFocus={() => setFocus(true)}
-          onAbort={() => setFocus(false)}
-          onBlur={() => setFocus(false)}
-          placeholder="Ask me anything..."
-          ref={textAreaRef}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="size-full bg-transparent p-2 outline-none resize-none text-xl"
-          disabled={loading}
-        />
-        <IconButton
-          disabled={loading}
-          className="self-end"
-          onClick={handelModelResponse}>
-          <Icon icon="ri:send-plane-fill" className="text-2xl" />
-        </IconButton>
-      </div>
-    </div>
+    <OutlinedInput
+      autoFocus
+      multiline
+      maxRows={5}
+      minRows={1}
+      size="small"
+      placeholder="Ask me anything..."
+      sx={{
+        width: expand ? "80%" : "320px",
+        "&.Mui-focused": { width: "80%" },
+        transition: "all 0.3s ease",
+        alignSelf: "center",
+      }}
+      value={input}
+      onChange={(e) => setInput(e.target.value)}
+      disabled={loading}
+      endAdornment={
+        <InputAdornment className="self-end" position="end">
+          <IconButton disabled={loading} onClick={handleModelResponse}>
+            <Icon icon="ri:send-plane-fill" className="text-2xl" />
+          </IconButton>
+        </InputAdornment>
+      }
+    />
   );
 }
 
@@ -183,41 +183,30 @@ type reformatContentProps = {
   conversation: Content[];
   loading?: boolean;
 };
-export function ReformatContent({
-  conversation,
-  loading,
-}: reformatContentProps) {
+export function ReformatContent({ conversation, loading }: reformatContentProps) {
   const cls = "px-4 self-start";
   return (
     <>
-      {conversation.map(({ parts, role }) => (
-        <>
+      {conversation.map(({ parts, role }, index) => (
+        <Fragment key={index}>
           {role === "user" && (
-            <Paper
-              variant="outlined"
-              className="flex flex-col gap-2 max-w-[80%] self-end p-4">
+            <Paper variant="outlined" className="flex max-w-[80%] flex-col gap-2 self-end p-4">
               {parts.map(({ text }, i) => (
                 <Fragment key={i}>
-                  {text?.split("\n").map((t, i) => (
-                    <div key={i}>{t}</div>
-                  ))}
+                  {text?.split("\n").map((t, i) => <div key={i}>{t}</div>)}
                 </Fragment>
               ))}
             </Paper>
           )}
           {role === "model" && (
-            <Paper className={cn(cls, "mx-w-[80%]")} variant="outlined">
-              <ReactMarkdown className="w-full">
-                {parts.map(({ text }) => text || "").join("\n")}
-              </ReactMarkdown>
+            <Paper className={cn(cls, "max-w-[90%]")} variant="outlined">
+              <MarkdownPreview value={parts.map(({ text }) => text || "").join("\n")} />
             </Paper>
           )}
-        </>
+        </Fragment>
       ))}
       {loading && (
-        <Paper
-          className={cn(cls, "flex flex-center gap-2 py-2")}
-          variant="outlined">
+        <Paper className={cn(cls, "flex-center flex gap-2 py-2")} variant="outlined">
           <Icon icon="svg-spinners:3-dots-bounce" className="text-3xl" />
           <div className="text-xl">Gemini Is Typing</div>
         </Paper>

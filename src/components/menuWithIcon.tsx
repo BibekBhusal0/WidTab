@@ -9,6 +9,7 @@ export type IconMenuType = {
   icon: iconAsProp;
   onClick?: (event: React.MouseEvent<HTMLElement>) => void;
   color?: string;
+  selected?: boolean;
 };
 
 export type IconMenuProps = {
@@ -18,10 +19,11 @@ export type IconMenuProps = {
 function IconMenu({ menuItems }: IconMenuProps) {
   return (
     <>
-      {menuItems.map(({ name, icon, onClick, color }, i) => (
+      {menuItems.map(({ name, icon, onClick, color, selected }, i) => (
         <MenuItem
+          selected={selected}
           sx={{ color: color }}
-          className="flex-center gap-3 icon-lg"
+          className="flex-center icon-lg gap-3"
           key={i}
           onClick={onClick}>
           <ListItemIcon sx={{ color: color }}>
