@@ -477,10 +477,10 @@
   "resolved" "https://registry.npmjs.org/@humanwhocodes/retry/-/retry-0.4.2.tgz"
   "version" "0.4.2"
 
-"@iconify/react@^5.2.1":
-  "integrity" "sha512-37GDR3fYDZmnmUn9RagyaX+zca24jfVOMY8E1IXTqJuE8pxNtN51KWPQe3VODOWvuUurq7q9uUu3CFrpqj5Iqg=="
-  "resolved" "https://registry.npmjs.org/@iconify/react/-/react-5.2.1.tgz"
-  "version" "5.2.1"
+"@iconify/react@^6.0.0":
+  "integrity" "sha512-eqNscABVZS8eCpZLU/L5F5UokMS9mnCf56iS1nM9YYHdH8ZxqZL9zyjSwW60IOQFsXZkilbBiv+1paMXBhSQnw=="
+  "resolved" "https://registry.npmjs.org/@iconify/react/-/react-6.0.0.tgz"
+  "version" "6.0.0"
   dependencies:
     "@iconify/types" "^2.0.0"
 
