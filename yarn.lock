@@ -1277,10 +1277,10 @@
   dependencies:
     "@babel/types" "^7.20.7"
 
-"@types/chrome@^0.0.313":
-  "integrity" "sha512-9R5T7gTaYZhkxlu+Ho4wk9FL+y/werWQY2yjGWSqCuiTsqS7nL/BE5UMTP6rU7J+oIG2FRKqrEycHhJATeltVA=="
-  "resolved" "https://registry.npmjs.org/@types/chrome/-/chrome-0.0.313.tgz"
-  "version" "0.0.313"
+"@types/chrome@^0.0.319":
+  "integrity" "sha512-k+E1b3VrWEj7OqQ22cPxHs3o/jrYWEEDGaocwjlIGtul+WrAn1vaBANc0iurgm0aXkyIVs7aH3ce0lpr96XYhw=="
+  "resolved" "https://registry.npmjs.org/@types/chrome/-/chrome-0.0.319.tgz"
+  "version" "0.0.319"
   dependencies:
     "@types/filesystem" "*"
     "@types/har-format" "*"
