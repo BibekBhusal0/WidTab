@@ -55,7 +55,7 @@
     "@crxjs/vite-plugin": "^2.0.0-beta.32",
     "@iconify/react": "^6.0.0",
     "@tailwindcss/typography": "^0.5.16",
-    "@tailwindcss/vite": "^4.0.17",
+    "@tailwindcss/vite": "^4.1.6",
     "@types/chrome": "^0.0.319",
     "@types/node": "^22.14.1",
     "@types/react": "^19.0.12",
