@@ -193,7 +193,9 @@ export function ReformatContent({ conversation, loading }: reformatContentProps)
             <Paper variant="outlined" className="flex max-w-[80%] flex-col gap-2 self-end p-4">
               {parts.map(({ text }, i) => (
                 <Fragment key={i}>
-                  {text?.split("\n").map((t, i) => <div key={i}>{t}</div>)}
+                  {text?.split("\n").map((t, i) => (
+                    <div key={i}>{t}</div>
+                  ))}
                 </Fragment>
               ))}
             </Paper>
