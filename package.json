@@ -35,7 +35,7 @@
     "dayjs": "^1.11.19",
     "lowlight": "^3.3.0",
     "moment-timezone": "^0.6.0",
-    "motion": "^12.25.0",
+    "motion": "^12.27.0",
     "novel": "^1.0.2",
     "react": "19.2.3",
     "react-clock": "^6.0.0",
