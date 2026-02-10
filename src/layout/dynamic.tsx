@@ -51,11 +51,11 @@ function DynamicLayout() {
         }}
         dragConfig={{
           enabled: !locked,
-          handle:".drag-handle"
+          handle: ".drag-handle",
         }}
         resizeConfig={{
           enabled: !locked,
-          handles:["n" , "e", "w", "s"]
+          handles: ["n", "e", "w", "s"],
         }}
         dropConfig={{
           enabled: !locked,
