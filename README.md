@@ -124,12 +124,10 @@ Download Latest build for you browser (chrome or firefox) from [Build Page](http
    **Or** follow the manual steps below: -->
 
 2. **Manual Installation**:
-
    - Build the extension or downloaded zip files from actions page.
 
    - **Open Extensions Page**:
      Open your preferred browser and enter the following text in the address bar
-
      - ![Chrome](https://img.icons8.com/color/20/000000/chrome--v1.png) Chrome: `chrome://extensions`
 
      - ![Edge](https://img.icons8.com/?size=20&id=dGm9KIZPpukc&format=png&color=000000) Edge: `edge://extensions`
@@ -139,7 +137,6 @@ Download Latest build for you browser (chrome or firefox) from [Build Page](http
      - ![Opera](https://img.icons8.com/color/20/000000/opera--v1.png) Opera: `opera://extensions`
 
    - **Enable Developer Mode**:
-
      - Turn on **Developer Mode** in the extensions page.
 
    - **Load Unpacked Extension**:
@@ -156,7 +153,6 @@ Download Latest build for you browser (chrome or firefox) from [Build Page](http
 **Or** follow the manual steps below: -->
 
 2. **Manual Installation**:
-
    - Build the extension or downloaded zip files from actions page.
 
    - **Load Temporary Add-on**:
