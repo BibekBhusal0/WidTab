@@ -1,0 +1,23 @@
+src/components/select-icon.tsx
+  801d7cbb61eebb47 150-151,162,180-181,228
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.42",
+  "base_commit_sha": "10ba6f15f18092c3b7ed97c2d52f1e1e80c02ef3",
+  "prompts": {
+    "801d7cbb61eebb47": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_3b9ccaed2ffeUwnta4JM0iXw4o",
+        "model": "opencode/big-pickle"
+      },
+      "human_author": "Bibek Bhusal <bibekbhusal04@gmail.com>",
+      "messages": [],
+      "total_additions": 131,
+      "total_deletions": 129,
+      "accepted_lines": 15,
+      "overriden_lines": 1
+    }
+  }
+}
