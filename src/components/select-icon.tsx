@@ -7,7 +7,7 @@ import Tab from "@mui/material/Tab";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
-import { FixedSizeGrid as Grid, GridChildComponentProps } from "react-window";
+import { Grid } from "react-window";
 import MenuPopover, { MenuPopoverProps } from "./popoverMenu";
 import { cn } from "@/utils/cn";
 import useCurrentIcons from "@/hooks/useCurrentIcons";
@@ -143,6 +143,12 @@ export const SelectIconMenu = ({
   );
 };
 
+interface IconGridProps {
+  iconsList: string[];
+  selected: string;
+  setSelected: (icon: string) => void;
+}
+
 export function IconsGrid({ iconsList, selected, setSelected }: IconGridProps) {
   const columnCount = 5;
   const width = 40;
@@ -153,9 +159,7 @@ export function IconsGrid({ iconsList, selected, setSelected }: IconGridProps) {
       rowCount={Math.ceil(iconsList.length / columnCount)}
       columnWidth={width}
       rowHeight={width}
-      height={300}
-      width={columnCount * width + 20}>
-      {({ columnIndex, rowIndex, style }: GridChildComponentProps) => {
+      cellComponent={({ columnIndex, rowIndex, style, iconsList, selected, setSelected }) => {
         const iconIndex = rowIndex * columnCount + columnIndex;
         const icon = iconsList[iconIndex];
         if (!icon) return null;
@@ -173,7 +177,9 @@ export function IconsGrid({ iconsList, selected, setSelected }: IconGridProps) {
           </div>
         );
       }}
-    </Grid>
+      cellProps={{ iconsList, selected, setSelected }}
+      style={{ height: 300, width: columnCount * width + 20 }}
+    />
   );
 }
 
@@ -219,11 +225,7 @@ export interface SelectIconProps {
   icon: string;
   setIcon: (icon: string) => void;
 }
-interface IconGridProps {
-  iconsList: string[];
-  selected: string;
-  setSelected: (icon: string) => void;
-}
+
 export interface APIv2CollectionResponse {
   prefix: string;
   total: number;

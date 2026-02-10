@@ -1,5 +1,5 @@
 import { AllWidgetPropsMapping, allWidgetsType, WidgetMappingAll } from "@/types/slice/widgets";
-import { Layout } from "react-grid-layout";
+import { LayoutItem } from "react-grid-layout";
 import { ControlsProps } from "@/layout/widgets/controls";
 import HabitTrackerControls from "@/layout/widgets/habit-tracker/controls";
 import ClockControls from "@/layout/widgets/clock/controls";
@@ -25,7 +25,7 @@ import Navigation from "@/layout/widgets/navigation/widget";
 import { CylindricalNavigation } from "@/layout/widgets/navigation/cylindrical";
 import Favorites from "@/layout/widgets/favorites";
 
-export const widgetDimensions: Record<allWidgetsType, Partial<Layout>> = {
+export const widgetDimensions: Record<allWidgetsType, Partial<LayoutItem>> = {
   "habit-tracker": { minW: 4, minH: 2, maxH: 2, maxW: 8 },
   "habit-tracker-stats-single": { minW: 4, minH: 3 },
   "habit-tracker-stats-all": { minW: 4, minH: 3 },

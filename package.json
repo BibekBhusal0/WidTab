@@ -11,7 +11,8 @@
     "format": "prettier --write .",
     "lint": "eslint -c .eslintrc.json ./src/**/**/*.{ts,tsx} --fix",
     "predeploy": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck": "tsc"
   },
   "type": "module",
   "dependencies": {
