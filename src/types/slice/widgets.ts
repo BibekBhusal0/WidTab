@@ -1,4 +1,4 @@
-import { Layout } from "react-grid-layout";
+import { LayoutItem } from "react-grid-layout";
 import { TaskType } from "./todo";
 import { HabitTrackerItemType } from "./habit-tracker";
 import { BookmarkWidgetType, FavoritesWidgetType } from "./bookmark";
@@ -109,4 +109,4 @@ export type WidgetTypeMapping =
   | { type: "habit-tracker"; values: HabitTrackerItemType }
   | { type: "bookmark"; values: BookmarkWidgetType };
 
-export type WidgetType = { gridProps: Layout } & WidgetMappingAll;
+export type WidgetType = { gridProps: LayoutItem } & WidgetMappingAll;

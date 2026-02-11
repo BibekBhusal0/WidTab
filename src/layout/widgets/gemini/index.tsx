@@ -29,7 +29,7 @@ function GeminiWidget(props: geminiWidgetType) {
       namespace: string
     ) => {
       if (namespace === "local" && changes.gemini) {
-        setKey(changes.gemini.newValue);
+        setKey(changes.gemini.newValue as string);
       }
     };
     getAPIKey("gemini").then((key) => setKey(key));

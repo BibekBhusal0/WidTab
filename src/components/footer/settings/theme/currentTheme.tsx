@@ -15,7 +15,13 @@ function CurrentThemeSettings() {
   const theme = useCurrentTheme();
   const dispatch = useDispatch();
   const { delete_ } = useCurrentIcons();
-  const numValues: numericalThemeValues[] = ["blur", "opacity", "roundness"];
+  const sliderProps: changeSliderProps[] = [
+    { val: "blur", step: 0.01, min: 0, max: 1 },
+    { val: "opacity", step: 0.01, min: 0, max: 1 },
+    { val: "roundness", step: 0.01, min: 0.5, max: 1 },
+    { val: "gap", step: 0.1, min: 2, max: 20 },
+  ];
+
   const toggle: MenuSwitchProps["items"] = [
     {
       onChange: () => dispatch(toggleCurrentMode()),
@@ -41,15 +47,8 @@ function CurrentThemeSettings() {
             </div>
           </div>
           <div aria-label="opacity/blur/roundness" className="flex flex-col items-center gap-4">
-            {numValues.map((val) => (
-              <ChangeSlider
-                valueLabelDisplay="auto"
-                step={0.01}
-                min={val === "roundness" ? 0 : 0.5}
-                max={1}
-                key={val}
-                val={val}
-              />
+            {sliderProps.map((props) => (
+              <ChangeSlider {...props} key={props.val} />
             ))}
           </div>
 
@@ -83,12 +82,13 @@ type changeSliderProps = SliderProps & {
 function ChangeSlider({ val, ...props }: changeSliderProps) {
   const theme = useCurrentTheme();
   const dispatch = useDispatch();
+  const num = theme[val] === undefined ? 10 : theme[val];
 
   return (
     <div className="full-between">
       <div className="w-40 text-xl capitalize">{val}</div>
       <Slider
-        value={theme[val]}
+        value={num}
         onChange={(_, value) => {
           dispatch(changeTheme({ ...theme, [val]: value as number }));
         }}

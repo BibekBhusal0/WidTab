@@ -41,10 +41,7 @@ function ClockWidget({ ...props }: ClockWidgetType) {
         <AnalogClock time={time} {...props} />
       )}
       {showTimeZone && (
-        <div
-          className={cn("h-[20%]", {
-            "-mt-2": showTimeZone && size.height < 100,
-          })}>
+        <div className={cn("h-[20%]", { "-mt-2": showTimeZone && size.height < 100 })}>
           <FitText min={2} className="text-center">
             {timeZone}
           </FitText>

@@ -15,7 +15,7 @@ import {
 } from "@/types/slice/widgets";
 import { getNextId } from "@/utils/next_id";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Layout } from "react-grid-layout";
+import { LayoutItem } from "react-grid-layout";
 import { initialLayoutState } from "./initialStates";
 import { which } from "@/hooks/useAllSpaceAndIcon";
 
@@ -139,7 +139,7 @@ export const layoutSlice = createSlice({
         );
       }
     },
-    currentSpaceSetGridProps(state, action: PayloadAction<Layout[]>) {
+    currentSpaceSetGridProps(state, action: PayloadAction<LayoutItem[]>) {
       const space = state.allSpaces.find((p) => p.id === state.currentSpace.id);
       if (space && state.currentSpace.type === "dynamic") {
         space.widgets = space.widgets.map((widget) => {
