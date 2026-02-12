@@ -99,14 +99,14 @@ function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
         {...listeners}
         style={style}
         onClick={(e) => openLink(bookmarks.url || "", linkInNewTab, e)}
-        className={cn("ml-2 flex w-full items-center gap-4 pl-2", isDragging && "cursor-grabbing")}>
-        <div className="my-1 w-full py-1">
-          <div className="flex w-full items-center gap-4">
-            <Favicon src={bookmarks.url} className="aspect-square size-10" />
-            <div className="truncate text-xl">{bookmarks.title}</div>
-          </div>
-        </div>
-        {fav && <Icon className="text-3xl" icon="mdi:heart" />}
+        className={cn(
+          "my-1 ml-2 w-[calc(100%-7px)] py-1 pl-2",
+          "flex items-center gap-2",
+          isDragging && "cursor-grabbing"
+        )}>
+        <Favicon src={bookmarks.url} className="aspect-square size-10 pointer-events-none" />
+        <div className="truncate text-xl w-[calc(100%-7px)] pointer-events-none">{bookmarks.title}</div>
+        {fav && <Icon className="text-3xl pointer-events-none" icon="mdi:heart" />}
       </div>
     </LinkContextMenu>
   );
@@ -154,7 +154,7 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
   if (!bookmarks.children) return null;
 
   return (
-    <div ref={draggableRef} style={style} {...attributes}>
+    <div ref={draggableRef} style={style} {...attributes} >
       <div
         ref={droppableRef}
         className={cn(
@@ -174,7 +174,7 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
               if (!open) changeFolder();
               setOpen(!open);
             }}>
-            <div className="aspect-square h-full shrink-0">
+            <div className="aspect-square h-full shrink-0 pointer-events-none">
               <Folder {...{ open }} icon={folderIcons?.[bookmarks.id]} />
             </div>
             <div className="truncate text-2xl">{bookmarks.title}</div>
@@ -191,7 +191,7 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-                //
+              //
               >
                 <BookmarkItem bookmarks={child} paths={paths} />
               </motion.div>
