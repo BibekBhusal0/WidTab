@@ -1,0 +1,13 @@
+src/components/bookmarks/contextMenu.tsx
+  355f2bd3c5933a7a 15-18,30-36,43-50,56,62,76,79-179,182,187,196-199,209-212,217-218,222-225,235-237
+src/components/bookmarks/editFolderModal.tsx
+  355f2bd3c5933a7a 1-79
+src/components/bookmarks/editLinkModal.tsx
+  355f2bd3c5933a7a 1-96
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.2",
+  "base_commit_sha": "6e7078183bdd395b2cd41c54148571ca18c1b16f",
+  "prompts": {}
+}
