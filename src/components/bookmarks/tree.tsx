@@ -104,9 +104,11 @@ function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
           "flex items-center gap-2",
           isDragging && "cursor-grabbing"
         )}>
-        <Favicon src={bookmarks.url} className="aspect-square size-10 pointer-events-none" />
-        <div className="truncate text-xl w-[calc(100%-7px)] pointer-events-none">{bookmarks.title}</div>
-        {fav && <Icon className="text-3xl pointer-events-none" icon="mdi:heart" />}
+        <Favicon src={bookmarks.url} className="pointer-events-none aspect-square size-10" />
+        <div className="pointer-events-none w-[calc(100%-7px)] truncate text-xl">
+          {bookmarks.title}
+        </div>
+        {fav && <Icon className="pointer-events-none text-3xl" icon="mdi:heart" />}
       </div>
     </LinkContextMenu>
   );
@@ -154,7 +156,7 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
   if (!bookmarks.children) return null;
 
   return (
-    <div ref={draggableRef} style={style} {...attributes} >
+    <div ref={draggableRef} style={style} {...attributes}>
       <div
         ref={droppableRef}
         className={cn(
@@ -174,7 +176,7 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
               if (!open) changeFolder();
               setOpen(!open);
             }}>
-            <div className="aspect-square h-full shrink-0 pointer-events-none">
+            <div className="pointer-events-none aspect-square h-full shrink-0">
               <Folder {...{ open }} icon={folderIcons?.[bookmarks.id]} />
             </div>
             <div className="truncate text-2xl">{bookmarks.title}</div>
@@ -191,7 +193,7 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-              //
+                //
               >
                 <BookmarkItem bookmarks={child} paths={paths} />
               </motion.div>
