@@ -115,14 +115,16 @@ function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
         {...listeners}
         style={style}
         onClick={(e) => openLink(bookmarks.url || "", linkInNewTab, e)}
-        className={cn("ml-2 flex w-full items-center gap-4 pl-2", isDragging && "cursor-grabbing")}>
-        <div className="my-1 w-full py-1">
-          <div className="flex w-full items-center gap-4">
-            <Favicon src={bookmarks.url} className="aspect-square size-10" />
-            <div className="truncate text-xl">{bookmarks.title}</div>
-          </div>
+        className={cn(
+          "my-1 ml-2 w-[calc(100%-7px)] py-1 pl-2",
+          "flex items-center gap-2",
+          isDragging && "cursor-grabbing"
+        )}>
+        <Favicon src={bookmarks.url} className="select-none aspect-square size-10" />
+        <div className="select-none w-[calc(100%-7px)] truncate text-xl">
+          {bookmarks.title}
         </div>
-        {fav && <Icon className="text-3xl" icon="mdi:heart" />}
+        {fav && <Icon className="select-none text-3xl" icon="mdi:heart" />}
       </div>
     </LinkContextMenu>
   );
@@ -183,17 +185,17 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
             {...listeners}
             ref={folderRef}
             className={cn(
-              "flex w-full cursor-pointer items-center gap-4",
+              "flex w-full cursor-pointer items-center gap-4 select-none",
               isDragging && "cursor-grabbing"
             )}
             onClick={() => {
               if (!open) changeFolder();
               setOpen(!open);
             }}>
-            <div className="aspect-square h-full shrink-0">
+            <div className="select-none aspect-square h-full shrink-0">
               <Folder {...{ open }} icon={folderIcons?.[bookmarks.id]} />
             </div>
-            <div className="truncate text-2xl">{bookmarks.title}</div>
+            <div className="truncate text-2xl select-none">{bookmarks.title}</div>
           </div>
         </FolderContextMenu>
 

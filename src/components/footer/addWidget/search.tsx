@@ -13,7 +13,7 @@ function AddSearch() {
   };
 
   return (
-    <div className="flex-center w-full flex-col gap-5 pt-4">
+    <div className="flex-center size-full flex-col gap-5 pt-4">
       <SearchEngineSelect
         showName
         sx={{ width: "80%" }}

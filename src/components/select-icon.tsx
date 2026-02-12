@@ -81,6 +81,7 @@ const SelectIcon = ({
     }
     fetchIcons();
   }, [currentMode, deferredSearchTerm]);
+  const _search = () => setDeferredSearchTerm(searchTerm);
 
   return (
     <div className="flex size-full flex-col items-center gap-3">
@@ -93,9 +94,12 @@ const SelectIcon = ({
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search Icon"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") _search();
+          }}
           endAdornment={
             <InputAdornment position="end">
-              <IconButton onClick={() => setDeferredSearchTerm(searchTerm)}>
+              <IconButton onClick={_search}>
                 <Icon2RN icon={search} />
               </IconButton>
             </InputAdornment>
@@ -178,7 +182,7 @@ export function IconsGrid({ iconsList, selected, setSelected }: IconGridProps) {
         );
       }}
       cellProps={{ iconsList, selected, setSelected }}
-      style={{ height: 300, width: columnCount * width + 20 }}
+      style={{ height: 300, width: columnCount * width + 5 }}
     />
   );
 }

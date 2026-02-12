@@ -172,7 +172,7 @@
   background-color: var(--mui-palette-primary-contrastText) !important;
 }
 
-.pre:not(.node-codeBlock)[data-placeholder]:not(:empty)::before {
+.pre:not(li):not(ul):not(ol):not(.node-codeBlock)[data-placeholder]:not(:empty)::before {
   @apply text-divider pointer-events-none float-left h-0;
   content: attr(data-placeholder);
   pointer-events: none;
