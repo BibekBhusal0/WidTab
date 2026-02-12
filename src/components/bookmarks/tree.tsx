@@ -120,11 +120,9 @@ function BookmarkTreeLink({ bookmarks }: bookmarkTreeNode) {
           "flex items-center gap-2",
           isDragging && "cursor-grabbing"
         )}>
-        <Favicon src={bookmarks.url} className="select-none aspect-square size-10" />
-        <div className="select-none w-[calc(100%-7px)] truncate text-xl">
-          {bookmarks.title}
-        </div>
-        {fav && <Icon className="select-none text-3xl" icon="mdi:heart" />}
+        <Favicon src={bookmarks.url} className="aspect-square size-10 select-none" />
+        <div className="w-[calc(100%-7px)] truncate text-xl select-none">{bookmarks.title}</div>
+        {fav && <Icon className="text-3xl select-none" icon="mdi:heart" />}
       </div>
     </LinkContextMenu>
   );
@@ -192,7 +190,7 @@ function BookmarkFolder({ bookmarks, paths }: bookmarkTreeNode & defaultOpen) {
               if (!open) changeFolder();
               setOpen(!open);
             }}>
-            <div className="select-none aspect-square h-full shrink-0">
+            <div className="aspect-square h-full shrink-0 select-none">
               <Folder {...{ open }} icon={folderIcons?.[bookmarks.id]} />
             </div>
             <div className="truncate text-2xl select-none">{bookmarks.title}</div>
