@@ -63,7 +63,7 @@ function AddBookmark() {
   };
 
   return (
-    <div className="relative h-[330px] w-full">
+    <div className="relative size-full">
       <ScrollArea className="h-[80%] w-full">{getBookmarkFolders(bookmarks)}</ScrollArea>
       <div className="horizontal-center flex-center bottom-2 h-[10%] w-full gap-4 p-2">
         <SimpleAddWidgetButton
